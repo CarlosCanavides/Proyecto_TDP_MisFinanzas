@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/nav_escritorio"
+        android:icon="@drawable/icon_home"
+        android:title="@string/item_escritorio"
+        app:showAsAction="withText" />
+
+    <item
+        android:id="@+id/nav_transacciones"
+        android:icon="@drawable/icon_transacciones"
+        android:title="@string/item_transacciones"
+        app:showAsAction="withText" />
+
+    <item
+        android:enabled="false"
+        tools:ignore="MenuTitle" />
+
+    <item
+        android:id="@+id/nav_resumen"
+        android:icon="@drawable/icon_resumen"
+        android:title="@string/item_resumen"
+        app:showAsAction="withText" />
+
+    <item
+        android:id="@+id/nav_informes"
+        android:icon="@drawable/icon_informes"
+        android:title="@string/item_informes"
+        app:showAsAction="withText" />
+
+</menu>

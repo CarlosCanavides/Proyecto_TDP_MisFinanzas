@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Expenses</string>
+
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string name="item_escritorio">Escritorio</string>
+    <string name="item_transacciones">Transacciones</string>
+    <string name="item_resumen">Resumen</string>
+    <string name="item_informes">Informes</string>
+
+    <string name="resumen_mensajeGasto">Muchos gastos en</string>
+
+    <string name="mensaje_estadoCuenta">Balance</string>
+    <string name="mensaje_saldo">$0,00</string>
+    <string name="descripcion_app">DESCRIPCIÓN DE LA APLICACIÓN</string>
+    <string name="title_activity_categorias">CategoriasActivity</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+</resources>

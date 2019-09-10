@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/espacio_mediano"
+        android:layout_marginBottom="@dimen/espacio_mediano">
+
+        <TextView
+            android:id="@+id/categoria_letra"
+            android:layout_width="@dimen/size_circularview"
+            android:layout_height="@dimen/size_circularview"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/espacio_mediano"
+            android:layout_marginEnd="@dimen/espacio_mediano"
+            android:background="@drawable/textview_circular"
+            android:backgroundTint="@color/colorAccent"
+            android:text="H"
+            android:textAlignment="center"
+            android:textColor="@color/background_white"
+            android:textSize="@dimen/text_circularview" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/espacio_small"
+            android:divider="@color/primary_light"
+            android:showDividers="middle">
+
+            <TextView
+                android:id="@+id/categoria_nombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/espacio_mediano"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/primary_light"
+                android:layout_gravity="bottom">
+
+            </View>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

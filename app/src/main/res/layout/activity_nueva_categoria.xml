@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NuevaCategoriaActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginStart="@dimen/espacio_mediano"
+        android:layout_marginEnd="@dimen/espacio_mediano"
+        android:layout_marginTop="@dimen/espacio_mediano">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_titulo"
+            android:layout_gravity="center_vertical"/>
+
+        <EditText
+            android:id="@+id/campo_nombre_categoria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/espacio_mediano"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginStart="@dimen/espacio_mediano"
+        android:layout_marginEnd="@dimen/espacio_mediano">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_categoria_superior"
+            android:layout_gravity="center_vertical"/>
+
+        <EditText
+            android:id="@+id/campo_categoria_superior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/espacio_mediano"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginStart="@dimen/espacio_mediano"
+        android:layout_marginEnd="@dimen/espacio_mediano">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_color"
+            android:layout_gravity="center_vertical"/>
+
+        <EditText
+            android:id="@+id/campo_categoria_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/espacio_mediano"
+            android:maxLines="1"
+            android:singleLine="true"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginStart="@dimen/espacio_mediano"
+        android:layout_marginEnd="@dimen/espacio_mediano">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_tipo_transaccion"
+            android:layout_gravity="center_vertical"/>
+
+        <EditText
+            android:id="@+id/campo_categoria_tipoT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/espacio_mediano"
+            android:maxLines="1"
+            android:singleLine="true"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_confirmar_nueva_categoria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/degrade_end"
+        android:text="ACEPTAR"
+        android:textColor="@color/colorAccent"
+        android:layout_gravity="bottom"/>
+
+</LinearLayout>

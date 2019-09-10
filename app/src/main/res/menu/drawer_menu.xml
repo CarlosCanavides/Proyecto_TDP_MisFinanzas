@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/drawer_categorias"
+            android:icon="@drawable/icon_categoria"
+            android:title="Categorias">
+        </item>
+
+        <item
+            android:id="@+id/drawer_principal"
+            android:icon="@drawable/icon_home"
+            android:title="Principal">
+        </item>
+
+        <item
+            android:id="@+id/drawer_transacciones"
+            android:icon="@drawable/icon_transacciones"
+            android:title="Transacciones">
+        </item>
+
+        <item
+            android:id="@+id/drawer_resumen"
+            android:icon="@drawable/icon_resumen"
+            android:title="Resumen">
+        </item>
+
+        <item
+            android:id="@+id/drawer_informes"
+            android:icon="@drawable/icon_informes"
+            android:title="Informes">
+        </item>
+
+    </group>
+
+</menu>
