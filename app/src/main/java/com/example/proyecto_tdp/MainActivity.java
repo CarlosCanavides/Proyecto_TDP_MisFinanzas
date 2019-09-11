@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int NRO_PEDIDO = 1826;
 
     private DrawerLayout drawerLayout;
-
     private ViewModelTransaccion viewModelTransaccion;
 
     @Override
@@ -160,11 +159,21 @@ public class MainActivity extends AppCompatActivity {
                 String etiqueta = data.getStringExtra("etiqueta");
                 String fecha = data.getStringExtra("fecha");
                 String info = data.getStringExtra("info");
+                float monto = 0;
+                try {
+                    monto = Float.parseFloat(precio);
+                }catch (Exception e) {
+                    mostrarMensaje("El monto ingresado debe ser mayor a 0");
+                }
 
-                Transaccion nuevaTransaccion = new Transaccion(titulo,etiqueta,precio,categoria,tipoTransaccion,fecha,info);
+                Transaccion nuevaTransaccion = new Transaccion(titulo, etiqueta, monto, categoria, tipoTransaccion, fecha, info);
                 viewModelTransaccion.insertarTransaccion(nuevaTransaccion);
             }
         }
+    }
+
+    private void mostrarMensaje(String mensaje){
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
 
     @Override

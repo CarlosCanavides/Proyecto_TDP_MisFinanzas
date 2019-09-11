@@ -40,11 +40,11 @@ public class AdapterTransacciones extends RecyclerView.Adapter<AdapterTransaccio
         viewHolderDatos.etiIdentificacion.setText(transaccion.getEtiqueta());
 
         if(transaccion.getTipoTransaccion().equals("gasto")){
-            viewHolderDatos.etiPrecio.setText("- "+transaccion.getPrecio());
+            viewHolderDatos.etiPrecio.setText("- $"+transaccion.getPrecio());
             viewHolderDatos.etiPrecio.setTextColor(Color.parseColor("#FF5722"));
         }
         else{
-            viewHolderDatos.etiPrecio.setText("+ "+transaccion.getPrecio());
+            viewHolderDatos.etiPrecio.setText("+ $"+transaccion.getPrecio());
             viewHolderDatos.etiPrecio.setTextColor(Color.parseColor("#303F9F"));
         }
 

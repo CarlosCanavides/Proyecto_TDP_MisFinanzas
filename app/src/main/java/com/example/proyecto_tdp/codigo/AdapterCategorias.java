@@ -1,5 +1,8 @@
 package com.example.proyecto_tdp.codigo;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +36,9 @@ public class AdapterCategorias extends RecyclerView.Adapter<AdapterCategorias.Vi
         Categoria categoria = categorias.get(position);
         holder.etiNombreCategoria.setText(categoria.getNombreCategoria());
         holder.etiFoto.setText(categoria.getNombreCategoria().charAt(0)+"");
+
+        Drawable bg = holder.etiFoto.getBackground();
+        bg.setColorFilter(categoria.getColorCategoria(), PorterDuff.Mode.SRC);
     }
 
     @Override

@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_tdp.SetTransaccionActivity;
 import com.example.proyecto_tdp.codigo.AdapterTransacciones;
 import com.example.proyecto_tdp.R;
-import com.example.proyecto_tdp.codigo.RecyclerItemClickListener;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
 
@@ -100,8 +99,10 @@ public class TransaccionesFragment extends Fragment {
                 String fecha = data.getStringExtra("fecha");
                 String info = data.getStringExtra("info");
 
+                float monto = Float.parseFloat(precio);
+
                 if(id!=-1) {
-                    Transaccion nueva = new Transaccion(titulo, etiqueta, precio, categoria, tipoTransaccion, fecha, info);
+                    Transaccion nueva = new Transaccion(titulo, etiqueta, monto, categoria, tipoTransaccion, fecha, info);
                     nueva.setId(id);
                     viewModelTransaccion.actualizarTransaccion(nueva);
                 }
@@ -109,7 +110,7 @@ public class TransaccionesFragment extends Fragment {
             else if (resultCode == 0) {
                 int id = data.getIntExtra("id",-1);
                 if(id!=-1) {
-                    Transaccion t = new Transaccion("","","","","","","");
+                    Transaccion t = new Transaccion("","",0,"","","","");
                     t.setId(id);
                     viewModelTransaccion.actualizarTransaccion(t);
                     viewModelTransaccion.eliminarTransaccion(t);

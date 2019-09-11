@@ -1,6 +1,7 @@
 package com.example.proyecto_tdp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -78,11 +79,21 @@ public class CategoriaActivity extends AppCompatActivity {
                 String colorCategoria = data.getStringExtra("colorCategoria");
                 String tipoC = data.getStringExtra("tipoC");
 
-                int color = Integer.parseInt(colorCategoria);
+                int color = Color.parseColor("#7373FF");
 
-                Categoria categoria = new Categoria(nombreCategoria,categoriaSuperior,color,tipoC);
-                viewModelCategoria.insertarCategoria(categoria);
+                if(nombreCategoria!="") {
+                    Categoria categoria = new Categoria(nombreCategoria, categoriaSuperior, color, tipoC);
+                    viewModelCategoria.insertarCategoria(categoria);
+                }
+                else {
+                    mostrarMensaje("CATEGORIA NO REGISTRADA");
+                }
             }
         }
     }
+
+    private void mostrarMensaje(String mensaje){
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+    }
+
 }

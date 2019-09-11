@@ -23,7 +23,7 @@ public class Transaccion {
     private String etiqueta;
 
     @ColumnInfo(name = "precio")
-    private String precio;
+    private float precio;
 
     @ColumnInfo(name = "categoria", defaultValue = "NULL")
     private String categoria;
@@ -37,7 +37,7 @@ public class Transaccion {
     @ColumnInfo(name = "info")
     private String info;
 
-    public Transaccion(String titulo, String etiqueta, String precio, String categoria, String tipoTransaccion, String fecha, String info) {
+    public Transaccion(String titulo, String etiqueta, float precio, String categoria, String tipoTransaccion, String fecha, String info) {
         this.titulo = titulo;
         this.etiqueta = etiqueta;
         this.precio = precio;
@@ -74,11 +74,11 @@ public class Transaccion {
         this.etiqueta = etiqueta;
     }
 
-    public String getPrecio() {
+    public float getPrecio() {
         return precio;
     }
 
-    public void setPrecio(String precio) {
+    public void setPrecio(float precio) {
         this.precio = precio;
     }
 
