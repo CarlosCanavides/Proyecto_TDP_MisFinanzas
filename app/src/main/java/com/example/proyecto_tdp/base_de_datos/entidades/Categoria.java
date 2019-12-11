@@ -16,9 +16,6 @@ public class Categoria {
     @NonNull
     private String nombreCategoria;
 
-    /*@ColumnInfo(name = "categoriaSuperior", defaultValue = "NULL")
-    private String categoriaSuperior;*/
-
     @ColumnInfo(name = "colorCategoria")
     private int colorCategoria;
 
@@ -26,11 +23,8 @@ public class Categoria {
     private String tipoCategoria;
 
 
-    public Categoria(@NonNull String nombreCategoria, String categoriaSuperior, int colorCategoria, String tipoCategoria) {
+    public Categoria(@NonNull String nombreCategoria, int colorCategoria, String tipoCategoria) {
         this.nombreCategoria = nombreCategoria;
-        /*if(categoriaSuperior!=null && !categoriaSuperior.equals("")){
-            this.categoriaSuperior = categoriaSuperior;
-        }*/
         this.colorCategoria = colorCategoria;
         this.tipoCategoria = tipoCategoria;
     }
@@ -43,14 +37,6 @@ public class Categoria {
     public void setNombreCategoria(@NonNull String nombreCategoria) {
         this.nombreCategoria = nombreCategoria;
     }
-
-    /*public String getCategoriaSuperior() {
-        return categoriaSuperior;
-    }
-
-    public void setCategoriaSuperior(String categoriaSuperior) {
-        this.categoriaSuperior = categoriaSuperior;
-    }*/
 
     public int getColorCategoria() {
         return colorCategoria;
@@ -70,7 +56,6 @@ public class Categoria {
 
     public void copy(Categoria nuevosDatos){
         nombreCategoria = nuevosDatos.getNombreCategoria();
-        /*categoriaSuperior = nuevosDatos.getCategoriaSuperior();*/
         colorCategoria = nuevosDatos.getColorCategoria();
         tipoCategoria = nuevosDatos.getTipoCategoria();
     }

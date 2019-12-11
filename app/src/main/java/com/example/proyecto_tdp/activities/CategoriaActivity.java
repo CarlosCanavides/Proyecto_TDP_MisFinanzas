@@ -11,13 +11,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.adapters.AdapterListCategorias;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
-import com.example.proyecto_tdp.adapters.AdapterCategorias;
 import com.example.proyecto_tdp.view_models.ViewModelCategoria;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -28,14 +25,10 @@ import java.util.Map;
 
 public class CategoriaActivity extends AppCompatActivity {
 
-    /*private RecyclerView recyclerCategorias;
-    private ArrayList<Categoria> categorias;
-    private AdapterCategorias adapterCategorias;*/
-
     private ExpandableListView expLV;
-    private AdapterListCategorias adapterListCategorias;
-    private List<String> listaCategorias;
-    private Map<String, List<String>> mapChild;
+    private AdapterListCategorias adapterCategorias;
+    private List<String> categorias;
+    private Map<String, List<String>> mapSubcategorias;
 
     private FloatingActionButton btnAgregarCategoria;
     private static final int NRO_PEDIDO = 1826;
@@ -57,33 +50,7 @@ public class CategoriaActivity extends AppCompatActivity {
             }
         });
 
-        /*categorias = new ArrayList<>();
-        adapterCategorias = new AdapterCategorias(categorias);
-        recyclerCategorias = findViewById(R.id.recyclerCategorias);
-        recyclerCategorias.setLayoutManager(new GridLayoutManager(this,1));
-        recyclerCategorias.setHasFixedSize(true);
-        recyclerCategorias.setAdapter(adapterCategorias);
-
-        viewModelCategoria = ViewModelProviders.of(this).get(ViewModelCategoria.class);
-        viewModelCategoria.getAllCategorias().observe(this, new Observer<List<Categoria>>() {
-            @Override
-            public void onChanged(List<Categoria> c) {
-                categorias.clear();
-                categorias.addAll(c);
-                adapterCategorias.notifyDataSetChanged();
-            }
-        });
-
-        adapterCategorias.setOnItemClickListener(new AdapterCategorias.OnItemClickListener() {
-            @Override
-            public void onItemClik(Categoria categoria) {
-                Intent intent = new Intent();
-                intent.putExtra("id_categoria_elegida",categoria.getNombreCategoria());
-                setResult(RESULT_OK, intent);
-                finish();
-            }
-        });*/
-
+        cargar();
     }
 
     @Override
@@ -99,7 +66,7 @@ public class CategoriaActivity extends AppCompatActivity {
                 int color = Color.parseColor("#7373FF");
 
                 if(nombreCategoria!="") {
-                    Categoria categoria = new Categoria(nombreCategoria, categoriaSuperior, color, tipoC);
+                    Categoria categoria = new Categoria(nombreCategoria, color, tipoC);
                     viewModelCategoria.insertarCategoria(categoria);
                 }
                 else {
@@ -115,14 +82,14 @@ public class CategoriaActivity extends AppCompatActivity {
 
     private void cargar() {
         expLV = findViewById(R.id.expLV);
-        listaCategorias = new ArrayList<>();
-        mapChild = new HashMap<>();
+        categorias = new ArrayList<>();
+        mapSubcategorias = new HashMap<>();
 
         viewModelCategoria = ViewModelProviders.of(this).get(ViewModelCategoria.class);
         viewModelCategoria.getAllCategorias().observe(this, new Observer<List<Categoria>>() {
             @Override
             public void onChanged(List<Categoria> c) {
-                listaCategorias.clear();
+                categorias.clear();
                 /*listaCategorias.addAll(c);
                 adapterCategorias.notifyDataSetChanged();*/
             }
