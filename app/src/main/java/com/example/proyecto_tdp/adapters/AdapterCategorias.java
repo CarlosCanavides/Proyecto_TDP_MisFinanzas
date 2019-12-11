@@ -1,6 +1,5 @@
-package com.example.proyecto_tdp.codigo;
+package com.example.proyecto_tdp.adapters;
 
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;

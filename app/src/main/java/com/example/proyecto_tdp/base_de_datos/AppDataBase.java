@@ -10,4 +10,5 @@ import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 public abstract class AppDataBase extends RoomDatabase {
     public abstract TransaccionDao transaccionDao();
     public abstract CategoriaDao categoriaDao();
+    public abstract SubcategoriaDao subcategoriaDao();
 }

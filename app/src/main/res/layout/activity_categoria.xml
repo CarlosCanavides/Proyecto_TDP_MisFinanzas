@@ -12,13 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerCategorias"
+        <ExpandableListView
+            android:id="@+id/expLV"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/item_categoria">
+            android:layout_height="match_parent">
 
-        </androidx.recyclerview.widget.RecyclerView>
+        </ExpandableListView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnAgregarCategoria"

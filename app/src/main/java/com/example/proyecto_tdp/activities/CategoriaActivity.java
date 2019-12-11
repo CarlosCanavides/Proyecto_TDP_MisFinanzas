@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -14,19 +15,27 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_tdp.R;
+import com.example.proyecto_tdp.adapters.AdapterListCategorias;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
-import com.example.proyecto_tdp.codigo.AdapterCategorias;
+import com.example.proyecto_tdp.adapters.AdapterCategorias;
 import com.example.proyecto_tdp.view_models.ViewModelCategoria;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CategoriaActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerCategorias;
+    /*private RecyclerView recyclerCategorias;
     private ArrayList<Categoria> categorias;
-    private AdapterCategorias adapterCategorias;
+    private AdapterCategorias adapterCategorias;*/
+
+    private ExpandableListView expLV;
+    private AdapterListCategorias adapterListCategorias;
+    private List<String> listaCategorias;
+    private Map<String, List<String>> mapChild;
 
     private FloatingActionButton btnAgregarCategoria;
     private static final int NRO_PEDIDO = 1826;
@@ -48,7 +57,7 @@ public class CategoriaActivity extends AppCompatActivity {
             }
         });
 
-        categorias = new ArrayList<>();
+        /*categorias = new ArrayList<>();
         adapterCategorias = new AdapterCategorias(categorias);
         recyclerCategorias = findViewById(R.id.recyclerCategorias);
         recyclerCategorias.setLayoutManager(new GridLayoutManager(this,1));
@@ -73,7 +82,7 @@ public class CategoriaActivity extends AppCompatActivity {
                 setResult(RESULT_OK, intent);
                 finish();
             }
-        });
+        });*/
 
     }
 
@@ -102,6 +111,22 @@ public class CategoriaActivity extends AppCompatActivity {
 
     private void mostrarMensaje(String mensaje){
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+    }
+
+    private void cargar() {
+        expLV = findViewById(R.id.expLV);
+        listaCategorias = new ArrayList<>();
+        mapChild = new HashMap<>();
+
+        viewModelCategoria = ViewModelProviders.of(this).get(ViewModelCategoria.class);
+        viewModelCategoria.getAllCategorias().observe(this, new Observer<List<Categoria>>() {
+            @Override
+            public void onChanged(List<Categoria> c) {
+                listaCategorias.clear();
+                /*listaCategorias.addAll(c);
+                adapterCategorias.notifyDataSetChanged();*/
+            }
+        });
     }
 
 }

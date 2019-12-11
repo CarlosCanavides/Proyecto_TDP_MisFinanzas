@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_tdp.R;
-import com.example.proyecto_tdp.codigo.AdapterResumen;
+import com.example.proyecto_tdp.adapters.AdapterResumen;
 import com.example.proyecto_tdp.base_de_datos.entidades.ResumenMes;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
