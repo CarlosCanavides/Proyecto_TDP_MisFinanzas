@@ -8,9 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,7 +36,6 @@ public class CategoriaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categoria);
-
         setTitle("Categorias");
 
         btnAgregarCategoria = findViewById(R.id.btnAgregarCategoria);
@@ -64,6 +61,16 @@ public class CategoriaActivity extends AppCompatActivity {
                 categorias.clear();
                 categorias.addAll(c);
                 adapterCategorias.notifyDataSetChanged();
+            }
+        });
+
+        adapterCategorias.setOnItemClickListener(new AdapterCategorias.OnItemClickListener() {
+            @Override
+            public void onItemClik(Categoria categoria) {
+                Intent intent = new Intent();
+                intent.putExtra("id_categoria_elegida",categoria.getNombreCategoria());
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
 

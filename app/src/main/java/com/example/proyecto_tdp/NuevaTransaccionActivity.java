@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class NuevaTransaccionActivity extends AppCompatActivity {
@@ -13,12 +15,14 @@ public class NuevaTransaccionActivity extends AppCompatActivity {
     private Button btnAceptar;
     private Button btnCancelar;
     private EditText campoPrecio;
-    private EditText campoCategoria;
+    private TextView campoCategoria;
     private EditText campoTipoTransaccion;
     private EditText campoTitulo;
     private EditText campoEtiqueta;
     private EditText campoFecha;
     private EditText campoInfo;
+
+    private static final int PEDIDO_SELECCIONAR_CATEGORIA = 1829;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,14 @@ public class NuevaTransaccionActivity extends AppCompatActivity {
         campoEtiqueta = findViewById(R.id.campo_transaccion_etiqueta);
         campoFecha = findViewById(R.id.campo_transaccion_fecha);
         campoInfo = findViewById(R.id.campo_transaccion_info);
+
+        campoCategoria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NuevaTransaccionActivity.this, CategoriaActivity.class);
+                startActivityForResult(intent,PEDIDO_SELECCIONAR_CATEGORIA);
+            }
+        });
 
         btnAceptar = findViewById(R.id.btn_transaccion_aceptar);
         btnAceptar.setOnClickListener(new View.OnClickListener() {
@@ -71,4 +83,14 @@ public class NuevaTransaccionActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PEDIDO_SELECCIONAR_CATEGORIA) {
+            if (resultCode == RESULT_OK) {
+                String idCategoriaElegida = data.getStringExtra("id_categoria_elegida");
+                campoCategoria.setText(idCategoriaElegida);
+            }
+        }
+    }
 }

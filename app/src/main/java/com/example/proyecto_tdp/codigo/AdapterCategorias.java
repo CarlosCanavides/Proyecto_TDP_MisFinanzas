@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class AdapterCategorias extends RecyclerView.Adapter<AdapterCategorias.ViewHolderCategorias> {
 
     private ArrayList<Categoria> categorias;
+    private OnItemClickListener listener;
 
     public AdapterCategorias(ArrayList<Categoria> categorias) {
         this.categorias = categorias;
@@ -55,7 +56,25 @@ public class AdapterCategorias extends RecyclerView.Adapter<AdapterCategorias.Vi
             super(itemView);
             etiNombreCategoria = itemView.findViewById(R.id.categoria_nombre);
             etiFoto = itemView.findViewById(R.id.categoria_letra);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    if(listener!=null && pos!=RecyclerView.NO_POSITION)
+                        listener.onItemClik(categorias.get(pos));
+                }
+            });
+
         }
 
+    }
+
+    public interface OnItemClickListener{
+        void onItemClik(Categoria categoria);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
     }
 }
