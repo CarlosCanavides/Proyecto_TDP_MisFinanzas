@@ -1,6 +1,5 @@
 package com.example.proyecto_tdp.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,20 +7,20 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.example.proyecto_tdp.R;
+import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
+import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
 
 import java.util.List;
 import java.util.Map;
 
 public class AdapterListCategorias extends BaseExpandableListAdapter {
 
-    private List<String> categorias;
-    private Map<String, List<String>> mapHijos;
-    private Context context;
+    private List<Categoria> categorias;
+    private Map<Categoria, List<Subcategoria>> mapSubcategorias;
 
-    public AdapterListCategorias(List<String> categorias, Map<String, List<String>> mapHijos, Context context) {
+    public AdapterListCategorias(List<Categoria> categorias, Map<Categoria, List<Subcategoria>> mapSubcategorias) {
         this.categorias = categorias;
-        this.mapHijos = mapHijos;
-        this.context = context;
+        this.mapSubcategorias = mapSubcategorias;
     }
 
     @Override
@@ -31,7 +30,12 @@ public class AdapterListCategorias extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return mapHijos.get(categorias.get(groupPosition)).size();
+        int size = 0;
+        List<Subcategoria> subcategorias = mapSubcategorias.get(categorias.get(groupPosition));
+        if(subcategorias!=null){
+            size = subcategorias.size();
+        }
+        return size;
     }
 
     @Override
@@ -41,7 +45,7 @@ public class AdapterListCategorias extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return mapHijos.get(categorias.get(groupPosition)).get(childPosition);
+        return mapSubcategorias.get(categorias.get(groupPosition)).get(childPosition);
     }
 
     @Override
@@ -61,19 +65,23 @@ public class AdapterListCategorias extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        String tituloCategoria = (String) getGroup(groupPosition);
-        convertView = LayoutInflater.from(context).inflate(R.layout.item_categoria, null);
+        String tituloCategoria = categorias.get(groupPosition).getNombreCategoria();
+        convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_categoria, null, false);
         TextView tvGroup = convertView.findViewById(R.id.categoria_nombre);
-        tvGroup.setText(tituloCategoria);
+        if(tituloCategoria!=null) {
+            tvGroup.setText(tituloCategoria);
+        }
         return convertView;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        String tituloCategoriaHijo = (String) getChild(groupPosition, childPosition);
-        convertView = LayoutInflater.from(context).inflate(R.layout.item_subcategoria, null);
+        String tituloSubcategoria =  mapSubcategorias.get(categorias.get(groupPosition)).get(childPosition).getNombreSubcategoria();
+        convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_subcategoria, null, false);
         TextView tvChild = convertView.findViewById(R.id.subcategoria_nombre);
-        tvChild.setText(tituloCategoriaHijo);
+        if(tituloSubcategoria!=null) {
+            tvChild.setText(tituloSubcategoria);
+        }
         return convertView;
     }
 

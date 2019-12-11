@@ -6,10 +6,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(foreignKeys = @ForeignKey(entity = Categoria.class,
-        parentColumns = "nombreCategoria",
-        childColumns = "categoriaSuperior",
-        onDelete = ForeignKey.SET_DEFAULT))
+@Entity
 public class Categoria {
 
     @PrimaryKey

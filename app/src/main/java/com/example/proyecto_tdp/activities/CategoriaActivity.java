@@ -15,7 +15,9 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.adapters.AdapterListCategorias;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
+import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
 import com.example.proyecto_tdp.view_models.ViewModelCategoria;
+import com.example.proyecto_tdp.view_models.ViewModelSubcategoria;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -27,13 +29,14 @@ public class CategoriaActivity extends AppCompatActivity {
 
     private ExpandableListView expLV;
     private AdapterListCategorias adapterCategorias;
-    private List<String> categorias;
-    private Map<String, List<String>> mapSubcategorias;
+    private List<Categoria> categorias;
+    private Map<Categoria, List<Subcategoria>> mapSubcategorias;
 
     private FloatingActionButton btnAgregarCategoria;
     private static final int NRO_PEDIDO = 1826;
 
     private ViewModelCategoria viewModelCategoria;
+    private ViewModelSubcategoria viewModelSubcategoria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +53,12 @@ public class CategoriaActivity extends AppCompatActivity {
             }
         });
 
-        cargar();
+        expLV = findViewById(R.id.expLV);
+        categorias = new ArrayList<>();
+        mapSubcategorias = new HashMap<>();
+        adapterCategorias = new AdapterListCategorias(categorias, mapSubcategorias);
+        expLV.setAdapter(adapterCategorias);
+        inicializarViewModels();
     }
 
     @Override
@@ -80,20 +88,48 @@ public class CategoriaActivity extends AppCompatActivity {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
 
-    private void cargar() {
-        expLV = findViewById(R.id.expLV);
-        categorias = new ArrayList<>();
-        mapSubcategorias = new HashMap<>();
-
-        viewModelCategoria = ViewModelProviders.of(this).get(ViewModelCategoria.class);
+    private void inicializarViewModels(){
+        viewModelCategoria =  ViewModelProviders.of(this).get(ViewModelCategoria.class);
         viewModelCategoria.getAllCategorias().observe(this, new Observer<List<Categoria>>() {
             @Override
             public void onChanged(List<Categoria> c) {
                 categorias.clear();
-                /*listaCategorias.addAll(c);
-                adapterCategorias.notifyDataSetChanged();*/
+                categorias.addAll(c);
             }
         });
+        viewModelSubcategoria = ViewModelProviders.of(this).get(ViewModelSubcategoria.class);
+        viewModelSubcategoria.getAllSubcategorias().observe(this, new Observer<List<Subcategoria>>() {
+            @Override
+            public void onChanged(List<Subcategoria> subC) {
+                for (int i=0; i<subC.size(); i++){
+                    Subcategoria nuevaSubcategoria = subC.get(i);
+                    Categoria categoriaSuperior = obtenerCategoriaSuperior(nuevaSubcategoria);
+                    List<Subcategoria> list = mapSubcategorias.get(categoriaSuperior);
+                    if(list!=null){
+                        if(!list.contains(nuevaSubcategoria)) {
+                            list.add(nuevaSubcategoria);
+                        }
+                    }
+                    else{
+                        list = new ArrayList<>();
+                        list.add(nuevaSubcategoria);
+                        mapSubcategorias.put(categoriaSuperior, list);
+                    }
+                }
+            }
+        });
+    }
+
+    private Categoria obtenerCategoriaSuperior(Subcategoria subcategoria){
+        Categoria c = null;
+        boolean encontre = false;
+        for (int i=0; i<categorias.size() && !encontre; i++){
+            if(categorias.get(i).getNombreCategoria().equals(subcategoria.getCategoriaSuperior())){
+                c = categorias.get(i);
+                encontre = true;
+            }
+        }
+        return c;
     }
 
 }

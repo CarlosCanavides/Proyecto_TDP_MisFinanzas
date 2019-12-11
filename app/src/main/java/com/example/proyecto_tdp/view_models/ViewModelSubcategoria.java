@@ -22,19 +22,19 @@ public class ViewModelSubcategoria extends AndroidViewModel {
         subcategorias = repositorioCategorias.getCategorias();
     }
 
-    public LiveData<List<Subcategoria>> getAllCategorias(){
+    public LiveData<List<Subcategoria>> getAllSubcategorias(){
         return subcategorias;
     }
 
-    public void insertarCategoria(Subcategoria subcategoria){
+    public void insertarSubcategoria(Subcategoria subcategoria){
         repositorioCategorias.insertarCategoria(subcategoria);
     }
 
-    public void actualizarCategoria(Subcategoria subcategoria){
+    public void actualizarSubcategoria(Subcategoria subcategoria){
         repositorioCategorias.actualizarCategoria(subcategoria);
     }
 
-    public void eliminarCategoria(Subcategoria subcategoria){
+    public void eliminarSubcategoria(Subcategoria subcategoria){
         repositorioCategorias.eliminarCategoria(subcategoria);
     }
 

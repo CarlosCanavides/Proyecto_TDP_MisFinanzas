@@ -14,10 +14,10 @@ import java.util.List;
 @Dao
 public interface SubcategoriaDao {
 
-    @Query("SELECT * FROM categoria")
+    @Query("SELECT * FROM subcategoria")
     List<Subcategoria> getAllSubcategorias();
 
-    @Query("SELECT * FROM categoria")
+    @Query("SELECT * FROM subcategoria")
     LiveData<List<Subcategoria>> getAllLiveSubcategorias();
 
     @Update
