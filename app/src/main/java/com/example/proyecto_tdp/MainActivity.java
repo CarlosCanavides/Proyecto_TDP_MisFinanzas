@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.akshay.library.CurveBottomBar;
+import com.example.proyecto_tdp.activities.CategoriaActivity;
+import com.example.proyecto_tdp.activities.NuevaTransaccionActivity;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.fragments.HomeFragment;
 import com.example.proyecto_tdp.fragments.InformesFragment;

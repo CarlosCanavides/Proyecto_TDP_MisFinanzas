@@ -9,12 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NuevaCategoriaActivity"></activity>
+        <activity android:name=".activities.NuevaCategoriaActivity"></activity>
         <activity
-            android:name=".CategoriaActivity"
+            android:name=".activities.CategoriaActivity"
             android:label="@string/title_activity_categorias"></activity>
-        <activity android:name=".SetTransaccionActivity" />
-        <activity android:name=".NuevaTransaccionActivity" />
+        <activity android:name=".activities.SetTransaccionActivity" />
+        <activity android:name=".activities.NuevaTransaccionActivity" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

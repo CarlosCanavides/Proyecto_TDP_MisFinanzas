@@ -1,4 +1,4 @@
-package com.example.proyecto_tdp;
+package com.example.proyecto_tdp.views;
 
 import android.content.Context;
 import android.graphics.Canvas;

@@ -1,4 +1,4 @@
-package com.example.proyecto_tdp;
+package com.example.proyecto_tdp.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.codigo.AdapterCategorias;
 import com.example.proyecto_tdp.view_models.ViewModelCategoria;
@@ -42,7 +43,7 @@ public class CategoriaActivity extends AppCompatActivity {
         btnAgregarCategoria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CategoriaActivity.this,NuevaCategoriaActivity.class);
+                Intent intent = new Intent(CategoriaActivity.this, NuevaCategoriaActivity.class);
                 startActivityForResult(intent,NRO_PEDIDO);
             }
         });

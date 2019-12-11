@@ -1,4 +1,4 @@
-package com.example.proyecto_tdp;
+package com.example.proyecto_tdp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.proyecto_tdp.R;
 
 public class SetTransaccionActivity extends AppCompatActivity {
 
