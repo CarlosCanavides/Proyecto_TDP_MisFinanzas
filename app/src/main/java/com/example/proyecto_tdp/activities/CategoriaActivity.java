@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.proyecto_tdp.R;
-import com.example.proyecto_tdp.adapters.AdapterListCategorias;
+import com.example.proyecto_tdp.adapters.AdapterCategorias;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
 import com.example.proyecto_tdp.view_models.ViewModelCategoria;
@@ -27,16 +27,15 @@ import java.util.Map;
 
 public class CategoriaActivity extends AppCompatActivity {
 
-    private ExpandableListView expLV;
-    private AdapterListCategorias adapterCategorias;
     private List<Categoria> categorias;
     private Map<Categoria, List<Subcategoria>> mapSubcategorias;
-
+    private AdapterCategorias adapterCategorias;
+    private ExpandableListView expLV;
     private FloatingActionButton btnAgregarCategoria;
-    private static final int NRO_PEDIDO = 1826;
 
     private ViewModelCategoria viewModelCategoria;
     private ViewModelSubcategoria viewModelSubcategoria;
+    private static final int NRO_PEDIDO = 1826;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +55,7 @@ public class CategoriaActivity extends AppCompatActivity {
         expLV = findViewById(R.id.expLV);
         categorias = new ArrayList<>();
         mapSubcategorias = new HashMap<>();
-        adapterCategorias = new AdapterListCategorias(categorias, mapSubcategorias);
+        adapterCategorias = new AdapterCategorias(categorias, mapSubcategorias);
         expLV.setAdapter(adapterCategorias);
         inicializarViewModels();
     }
@@ -77,7 +76,6 @@ public class CategoriaActivity extends AppCompatActivity {
                     if(categoriaSuperior==null || categoriaSuperior.equals("")) {
                         Categoria categoria = new Categoria(nombreCategoria, color, tipoC);
                         viewModelCategoria.insertarCategoria(categoria);
-                        mostrarMensaje("holaa");
                     }
                     else {
                         Subcategoria subcategoria = new Subcategoria(nombreCategoria,categoriaSuperior,color,tipoC);
@@ -114,7 +112,7 @@ public class CategoriaActivity extends AppCompatActivity {
                     Categoria categoriaSuperior = obtenerCategoriaSuperior(nuevaSubcategoria);
                     List<Subcategoria> list = mapSubcategorias.get(categoriaSuperior);
                     if(list!=null){
-                        if(!list.contains(nuevaSubcategoria)) {
+                        if(!encontre(nuevaSubcategoria,list)) {
                             list.add(nuevaSubcategoria);
                         }
                     }
@@ -139,6 +137,16 @@ public class CategoriaActivity extends AppCompatActivity {
             }
         }
         return c;
+    }
+
+    private boolean encontre(Subcategoria subcategoria, List<Subcategoria> list){
+        boolean e = false;
+        for (int i=0; i<list.size() && !e; i++){
+            if(list.get(i).getNombreSubcategoria().equals(subcategoria.getNombreSubcategoria())){
+                e = true;
+            }
+        }
+        return e;
     }
 
 }

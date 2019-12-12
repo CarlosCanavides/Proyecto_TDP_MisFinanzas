@@ -15,7 +15,13 @@
         <ExpandableListView
             android:id="@+id/expLV"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:cacheColorHint="@color/colorAccent"
+            android:childDivider="@color/background_white"
+            android:divider="@color/background_white"
+            android:groupIndicator="@android:drawable/screen_background_light_transparent"
+            android:indicatorLeft="3dip"
+            android:indicatorRight="0dip">
 
         </ExpandableListView>
 

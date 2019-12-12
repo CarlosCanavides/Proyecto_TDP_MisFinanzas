@@ -1,14 +1,11 @@
 package com.example.proyecto_tdp.view_models;
 
 import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-
 import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
 import com.example.proyecto_tdp.base_de_datos.repositorios.RepositorioSubcategorias;
-
 import java.util.List;
 
 public class ViewModelSubcategoria extends AndroidViewModel {

@@ -5,75 +5,98 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
+import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-public class AdapterCategorias extends RecyclerView.Adapter<AdapterCategorias.ViewHolderCategorias> {
+public class AdapterCategorias extends BaseExpandableListAdapter {
 
-    private ArrayList<Categoria> categorias;
-    private OnItemClickListener listener;
+    private List<Categoria> categorias;
+    private Map<Categoria, List<Subcategoria>> mapSubcategorias;
 
-    public AdapterCategorias(ArrayList<Categoria> categorias) {
+    public AdapterCategorias(List<Categoria> categorias, Map<Categoria, List<Subcategoria>> mapSubcategorias) {
         this.categorias = categorias;
-    }
-
-    @NonNull
-    @Override
-    public AdapterCategorias.ViewHolderCategorias onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_categoria, null, false);
-        return new ViewHolderCategorias(view);
+        this.mapSubcategorias = mapSubcategorias;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterCategorias.ViewHolderCategorias holder, int position) {
-        Categoria categoria = categorias.get(position);
-        holder.etiNombreCategoria.setText(categoria.getNombreCategoria());
-        holder.etiFoto.setText(categoria.getNombreCategoria().charAt(0)+"");
-
-        Drawable bg = holder.etiFoto.getBackground();
-        bg.setColorFilter(categoria.getColorCategoria(), PorterDuff.Mode.SRC);
-    }
-
-    @Override
-    public int getItemCount() {
+    public int getGroupCount() {
         return categorias.size();
     }
 
-    public class ViewHolderCategorias extends RecyclerView.ViewHolder {
-
-        private TextView etiNombreCategoria;
-        private TextView etiFoto;
-
-        public ViewHolderCategorias(@NonNull View itemView) {
-            super(itemView);
-            etiNombreCategoria = itemView.findViewById(R.id.categoria_nombre);
-            etiFoto = itemView.findViewById(R.id.categoria_letra);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int pos = getAdapterPosition();
-                    if(listener!=null && pos!=RecyclerView.NO_POSITION)
-                        listener.onItemClik(categorias.get(pos));
-                }
-            });
-
+    @Override
+    public int getChildrenCount(int groupPosition) {
+        int size = 0;
+        List<Subcategoria> subcategorias = mapSubcategorias.get(categorias.get(groupPosition));
+        if(subcategorias!=null){
+            size = subcategorias.size();
         }
-
+        return size;
     }
 
-    public interface OnItemClickListener{
-        void onItemClik(Categoria categoria);
+    @Override
+    public Object getGroup(int groupPosition) {
+        return categorias.get(groupPosition);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
-        this.listener = listener;
+    @Override
+    public Object getChild(int groupPosition, int childPosition) {
+        return mapSubcategorias.get(categorias.get(groupPosition)).get(childPosition);
+    }
+
+    @Override
+    public long getGroupId(int groupPosition) {
+        return 0;
+    }
+
+    @Override
+    public long getChildId(int groupPosition, int childPosition) {
+        return 0;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return false;
+    }
+
+    @Override
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+        Categoria categoria = categorias.get(groupPosition);
+        convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_categoria, null, false);
+        TextView tvNombre = convertView.findViewById(R.id.categoria_nombre);
+        TextView tvLetra = convertView.findViewById(R.id.categoria_letra);
+        if(categoria!=null) {
+            tvNombre.setText(categoria.getNombreCategoria());
+            tvLetra.setText(categoria.getNombreCategoria().charAt(0)+"");
+            Drawable bg = tvLetra.getBackground();
+            bg.setColorFilter(categoria.getColorCategoria(), PorterDuff.Mode.SRC);
+        }
+        return convertView;
+    }
+
+    @Override
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        Subcategoria subcategoria =  mapSubcategorias.get(categorias.get(groupPosition)).get(childPosition);
+        convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_subcategoria, null, false);
+        TextView tvNombre = convertView.findViewById(R.id.subcategoria_nombre);
+        TextView tvLetra = convertView.findViewById(R.id.subcategoria_letra);
+        if(subcategoria!=null) {
+            tvNombre.setText(subcategoria.getNombreSubcategoria());
+            tvLetra.setText(subcategoria.getNombreSubcategoria().charAt(0)+"");
+            Drawable bg = tvLetra.getBackground();
+            bg.setColorFilter(subcategoria.getColorSubcategoria(), PorterDuff.Mode.SRC);
+        }
+        return convertView;
+    }
+
+    @Override
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return true;
     }
 }
