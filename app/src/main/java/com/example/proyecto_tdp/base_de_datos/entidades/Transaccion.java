@@ -6,8 +6,8 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(foreignKeys = @ForeignKey(entity = Categoria.class,
-        parentColumns = "nombreCategoria",
+@Entity(foreignKeys = @ForeignKey(entity = Subcategoria.class,
+        parentColumns = "nombreSubcategoria",
         childColumns = "categoria",
         onDelete = ForeignKey.NO_ACTION))
 public class Transaccion {

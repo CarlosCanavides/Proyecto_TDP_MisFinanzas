@@ -6,10 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.proyecto_tdp.R;
 
 public class NuevaTransaccionActivity extends AppCompatActivity {
@@ -39,6 +37,7 @@ public class NuevaTransaccionActivity extends AppCompatActivity {
         campoFecha = findViewById(R.id.campo_transaccion_fecha);
         campoInfo = findViewById(R.id.campo_transaccion_info);
 
+        campoCategoria.setText("Seleccionar categoria");
         campoCategoria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

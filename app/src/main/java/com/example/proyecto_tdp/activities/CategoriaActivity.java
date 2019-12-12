@@ -30,7 +30,7 @@ public class CategoriaActivity extends AppCompatActivity {
     private List<Categoria> categorias;
     private Map<Categoria, List<Subcategoria>> mapSubcategorias;
     private AdapterCategorias adapterCategorias;
-    private ExpandableListView expLV;
+    private ExpandableListView expandableLV;
     private FloatingActionButton btnAgregarCategoria;
 
     private ViewModelCategoria viewModelCategoria;
@@ -52,12 +52,24 @@ public class CategoriaActivity extends AppCompatActivity {
             }
         });
 
-        expLV = findViewById(R.id.expLV);
+        expandableLV = findViewById(R.id.expLV);
         categorias = new ArrayList<>();
         mapSubcategorias = new HashMap<>();
         adapterCategorias = new AdapterCategorias(categorias, mapSubcategorias);
-        expLV.setAdapter(adapterCategorias);
+        expandableLV.setAdapter(adapterCategorias);
         inicializarViewModels();
+
+        expandableLV.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Intent intent = new Intent();
+                Subcategoria subcategoria = mapSubcategorias.get(categorias.get(groupPosition)).get(childPosition);
+                intent.putExtra("id_categoria_elegida", subcategoria.getNombreSubcategoria());
+                setResult(RESULT_OK, intent);
+                finish();
+                return true;
+            }
+        });
     }
 
     @Override
