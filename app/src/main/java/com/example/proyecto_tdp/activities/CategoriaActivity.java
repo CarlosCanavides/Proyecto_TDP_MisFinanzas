@@ -73,9 +73,16 @@ public class CategoriaActivity extends AppCompatActivity {
 
                 int color = Color.parseColor("#7373FF");
 
-                if(nombreCategoria!="") {
-                    Categoria categoria = new Categoria(nombreCategoria, color, tipoC);
-                    viewModelCategoria.insertarCategoria(categoria);
+                if(nombreCategoria!=null) {
+                    if(categoriaSuperior==null || categoriaSuperior.equals("")) {
+                        Categoria categoria = new Categoria(nombreCategoria, color, tipoC);
+                        viewModelCategoria.insertarCategoria(categoria);
+                        mostrarMensaje("holaa");
+                    }
+                    else {
+                        Subcategoria subcategoria = new Subcategoria(nombreCategoria,categoriaSuperior,color,tipoC);
+                        viewModelSubcategoria.insertarSubcategoria(subcategoria);
+                    }
                 }
                 else {
                     mostrarMensaje("CATEGORIA NO REGISTRADA");
@@ -95,6 +102,7 @@ public class CategoriaActivity extends AppCompatActivity {
             public void onChanged(List<Categoria> c) {
                 categorias.clear();
                 categorias.addAll(c);
+                adapterCategorias.notifyDataSetChanged();
             }
         });
         viewModelSubcategoria = ViewModelProviders.of(this).get(ViewModelSubcategoria.class);
@@ -116,6 +124,7 @@ public class CategoriaActivity extends AppCompatActivity {
                         mapSubcategorias.put(categoriaSuperior, list);
                     }
                 }
+                adapterCategorias.notifyDataSetChanged();
             }
         });
     }
