@@ -25,6 +25,7 @@ public class Subcategoria {
     @ColumnInfo(name = "tipoSubcategoria")
     private String tipoSubcategoria;
 
+
     public Subcategoria(@NonNull String nombreSubcategoria, String categoriaSuperior, int colorSubcategoria, String tipoSubcategoria) {
         this.nombreSubcategoria = nombreSubcategoria;
         if(categoriaSuperior!=null && !categoriaSuperior.equals("")){

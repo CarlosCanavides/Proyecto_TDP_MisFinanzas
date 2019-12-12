@@ -2,7 +2,6 @@ package com.example.proyecto_tdp.base_de_datos;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
-
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;

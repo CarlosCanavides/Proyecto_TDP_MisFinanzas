@@ -2,14 +2,11 @@ package com.example.proyecto_tdp.base_de_datos.repositorios;
 
 import android.app.Application;
 import android.os.AsyncTask;
-
 import androidx.lifecycle.LiveData;
 import androidx.room.Room;
-
 import com.example.proyecto_tdp.base_de_datos.AppDataBase;
 import com.example.proyecto_tdp.base_de_datos.SubcategoriaDao;
 import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
-
 import java.util.List;
 
 public class RepositorioSubcategorias {
