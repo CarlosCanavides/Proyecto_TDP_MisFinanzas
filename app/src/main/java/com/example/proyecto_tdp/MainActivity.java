@@ -27,6 +27,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
     private Fragment fragmentHome;
@@ -166,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                     mostrarMensaje("El monto ingresado debe ser mayor a 0");
                 }
 
-                Transaccion nuevaTransaccion = new Transaccion(titulo, etiqueta, monto, categoria, tipoTransaccion, fecha, info);
+                Transaccion nuevaTransaccion = new Transaccion(titulo, etiqueta, monto, categoria, tipoTransaccion, new Date(), info);
                 viewModelTransaccion.insertarTransaccion(nuevaTransaccion);
             }
         }

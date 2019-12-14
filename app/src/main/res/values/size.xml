@@ -4,11 +4,17 @@
     <dimen name="espacio_mediano">10dp</dimen>
     <dimen name="espacio_big">20dp</dimen>
 
+    <dimen name="espacio_margen_subcategoria">25dp</dimen>
+
     <dimen name="text_circularview">30sp</dimen>
     <dimen name="size_circularview">45sp</dimen>
     <dimen name="size_contenedor_info">200dp</dimen>
 
     <dimen name="text_circularviewSubcategoria">20sp</dimen>
     <dimen name="size_circularviewSubcategoria">30sp</dimen>
+
+    <dimen name="text_transacciones_mes">20sp</dimen>
+    <dimen name="btn_transacciones_mes_back">50sp</dimen>
+    <dimen name="btn_transacciones_mes_advance">30sp</dimen>
 
 </resources>

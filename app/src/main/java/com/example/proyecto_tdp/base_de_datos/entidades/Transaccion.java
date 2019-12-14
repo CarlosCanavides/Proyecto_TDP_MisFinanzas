@@ -5,11 +5,16 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+import com.example.proyecto_tdp.base_de_datos.DateConverter;
+
+import java.util.Date;
 
 @Entity(foreignKeys = @ForeignKey(entity = Subcategoria.class,
         parentColumns = "nombreSubcategoria",
         childColumns = "categoria",
         onDelete = ForeignKey.NO_ACTION))
+@TypeConverters(DateConverter.class)
 public class Transaccion {
 
     @PrimaryKey(autoGenerate = true)
@@ -32,12 +37,12 @@ public class Transaccion {
     private String tipoTransaccion;
 
     @ColumnInfo(name = "fecha")
-    private String fecha;
+    private Date fecha;
 
     @ColumnInfo(name = "info")
     private String info;
 
-    public Transaccion(String titulo, String etiqueta, float precio, String categoria, String tipoTransaccion, String fecha, String info) {
+    public Transaccion(String titulo, String etiqueta, float precio, String categoria, String tipoTransaccion, Date fecha, String info) {
         this.titulo = titulo;
         this.etiqueta = etiqueta;
         this.precio = precio;
@@ -98,11 +103,11 @@ public class Transaccion {
         this.tipoTransaccion = tipoTransaccion;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 

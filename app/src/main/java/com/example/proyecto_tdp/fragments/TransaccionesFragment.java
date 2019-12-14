@@ -19,6 +19,7 @@ import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TransaccionesFragment extends Fragment {
@@ -99,7 +100,7 @@ public class TransaccionesFragment extends Fragment {
                 float monto = Float.parseFloat(precio);
 
                 if(id!=-1) {
-                    Transaccion nueva = new Transaccion(titulo, etiqueta, monto, categoria, tipoTransaccion, fecha, info);
+                    Transaccion nueva = new Transaccion(titulo, etiqueta, monto, categoria, tipoTransaccion, new Date(), info);
                     nueva.setId(id);
                     viewModelTransaccion.actualizarTransaccion(nueva);
                 }
@@ -107,7 +108,7 @@ public class TransaccionesFragment extends Fragment {
             else if (resultCode == 0) {
                 int id = data.getIntExtra("id",-1);
                 if(id!=-1) {
-                    Transaccion t = new Transaccion("","",0,"","","","");
+                    Transaccion t = new Transaccion("","",0,"","",new Date(),"");
                     t.setId(id);
                     viewModelTransaccion.actualizarTransaccion(t);
                     viewModelTransaccion.eliminarTransaccion(t);

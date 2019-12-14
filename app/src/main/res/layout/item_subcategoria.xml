@@ -17,7 +17,7 @@
             android:layout_width="@dimen/size_circularviewSubcategoria"
             android:layout_height="@dimen/size_circularviewSubcategoria"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/espacio_mediano"
+            android:layout_marginStart="@dimen/espacio_margen_subcategoria"
             android:layout_marginEnd="@dimen/espacio_mediano"
             android:background="@drawable/textview_circular"
             android:backgroundTint="@color/colorAccent"

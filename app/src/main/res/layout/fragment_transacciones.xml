@@ -5,7 +5,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/background_white" >
+    android:background="@color/background_white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_back_mes"
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginRight="@dimen/espacio_small"/>
+
+        <TextView
+            android:id="@+id/transaccion_mes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12/2019"
+            android:textColor="@color/background_white"
+            android:background="@color/colorPrimaryDark"
+            android:textSize="@dimen/text_transacciones_mes"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_advance_mes"
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginLeft="@dimen/espacio_small"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-$ 1320,00"
+            android:textAlignment="center"
+            android:textColor="@color/background_white"
+            android:background="@color/colorPrimaryDark"
+            android:textSize="@dimen/text_transacciones_mes"
+            android:layout_marginBottom="@dimen/espacio_mediano"/>
+
+    </LinearLayout>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewId"
