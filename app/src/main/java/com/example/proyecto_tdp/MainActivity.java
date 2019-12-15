@@ -168,6 +168,9 @@ public class MainActivity extends AppCompatActivity {
                     mostrarMensaje("El monto ingresado debe ser mayor a 0");
                 }
 
+                if(tipoTransaccion.equals("Gasto")){
+                    monto = monto*(-1);
+                }
                 Transaccion nuevaTransaccion = new Transaccion(titulo, etiqueta, monto, categoria, tipoTransaccion, new Date(), info);
                 viewModelTransaccion.insertarTransaccion(nuevaTransaccion);
             }

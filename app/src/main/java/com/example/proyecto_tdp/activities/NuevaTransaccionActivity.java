@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,15 +13,16 @@ import com.example.proyecto_tdp.R;
 
 public class NuevaTransaccionActivity extends AppCompatActivity {
 
-    private Button btnAceptar;
-    private Button btnCancelar;
     private EditText campoPrecio;
     private TextView campoCategoria;
-    private EditText campoTipoTransaccion;
     private EditText campoTitulo;
     private EditText campoEtiqueta;
     private EditText campoFecha;
     private EditText campoInfo;
+    private RadioButton btnGasto;
+    private RadioButton btnIngreso;
+    private Button btnAceptar;
+    private Button btnCancelar;
 
     private static final int PEDIDO_SELECCIONAR_CATEGORIA = 1829;
 
@@ -31,11 +33,13 @@ public class NuevaTransaccionActivity extends AppCompatActivity {
 
         campoPrecio = findViewById(R.id.campo_transaccion_precio);
         campoCategoria = findViewById(R.id.campo_transaccion_categoria);
-        campoTipoTransaccion = findViewById(R.id.campo_tipo_transaccion);
         campoTitulo = findViewById(R.id.campo_transaccion_titulo);
         campoEtiqueta = findViewById(R.id.campo_transaccion_etiqueta);
         campoFecha = findViewById(R.id.campo_transaccion_fecha);
         campoInfo = findViewById(R.id.campo_transaccion_info);
+        btnGasto = findViewById(R.id.radiobtn_transaccion_gasto);
+        btnIngreso = findViewById(R.id.radiobtn_transaccion_ingreso);
+        btnGasto.setChecked(true);
 
         campoCategoria.setText("Seleccionar categoria");
         campoCategoria.setOnClickListener(new View.OnClickListener() {
@@ -52,12 +56,17 @@ public class NuevaTransaccionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String precio = campoPrecio.getText().toString();
                 String categoria = campoCategoria.getText().toString();
-                String tipoT = campoTipoTransaccion.getText().toString();
                 String titulo = campoTitulo.getText().toString();
                 String etiqueta = campoEtiqueta.getText().toString();
                 String fecha = campoFecha.getText().toString();
                 String info = campoInfo.getText().toString();
-
+                String tipoT;
+                if(btnGasto.isChecked()){
+                    tipoT = btnGasto.getText().toString();
+                }
+                else {
+                    tipoT = btnIngreso.getText().toString();
+                }
                 Intent intent = new Intent();
                 intent.putExtra("precio", precio);
                 intent.putExtra("categoria", categoria);
@@ -67,7 +76,6 @@ public class NuevaTransaccionActivity extends AppCompatActivity {
                 intent.putExtra("fecha", fecha);
                 intent.putExtra("info", info);
                 setResult(RESULT_OK, intent);
-
                 finish();
             }
         });
@@ -81,7 +89,6 @@ public class NuevaTransaccionActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     @Override

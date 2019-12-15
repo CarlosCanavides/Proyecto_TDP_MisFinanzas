@@ -6,22 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_tdp.activities.SetTransaccionActivity;
-import com.example.proyecto_tdp.adapters.AdapterT;
 import com.example.proyecto_tdp.adapters.AdapterTransacciones;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,7 +30,7 @@ public class TransaccionesFragment extends Fragment {
     private List<Transaccion> transacciones;
     private List<String> fechas;
     private Map<String, List<Transaccion>> mapTransacciones;
-    private AdapterT adapter;
+    private AdapterTransacciones adapter;
 
     private View vista;
     private static final int NRO_PEDIDO_SET = 1827;
@@ -52,7 +46,7 @@ public class TransaccionesFragment extends Fragment {
         transacciones = new ArrayList<>();
         fechas = new ArrayList<>();
         mapTransacciones = new HashMap<>();
-        adapter = new AdapterT(fechas,mapTransacciones);
+        adapter = new AdapterTransacciones(fechas,mapTransacciones);
         expTransacciones.setAdapter(adapter);
 
         expTransacciones.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -133,6 +127,9 @@ public class TransaccionesFragment extends Fragment {
                 float monto = Float.parseFloat(precio);
 
                 if(id!=-1) {
+                    if(tipoTransaccion.equals("Gasto")){
+                        monto = monto*(-1);
+                    }
                     Transaccion nueva = new Transaccion(titulo, etiqueta, monto, categoria, tipoTransaccion, new Date(), info);
                     nueva.setId(id);
                     viewModelTransaccion.actualizarTransaccion(nueva);
