@@ -16,10 +16,10 @@ import java.util.Map;
 
 public class AdapterT extends BaseExpandableListAdapter {
 
-    private List<Date> fechas;
-    private Map<Date, List<Transaccion>> mapTransacciones;
+    private List<String> fechas;
+    private Map<String, List<Transaccion>> mapTransacciones;
 
-    public AdapterT(List<Date> fechas, Map<Date, List<Transaccion>> mapTransacciones) {
+    public AdapterT(List<String> fechas, Map<String, List<Transaccion>> mapTransacciones) {
         this.fechas = fechas;
         this.mapTransacciones = mapTransacciones;
     }
@@ -66,12 +66,24 @@ public class AdapterT extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        Date fecha = fechas.get(groupPosition);
+        String fecha = fechas.get(groupPosition);
         convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.section_fecha,null,false);
         TextView tvFecha = convertView.findViewById(R.id.encabezado_section_fecha);
         TextView tvGP = convertView.findViewById(R.id.encabezado_section_gp);
-        tvFecha.setText(fecha.toString());
-        tvGP.setText("$-1320");
+        tvFecha.setText(fecha);
+        float resultado = 0;
+        List<Transaccion> transacciones =  mapTransacciones.get(fechas.get(groupPosition));
+        if(transacciones!=null) {
+            for (Transaccion t : transacciones) {
+                resultado += t.getPrecio();
+            }
+        }
+        if(resultado<0){
+            tvGP.setText("-$ "+Math.abs(resultado));
+        }
+        else {
+            tvGP.setText("+$ " + resultado);
+        }
         return convertView;
     }
 
@@ -90,11 +102,11 @@ public class AdapterT extends BaseExpandableListAdapter {
         tvIdentificacion.setText(transaccion.getEtiqueta());
 
         if(transaccion.getTipoTransaccion().equals("gasto")){
-            tvPrecio.setText("- $"+transaccion.getPrecio());
+            tvPrecio.setText("-$ "+transaccion.getPrecio());
             tvPrecio.setTextColor(Color.parseColor("#FF5722"));
         }
         else{
-            tvPrecio.setText("+ $"+transaccion.getPrecio());
+            tvPrecio.setText("+$ "+transaccion.getPrecio());
             tvPrecio.setTextColor(Color.parseColor("#303F9F"));
         }
 

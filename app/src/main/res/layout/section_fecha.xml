@@ -13,16 +13,16 @@
             android:id="@+id/encabezado_section_fecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
+            android:layout_gravity="left|center_vertical"
             android:text="12/2019"
             android:textSize="@dimen/text_transacciones_mes"
-            android:layout_marginStart="@dimen/espacio_small"/>
+            android:layout_marginStart="@dimen/espacio_mediano"/>
 
         <TextView
             android:id="@+id/encabezado_section_gp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
+            android:layout_gravity="right|center_vertical"
             android:text="$-1320"
             android:textSize="@dimen/text_transacciones_mes"
             android:textColor="@color/colorAccent"

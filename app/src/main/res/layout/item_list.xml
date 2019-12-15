@@ -79,7 +79,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="$100,00"
-                    android:gravity="right"/>
+                    android:gravity="right"
+                    android:layout_marginEnd="@dimen/espacio_mediano"/>
 
             </LinearLayout>
 

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -14,19 +16,27 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_tdp.activities.SetTransaccionActivity;
+import com.example.proyecto_tdp.adapters.AdapterT;
 import com.example.proyecto_tdp.adapters.AdapterTransacciones;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TransaccionesFragment extends Fragment {
 
-    private RecyclerView recyclerTransacciones;
-    private ArrayList<Transaccion> transacciones;
-    private AdapterTransacciones adapter;
+    private ExpandableListView expTransacciones;
+    private List<Transaccion> transacciones;
+    private List<String> fechas;
+    private Map<String, List<Transaccion>> mapTransacciones;
+    private AdapterT adapter;
 
     private View vista;
     private static final int NRO_PEDIDO_SET = 1827;
@@ -38,15 +48,24 @@ public class TransaccionesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         vista = inflater.inflate(R.layout.fragment_transacciones, container, false);
 
+        expTransacciones = vista.findViewById(R.id.expTransacciones);
         transacciones = new ArrayList<>();
-        adapter = new AdapterTransacciones(transacciones);
-        recyclerTransacciones = vista.findViewById(R.id.recyclerViewId);
-        recyclerTransacciones.setLayoutManager(new GridLayoutManager(getActivity(),1));
-        recyclerTransacciones.setAdapter(adapter);
+        fechas = new ArrayList<>();
+        mapTransacciones = new HashMap<>();
+        adapter = new AdapterT(fechas,mapTransacciones);
+        expTransacciones.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new AdapterTransacciones.OnItemClickListener() {
+        expTransacciones.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
-            public void onItemClik(Transaccion transaccion) {
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                return true;
+            }
+        });
+
+        expTransacciones.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Transaccion transaccion = mapTransacciones.get(fechas.get(groupPosition)).get(childPosition);
                 Intent intent = new Intent(getActivity(), SetTransaccionActivity.class);
                 intent.putExtra("id", transaccion.getId());
                 intent.putExtra("precio", transaccion.getPrecio());
@@ -57,6 +76,7 @@ public class TransaccionesFragment extends Fragment {
                 intent.putExtra("fecha", transaccion.getFecha());
                 intent.putExtra("info", transaccion.getInfo());
                 startActivityForResult(intent, NRO_PEDIDO_SET);
+                return true;
             }
         });
 
@@ -66,21 +86,34 @@ public class TransaccionesFragment extends Fragment {
             public void onChanged(List<Transaccion> transaccions) {
                 transacciones.clear();
                 transacciones.addAll(transaccions);
+                fechas.clear();
+                mapTransacciones.clear();
+                for(Transaccion t : transacciones){
+                    Date fechaDate = t.getFecha();
+                    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                    String fechaNueva = formatter.format(fechaDate);
+                    if(!fechas.contains(fechaNueva)){
+                        fechas.add(fechaNueva);
+                        List<Transaccion> lista = mapTransacciones.get(fechaNueva);
+                        if(lista == null){
+                            lista = new ArrayList<>();
+                            lista.add(t);
+                            mapTransacciones.put(fechaNueva,lista);
+                        }
+                        else {
+                            lista.add(t);
+                        }
+                    }
+                    else{
+                        mapTransacciones.get(fechaNueva).add(t);
+                    }
+                }
                 adapter.notifyDataSetChanged();
+                for (int i=0; i<fechas.size(); i++){
+                    expTransacciones.expandGroup(i);
+                }
             }
         });
-
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                viewModelTransaccion.eliminarTransaccion(adapter.getTransaccionAt(viewHolder.getAdapterPosition()));
-            }
-        }).attachToRecyclerView(recyclerTransacciones);
-
         return vista;
     }
 
