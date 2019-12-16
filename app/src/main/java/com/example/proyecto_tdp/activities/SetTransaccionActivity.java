@@ -21,9 +21,9 @@ public class SetTransaccionActivity extends AppCompatActivity {
 
     private TextView campoPrecio;
     private TextView campoCategoria;
+    private TextView campoFecha;
     private EditText campoTitulo;
     private EditText campoEtiqueta;
-    private EditText campoFecha;
     private EditText campoInfo;
     private RadioButton btnGasto;
     private RadioButton btnIngreso;

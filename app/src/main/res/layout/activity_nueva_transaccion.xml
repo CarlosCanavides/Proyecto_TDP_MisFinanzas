@@ -76,7 +76,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/espacio_mediano"
                 android:textAlignment="textEnd"
-                tools:ignore="RtlCompat"/>
+                tools:ignore="RtlCompat"
+                android:background="@drawable/background_campo_transaccion"/>
 
         </LinearLayout>
 
