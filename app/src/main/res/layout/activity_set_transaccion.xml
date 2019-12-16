@@ -42,11 +42,11 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/primary_light"
+                android:layout_height="2dp"
+                android:background="@color/divider"
                 android:layout_gravity="bottom"
-                android:layout_marginStart="@dimen/espacio_mediano"
-                android:layout_marginEnd="@dimen/espacio_mediano">
+                android:layout_marginStart="@dimen/margen_iconos_transaccion"
+                android:layout_marginEnd="@dimen/margen_iconos_transaccion">
             </View>
 
         </FrameLayout>
@@ -55,9 +55,9 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal"
-            android:layout_marginStart="@dimen/espacio_mediano"
-            android:layout_marginEnd="@dimen/espacio_mediano"
-            android:layout_marginTop="@dimen/espacio_mediano">
+            android:layout_marginStart="@dimen/margen_iconos_transaccion"
+            android:layout_marginEnd="@dimen/margen_iconos_transaccion"
+            android:layout_marginTop="@dimen/margen_iconos_transaccion">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -79,8 +79,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal"
-            android:layout_marginStart="@dimen/espacio_mediano"
-            android:layout_marginEnd="@dimen/espacio_mediano">
+            android:layout_marginStart="@dimen/margen_iconos_transaccion"
+            android:layout_marginEnd="@dimen/margen_iconos_transaccion">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -125,8 +125,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal"
-            android:layout_marginStart="@dimen/espacio_mediano"
-            android:layout_marginEnd="@dimen/espacio_mediano">
+            android:layout_marginStart="@dimen/margen_iconos_transaccion"
+            android:layout_marginEnd="@dimen/margen_iconos_transaccion">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -148,8 +148,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal"
-            android:layout_marginStart="@dimen/espacio_mediano"
-            android:layout_marginEnd="@dimen/espacio_mediano">
+            android:layout_marginStart="@dimen/margen_iconos_transaccion"
+            android:layout_marginEnd="@dimen/margen_iconos_transaccion">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -171,8 +171,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal"
-            android:layout_marginStart="@dimen/espacio_mediano"
-            android:layout_marginEnd="@dimen/espacio_mediano">
+            android:layout_marginStart="@dimen/margen_iconos_transaccion"
+            android:layout_marginEnd="@dimen/margen_iconos_transaccion">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -194,8 +194,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal"
-            android:layout_marginStart="@dimen/espacio_mediano"
-            android:layout_marginEnd="@dimen/espacio_mediano">
+            android:layout_marginStart="@dimen/margen_iconos_transaccion"
+            android:layout_marginEnd="@dimen/margen_iconos_transaccion">
 
             <ImageView
                 android:layout_width="wrap_content"

@@ -17,7 +17,9 @@
     <dimen name="btn_transacciones_mes_back">50sp</dimen>
     <dimen name="btn_transacciones_mes_advance">30sp</dimen>
 
-    <dimen name="text_campos_transaccion">17sp</dimen>
+    <dimen name="text_campos_transaccion">16sp</dimen>
     <dimen name="size_titulo_item_transaccion">16sp</dimen>
+
+    <dimen name="margen_iconos_transaccion">15dp</dimen>
 
 </resources>
