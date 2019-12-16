@@ -22,4 +22,11 @@
 
     <dimen name="margen_iconos_transaccion">15dp</dimen>
 
+
+
+    <dimen name="calculator_button_padding">10dp</dimen>
+    <dimen name="calculator_button_text_size">26sp</dimen>
+    <dimen name="calculator_result_padding">10dp</dimen>
+    <dimen name="calculator_footer_size">50dp</dimen>
+
 </resources>

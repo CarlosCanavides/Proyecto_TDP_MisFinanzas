@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -17,11 +19,13 @@ import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class TransaccionesFragment extends Fragment {
@@ -124,7 +128,14 @@ public class TransaccionesFragment extends Fragment {
                 String fecha = data.getStringExtra("fecha");
                 String info = data.getStringExtra("info");
 
-                float monto = Float.parseFloat(precio);
+                float monto = 0;
+                try {
+                    Locale spanish = new Locale("es", "ES");
+                    NumberFormat nf = NumberFormat.getInstance(spanish);
+                    monto = nf.parse(precio).floatValue();
+                }catch (Exception e) {
+                    mostrarMensaje("El monto ingresado debe ser mayor a 0");
+                }
 
                 if(id!=-1) {
                     if(tipoTransaccion.equals("Gasto")){
@@ -145,5 +156,9 @@ public class TransaccionesFragment extends Fragment {
                 }
             }
         }
+    }
+
+    private void mostrarMensaje(String mensaje){
+        Toast.makeText(getActivity(), mensaje, Toast.LENGTH_SHORT).show();
     }
 }

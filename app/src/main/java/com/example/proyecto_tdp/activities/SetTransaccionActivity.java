@@ -2,6 +2,9 @@ package com.example.proyecto_tdp.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +13,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import com.example.proyecto_tdp.R;
+import com.example.proyecto_tdp.views.CalculatorInputDialog;
 
 public class SetTransaccionActivity extends AppCompatActivity {
 
@@ -43,6 +47,22 @@ public class SetTransaccionActivity extends AppCompatActivity {
         btnEliminar = findViewById(R.id.btn_eliminar);
 
         inicializarValoresCampos();
+
+        final Context context = this;
+        campoPrecio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CalculatorInputDialog calculatorInputDialog = new CalculatorInputDialog(context);
+                calculatorInputDialog.setPositiveButton(new CalculatorInputDialog.OnInputDoubleListener() {
+                    @Override
+                    public boolean onInputDouble(AlertDialog dialog, Double value) {
+                        campoPrecio.setText(String.format( "%.2f", value));
+                        return false;
+                    }
+                });
+                calculatorInputDialog.show();
+            }
+        });
 
         campoCategoria.setOnClickListener(new View.OnClickListener() {
             @Override

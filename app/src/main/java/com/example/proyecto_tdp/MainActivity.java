@@ -27,7 +27,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import java.text.NumberFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -161,9 +163,12 @@ public class MainActivity extends AppCompatActivity {
                 String etiqueta = data.getStringExtra("etiqueta");
                 String fecha = data.getStringExtra("fecha");
                 String info = data.getStringExtra("info");
+
                 float monto = 0;
                 try {
-                    monto = Float.parseFloat(precio);
+                    Locale spanish = new Locale("es", "ES");
+                    NumberFormat nf = NumberFormat.getInstance(spanish);
+                    monto = nf.parse(precio).floatValue();
                 }catch (Exception e) {
                     mostrarMensaje("El monto ingresado debe ser mayor a 0");
                 }
@@ -173,6 +178,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(titulo.equals("")){
                     titulo = "Sin título";
+                }
+                if(categoria.equals("Seleccionar categoria")){
+                    categoria = "";
                 }
                 Transaccion nuevaTransaccion = new Transaccion(titulo, etiqueta, monto, categoria, tipoTransaccion, new Date(), info);
                 viewModelTransaccion.insertarTransaccion(nuevaTransaccion);

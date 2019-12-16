@@ -37,7 +37,7 @@
                     android:id="@+id/campo_transaccion_precio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="10.0"
+                    android:text="0,00"
                     android:textSize="40sp"
                     android:textAlignment="center"/>
 

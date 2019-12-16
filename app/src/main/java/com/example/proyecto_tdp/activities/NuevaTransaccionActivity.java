@@ -1,5 +1,6 @@
 package com.example.proyecto_tdp.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.proyecto_tdp.R;
+import com.example.proyecto_tdp.views.CalculatorInputDialog;
 
 public class NuevaTransaccionActivity extends AppCompatActivity{
 
@@ -25,6 +27,7 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
     private Button btnCancelar;
 
     private static final int PEDIDO_SELECCIONAR_CATEGORIA = 1829;
+    private CalculatorInputDialog calculatorInputDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,21 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
         btnGasto = findViewById(R.id.radiobtn_transaccion_gasto);
         btnIngreso = findViewById(R.id.radiobtn_transaccion_ingreso);
         btnGasto.setChecked(true);
+
+        calculatorInputDialog = new CalculatorInputDialog(this);
+        calculatorInputDialog.setPositiveButton(new CalculatorInputDialog.OnInputDoubleListener() {
+            @Override
+            public boolean onInputDouble(AlertDialog dialog, Double value) {
+                campoPrecio.setText(String.format( "%.2f", value));
+                return false;
+            }
+        });
+        campoPrecio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calculatorInputDialog.show();
+            }
+        });
 
         campoCategoria.setText("Seleccionar categoria");
         campoCategoria.setOnClickListener(new View.OnClickListener() {
