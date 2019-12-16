@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.proyecto_tdp.R;
 
-public class NuevaTransaccionActivity extends AppCompatActivity {
+public class NuevaTransaccionActivity extends AppCompatActivity{
 
     private TextView campoPrecio;
     private TextView campoCategoria;

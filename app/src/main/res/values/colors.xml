@@ -35,5 +35,6 @@
     <color name="black">#000000</color>
 
     <color name="color_titulo_transaccion">#BDBDBD</color>
+    <color name="color_campo_transaccion">#757575</color>
 
 </resources>
