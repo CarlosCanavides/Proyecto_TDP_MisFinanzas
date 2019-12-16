@@ -6,12 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.adapters.AdapterCategorias;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
@@ -19,7 +17,6 @@ import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
 import com.example.proyecto_tdp.view_models.ViewModelCategoria;
 import com.example.proyecto_tdp.view_models.ViewModelSubcategoria;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,51 +28,92 @@ public class CategoriaActivity extends AppCompatActivity {
     private Map<Categoria, List<Subcategoria>> mapSubcategorias;
     private AdapterCategorias adapterCategorias;
     private ExpandableListView expandableLV;
+    private ExpandableListView.OnChildClickListener childClickListener;
     private FloatingActionButton btnAgregarCategoria;
-
     private ViewModelCategoria viewModelCategoria;
     private ViewModelSubcategoria viewModelSubcategoria;
-    private static final int NRO_PEDIDO = 1826;
+    private static final int PEDIDO_NUEVA_CATEGORIA = 18;
+    private static final int PEDIDO_SET_CATEGORIA = 26;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categoria);
         setTitle("Categorias");
-
+        setContentView(R.layout.activity_categoria);
+        expandableLV = findViewById(R.id.expLV);
         btnAgregarCategoria = findViewById(R.id.btnAgregarCategoria);
+
+        inicializarListViewCategorias();
+        inicializarViewModels();
+
         btnAgregarCategoria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CategoriaActivity.this, NuevaCategoriaActivity.class);
-                startActivityForResult(intent,NRO_PEDIDO);
+                startActivityForResult(intent, PEDIDO_NUEVA_CATEGORIA);
             }
         });
 
-        expandableLV = findViewById(R.id.expLV);
+        childClickListener = new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Subcategoria subcategoria = mapSubcategorias.get(categorias.get(groupPosition)).get(childPosition);
+                Intent intent = new Intent(CategoriaActivity.this, NuevaCategoriaActivity.class);
+                intent.putExtra("nombre_subcategoria", subcategoria.getNombreSubcategoria());
+                intent.putExtra("categoria_superior", subcategoria.getCategoriaSuperior());
+                intent.putExtra("color_subcategoria", subcategoria.getColorSubcategoria()+"");
+                intent.putExtra("tipo_subcategoria", subcategoria.getTipoSubcategoria());
+                startActivityForResult(intent, PEDIDO_SET_CATEGORIA);
+                return true;
+            }
+        };
+        expandableLV.setOnChildClickListener(childClickListener);
+    }
+
+    private void inicializarViewModels(){
+        viewModelCategoria =  ViewModelProviders.of(this).get(ViewModelCategoria.class);
+        viewModelCategoria.getAllCategorias().observe(this, new Observer<List<Categoria>>() {
+            @Override
+            public void onChanged(List<Categoria> c) {
+                categorias.clear();
+                categorias.addAll(c);
+                mapSubcategorias.clear();
+                for(Categoria categoria : categorias){
+                    List<Subcategoria> sc = new ArrayList<>();
+                    sc.add(new Subcategoria(categoria.getNombreCategoria()+" General","",categoria.getColorCategoria(),categoria.getTipoCategoria()));
+                    sc.addAll(viewModelSubcategoria.getSubcategoriasHijas(categoria.getNombreCategoria()));
+                    mapSubcategorias.put(categoria,sc);
+                }
+                adapterCategorias.notifyDataSetChanged();
+            }
+        });
+        viewModelSubcategoria = ViewModelProviders.of(this).get(ViewModelSubcategoria.class);
+        viewModelSubcategoria.getAllSubcategorias().observe(this, new Observer<List<Subcategoria>>() {
+            @Override
+            public void onChanged(List<Subcategoria> subC) {
+                mapSubcategorias.clear();
+                for(Categoria categoria : categorias){
+                    List<Subcategoria> sc = new ArrayList<>();
+                    sc.add(new Subcategoria(categoria.getNombreCategoria()+" General","",categoria.getColorCategoria(),categoria.getTipoCategoria()));
+                    sc.addAll(viewModelSubcategoria.getSubcategoriasHijas(categoria.getNombreCategoria()));
+                    mapSubcategorias.put(categoria,sc);
+                }
+                adapterCategorias.notifyDataSetChanged();
+            }
+        });
+    }
+
+    private void inicializarListViewCategorias(){
         categorias = new ArrayList<>();
         mapSubcategorias = new HashMap<>();
         adapterCategorias = new AdapterCategorias(categorias, mapSubcategorias);
         expandableLV.setAdapter(adapterCategorias);
-        inicializarViewModels();
-
-        expandableLV.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Intent intent = new Intent();
-                Subcategoria subcategoria = mapSubcategorias.get(categorias.get(groupPosition)).get(childPosition);
-                intent.putExtra("id_categoria_elegida", subcategoria.getNombreSubcategoria());
-                setResult(RESULT_OK, intent);
-                finish();
-                return true;
-            }
-        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == NRO_PEDIDO) {
+        if (requestCode == PEDIDO_NUEVA_CATEGORIA) {
             if (resultCode == RESULT_OK) {
                 String nombreCategoria = data.getStringExtra("nombreCategoria");
                 String categoriaSuperior = data.getStringExtra("categoriaSuperior");
@@ -99,66 +137,50 @@ public class CategoriaActivity extends AppCompatActivity {
                 }
             }
         }
+        else if(requestCode == PEDIDO_SET_CATEGORIA){
+            if(resultCode == RESULT_OK){
+                String nombreCategoria = data.getStringExtra("nombreCategoria");
+                String categoriaSuperior = data.getStringExtra("categoriaSuperior");
+                String colorCategoria = data.getStringExtra("colorCategoria");
+                String tipoC = data.getStringExtra("tipoC");
+                String idCategoria = data.getStringExtra("idCategoria");
+
+                if(nombreCategoria!=null) {
+                    if(categoriaSuperior==null || categoriaSuperior.equals("") || categoriaSuperior.equals("Categoría superior")){
+                        Categoria categoria = new Categoria(idCategoria, Color.parseColor("#7373FF"), tipoC);
+                        viewModelCategoria.actualizarCategoria(categoria);
+                        categoria.setNombreCategoria(nombreCategoria);
+                        viewModelCategoria.actualizarCategoria(categoria);
+                    }
+                    else {
+                        Subcategoria subcategoria = new Subcategoria(idCategoria,categoriaSuperior,Color.parseColor("#7373FF"),tipoC);
+                        viewModelSubcategoria.actualizarSubcategoria(subcategoria);
+                        subcategoria.setNombreSubcategoria(nombreCategoria);
+                        viewModelSubcategoria.actualizarSubcategoria(subcategoria);
+                    }
+                }
+                else {
+                    mostrarMensaje("CATEGORIA NO REGISTRADA");
+                }
+            }
+        }
     }
 
     private void mostrarMensaje(String mensaje){
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
 
-    private void inicializarViewModels(){
-        viewModelCategoria =  ViewModelProviders.of(this).get(ViewModelCategoria.class);
-        viewModelCategoria.getAllCategorias().observe(this, new Observer<List<Categoria>>() {
+    public void setListenerSeleccionarSubcategoria(){
+        childClickListener = new ExpandableListView.OnChildClickListener() {
             @Override
-            public void onChanged(List<Categoria> c) {
-                categorias.clear();
-                categorias.addAll(c);
-                adapterCategorias.notifyDataSetChanged();
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Intent intent = new Intent();
+                Subcategoria subcategoria = mapSubcategorias.get(categorias.get(groupPosition)).get(childPosition);
+                intent.putExtra("id_categoria_elegida", subcategoria.getNombreSubcategoria());
+                setResult(RESULT_OK, intent);
+                finish();
+                return true;
             }
-        });
-        viewModelSubcategoria = ViewModelProviders.of(this).get(ViewModelSubcategoria.class);
-        viewModelSubcategoria.getAllSubcategorias().observe(this, new Observer<List<Subcategoria>>() {
-            @Override
-            public void onChanged(List<Subcategoria> subC) {
-                for (int i=0; i<subC.size(); i++){
-                    Subcategoria nuevaSubcategoria = subC.get(i);
-                    Categoria categoriaSuperior = obtenerCategoriaSuperior(nuevaSubcategoria);
-                    List<Subcategoria> list = mapSubcategorias.get(categoriaSuperior);
-                    if(list!=null){
-                        if(!encontre(nuevaSubcategoria,list)) {
-                            list.add(nuevaSubcategoria);
-                        }
-                    }
-                    else{
-                        list = new ArrayList<>();
-                        list.add(nuevaSubcategoria);
-                        mapSubcategorias.put(categoriaSuperior, list);
-                    }
-                }
-                adapterCategorias.notifyDataSetChanged();
-            }
-        });
+        };
     }
-
-    private Categoria obtenerCategoriaSuperior(Subcategoria subcategoria){
-        Categoria c = null;
-        boolean encontre = false;
-        for (int i=0; i<categorias.size() && !encontre; i++){
-            if(categorias.get(i).getNombreCategoria().equals(subcategoria.getCategoriaSuperior())){
-                c = categorias.get(i);
-                encontre = true;
-            }
-        }
-        return c;
-    }
-
-    private boolean encontre(Subcategoria subcategoria, List<Subcategoria> list){
-        boolean e = false;
-        for (int i=0; i<list.size() && !e; i++){
-            if(list.get(i).getNombreSubcategoria().equals(subcategoria.getNombreSubcategoria())){
-                e = true;
-            }
-        }
-        return e;
-    }
-
 }

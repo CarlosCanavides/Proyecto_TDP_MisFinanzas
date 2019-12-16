@@ -32,5 +32,4 @@ public interface CategoriaDao {
 
     @Delete
     void deleteCategoria(Categoria... categorias);
-
 }

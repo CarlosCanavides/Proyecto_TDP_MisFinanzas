@@ -36,6 +36,7 @@ public class RepositorioTransacciones {
         new EliminarTransaccionAsyncTask(transaccionDao).execute(transaccion);
     }
 
+
     public static class InsertTransaccionAsyncTask extends AsyncTask<Transaccion,Void,Void> {
         private TransaccionDao transaccionDao;
 
@@ -48,7 +49,6 @@ public class RepositorioTransacciones {
             transaccionDao.insertTransaccion(transaccions[0]);
             return null;
         }
-
     }
 
     public static class ActualizarTransaccionAsyncTask extends AsyncTask<Transaccion,Void,Void> {
@@ -63,7 +63,6 @@ public class RepositorioTransacciones {
             transaccionDao.upDateTransaccion(transaccions[0]);
             return null;
         }
-
     }
 
     public static class EliminarTransaccionAsyncTask extends AsyncTask<Transaccion,Void,Void> {
@@ -78,7 +77,5 @@ public class RepositorioTransacciones {
             transaccionDao.deleteTransaccion(transaccions[0]);
             return null;
         }
-
     }
-
 }

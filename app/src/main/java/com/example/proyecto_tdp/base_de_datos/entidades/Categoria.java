@@ -55,5 +55,4 @@ public class Categoria {
         colorCategoria = nuevosDatos.getColorCategoria();
         tipoCategoria = nuevosDatos.getTipoCategoria();
     }
-
 }

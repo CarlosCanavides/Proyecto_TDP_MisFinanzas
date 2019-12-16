@@ -74,5 +74,4 @@ public class Subcategoria {
         colorSubcategoria = nuevosDatos.getColorSubcategoria();
         tipoSubcategoria = nuevosDatos.getTipoSubcategoria();
     }
-
 }

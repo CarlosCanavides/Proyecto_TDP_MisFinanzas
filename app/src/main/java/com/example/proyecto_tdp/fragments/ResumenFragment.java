@@ -48,5 +48,4 @@ public class ResumenFragment extends Fragment {
 
         return vista;
     }
-
 }

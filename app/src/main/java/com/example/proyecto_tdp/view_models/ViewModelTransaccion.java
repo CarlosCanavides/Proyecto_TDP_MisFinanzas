@@ -34,5 +34,4 @@ public class ViewModelTransaccion extends AndroidViewModel {
     public void eliminarTransaccion(Transaccion transaccion){
         repositorioTransacciones.eliminarTransaccion(transaccion);
     }
-
 }

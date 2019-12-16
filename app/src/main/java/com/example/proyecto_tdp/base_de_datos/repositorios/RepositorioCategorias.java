@@ -36,6 +36,7 @@ public class RepositorioCategorias {
         new EliminarCategoriaAsyncTask(categoriaDao).execute(categoria);
     }
 
+
     public static class InsertCategoriaAsyncTask extends AsyncTask<Categoria,Void,Void> {
         private CategoriaDao categoriaDao;
 
@@ -48,7 +49,6 @@ public class RepositorioCategorias {
            categoriaDao.insertCategoria(categoria[0]);
             return null;
         }
-
     }
 
     public static class ActualizarCategoriaAsyncTask extends AsyncTask<Categoria,Void,Void> {
@@ -63,7 +63,6 @@ public class RepositorioCategorias {
             categoriaDao.upDateCategoria(categoria[0]);
             return null;
         }
-
     }
 
     public static class EliminarCategoriaAsyncTask extends AsyncTask<Categoria,Void,Void> {
@@ -78,7 +77,5 @@ public class RepositorioCategorias {
             categoriaDao.deleteCategoria(categoria[0]);
             return null;
         }
-
     }
-
 }

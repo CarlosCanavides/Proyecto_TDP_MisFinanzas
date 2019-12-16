@@ -27,6 +27,16 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
         campoColor = findViewById(R.id.campo_categoria_color);
         campoTipoT = findViewById(R.id.campo_categoria_tipoT);
 
+        Intent intent = getIntent();
+        String nombre = intent.getStringExtra("nombre_subcategoria");
+        String superior = intent.getStringExtra("categoria_superior");
+        String color = intent.getStringExtra("color_subcategoria");
+        String tipo = intent.getStringExtra("tipo_subcategoria");
+        campoNombre.setText(nombre);
+        campoCategoriaSup.setText(superior);
+        campoColor.setText(color);
+        campoTipoT.setText(tipo);
+
         btnConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,6 +49,5 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 }

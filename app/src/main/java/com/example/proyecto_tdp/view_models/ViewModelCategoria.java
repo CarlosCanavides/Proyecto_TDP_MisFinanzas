@@ -34,5 +34,4 @@ public class ViewModelCategoria extends AndroidViewModel {
     public void eliminarCategoria(Categoria categoria){
         repositorioCategorias.eliminarCategoria(categoria);
     }
-
 }

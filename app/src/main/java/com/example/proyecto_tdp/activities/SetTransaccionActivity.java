@@ -2,9 +2,7 @@ package com.example.proyecto_tdp.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +12,10 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.views.CalculatorInputDialog;
+import com.example.proyecto_tdp.views.CalendarioDialog;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class SetTransaccionActivity extends AppCompatActivity {
 
@@ -28,13 +30,15 @@ public class SetTransaccionActivity extends AppCompatActivity {
     private Button btnAceptar;
     private Button btnEliminar;
 
-    private static final int PEDIDO_SELECCIONAR_CATEGORIA = 18;
+    private static final int PEDIDO_SELECCIONAR_CATEGORIA = 26;
+    private CalculatorInputDialog calculatorInputDialog;
+    private CalendarioDialog calendarioDialog;
+    private DateFormat formatFecha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_transaccion);
-
         campoPrecio = findViewById(R.id.set_campo_precio);
         campoCategoria = findViewById(R.id.set_campo_categoria);
         campoTitulo = findViewById(R.id.set_campo_titulo);
@@ -47,23 +51,47 @@ public class SetTransaccionActivity extends AppCompatActivity {
         btnEliminar = findViewById(R.id.btn_eliminar);
 
         inicializarValoresCampos();
+        definirIngresarMonto();
+        definirSeleccionarFecha();
+        definirSeleccionarCategoria();
+        listenerBotonesPrincipales();
+    }
 
-        final Context context = this;
+    private void definirIngresarMonto(){
+        calculatorInputDialog = new CalculatorInputDialog(this);
+        calculatorInputDialog.setPositiveButton(new CalculatorInputDialog.OnInputDoubleListener() {
+            @Override
+            public boolean onInputDouble(AlertDialog dialog, Double value) {
+                campoPrecio.setText(String.format( "%.2f", value));
+                return false;
+            }
+        });
         campoPrecio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CalculatorInputDialog calculatorInputDialog = new CalculatorInputDialog(context);
-                calculatorInputDialog.setPositiveButton(new CalculatorInputDialog.OnInputDoubleListener() {
-                    @Override
-                    public boolean onInputDouble(AlertDialog dialog, Double value) {
-                        campoPrecio.setText(String.format( "%.2f", value));
-                        return false;
-                    }
-                });
                 calculatorInputDialog.show();
             }
         });
+    }
 
+    private void definirSeleccionarFecha(){
+        calendarioDialog = new CalendarioDialog();
+        formatFecha = new SimpleDateFormat("dd-MM-yyyy");
+        calendarioDialog.setListener(new CalendarioDialog.OnSelectDateListener() {
+            @Override
+            public void onSelectDate(Date date) throws Exception {
+                campoFecha.setText(formatFecha.format(date));
+            }
+        });
+        campoFecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calendarioDialog.show(getSupportFragmentManager(), getClass().getSimpleName());
+            }
+        });
+    }
+
+    private void definirSeleccionarCategoria(){
         campoCategoria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +99,9 @@ public class SetTransaccionActivity extends AppCompatActivity {
                 startActivityForResult(intent,PEDIDO_SELECCIONAR_CATEGORIA);
             }
         });
+    }
 
+    private void listenerBotonesPrincipales(){
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

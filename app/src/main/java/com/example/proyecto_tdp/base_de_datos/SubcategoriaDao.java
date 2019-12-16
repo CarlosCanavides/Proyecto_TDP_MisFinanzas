@@ -18,6 +18,9 @@ public interface SubcategoriaDao {
     @Query("SELECT * FROM subcategoria")
     LiveData<List<Subcategoria>> getAllLiveSubcategorias();
 
+    @Query("SELECT * FROM subcategoria WHERE categoriaSuperior LIKE (:categoriaPadre)")
+    List<Subcategoria> getSubcategoriasHijas(String categoriaPadre);
+
     @Update
     void upDateSubcategoria(Subcategoria... subcategorias);
 
@@ -26,5 +29,4 @@ public interface SubcategoriaDao {
 
     @Delete
     void deleteSubcategoria(Subcategoria... subcategorias);
-
 }

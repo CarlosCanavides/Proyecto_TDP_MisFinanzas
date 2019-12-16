@@ -16,11 +16,16 @@ public class ViewModelSubcategoria extends AndroidViewModel {
     public ViewModelSubcategoria(@NonNull Application application) {
         super(application);
         repositorioCategorias = new RepositorioSubcategorias(application);
-        subcategorias = repositorioCategorias.getCategorias();
+        subcategorias = repositorioCategorias.getSubcategorias();
     }
 
     public LiveData<List<Subcategoria>> getAllSubcategorias(){
         return subcategorias;
+    }
+
+    public List<Subcategoria> getSubcategoriasHijas(String categoriaPadre){
+        List<Subcategoria> subcategoriasHijas = repositorioCategorias.getSubcategoriasHijas(categoriaPadre);
+        return subcategoriasHijas;
     }
 
     public void insertarSubcategoria(Subcategoria subcategoria){
@@ -34,5 +39,4 @@ public class ViewModelSubcategoria extends AndroidViewModel {
     public void eliminarSubcategoria(Subcategoria subcategoria){
         repositorioCategorias.eliminarCategoria(subcategoria);
     }
-
 }

@@ -13,7 +13,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.annotation.StyleRes;
-import androidx.appcompat.widget.AppCompatEditText;
 import com.example.proyecto_tdp.R;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
@@ -486,5 +485,4 @@ public class CalculatorInputDialog extends AlertDialog.Builder implements View.O
     public interface OnInputDoubleListener {
         boolean onInputDouble(AlertDialog dialog, Double value);
     }
-
 }

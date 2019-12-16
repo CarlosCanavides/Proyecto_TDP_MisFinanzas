@@ -26,7 +26,6 @@ import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-
 import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -37,12 +36,10 @@ public class MainActivity extends AppCompatActivity {
     private Fragment fragmentResumen;
     private Fragment fragmentInformes;
     private Fragment fragmentTransacciones;
-
-    private FloatingActionButton btnAgregar;
-    private static final int NRO_PEDIDO = 1826;
-
-    private DrawerLayout drawerLayout;
     private ViewModelTransaccion viewModelTransaccion;
+    private FloatingActionButton btnAgregar;
+    private DrawerLayout drawerLayout;
+    private static final int NRO_PEDIDO = 1826;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -227,5 +224,4 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }
