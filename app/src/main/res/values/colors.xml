@@ -23,4 +23,17 @@
     <color name="degrade_start">#BE2C4BF6</color>
     <color name="degrade_end">#F7F7FF</color>
 
+    <color name="red">#b71c1c</color>
+    <color name="orange">#f05545</color>
+    <color name="red_dark">#7f0000</color>
+    <color name="white">#ffffff</color>
+
+    <color name="green">#388e3c</color>
+    <color name="green_intermedium">#00701a</color>
+    <color name="green_light">#6abf69</color>
+    <color name="green_dark">#00600f</color>
+    <color name="black">#000000</color>
+
+    <color name="color_titulo_transaccion">#BDBDBD</color>
+
 </resources>

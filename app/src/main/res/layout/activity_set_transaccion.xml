@@ -11,14 +11,45 @@
         android:orientation="vertical"
         android:layout_above="@id/set_contenedor_botones">
 
-        <EditText
-            android:id="@+id/set_campo_precio"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="10.0"
-            android:textSize="40sp"
-            android:textAlignment="center"
-            android:layout_marginTop="10dp"/>
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/espacio_mediano"
+                android:layout_marginBottom="@dimen/espacio_mediano">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$"
+                    android:textSize="40sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/espacio_mediano"/>
+
+                <TextView
+                    android:id="@+id/set_campo_precio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="10.0"
+                    android:textSize="40sp"
+                    android:textAlignment="center"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/primary_light"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="@dimen/espacio_mediano"
+                android:layout_marginEnd="@dimen/espacio_mediano">
+            </View>
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

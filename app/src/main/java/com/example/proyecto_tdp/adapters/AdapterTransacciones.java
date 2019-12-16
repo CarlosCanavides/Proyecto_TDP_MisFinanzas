@@ -78,13 +78,14 @@ public class AdapterTransacciones extends BaseExpandableListAdapter {
                 resultado += t.getPrecio();
             }
         }
+        String resultadoFinal = String.format( "%.2f", Math.abs(resultado));
         if(resultado<0){
-            tvGP.setText("-$ "+Math.abs(resultado));
-            tvGP.setTextColor(Color.parseColor("#FF5722"));
+            tvGP.setText("- $ "+resultadoFinal);
+            tvGP.setTextColor(convertView.getResources().getColor(R.color.red));
         }
         else {
-            tvGP.setText("+$ " + resultado);
-            tvGP.setTextColor(Color.parseColor("#303F9F"));
+            tvGP.setText("+ $ "+resultadoFinal);
+            tvGP.setTextColor(convertView.getResources().getColor(R.color.green_intermedium));
         }
         return convertView;
     }
@@ -101,15 +102,18 @@ public class AdapterTransacciones extends BaseExpandableListAdapter {
 
         tvCategoria.setText(transaccion.getCategoria());
         tvNombre.setText(transaccion.getTitulo());
-        tvIdentificacion.setText(transaccion.getEtiqueta());
+        if(!transaccion.getEtiqueta().equals("")) {
+            tvIdentificacion.setText(" " + transaccion.getEtiqueta() + " ");
+        }
 
+        String monto = String.format( "%.2f", Math.abs(transaccion.getPrecio()));
         if(transaccion.getTipoTransaccion().equals("Gasto")){
-            tvPrecio.setText("-$ "+Math.abs(transaccion.getPrecio()));
-            tvPrecio.setTextColor(Color.parseColor("#FF5722"));
+            tvPrecio.setText("- $ "+monto);
+            tvPrecio.setTextColor(convertView.getResources().getColor(R.color.red));
         }
         else{
-            tvPrecio.setText("+$ "+transaccion.getPrecio());
-            tvPrecio.setTextColor(Color.parseColor("#303F9F"));
+            tvPrecio.setText("+ $ "+monto);
+            tvPrecio.setTextColor(convertView.getResources().getColor(R.color.green_intermedium));
         }
 
         if(transaccion.getCategoria()!=null && transaccion.getCategoria().length() > 0) {

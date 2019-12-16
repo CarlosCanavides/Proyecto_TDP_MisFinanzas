@@ -171,6 +171,9 @@ public class MainActivity extends AppCompatActivity {
                 if(tipoTransaccion.equals("Gasto")){
                     monto = monto*(-1);
                 }
+                if(titulo.equals("")){
+                    titulo = "Sin título";
+                }
                 Transaccion nuevaTransaccion = new Transaccion(titulo, etiqueta, monto, categoria, tipoTransaccion, new Date(), info);
                 viewModelTransaccion.insertarTransaccion(nuevaTransaccion);
             }

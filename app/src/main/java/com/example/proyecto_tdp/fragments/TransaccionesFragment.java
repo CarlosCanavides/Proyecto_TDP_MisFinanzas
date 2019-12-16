@@ -62,7 +62,7 @@ public class TransaccionesFragment extends Fragment {
                 Transaccion transaccion = mapTransacciones.get(fechas.get(groupPosition)).get(childPosition);
                 Intent intent = new Intent(getActivity(), SetTransaccionActivity.class);
                 intent.putExtra("id", transaccion.getId());
-                intent.putExtra("precio", transaccion.getPrecio());
+                intent.putExtra("precio", String.format( "%.2f", Math.abs(transaccion.getPrecio())));
                 intent.putExtra("categoria", transaccion.getCategoria());
                 intent.putExtra("tipoT", transaccion.getTipoTransaccion());
                 intent.putExtra("titulo", transaccion.getTitulo());

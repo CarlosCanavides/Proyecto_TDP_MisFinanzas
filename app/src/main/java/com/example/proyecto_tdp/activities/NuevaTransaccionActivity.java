@@ -13,7 +13,7 @@ import com.example.proyecto_tdp.R;
 
 public class NuevaTransaccionActivity extends AppCompatActivity {
 
-    private EditText campoPrecio;
+    private TextView campoPrecio;
     private TextView campoCategoria;
     private EditText campoTitulo;
     private EditText campoEtiqueta;
