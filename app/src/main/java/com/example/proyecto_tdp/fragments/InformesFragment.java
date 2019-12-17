@@ -29,8 +29,8 @@ public class InformesFragment extends Fragment {
     private View vista;
 
     private String[] meses = new String[]{"Enero","Febrero","Marzo","Abril","Mayo"};
-    private int[] datos = new int[]{25,20,38,10,15};
-    private int[] colores = new int[]{Color.BLACK,Color.RED,Color.BLUE,Color.YELLOW, Color.LTGRAY};
+    private int[] datos = new int[]{25,20,38,10,7};
+    private int[] colores = new int[]{Color.BLUE,Color.RED,Color.BLUE,Color.YELLOW, Color.LTGRAY};
 
     @Nullable
     @Override
@@ -70,7 +70,7 @@ public class InformesFragment extends Fragment {
     private ArrayList<PieEntry> getPieEntries(){
         ArrayList<PieEntry> entries = new ArrayList<>();
         for (int i=0; i<datos.length; i++) {
-            entries.add(new PieEntry(i, datos[i]));
+            entries.add(new PieEntry(datos[i], i));
         }
         return entries;
     }
@@ -90,10 +90,10 @@ public class InformesFragment extends Fragment {
         axis.setEnabled(false);
     }
 
-    public void createChart(){
+    private void createChart(){
         pieChart = (PieChart) setChart(pieChart,"GRAFICO",Color.BLACK,Color.WHITE,3000);
-        pieChart.setHoleRadius(50);
-        pieChart.setTransparentCircleRadius(15);
+        pieChart.setHoleRadius(0);
+        pieChart.setTransparentCircleRadius(20);
         pieChart.setData(getData());
         pieChart.invalidate();
     }

@@ -9,63 +9,118 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="2dp"
-        app:cardUseCompatPadding="true">
+        app:cardUseCompatPadding="true"
+        android:layout_marginTop="@dimen/espacio_small"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="125dp"
-            android:orientation="horizontal" >
+            android:layout_height="180dp"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="320dp"
+                android:layout_width="200dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginStart="17dp"
+                android:layout_marginTop="@dimen/espacio_big">
 
                 <TextView
-                    android:id="@+id/resumen_fecha"
+                    android:id="@+id/resumen_mes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/espacio_mediano"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/text_transacciones_mes"
+                    android:text="12/2019"
+                    android:layout_marginBottom="@dimen/espacio_small"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/resumen_ingreso"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:text="$90"
+                    android:textColor="@color/green_intermedium"
                     android:textStyle="bold"
-                    android:layout_marginTop="@dimen/espacio_mediano"
-                    android:layout_marginEnd="@dimen/espacio_mediano"/>
+                    android:lines="1"
+                    android:singleLine="true"/>
 
                 <TextView
-                    android:id="@+id/resumen_cantidadTransacciones"
+                    android:id="@+id/resumen_gasto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/espacio_mediano"
-                    android:layout_marginTop="@dimen/espacio_small"
-                    android:layout_marginEnd="@dimen/espacio_mediano"/>
+                    android:textSize="14sp"
+                    android:text="$90"
+                    android:textColor="@color/red"
+                    android:textStyle="bold"
+                    android:lines="1"
+                    android:singleLine="true"/>
+
+                <TextView
+                    android:id="@+id/resumen_balance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:lines="1"
+                    android:singleLine="true"
+                    android:text="$90 $2113"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/resumen_cantidad_transacciones"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="13 transacciones"
+                    android:layout_marginBottom="8dp"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/espacio_mediano"
-                    android:layout_marginTop="@dimen/espacio_small"
-                    android:layout_marginEnd="@dimen/espacio_mediano"
-                    android:text="@string/resumen_mensajeGasto"/>
+                    android:textSize="@dimen/text_campos_resumen"
+                    android:text="Muchos gastos en"
+                    android:layout_marginBottom="4dp"/>
 
-                <TextView
-                    android:id="@+id/resumen_aviso"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/espacio_mediano"
-                    android:layout_marginTop="@dimen/espacio_small"
-                    android:layout_marginEnd="@dimen/espacio_mediano"/>
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/circulo_color_categoria"
+                        android:layout_width="@dimen/text_campos_transaccion"
+                        android:layout_height="@dimen/text_campos_transaccion"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/textview_circular"
+                        android:backgroundTint="@color/colorAccent"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/text_campos_transaccion"/>
+
+                    <TextView
+                        android:id="@+id/resumen_categoria_predominante"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_campos_resumen"
+                        android:text="Sin calificar"
+                        android:textStyle="italic"
+                        android:layout_marginLeft="@dimen/espacio_mediano"
+                        android:lines="1"
+                        android:singleLine="true"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <ImageView
+            <com.example.proyecto_tdp.views.GraficoResumen
                 android:id="@+id/resumen_grafico"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/espacio_mediano"
-                android:layout_marginEnd="@dimen/espacio_small"
-                android:src="@mipmap/ic_launcher" />
+                android:layout_marginRight="@dimen/espacio_big">
+
+            </com.example.proyecto_tdp.views.GraficoResumen>
 
         </LinearLayout>
 

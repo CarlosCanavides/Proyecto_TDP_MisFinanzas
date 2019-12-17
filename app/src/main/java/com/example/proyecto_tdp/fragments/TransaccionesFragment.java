@@ -30,7 +30,6 @@ import java.util.Map;
 public class TransaccionesFragment extends Fragment {
 
     private ExpandableListView expTransacciones;
-    private List<Transaccion> transacciones;
     private List<String> fechas;
     private Map<String, List<Transaccion>> mapTransacciones;
     private AdapterTransacciones adapter;
@@ -51,7 +50,6 @@ public class TransaccionesFragment extends Fragment {
     }
 
     private void inicializarListViewTransacciones(){
-        transacciones = new ArrayList<>();
         fechas = new ArrayList<>();
         mapTransacciones = new HashMap<>();
         adapter = new AdapterTransacciones(fechas,mapTransacciones);
@@ -87,11 +85,9 @@ public class TransaccionesFragment extends Fragment {
         viewModelTransaccion.getAllTransacciones().observe(getActivity(), new Observer<List<Transaccion>>() {
             @Override
             public void onChanged(List<Transaccion> transaccions) {
-                transacciones.clear();
-                transacciones.addAll(transaccions);
                 fechas.clear();
                 mapTransacciones.clear();
-                for(Transaccion t : transacciones){
+                for(Transaccion t : transaccions){
                     Date fechaDate = t.getFecha();
                     DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                     String fechaNueva = formatter.format(fechaDate);
