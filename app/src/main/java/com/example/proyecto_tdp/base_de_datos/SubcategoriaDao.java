@@ -21,6 +21,9 @@ public interface SubcategoriaDao {
     @Query("SELECT * FROM subcategoria WHERE categoriaSuperior LIKE (:categoriaPadre)")
     List<Subcategoria> getSubcategoriasHijas(String categoriaPadre);
 
+    @Query("SELECT * FROM subcategoria WHERE nombreSubcategoria LIKE (:subcategoria) LIMIT 1")
+    Subcategoria getSubcategoria(String subcategoria);
+
     @Update
     void upDateSubcategoria(Subcategoria... subcategorias);
 

@@ -67,6 +67,7 @@ public class CategoriaActivity extends AppCompatActivity {
                 return true;
             }
         };
+        setListenerSeleccionarSubcategoria();
         expandableLV.setOnChildClickListener(childClickListener);
     }
 

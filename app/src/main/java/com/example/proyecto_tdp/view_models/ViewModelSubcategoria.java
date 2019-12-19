@@ -4,6 +4,8 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+
+import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
 import com.example.proyecto_tdp.base_de_datos.repositorios.RepositorioSubcategorias;
 import java.util.List;
@@ -26,6 +28,10 @@ public class ViewModelSubcategoria extends AndroidViewModel {
     public List<Subcategoria> getSubcategoriasHijas(String categoriaPadre){
         List<Subcategoria> subcategoriasHijas = repositorioCategorias.getSubcategoriasHijas(categoriaPadre);
         return subcategoriasHijas;
+    }
+
+    public Subcategoria getSubcategoriaPorNombre(String subcategoria){
+        return repositorioCategorias.getSubcategoria(subcategoria);
     }
 
     public void insertarSubcategoria(Subcategoria subcategoria){

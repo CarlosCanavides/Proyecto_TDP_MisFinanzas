@@ -95,7 +95,7 @@ public class AdapterResumen extends RecyclerView.Adapter<AdapterResumen.ViewHold
     }
 
 
-    public class ViewHolderResumen extends RecyclerView.ViewHolder {
+    public class ViewHolderResumen extends RecyclerView.ViewHolder{
 
         private TextView tvMes;
         private TextView tvIngreso;

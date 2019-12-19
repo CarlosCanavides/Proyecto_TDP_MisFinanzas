@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 import com.example.proyecto_tdp.base_de_datos.AppDataBase;
 import com.example.proyecto_tdp.base_de_datos.SubcategoriaDao;
+import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -28,6 +29,17 @@ public class RepositorioSubcategorias {
     public List<Subcategoria> getSubcategoriasHijas(String categoriaPadre){
         try {
             return new ObtenerSubcategoriasHijasAsyncTask(subcategoriaDao).execute(categoriaPadre).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Subcategoria getSubcategoria(String subcategoria){
+        try {
+            return new ObtenerSubcategoriaAsyncTask(subcategoriaDao).execute(subcategoria).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -102,6 +114,19 @@ public class RepositorioSubcategorias {
         @Override
         protected List<Subcategoria> doInBackground(String... categoriaPadre) {
             return subcategoriaDao.getSubcategoriasHijas(categoriaPadre[0]);
+        }
+    }
+
+    public static class ObtenerSubcategoriaAsyncTask extends AsyncTask<String,Void,Subcategoria> {
+        private SubcategoriaDao subcategoriaDao;
+
+        private ObtenerSubcategoriaAsyncTask(SubcategoriaDao subcategoriaDao){
+            this.subcategoriaDao = subcategoriaDao;
+        }
+
+        @Override
+        protected Subcategoria doInBackground(String... subcategoria) {
+            return subcategoriaDao.getSubcategoria(subcategoria[0]);
         }
     }
 }

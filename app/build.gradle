@@ -46,4 +46,5 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.androidkun:XTabLayout:1.1.4'
 }

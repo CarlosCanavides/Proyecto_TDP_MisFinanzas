@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.akshay.library.CurveBottomBar;
 import com.example.proyecto_tdp.activities.CategoriaActivity;
+import com.example.proyecto_tdp.activities.InformesActivity;
 import com.example.proyecto_tdp.activities.NuevaTransaccionActivity;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.fragments.HomeFragment;
@@ -134,7 +135,8 @@ public class MainActivity extends AppCompatActivity {
                     titulo = R.string.item_resumen;
                     break;
                 case R.id.drawer_informes:
-                    selectedFragment = fragmentInformes;
+                    Intent intent1 = new Intent(MainActivity.this, InformesActivity.class);
+                    startActivity(intent1);
                     titulo = R.string.item_informes;
                     break;
             }
