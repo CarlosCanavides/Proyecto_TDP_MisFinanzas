@@ -76,7 +76,7 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
 
     private void definirSeleccionarFecha(){
         calendarioDialog = new CalendarioDialog();
-        formatFecha = new SimpleDateFormat("dd-MM-yyyy");
+        formatFecha = new SimpleDateFormat("dd/MM/yyyy");
         calendarioDialog.setListener(new CalendarioDialog.OnSelectDateListener() {
             @Override
             public void onSelectDate(Date date) throws Exception {

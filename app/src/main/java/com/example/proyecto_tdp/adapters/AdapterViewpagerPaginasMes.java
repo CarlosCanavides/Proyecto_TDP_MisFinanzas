@@ -21,7 +21,7 @@ public class AdapterViewpagerPaginasMes extends FragmentStatePagerAdapter {
         this.anio = anio;
         fragments = new ArrayList<>();
         for(int i=0; i<=12; i++){
-            GastoMesFregment mesFregment = GastoMesFregment.newInstance(i,anio);
+            GastoMesFregment mesFregment = new GastoMesFregment(i,anio);
             fragments.add(mesFregment);
         }
     }
@@ -48,5 +48,9 @@ public class AdapterViewpagerPaginasMes extends FragmentStatePagerAdapter {
         for(GastoMesFregment fregment : fragments){
             fregment.setDatos(anio);
         }
+    }
+
+    public int getAnio(){
+        return anio;
     }
 }

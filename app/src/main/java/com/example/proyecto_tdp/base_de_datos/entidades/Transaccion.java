@@ -13,7 +13,6 @@ import java.util.Date;
         parentColumns = "nombreSubcategoria",
         childColumns = "categoria",
         onDelete = ForeignKey.NO_ACTION))
-@TypeConverters(DateConverter.class)
 public class Transaccion {
 
     @PrimaryKey(autoGenerate = true)
@@ -36,6 +35,7 @@ public class Transaccion {
     private String tipoTransaccion;
 
     @ColumnInfo(name = "fecha")
+    @TypeConverters(DateConverter.class)
     private Date fecha;
 
     @ColumnInfo(name = "info")

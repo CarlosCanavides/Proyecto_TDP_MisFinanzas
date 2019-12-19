@@ -59,7 +59,7 @@ public class AdapterInformeMes extends RecyclerView.Adapter<AdapterInformeMes.Vi
             if (subcategoria != null) {
                 holder.tvNombreCategoria.setText(subcategoria.getNombreSubcategoria());
                 holder.tvGastoCategoria.setText("- $ " + gastoPorSubcategoria.get(subcategoria));
-                //holder.tvIconoCategoria.setText(subcategoria.getNombreSubcategoria().charAt(0));
+                holder.tvIconoCategoria.setText(subcategoria.getNombreSubcategoria().charAt(0)+"");
                 Drawable bg = holder.tvIconoCategoria.getBackground();
                 bg.setColorFilter(subcategoria.getColorSubcategoria(), PorterDuff.Mode.SRC);
             }

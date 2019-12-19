@@ -8,6 +8,7 @@ import com.example.proyecto_tdp.base_de_datos.AppDataBase;
 import com.example.proyecto_tdp.base_de_datos.TransaccionDao;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class RepositorioTransacciones {
 
@@ -22,6 +23,17 @@ public class RepositorioTransacciones {
 
     public LiveData<List<Transaccion>> getTransacciones(){
         return transacciones;
+    }
+
+    public LiveData<List<Transaccion>> getTransaccionesDesdeHasta(String desde, String hasta){
+        try {
+            return new ObtenerTransaccionesDesdeHastaAsyncTask(transaccionDao).execute(desde,hasta).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void insertarTransaccion(Transaccion transaccion){
@@ -75,6 +87,20 @@ public class RepositorioTransacciones {
         @Override
         protected Void doInBackground(Transaccion... transaccions) {
             transaccionDao.deleteTransaccion(transaccions[0]);
+            return null;
+        }
+    }
+
+    public static class ObtenerTransaccionesDesdeHastaAsyncTask extends AsyncTask<String,Void,LiveData<List<Transaccion>>> {
+        private TransaccionDao transaccionDao;
+
+        private ObtenerTransaccionesDesdeHastaAsyncTask(TransaccionDao transaccionDao){
+            this.transaccionDao = transaccionDao;
+        }
+
+        @Override
+        protected LiveData<List<Transaccion>> doInBackground(String... periodo) {
+            transaccionDao.getTransaccionesDesdeHasta(periodo[0],periodo[1]);
             return null;
         }
     }

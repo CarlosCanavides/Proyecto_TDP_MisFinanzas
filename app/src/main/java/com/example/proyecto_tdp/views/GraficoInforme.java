@@ -3,7 +3,6 @@ package com.example.proyecto_tdp.views;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -13,8 +12,6 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +21,7 @@ public class GraficoInforme extends PieChart {
 
     private List<String> labels;
     private List<Float> porcentajes;
-    private int[] colores;
+    private List<Integer> colores;
 
     public GraficoInforme(Context context) {
         super(context);
@@ -39,7 +36,6 @@ public class GraficoInforme extends PieChart {
     }
 
     public GraficoInforme inicializarGraficoInforme(GraficoInforme grafico, Map<Subcategoria,Float> gastos){
-        colores = ColorTemplate.PASTEL_COLORS;
         calcularPorcentajes(gastos);
         grafico.getDescription().setText("");
         grafico.setBackgroundColor(Color.WHITE);
@@ -58,18 +54,19 @@ public class GraficoInforme extends PieChart {
     private void calcularPorcentajes(Map<Subcategoria,Float> gastos){
         labels = new ArrayList<>();
         porcentajes = new ArrayList<>();
+        colores = new ArrayList<>();
         float totalGasto = 0;
         Iterator it = gastos.entrySet().iterator();
         while(it.hasNext()){
             Map.Entry<Subcategoria,Float> entry = (Map.Entry<Subcategoria, Float>) it.next();
             labels.add(entry.getKey().getNombreSubcategoria());
+            colores.add(entry.getKey().getColorSubcategoria());
             totalGasto += entry.getValue();
         }
-        totalGasto = Math.abs(totalGasto);
         Iterator iterator = gastos.entrySet().iterator();
         while (iterator.hasNext()){
             Map.Entry<Subcategoria,Float> e = (Map.Entry<Subcategoria, Float>) iterator.next();
-            porcentajes.add((Math.abs(e.getValue())*100)/totalGasto);
+            porcentajes.add((e.getValue()*100)/totalGasto);
         }
     }
 
@@ -90,7 +87,7 @@ public class GraficoInforme extends PieChart {
         ArrayList<LegendEntry> entries = new ArrayList<>();
         for (int i=0; i<labels.size(); i++) {
             LegendEntry entry = new LegendEntry();
-            entry.formColor = colores[i];
+            entry.formColor = colores.get(i);
             entry.label = labels.get(i);
             entries.add(entry);
         }
