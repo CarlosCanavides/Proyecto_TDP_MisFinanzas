@@ -34,6 +34,7 @@ public class CategoriaActivity extends AppCompatActivity {
     private ViewModelSubcategoria viewModelSubcategoria;
     private static final int PEDIDO_NUEVA_CATEGORIA = 18;
     private static final int PEDIDO_SET_CATEGORIA = 26;
+    private static final int COLOR_CATEGORIA_POR_DEFECTO = Color.parseColor("#7373FF");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,18 +119,16 @@ public class CategoriaActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 String nombreCategoria = data.getStringExtra("nombreCategoria");
                 String categoriaSuperior = data.getStringExtra("categoriaSuperior");
-                String colorCategoria = data.getStringExtra("colorCategoria");
+                int colorCategoria = data.getIntExtra("colorCategoria", COLOR_CATEGORIA_POR_DEFECTO);
                 String tipoC = data.getStringExtra("tipoC");
-
-                int color = Color.parseColor("#7373FF");
 
                 if(nombreCategoria!=null) {
                     if(categoriaSuperior==null || categoriaSuperior.equals("")) {
-                        Categoria categoria = new Categoria(nombreCategoria, color, tipoC);
+                        Categoria categoria = new Categoria(nombreCategoria, colorCategoria, tipoC);
                         viewModelCategoria.insertarCategoria(categoria);
                     }
                     else {
-                        Subcategoria subcategoria = new Subcategoria(nombreCategoria,categoriaSuperior,color,tipoC);
+                        Subcategoria subcategoria = new Subcategoria(nombreCategoria,categoriaSuperior,colorCategoria,tipoC);
                         viewModelSubcategoria.insertarSubcategoria(subcategoria);
                     }
                 }
@@ -142,19 +141,19 @@ public class CategoriaActivity extends AppCompatActivity {
             if(resultCode == RESULT_OK){
                 String nombreCategoria = data.getStringExtra("nombreCategoria");
                 String categoriaSuperior = data.getStringExtra("categoriaSuperior");
-                String colorCategoria = data.getStringExtra("colorCategoria");
+                int colorCategoria = data.getIntExtra("colorCategoria",COLOR_CATEGORIA_POR_DEFECTO);
                 String tipoC = data.getStringExtra("tipoC");
                 String idCategoria = data.getStringExtra("idCategoria");
 
                 if(nombreCategoria!=null) {
                     if(categoriaSuperior==null || categoriaSuperior.equals("") || categoriaSuperior.equals("Categoría superior")){
-                        Categoria categoria = new Categoria(idCategoria, Color.parseColor("#7373FF"), tipoC);
+                        Categoria categoria = new Categoria(idCategoria, colorCategoria, tipoC);
                         viewModelCategoria.actualizarCategoria(categoria);
                         categoria.setNombreCategoria(nombreCategoria);
                         viewModelCategoria.actualizarCategoria(categoria);
                     }
                     else {
-                        Subcategoria subcategoria = new Subcategoria(idCategoria,categoriaSuperior,Color.parseColor("#7373FF"),tipoC);
+                        Subcategoria subcategoria = new Subcategoria(idCategoria,categoriaSuperior,colorCategoria,tipoC);
                         viewModelSubcategoria.actualizarSubcategoria(subcategoria);
                         subcategoria.setNombreSubcategoria(nombreCategoria);
                         viewModelSubcategoria.actualizarSubcategoria(subcategoria);

@@ -71,7 +71,9 @@ public class AdapterCategorias extends BaseExpandableListAdapter {
         TextView tvLetra = convertView.findViewById(R.id.categoria_letra);
         if(categoria!=null) {
             tvNombre.setText(categoria.getNombreCategoria());
-            tvLetra.setText(categoria.getNombreCategoria().charAt(0)+"");
+            if(!categoria.getNombreCategoria().equals("")) {
+                tvLetra.setText(categoria.getNombreCategoria().charAt(0) + "");
+            }
             Drawable bg = tvLetra.getBackground();
             bg.setColorFilter(categoria.getColorCategoria(), PorterDuff.Mode.SRC);
         }

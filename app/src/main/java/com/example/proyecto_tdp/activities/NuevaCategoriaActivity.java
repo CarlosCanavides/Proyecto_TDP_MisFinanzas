@@ -1,20 +1,26 @@
 package com.example.proyecto_tdp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import com.example.proyecto_tdp.R;
+import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class NuevaCategoriaActivity extends AppCompatActivity {
 
     private Button btnConfirmar;
     private EditText campoNombre;
     private EditText campoCategoriaSup;
-    private EditText campoColor;
+    private TextView campoColor;
     private EditText campoTipoT;
+    private AmbilWarnaDialog paletaColores;
+    private int colorActual = Color.parseColor("#7373FF");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +49,34 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
                 Intent intent = getIntent();
                 intent.putExtra("nombreCategoria",campoNombre.getText().toString());
                 intent.putExtra("categoriaSuperior",campoCategoriaSup.getText().toString());
-                intent.putExtra("colorCategoria",campoColor.getText().toString());
+                intent.putExtra("colorCategoria",colorActual);
                 intent.putExtra("tipoC",campoTipoT.getText().toString());
                 setResult(RESULT_OK, intent);
                 finish();
+            }
+        });
+        definirSeleccionarColor();
+    }
+
+    private void definirSeleccionarColor(){
+        final Context context = this;
+        campoColor.setText(colorActual+"");
+        campoColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                paletaColores = new AmbilWarnaDialog(context, colorActual, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+                    @Override
+                    public void onCancel(AmbilWarnaDialog dialog) {
+
+                    }
+
+                    @Override
+                    public void onOk(AmbilWarnaDialog dialog, int color) {
+                        colorActual = color;
+                        campoColor.setText(""+color);
+                    }
+                });
+                paletaColores.show();
             }
         });
     }

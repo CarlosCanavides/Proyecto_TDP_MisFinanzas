@@ -67,7 +67,7 @@
             android:src="@drawable/icon_color"
             android:layout_gravity="center_vertical"/>
 
-        <EditText
+        <TextView
             android:id="@+id/campo_categoria_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
