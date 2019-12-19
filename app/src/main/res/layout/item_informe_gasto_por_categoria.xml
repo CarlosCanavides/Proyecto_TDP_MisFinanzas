@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/espacio_mediano"
-        android:layout_marginBottom="@dimen/espacio_mediano">
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="13dp">
 
         <TextView
             android:id="@+id/informes_icono_categroia"
-            android:layout_width="@dimen/size_circularview"
-            android:layout_height="@dimen/size_circularview"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/espacio_mediano"
+            android:layout_marginStart="@dimen/espacio_big"
             android:layout_marginEnd="@dimen/espacio_mediano"
             android:background="@drawable/textview_circular"
             android:backgroundTint="@color/colorAccent"
@@ -27,7 +29,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginEnd="@dimen/espacio_small"
+            android:layout_marginEnd="@dimen/espacio_mediano"
             android:divider="@color/primary_light"
             android:showDividers="middle"
             android:layout_gravity="center_vertical">
@@ -37,7 +39,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|left"
-                android:layout_marginStart="@dimen/espacio_mediano"/>
+                android:layout_marginStart="@dimen/espacio_mediano"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/informes_gasto_categoria"
@@ -45,10 +49,18 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|right"
                 android:textColor="@color/secondary_text"
-                android:layout_marginEnd="@dimen/espacio_mediano"/>
+                android:layout_marginEnd="@dimen/espacio_mediano"
+                android:textSize="16sp"/>
 
         </FrameLayout>
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_divider_recyclerview_informes"
+        android:layout_marginTop="2dp">
+    </View>
 
 </LinearLayout>

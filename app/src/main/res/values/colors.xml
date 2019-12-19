@@ -38,6 +38,7 @@
     <color name="color_campo_transaccion">#757575</color>
     <color name="color_tabIndicator_seleccionado">#757575</color>
     <color name="color_tabIndicator_no_seleccionado">#BDBDBD</color>
+    <color name="color_divider_recyclerview_informes">#DFDFDF</color>
 
     //
     <color name="colorPrimaryText">#212121</color>

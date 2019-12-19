@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
+import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -37,14 +38,14 @@ public class GraficoInforme extends PieChart {
         super(context, attrs, defStyle);
     }
 
-    public GraficoInforme inicializarGraficoInforme(GraficoInforme grafico, Map<Categoria,Float> gastos, float total){
+    public GraficoInforme inicializarGraficoInforme(GraficoInforme grafico, Map<Subcategoria,Float> gastos){
         colores = ColorTemplate.PASTEL_COLORS;
-        calcularPorcentajes(gastos,total);
+        calcularPorcentajes(gastos);
         grafico.getDescription().setText("");
         grafico.setBackgroundColor(Color.WHITE);
         grafico.animateY(400);
         grafico.setHoleRadius(50);
-        grafico.setTransparentCircleRadius(55);
+        grafico.setTransparentCircleRadius(60);
         grafico.setData(getDatos());
         grafico.setLegend(grafico);
         grafico.setUsePercentValues(true);
@@ -54,15 +55,21 @@ public class GraficoInforme extends PieChart {
         return grafico;
     }
 
-    private void calcularPorcentajes(Map<Categoria,Float> gastos, Float total){
+    private void calcularPorcentajes(Map<Subcategoria,Float> gastos){
         labels = new ArrayList<>();
         porcentajes = new ArrayList<>();
-        float totalGasto = Math.abs(total);
+        float totalGasto = 0;
         Iterator it = gastos.entrySet().iterator();
         while(it.hasNext()){
-            Map.Entry<Categoria,Float> entry = (Map.Entry<Categoria, Float>) it.next();
-            labels.add(entry.getKey().getNombreCategoria());
-            porcentajes.add((Math.abs(entry.getValue())*100)/totalGasto);
+            Map.Entry<Subcategoria,Float> entry = (Map.Entry<Subcategoria, Float>) it.next();
+            labels.add(entry.getKey().getNombreSubcategoria());
+            totalGasto += entry.getValue();
+        }
+        totalGasto = Math.abs(totalGasto);
+        Iterator iterator = gastos.entrySet().iterator();
+        while (iterator.hasNext()){
+            Map.Entry<Subcategoria,Float> e = (Map.Entry<Subcategoria, Float>) iterator.next();
+            porcentajes.add((Math.abs(e.getValue())*100)/totalGasto);
         }
     }
 

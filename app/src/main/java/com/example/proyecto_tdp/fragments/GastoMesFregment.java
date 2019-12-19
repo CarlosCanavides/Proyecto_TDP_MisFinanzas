@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_tdp.R;
@@ -19,6 +20,8 @@ import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.view_models.ViewModelSubcategoria;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
+import com.example.proyecto_tdp.views.GraficoInforme;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +56,7 @@ public class GastoMesFregment extends Fragment {
     private RecyclerView recyclerSubcategorias;
     private ViewModelTransaccion viewModelTransaccion;
     private ViewModelSubcategoria viewModelSubcategoria;
+    private GraficoInforme graficoInforme;
 
     private GastoMesFregment(int nroMes, int nroAnio){
         switch (nroMes){
@@ -137,7 +141,6 @@ public class GastoMesFregment extends Fragment {
                 Subcategoria subcategoria = viewModelSubcategoria.getSubcategoriaPorNombre(t.getCategoria());
                 Float gastoCategoria = mapSubcategoriasGasto.get(subcategoria);
                 if (gastoCategoria == null) {
-                    mostrarMensaje("holaaaaaa");
                     subcategoriasMes.add(subcategoria);
                     mapSubcategoriasGasto.put(subcategoria, Math.abs(t.getPrecio()));
                 } else {
@@ -146,9 +149,6 @@ public class GastoMesFregment extends Fragment {
                 }
             }
             adapterInforme.notifyDataSetChanged();
-        }
-        else {
-            mostrarMensaje("holaaaaaa");
         }
     }
 

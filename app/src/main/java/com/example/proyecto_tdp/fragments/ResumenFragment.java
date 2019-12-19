@@ -15,7 +15,6 @@ import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.adapters.AdapterResumen;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
-import com.example.proyecto_tdp.views.GraficoResumen;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
