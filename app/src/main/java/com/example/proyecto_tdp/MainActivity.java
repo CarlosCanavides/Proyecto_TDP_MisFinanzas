@@ -20,7 +20,6 @@ import com.example.proyecto_tdp.activities.InformesActivity;
 import com.example.proyecto_tdp.activities.NuevaTransaccionActivity;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.fragments.HomeFragment;
-import com.example.proyecto_tdp.fragments.InformesFragment;
 import com.example.proyecto_tdp.fragments.ResumenFragment;
 import com.example.proyecto_tdp.fragments.TransaccionesFragment;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
@@ -38,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Fragment fragmentHome;
     private Fragment fragmentResumen;
-    private Fragment fragmentInformes;
     private Fragment fragmentTransacciones;
     private ViewModelTransaccion viewModelTransaccion;
     private FloatingActionButton btnAgregar;
@@ -65,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentHome = new HomeFragment();
         fragmentTransacciones = new TransaccionesFragment();
         fragmentResumen = new ResumenFragment();
-        fragmentInformes = new InformesFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragmentHome).commit();
 
         btnAgregar = findViewById(R.id.floatingActionButton);
@@ -103,7 +100,8 @@ public class MainActivity extends AppCompatActivity {
                     titulo = R.string.item_resumen;
                     break;
                 case R.id.nav_informes:
-                    selectedFragment = fragmentInformes;
+                    Intent intent1 = new Intent(MainActivity.this, InformesActivity.class);
+                    startActivity(intent1);
                     titulo = R.string.item_informes;
                     break;
             }

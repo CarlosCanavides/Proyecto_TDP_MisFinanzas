@@ -18,9 +18,9 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
     private EditText campoNombre;
     private EditText campoCategoriaSup;
     private TextView campoColor;
-    private EditText campoTipoT;
     private AmbilWarnaDialog paletaColores;
-    private int colorActual = Color.parseColor("#7373FF");
+    private int colorActual;
+    private static final int COLOR_CATEGORIA_POR_DEFECTO = Color.parseColor("#7373FF");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +31,16 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
         campoNombre = findViewById(R.id.campo_nombre_categoria);
         campoCategoriaSup = findViewById(R.id.campo_categoria_superior);
         campoColor = findViewById(R.id.campo_categoria_color);
-        campoTipoT = findViewById(R.id.campo_categoria_tipoT);
 
         Intent intent = getIntent();
         String nombre = intent.getStringExtra("nombre_subcategoria");
         String superior = intent.getStringExtra("categoria_superior");
-        String color = intent.getStringExtra("color_subcategoria");
+        int color = intent.getIntExtra("color_subcategoria",COLOR_CATEGORIA_POR_DEFECTO);
         String tipo = intent.getStringExtra("tipo_subcategoria");
         campoNombre.setText(nombre);
         campoCategoriaSup.setText(superior);
-        campoColor.setText(color);
-        campoTipoT.setText(tipo);
+        campoColor.setText(color+"");
+        colorActual = color;
 
         btnConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +49,7 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
                 intent.putExtra("nombreCategoria",campoNombre.getText().toString());
                 intent.putExtra("categoriaSuperior",campoCategoriaSup.getText().toString());
                 intent.putExtra("colorCategoria",colorActual);
-                intent.putExtra("tipoC",campoTipoT.getText().toString());
+                intent.putExtra("tipoC","gasto");
                 setResult(RESULT_OK, intent);
                 finish();
             }

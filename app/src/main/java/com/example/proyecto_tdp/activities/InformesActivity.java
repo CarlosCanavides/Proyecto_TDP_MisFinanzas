@@ -3,17 +3,11 @@ package com.example.proyecto_tdp.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
-
-import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-
 import com.androidkun.xtablayout.XTabLayout;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.adapters.AdapterViewpagerPaginasMes;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
-import com.example.proyecto_tdp.fragments.GastoMesFregment;
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
 

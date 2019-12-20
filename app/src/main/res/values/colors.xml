@@ -40,6 +40,8 @@
     <color name="color_tabIndicator_no_seleccionado">#BDBDBD</color>
     <color name="color_divider_recyclerview_informes">#DFDFDF</color>
 
+    <color name="color_btn_cancelar">#E57373</color>
+
     //
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>

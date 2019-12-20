@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.NuevaCategoriaActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -92,25 +93,130 @@
             android:src="@drawable/icon_tipo_transaccion"
             android:layout_gravity="center_vertical"/>
 
-        <EditText
-            android:id="@+id/campo_categoria_tipoT"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/espacio_mediano"
-            android:maxLines="1"
-            android:singleLine="true"/>
+            android:layout_gravity="center_vertical">
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal|center_vertical">
+
+                <RadioButton
+                    android:id="@+id/radiobtn_categoria_tipo_gasto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gasto"
+                    android:textSize="15sp"
+                    android:layout_marginEnd="@dimen/espacio_big"
+                    android:checked="true"/>
+
+                <RadioButton
+                    android:id="@+id/radiobtn_categoria_tipo_ingreso"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ingreso"
+                    android:textSize="15sp"/>
+
+            </RadioGroup>
+
+        </FrameLayout>
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_confirmar_nueva_categoria"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/degrade_end"
-        android:text="ACEPTAR"
-        android:textColor="@color/colorAccent"
-        android:layout_gravity="bottom"/>
+        android:text="Vista previa :"
+        android:textSize="14sp"
+        android:textColor="@color/secondary_text"
+        android:textStyle="italic"
+        android:layout_marginTop="@dimen/espacio_big"
+        android:layout_marginStart="@dimen/espacio_mediano"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/espacio_mediano"
+        android:layout_marginBottom="@dimen/espacio_big">
+
+        <TextView
+            android:id="@+id/vista_previa_icono_categoria"
+            android:layout_width="@dimen/size_circularview"
+            android:layout_height="@dimen/size_circularview"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/espacio_mediano"
+            android:layout_marginEnd="@dimen/espacio_mediano"
+            android:background="@drawable/textview_circular"
+            android:backgroundTint="@color/colorAccent"
+            android:text="H"
+            android:textAlignment="center"
+            android:textColor="@color/background_white"
+            android:textSize="@dimen/text_circularview" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/espacio_small"
+            android:divider="@color/primary_light"
+            android:showDividers="middle">
+
+            <TextView
+                android:id="@+id/vista_previa_categoria_nombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/espacio_mediano"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/primary_light"
+                android:layout_gravity="bottom">
+
+            </View>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:stretchColumns="0,1"
+        android:layout_marginTop="@dimen/espacio_big">
+
+        <TableRow>
+            <Button
+                android:id="@+id/btn_cancelar_nueva_categoria"
+                android:layout_height="37sp"
+                android:background="@drawable/estilo_boton_cancelar"
+                android:text="CANCELAR"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/espacio_mediano"
+                android:layout_marginStart="@dimen/espacio_mediano"
+                android:layout_marginEnd="@dimen/espacio_mediano"
+                android:layout_marginBottom="@dimen/espacio_mediano"
+                android:elevation="0dp"/>
+
+            <Button
+                android:id="@+id/btn_confirmar_nueva_categoria"
+                android:layout_height="37sp"
+                android:background="@drawable/estilo_boton_aceptar"
+                android:text="ACEPTAR"
+                android:textSize="12sp"
+                android:textColor="#E57373"
+                android:layout_marginTop="@dimen/espacio_mediano"
+                android:layout_marginEnd="@dimen/espacio_mediano"
+                android:layout_marginStart="@dimen/espacio_mediano"
+                android:layout_marginBottom="@dimen/espacio_mediano"/>
+        </TableRow>
+
+    </TableLayout>
 
 </LinearLayout>

@@ -66,7 +66,7 @@ public class AdapterTransacciones extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         String fecha = fechas.get(groupPosition);
-        convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.section_fecha,null,false);
+        convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_encabezado_transacciones_fecha,null,false);
         TextView tvFecha = convertView.findViewById(R.id.encabezado_section_fecha);
         TextView tvGP = convertView.findViewById(R.id.encabezado_section_gp);
         tvFecha.setText(fecha);
