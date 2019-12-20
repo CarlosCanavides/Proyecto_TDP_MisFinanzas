@@ -126,7 +126,7 @@ public class GastoMesFregment extends Fragment {
                             mapSubcategoriasGasto.put(subcategoria, gastoCategoria + Math.abs(t.getPrecio()));
                         }
                     }
-                    mostrarMensaje("holaaaaaaaaaa");
+                    //mostrarMensaje(transaccions.size()+"");
                     adapterInforme.notifyDataSetChanged();
                 }
             });

@@ -100,8 +100,7 @@ public class RepositorioTransacciones {
 
         @Override
         protected LiveData<List<Transaccion>> doInBackground(String... periodo) {
-            transaccionDao.getTransaccionesDesdeHasta(periodo[0],periodo[1]);
-            return null;
+            return transaccionDao.getTransaccionesDesdeHasta(periodo[0],periodo[1]);
         }
     }
 }
