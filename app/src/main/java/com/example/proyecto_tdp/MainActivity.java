@@ -27,7 +27,6 @@ import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -45,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton btnAgregar;
     private DrawerLayout drawerLayout;
     private static final int NRO_PEDIDO = 1826;
-    private static final DateFormat formatFecha = new SimpleDateFormat("dd/MM/yyyy");
+    private static final DateFormat formatFecha = new SimpleDateFormat(Constantes.FORMATO_FECHA);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

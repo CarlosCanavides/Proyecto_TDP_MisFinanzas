@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
+import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.activities.SetTransaccionActivity;
 import com.example.proyecto_tdp.adapters.AdapterTransacciones;
 import com.example.proyecto_tdp.R;
@@ -89,7 +91,7 @@ public class TransaccionesFragment extends Fragment {
                 mapTransacciones.clear();
                 for(Transaccion t : transaccions){
                     Date fechaDate = t.getFecha();
-                    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                    DateFormat formatter = new SimpleDateFormat(Constantes.FORMATO_FECHA);
                     String fechaNueva = formatter.format(fechaDate);
                     if(!fechas.contains(fechaNueva)){
                         fechas.add(fechaNueva);

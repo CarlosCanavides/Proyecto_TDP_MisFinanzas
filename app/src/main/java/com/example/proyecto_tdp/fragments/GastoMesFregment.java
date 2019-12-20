@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -14,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.adapters.AdapterInformeMes;
 import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
@@ -29,21 +29,6 @@ import java.util.List;
 import java.util.Map;
 
 public class GastoMesFregment extends Fragment {
-
-    private static final String ARG_SECTION_NUMBER = "section_number";
-    private static final String ENERO = "Enero";
-    private static final String FEBRERO = "Febrero";
-    private static final String MARZO = "Marzo";
-    private static final String ABRIL = "Abril";
-    private static final String MAYO = "Mayo";
-    private static final String JUNIO = "Junio";
-    private static final String JULIO = "Julio";
-    private static final String AGOSTO = "Agosto";
-    private static final String SEPTIEMBRE = "Septiembre";
-    private static final String OCTUBRE = "Octubre";
-    private static final String NOVIEMBRE = "Noviembre";
-    private static final String DICIEMBRE = "Diciembre";
-    private static final String HISTORICO = "Historico";
 
     private String mes;
     protected int anio;
@@ -64,21 +49,21 @@ public class GastoMesFregment extends Fragment {
     public GastoMesFregment(int nroMes, int nroAnio){
         mesNumero = nroMes;
         switch (nroMes){
-            case 0 : mes = ENERO; break;
-            case 1 : mes = FEBRERO; break;
-            case 2 : mes = MARZO; break;
-            case 3 : mes = ABRIL; break;
-            case 4 : mes = MAYO; break;
-            case 5 : mes = JUNIO; break;
-            case 6 : mes = JULIO; break;
-            case 7 : mes = AGOSTO; break;
-            case 8 : mes = SEPTIEMBRE; break;
-            case 9 : mes = OCTUBRE; break;
-            case 10 : mes = NOVIEMBRE; break;
-            case 11 : mes = DICIEMBRE; break;
-            case 12 : mes = HISTORICO;
+            case 0 : mes = Constantes.ENERO; break;
+            case 1 : mes = Constantes.FEBRERO; break;
+            case 2 : mes = Constantes.MARZO; break;
+            case 3 : mes = Constantes.ABRIL; break;
+            case 4 : mes = Constantes.MAYO; break;
+            case 5 : mes = Constantes.JUNIO; break;
+            case 6 : mes = Constantes.JULIO; break;
+            case 7 : mes = Constantes.AGOSTO; break;
+            case 8 : mes = Constantes.SEPTIEMBRE; break;
+            case 9 : mes = Constantes.OCTUBRE; break;
+            case 10 : mes = Constantes.NOVIEMBRE; break;
+            case 11 : mes = Constantes.DICIEMBRE; break;
+            case 12 : mes = Constantes.HISTORICO;
         }
-        formatFecha = new SimpleDateFormat("dd/MM/yyyy");
+        formatFecha = new SimpleDateFormat(Constantes.FORMATO_FECHA);
         calendar = Calendar.getInstance();
         setPeriodoTiempo(nroAnio);
     }
@@ -126,7 +111,6 @@ public class GastoMesFregment extends Fragment {
                             mapSubcategoriasGasto.put(subcategoria, gastoCategoria + Math.abs(t.getPrecio()));
                         }
                     }
-                    //mostrarMensaje(transaccions.size()+"");
                     adapterInforme.notifyDataSetChanged();
                 }
             });

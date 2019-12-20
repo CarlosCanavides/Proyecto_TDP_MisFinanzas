@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.views.CalculatorInputDialog;
 import com.example.proyecto_tdp.views.CalendarioDialog;
@@ -33,7 +34,7 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
     private static final int PEDIDO_SELECCIONAR_CATEGORIA = 18;
     private CalculatorInputDialog calculatorInputDialog;
     private CalendarioDialog calendarioDialog;
-    private DateFormat formatFecha;
+    private DateFormat formatFecha =new SimpleDateFormat(Constantes.FORMATO_FECHA);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +77,6 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
 
     private void definirSeleccionarFecha(){
         calendarioDialog = new CalendarioDialog();
-        formatFecha = new SimpleDateFormat("dd/MM/yyyy");
         calendarioDialog.setListener(new CalendarioDialog.OnSelectDateListener() {
             @Override
             public void onSelectDate(Date date) throws Exception {

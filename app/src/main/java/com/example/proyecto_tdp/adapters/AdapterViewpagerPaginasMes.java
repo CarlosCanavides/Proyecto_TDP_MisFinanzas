@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import com.example.proyecto_tdp.fragments.GastoHistoricoFragment;
 import com.example.proyecto_tdp.fragments.GastoMesFregment;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +21,11 @@ public class AdapterViewpagerPaginasMes extends FragmentStatePagerAdapter {
         nroPaginas = behavior;
         this.anio = anio;
         fragments = new ArrayList<>();
-        for(int i=0; i<=12; i++){
+        for(int i=0; i<12; i++){
             GastoMesFregment mesFregment = new GastoMesFregment(i,anio);
             fragments.add(mesFregment);
         }
+        fragments.add(new GastoHistoricoFragment(12,anio));
     }
 
     @NonNull

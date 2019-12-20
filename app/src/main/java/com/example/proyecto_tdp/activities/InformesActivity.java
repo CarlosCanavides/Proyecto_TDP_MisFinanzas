@@ -28,6 +28,7 @@ public class InformesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Análisis de gastos");
         setContentView(R.layout.activity_informes);
 
         toolbar   = findViewById(R.id.informes_toolbar);
