@@ -17,11 +17,11 @@ import java.util.Map;
 public class AdapterInformeMes extends RecyclerView.Adapter<AdapterInformeMes.ViewHolderInformeMes> {
 
     private List<Subcategoria> subcategorias;
-    private Map<Subcategoria, Float> gastoPorSubcategoria;
+    private Map<String, Float> gastoPorSubcategoria;
     private static final int TYPE_GRAFICO = 0;
     private static final int TYPE_SUBCATEGORIA = 1;
 
-    public AdapterInformeMes(List<Subcategoria> subcategorias, Map<Subcategoria, Float> gastoPorSubcategoria) {
+    public AdapterInformeMes(List<Subcategoria> subcategorias, Map<String, Float> gastoPorSubcategoria) {
         this.subcategorias = subcategorias;
         this.gastoPorSubcategoria = gastoPorSubcategoria;
     }
@@ -52,13 +52,13 @@ public class AdapterInformeMes extends RecyclerView.Adapter<AdapterInformeMes.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolderInformeMes holder, int position) {
         if(position==0){
-            holder.graficoInforme.inicializarGraficoInforme(holder.graficoInforme,gastoPorSubcategoria);
+            holder.graficoInforme.inicializarGraficoInforme(holder.graficoInforme,subcategorias,gastoPorSubcategoria);
         }
         else {
             Subcategoria subcategoria = subcategorias.get(position-1);
             if (subcategoria != null) {
                 holder.tvNombreCategoria.setText(subcategoria.getNombreSubcategoria());
-                holder.tvGastoCategoria.setText("- $ " + gastoPorSubcategoria.get(subcategoria));
+                holder.tvGastoCategoria.setText("- $ " + gastoPorSubcategoria.get(subcategoria.getNombreSubcategoria()));
                 holder.tvIconoCategoria.setText(subcategoria.getNombreSubcategoria().charAt(0)+"");
                 Drawable bg = holder.tvIconoCategoria.getBackground();
                 bg.setColorFilter(subcategoria.getColorSubcategoria(), PorterDuff.Mode.SRC);

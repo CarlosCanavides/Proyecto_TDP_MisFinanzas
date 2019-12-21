@@ -35,7 +35,7 @@ public class GastoMesFregment extends Fragment {
     protected int mesNumero;
     private View vista;
     protected List<Subcategoria> subcategoriasMes;
-    protected Map<Subcategoria,Float> mapSubcategoriasGasto;
+    protected Map<String,Float> mapSubcategoriasGasto;
     protected AdapterInformeMes adapterInforme;
 
     private RecyclerView recyclerSubcategorias;
@@ -102,13 +102,13 @@ public class GastoMesFregment extends Fragment {
                     mapSubcategoriasGasto.clear();
                     for (Transaccion t : transaccions) {
                         Subcategoria subcategoria = viewModelSubcategoria.getSubcategoriaPorNombre(t.getCategoria());
-                        Float gastoCategoria = mapSubcategoriasGasto.get(subcategoria);
+                        Float gastoCategoria = mapSubcategoriasGasto.get(subcategoria.getNombreSubcategoria());
                         if (gastoCategoria == null) {
                             subcategoriasMes.add(subcategoria);
-                            mapSubcategoriasGasto.put(subcategoria, Math.abs(t.getPrecio()));
+                            mapSubcategoriasGasto.put(subcategoria.getNombreSubcategoria(), Math.abs(t.getPrecio()));
                         } else {
-                            mapSubcategoriasGasto.remove(subcategoria);
-                            mapSubcategoriasGasto.put(subcategoria, gastoCategoria + Math.abs(t.getPrecio()));
+                            mapSubcategoriasGasto.remove(subcategoria.getNombreSubcategoria());
+                            mapSubcategoriasGasto.put(subcategoria.getNombreSubcategoria(), gastoCategoria + Math.abs(t.getPrecio()));
                         }
                     }
                     adapterInforme.notifyDataSetChanged();
