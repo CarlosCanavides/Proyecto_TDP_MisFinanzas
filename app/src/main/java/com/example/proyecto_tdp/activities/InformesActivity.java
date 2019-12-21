@@ -8,7 +8,6 @@ import com.androidkun.xtablayout.XTabLayout;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.adapters.AdapterViewpagerPaginasMes;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
-
 import java.util.List;
 
 public class InformesActivity extends AppCompatActivity {

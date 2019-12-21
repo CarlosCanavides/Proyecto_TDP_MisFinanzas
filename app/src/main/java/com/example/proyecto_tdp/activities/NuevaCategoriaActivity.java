@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import com.example.proyecto_tdp.R;
 import yuku.ambilwarna.AmbilWarnaDialog;
@@ -15,10 +18,15 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 public class NuevaCategoriaActivity extends AppCompatActivity {
 
     private Button btnConfirmar;
+    private Button btnCancelar;
+    private RadioButton btnGasto;
+    private RadioButton btnIngreso;
     private EditText campoNombre;
     private EditText campoCategoriaSup;
     private TextView campoColor;
     private AmbilWarnaDialog paletaColores;
+    private TextView iconoCategoriaVP;
+    private TextView nombreCategoriaVP;
     private int colorActual;
     private static final int COLOR_CATEGORIA_POR_DEFECTO = Color.parseColor("#7373FF");
 
@@ -28,10 +36,21 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nueva_categoria);
 
         btnConfirmar = findViewById(R.id.btn_confirmar_nueva_categoria);
+        btnCancelar = findViewById(R.id.btn_cancelar_nueva_categoria);
+        btnGasto = findViewById(R.id.radiobtn_categoria_tipo_gasto);
+        btnIngreso = findViewById(R.id.radiobtn_categoria_tipo_ingreso);
         campoNombre = findViewById(R.id.campo_nombre_categoria);
         campoCategoriaSup = findViewById(R.id.campo_categoria_superior);
         campoColor = findViewById(R.id.campo_categoria_color);
+        iconoCategoriaVP = findViewById(R.id.vista_previa_icono_categoria);
+        nombreCategoriaVP = findViewById(R.id.vista_previa_categoria_nombre);
 
+        inicializarValoresCampos();
+        listenerBotonesPrincipales();
+        definirSeleccionarColor();
+    }
+
+    private void inicializarValoresCampos(){
         Intent intent = getIntent();
         String nombre = intent.getStringExtra("nombre_subcategoria");
         String superior = intent.getStringExtra("categoria_superior");
@@ -41,7 +60,22 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
         campoCategoriaSup.setText(superior);
         campoColor.setText(color+"");
         colorActual = color;
+        if(tipo!=null) {
+            if (tipo.equals("gasto")) {
+                btnGasto.setChecked(true);
+            } else {
+                btnIngreso.setChecked(true);
+            }
+        }
+        if(nombre!=null){
+            if(nombre.length()!=0) {
+                iconoCategoriaVP.setText(nombre.charAt(0) + "");
+            }
+            nombreCategoriaVP.setText(nombre);
+        }
+    }
 
+    private void listenerBotonesPrincipales(){
         btnConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,12 +83,24 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
                 intent.putExtra("nombreCategoria",campoNombre.getText().toString());
                 intent.putExtra("categoriaSuperior",campoCategoriaSup.getText().toString());
                 intent.putExtra("colorCategoria",colorActual);
-                intent.putExtra("tipoC","gasto");
+                String tipoCategoria;
+                if(btnGasto.isChecked()){
+                    tipoCategoria = "gasto";
+                }
+                else {
+                    tipoCategoria = "ingreso";
+                }
+                intent.putExtra("tipoC",tipoCategoria);
                 setResult(RESULT_OK, intent);
                 finish();
             }
         });
-        definirSeleccionarColor();
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void definirSeleccionarColor(){
@@ -73,6 +119,8 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
                     public void onOk(AmbilWarnaDialog dialog, int color) {
                         colorActual = color;
                         campoColor.setText(""+color);
+                        Drawable bg = iconoCategoriaVP.getBackground();
+                        bg.setColorFilter(color, PorterDuff.Mode.SRC);
                     }
                 });
                 paletaColores.show();

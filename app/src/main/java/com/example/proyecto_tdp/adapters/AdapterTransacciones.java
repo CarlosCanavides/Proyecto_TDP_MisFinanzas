@@ -1,6 +1,5 @@
 package com.example.proyecto_tdp.adapters;
 
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -17,10 +16,12 @@ public class AdapterTransacciones extends BaseExpandableListAdapter {
 
     private List<String> fechas;
     private Map<String, List<Transaccion>> mapTransacciones;
+    private Map<Transaccion, Integer> mapColorCategoria;
 
-    public AdapterTransacciones(List<String> fechas, Map<String, List<Transaccion>> mapTransacciones) {
+    public AdapterTransacciones(List<String> fechas, Map<String, List<Transaccion>> mapTransacciones, Map<Transaccion, Integer> mapColorCategoria) {
         this.fechas = fechas;
         this.mapTransacciones = mapTransacciones;
+        this.mapColorCategoria = mapColorCategoria;
     }
 
     @Override
@@ -121,8 +122,9 @@ public class AdapterTransacciones extends BaseExpandableListAdapter {
         else {
             tvLetra.setText("S");
         }
+        int colorCategoria = mapColorCategoria.get(transaccion);
         Drawable bg = tvLetra.getBackground();
-        bg.setColorFilter(Color.parseColor("#7373FF"), PorterDuff.Mode.SRC);
+        bg.setColorFilter(colorCategoria, PorterDuff.Mode.SRC);
         return convertView;
     }
 

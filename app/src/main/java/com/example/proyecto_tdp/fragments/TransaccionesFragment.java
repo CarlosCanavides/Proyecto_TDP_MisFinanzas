@@ -12,12 +12,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.activities.SetTransaccionActivity;
 import com.example.proyecto_tdp.adapters.AdapterTransacciones;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
+import com.example.proyecto_tdp.view_models.ViewModelSubcategoria;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -34,12 +34,14 @@ public class TransaccionesFragment extends Fragment {
     private ExpandableListView expTransacciones;
     private List<String> fechas;
     private Map<String, List<Transaccion>> mapTransacciones;
+    private Map<Transaccion, Integer> mapColorCategoria;
     private AdapterTransacciones adapter;
 
     private View vista;
     private static final int NRO_PEDIDO_SET = 1827;
 
     private ViewModelTransaccion viewModelTransaccion;
+    private ViewModelSubcategoria viewModelSubcategoria;
 
     @Nullable
     @Override
@@ -54,7 +56,8 @@ public class TransaccionesFragment extends Fragment {
     private void inicializarListViewTransacciones(){
         fechas = new ArrayList<>();
         mapTransacciones = new HashMap<>();
-        adapter = new AdapterTransacciones(fechas,mapTransacciones);
+        mapColorCategoria = new HashMap<>();
+        adapter = new AdapterTransacciones(fechas,mapTransacciones,mapColorCategoria);
         expTransacciones.setAdapter(adapter);
 
         expTransacciones.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -84,11 +87,13 @@ public class TransaccionesFragment extends Fragment {
 
     private void inicializarViewModel(){
         viewModelTransaccion = ViewModelProviders.of(getActivity()).get(ViewModelTransaccion.class);
+        viewModelSubcategoria = ViewModelProviders.of(getActivity()).get(ViewModelSubcategoria.class);
         viewModelTransaccion.getAllTransacciones().observe(getActivity(), new Observer<List<Transaccion>>() {
             @Override
             public void onChanged(List<Transaccion> transaccions) {
                 fechas.clear();
                 mapTransacciones.clear();
+                mapColorCategoria.clear();
                 for(Transaccion t : transaccions){
                     Date fechaDate = t.getFecha();
                     DateFormat formatter = new SimpleDateFormat(Constantes.FORMATO_FECHA);
@@ -108,6 +113,8 @@ public class TransaccionesFragment extends Fragment {
                     else{
                         mapTransacciones.get(fechaNueva).add(t);
                     }
+                    int colorCategoria = viewModelSubcategoria.getSubcategoriaPorNombre(t.getCategoria()).getColorSubcategoria();
+                    mapColorCategoria.put(t,colorCategoria);
                 }
                 adapter.notifyDataSetChanged();
                 for (int i=0; i<fechas.size(); i++){

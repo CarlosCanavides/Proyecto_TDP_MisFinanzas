@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -46,14 +45,7 @@ public class CategoriaActivity extends AppCompatActivity {
 
         inicializarListViewCategorias();
         inicializarViewModels();
-
-        btnAgregarCategoria.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CategoriaActivity.this, NuevaCategoriaActivity.class);
-                startActivityForResult(intent, PEDIDO_NUEVA_CATEGORIA);
-            }
-        });
+        inicializarBotonPrincipal();
 
         childClickListener = new ExpandableListView.OnChildClickListener() {
             @Override
@@ -112,6 +104,32 @@ public class CategoriaActivity extends AppCompatActivity {
         expandableLV.setAdapter(adapterCategorias);
     }
 
+    private void inicializarBotonPrincipal(){
+        btnAgregarCategoria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CategoriaActivity.this, NuevaCategoriaActivity.class);
+                startActivityForResult(intent, PEDIDO_NUEVA_CATEGORIA);
+            }
+        });
+    }
+
+    private void setListenerSeleccionarSubcategoria(){
+        Intent intent = getIntent();
+        childClickListener = intent.getParcelableExtra("listener_subcategorias");
+        childClickListener = new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Intent intent = new Intent();
+                Subcategoria subcategoria = mapSubcategorias.get(categorias.get(groupPosition)).get(childPosition);
+                intent.putExtra("id_categoria_elegida", subcategoria.getNombreSubcategoria());
+                setResult(RESULT_OK, intent);
+                finish();
+                return true;
+            }
+        };
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -131,9 +149,6 @@ public class CategoriaActivity extends AppCompatActivity {
                         Subcategoria subcategoria = new Subcategoria(nombreCategoria,categoriaSuperior,colorCategoria,tipoC);
                         viewModelSubcategoria.insertarSubcategoria(subcategoria);
                     }
-                }
-                else {
-                    mostrarMensaje("CATEGORIA NO REGISTRADA");
                 }
             }
         }
@@ -159,28 +174,7 @@ public class CategoriaActivity extends AppCompatActivity {
                         viewModelSubcategoria.actualizarSubcategoria(subcategoria);
                     }
                 }
-                else {
-                    mostrarMensaje("CATEGORIA NO REGISTRADA");
-                }
             }
         }
-    }
-
-    private void mostrarMensaje(String mensaje){
-        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
-    }
-
-    public void setListenerSeleccionarSubcategoria(){
-        childClickListener = new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Intent intent = new Intent();
-                Subcategoria subcategoria = mapSubcategorias.get(categorias.get(groupPosition)).get(childPosition);
-                intent.putExtra("id_categoria_elegida", subcategoria.getNombreSubcategoria());
-                setResult(RESULT_OK, intent);
-                finish();
-                return true;
-            }
-        };
     }
 }
