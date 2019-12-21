@@ -26,6 +26,7 @@ import com.example.proyecto_tdp.view_models.ViewModelSubcategoria;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
 import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,6 +46,7 @@ public class TransaccionesFragment extends Fragment {
     private ImageButton btnMesAnterior;
     private ImageButton btnMesSiguiente;
     private TextView tvMesTransacciones;
+    private TextView tvGastoPorMes;
     private DateFormat formatFecha = new SimpleDateFormat(Constantes.FORMATO_FECHA);
     private DateFormat formatFechaMes = new SimpleDateFormat("MM/yyyy");
 
@@ -52,6 +54,9 @@ public class TransaccionesFragment extends Fragment {
     private String fechaFin;
     private String mesActual;
     private Calendar calendario;
+
+    private float gastoPorMes;
+    private NumberFormat nf = NumberFormat.getInstance(new Locale("es", "ES"));
 
     LiveData<List<Transaccion>> liveData;
 
@@ -69,6 +74,7 @@ public class TransaccionesFragment extends Fragment {
         btnMesAnterior = vista.findViewById(R.id.btn_mes_anterior);
         btnMesSiguiente = vista.findViewById(R.id.btn_mes_siguiente);
         tvMesTransacciones = vista.findViewById(R.id.transaccion_mes);
+        tvGastoPorMes = vista.findViewById(R.id.transaccion_gasto_por_mes);
         inicializarListViewTransacciones();
         inicializarPeriodoDeTiempo();
         inicializarViewModel();
@@ -161,6 +167,7 @@ public class TransaccionesFragment extends Fragment {
     }
 
     private void recopilarDatos(){
+        gastoPorMes = 0;
         liveData =  viewModelTransaccion.getTransaccionesDesdeHasta(fechaInicio,fechaFin);
         liveData.observe(getActivity(), new Observer<List<Transaccion>>(){
             @Override
@@ -168,10 +175,12 @@ public class TransaccionesFragment extends Fragment {
                 fechas.clear();
                 mapTransacciones.clear();
                 mapColorCategoria.clear();
+                gastoPorMes = 0;
                 adapter.notifyDataSetChanged();
                 for(Transaccion t : transaccions){
                     actualizarDatos(t);
                 }
+                actualizarTVGastoPorMes();
                 adapter.notifyDataSetChanged();
                 for (int i=0; i<fechas.size(); i++){
                     expTransacciones.expandGroup(i);
@@ -194,6 +203,15 @@ public class TransaccionesFragment extends Fragment {
         }
         Subcategoria subcategoria = viewModelSubcategoria.getSubcategoriaPorNombre(t.getCategoria());
         mapColorCategoria.put(t,subcategoria.getColorSubcategoria());
+        gastoPorMes += t.getPrecio();
+    }
+
+    private void actualizarTVGastoPorMes(){
+        if (gastoPorMes >= 0) {
+            tvGastoPorMes.setText("+ $ "+String.format( "%.2f", Math.abs(gastoPorMes)));
+        } else {
+            tvGastoPorMes.setText("- $ "+String.format( "%.2f", Math.abs(gastoPorMes)));
+        }
     }
 
     @Override
@@ -211,8 +229,6 @@ public class TransaccionesFragment extends Fragment {
 
                 float monto = 0;
                 try {
-                    Locale spanish = new Locale("es", "ES");
-                    NumberFormat nf = NumberFormat.getInstance(spanish);
                     monto = nf.parse(precio).floatValue();
                 }catch (Exception e) {
                     mostrarMensaje("El monto ingresado debe ser mayor a 0");

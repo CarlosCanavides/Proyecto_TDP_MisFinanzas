@@ -48,6 +48,7 @@
         android:background="@color/colorPrimaryDark">
 
         <TextView
+            android:id="@+id/transaccion_gasto_por_mes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="-$ 1320,00"
