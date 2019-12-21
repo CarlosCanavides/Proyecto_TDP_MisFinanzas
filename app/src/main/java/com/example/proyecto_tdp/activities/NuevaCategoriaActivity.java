@@ -1,6 +1,9 @@
 package com.example.proyecto_tdp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,6 +16,13 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import com.example.proyecto_tdp.R;
+import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
+import com.example.proyecto_tdp.view_models.ViewModelCategoria;
+import com.example.proyecto_tdp.views.SeleccionCategoriaDialog;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class NuevaCategoriaActivity extends AppCompatActivity {
@@ -22,12 +32,14 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
     private RadioButton btnGasto;
     private RadioButton btnIngreso;
     private EditText campoNombre;
-    private EditText campoCategoriaSup;
+    private Button campoCategoriaSup;
+    private SeleccionCategoriaDialog seleccionCategoriaDialog;
     private TextView campoColor;
     private AmbilWarnaDialog paletaColores;
     private TextView iconoCategoriaVP;
     private TextView nombreCategoriaVP;
     private int colorActual;
+    private List<Categoria> categoriasSuperiores;
     private static final int COLOR_CATEGORIA_POR_DEFECTO = Color.parseColor("#7373FF");
 
     @Override
@@ -48,6 +60,7 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
         inicializarValoresCampos();
         listenerBotonesPrincipales();
         definirSeleccionarColor();
+        definirSeleccionarCategoriaSuperior();
     }
 
     private void inicializarValoresCampos(){
@@ -56,6 +69,9 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
         String superior = intent.getStringExtra("categoria_superior");
         int color = intent.getIntExtra("color_subcategoria",COLOR_CATEGORIA_POR_DEFECTO);
         String tipo = intent.getStringExtra("tipo_subcategoria");
+        if(superior==null) {
+            superior = "Seleccionar categoria superior";
+        }
         campoNombre.setText(nombre);
         campoCategoriaSup.setText(superior);
         campoColor.setText(color+"");
@@ -73,6 +89,15 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
             }
             nombreCategoriaVP.setText(nombre);
         }
+        categoriasSuperiores = new ArrayList<>();
+        ViewModelCategoria viewModelCategoria =  ViewModelProviders.of(this).get(ViewModelCategoria.class);
+        viewModelCategoria.getAllCategorias().observe(this, new Observer<List<Categoria>>() {
+            @Override
+            public void onChanged(List<Categoria> categorias) {
+                categoriasSuperiores.addAll(categorias);
+                seleccionCategoriaDialog.setCategoriasSuperiores(categorias);
+            }
+        });
     }
 
     private void listenerBotonesPrincipales(){
@@ -124,6 +149,22 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
                     }
                 });
                 paletaColores.show();
+            }
+        });
+    }
+
+    private void definirSeleccionarCategoriaSuperior(){
+        seleccionCategoriaDialog = new SeleccionCategoriaDialog(categoriasSuperiores,
+                                   new SeleccionCategoriaDialog.SeleccionCategoriaListener(){
+                                   @Override
+                                   public void onSelectCategoria(String idCategoriaSeleccionada){
+                                       campoCategoriaSup.setText(idCategoriaSeleccionada);
+                                   }
+        });
+        campoCategoriaSup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                seleccionCategoriaDialog.show(getSupportFragmentManager(),"Seleccionar categoria superior");
             }
         });
     }
