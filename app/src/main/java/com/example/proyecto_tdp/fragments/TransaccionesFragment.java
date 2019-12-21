@@ -5,17 +5,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.activities.SetTransaccionActivity;
 import com.example.proyecto_tdp.adapters.AdapterTransacciones;
 import com.example.proyecto_tdp.R;
+import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.view_models.ViewModelSubcategoria;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
@@ -23,6 +28,7 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +42,18 @@ public class TransaccionesFragment extends Fragment {
     private Map<String, List<Transaccion>> mapTransacciones;
     private Map<Transaccion, Integer> mapColorCategoria;
     private AdapterTransacciones adapter;
+    private ImageButton btnMesAnterior;
+    private ImageButton btnMesSiguiente;
+    private TextView tvMesTransacciones;
+    private DateFormat formatFecha = new SimpleDateFormat(Constantes.FORMATO_FECHA);
+    private DateFormat formatFechaMes = new SimpleDateFormat("MM/yyyy");
+
+    private String fechaInicio;
+    private String fechaFin;
+    private String mesActual;
+    private Calendar calendario;
+
+    LiveData<List<Transaccion>> liveData;
 
     private View vista;
     private static final int NRO_PEDIDO_SET = 1827;
@@ -48,8 +66,13 @@ public class TransaccionesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         vista = inflater.inflate(R.layout.fragment_transacciones, container, false);
         expTransacciones = vista.findViewById(R.id.expTransacciones);
+        btnMesAnterior = vista.findViewById(R.id.btn_mes_anterior);
+        btnMesSiguiente = vista.findViewById(R.id.btn_mes_siguiente);
+        tvMesTransacciones = vista.findViewById(R.id.transaccion_mes);
         inicializarListViewTransacciones();
+        inicializarPeriodoDeTiempo();
         inicializarViewModel();
+        listenerBotonesPrincipales();
         return vista;
     }
 
@@ -85,36 +108,69 @@ public class TransaccionesFragment extends Fragment {
         });
     }
 
+    private void inicializarPeriodoDeTiempo(){
+        calendario = Calendar.getInstance();
+        mesActual = formatFechaMes.format(calendario.getTime());
+        setIntervaloTiempo();
+    }
+
+    private void setIntervaloTiempo(){
+        String mes = formatFechaMes.format(calendario.getTime());
+        tvMesTransacciones.setText(mes);
+        calendario.set(Calendar.DAY_OF_MONTH,1);
+        fechaInicio = formatFecha.format(calendario.getTime());
+        calendario.set(Calendar.DAY_OF_MONTH, calendario.getActualMaximum(Calendar.DAY_OF_MONTH));
+        fechaFin = formatFecha.format(calendario.getTime());
+    }
+
     private void inicializarViewModel(){
         viewModelTransaccion = ViewModelProviders.of(getActivity()).get(ViewModelTransaccion.class);
         viewModelSubcategoria = ViewModelProviders.of(getActivity()).get(ViewModelSubcategoria.class);
-        viewModelTransaccion.getAllTransacciones().observe(getActivity(), new Observer<List<Transaccion>>() {
+        recopilarDatos();
+    }
+
+    private void listenerBotonesPrincipales(){
+        btnMesAnterior.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calendario.set(Calendar.DAY_OF_MONTH,1);
+                calendario.set(Calendar.MONTH, calendario.get(Calendar.MONTH)-1);
+                setIntervaloTiempo();
+                liveData.removeObservers(getActivity());
+                recopilarDatos();
+                btnMesSiguiente.setEnabled(true);
+                btnMesSiguiente.setVisibility(View.VISIBLE);
+            }
+        });
+        btnMesSiguiente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calendario.set(Calendar.DAY_OF_MONTH,1);
+                calendario.set(Calendar.MONTH, calendario.get(Calendar.MONTH)+1);
+                setIntervaloTiempo();
+                liveData.removeObservers(getActivity());
+                recopilarDatos();
+                if(formatFechaMes.format(calendario.getTime()).equals(mesActual)) {
+                    btnMesSiguiente.setEnabled(false);
+                    btnMesSiguiente.setVisibility(View.GONE);
+                }
+            }
+        });
+        btnMesSiguiente.setEnabled(false);
+        btnMesSiguiente.setVisibility(View.GONE);
+    }
+
+    private void recopilarDatos(){
+        liveData =  viewModelTransaccion.getTransaccionesDesdeHasta(fechaInicio,fechaFin);
+        liveData.observe(getActivity(), new Observer<List<Transaccion>>(){
             @Override
             public void onChanged(List<Transaccion> transaccions) {
                 fechas.clear();
                 mapTransacciones.clear();
                 mapColorCategoria.clear();
+                adapter.notifyDataSetChanged();
                 for(Transaccion t : transaccions){
-                    Date fechaDate = t.getFecha();
-                    DateFormat formatter = new SimpleDateFormat(Constantes.FORMATO_FECHA);
-                    String fechaNueva = formatter.format(fechaDate);
-                    if(!fechas.contains(fechaNueva)){
-                        fechas.add(fechaNueva);
-                        List<Transaccion> lista = mapTransacciones.get(fechaNueva);
-                        if(lista == null){
-                            lista = new ArrayList<>();
-                            lista.add(t);
-                            mapTransacciones.put(fechaNueva,lista);
-                        }
-                        else {
-                            lista.add(t);
-                        }
-                    }
-                    else{
-                        mapTransacciones.get(fechaNueva).add(t);
-                    }
-                    int colorCategoria = viewModelSubcategoria.getSubcategoriaPorNombre(t.getCategoria()).getColorSubcategoria();
-                    mapColorCategoria.put(t,colorCategoria);
+                    actualizarDatos(t);
                 }
                 adapter.notifyDataSetChanged();
                 for (int i=0; i<fechas.size(); i++){
@@ -122,6 +178,22 @@ public class TransaccionesFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void actualizarDatos(Transaccion t){
+        String fechaTransaccion = formatFecha.format(t.getFecha());
+        List<Transaccion> transaccionesRealizadas = mapTransacciones.get(fechaTransaccion);
+        if(transaccionesRealizadas==null){
+            transaccionesRealizadas = new ArrayList<>();
+            transaccionesRealizadas.add(t);
+            fechas.add(fechaTransaccion);
+            mapTransacciones.put(fechaTransaccion,transaccionesRealizadas);
+        }
+        else {
+            transaccionesRealizadas.add(t);
+        }
+        Subcategoria subcategoria = viewModelSubcategoria.getSubcategoriaPorNombre(t.getCategoria());
+        mapColorCategoria.put(t,subcategoria.getColorSubcategoria());
     }
 
     @Override

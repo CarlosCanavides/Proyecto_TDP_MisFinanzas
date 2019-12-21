@@ -142,7 +142,7 @@ public class CategoriaActivity extends AppCompatActivity {
                 String tipoC = data.getStringExtra("tipoC");
 
                 if(nombreCategoria!=null) {
-                    if(categoriaSuperior==null || categoriaSuperior.equals("")) {
+                    if(categoriaSuperior==null || categoriaSuperior.equals("Seleccionar categoria superior")) {
                         Categoria categoria = new Categoria(nombreCategoria, colorCategoria, tipoC);
                         viewModelCategoria.insertarCategoria(categoria);
                     }
