@@ -17,5 +17,6 @@ public class Constantes {
     public static final String HISTORICO = "Historico";
 
     public static final String FORMATO_FECHA = "yyyy-MM-dd";
+    public static final String FORMATO_FECHA_PARA_VISUALIZAR = "dd/MM/yyyy";
 
 }

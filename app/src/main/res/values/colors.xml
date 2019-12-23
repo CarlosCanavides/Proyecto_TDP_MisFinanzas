@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#5365CA</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#1565C0</color>
+    <color name="colorPrimaryDark">#003c8f</color>
     <color name="colorAccent">#FF5722</color>
 
     <color name="colorBar">#BE2C4BF6</color>
+    <color name="colorPrimary1">#5365CA</color>
 
     <color name="primary_light">#C5CAE9</color>
     <color name="primary_text">#212121</color>
@@ -48,6 +49,19 @@
     <color name="colorDivider">#BDBDBD</color>
     <color name="background">#d3d3d3</color>
 
+    <color name="colorPrimaryDarker">#141F2A</color>
+    <color name="gray">#263238</color>
+    <color name="yellow">#eeff41</color>
+    <color name="semiTransparent">#46263238</color>
+    <color name="semiTransparentBlack">#6e232323</color>
+    <color name="semiTransparentLight">#505b5b5b</color>
+    <color name="semiTransparentLighter">#145b5b5b</color>
+    <color name="transparent">#00ffffff</color>
+    <color name="link_text">#1EA1F2</color>
 
+    <color name="green_ingreso_promedio">#D2EFDF</color>
+    <color name="red_gasto_promedio">#F6DFE1</color>
+    <color name="text_gasto_ingreso_promedio">#BDBDBD</color>
+    <color name="tab_indicator_color">#819EBF</color>
 
 </resources>

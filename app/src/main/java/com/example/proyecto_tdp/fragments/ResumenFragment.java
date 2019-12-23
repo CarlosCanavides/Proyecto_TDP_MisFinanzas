@@ -30,7 +30,7 @@ public class ResumenFragment extends Fragment {
     private List<String> meses;
     private Map<String, List<Transaccion>> mapTransacciones;
     private Map<String, Integer> categoriaGastoPredominante;
-    private DateFormat formatFecha;
+    private DateFormat formatFecha = new SimpleDateFormat("MM/yyyy");
 
     private View vista;
     @Nullable
@@ -40,7 +40,6 @@ public class ResumenFragment extends Fragment {
         recyclerTransacciones = vista.findViewById(R.id.recyclerResumen);
         inicializarListResumen();
         inicializarViewModel();
-        formatFecha = new SimpleDateFormat("MM/yyyy");
         return vista;
     }
 

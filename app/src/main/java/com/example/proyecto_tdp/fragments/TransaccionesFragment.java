@@ -142,7 +142,6 @@ public class TransaccionesFragment extends Fragment {
                 calendario.set(Calendar.DAY_OF_MONTH,1);
                 calendario.set(Calendar.MONTH, calendario.get(Calendar.MONTH)-1);
                 setIntervaloTiempo();
-                liveData.removeObservers(getActivity());
                 recopilarDatos();
                 btnMesSiguiente.setEnabled(true);
                 btnMesSiguiente.setVisibility(View.VISIBLE);
@@ -154,7 +153,6 @@ public class TransaccionesFragment extends Fragment {
                 calendario.set(Calendar.DAY_OF_MONTH,1);
                 calendario.set(Calendar.MONTH, calendario.get(Calendar.MONTH)+1);
                 setIntervaloTiempo();
-                liveData.removeObservers(getActivity());
                 recopilarDatos();
                 if(formatFechaMes.format(calendario.getTime()).equals(mesActual)) {
                     btnMesSiguiente.setEnabled(false);
