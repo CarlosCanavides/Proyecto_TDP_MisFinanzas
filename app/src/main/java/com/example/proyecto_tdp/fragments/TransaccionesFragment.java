@@ -58,8 +58,6 @@ public class TransaccionesFragment extends Fragment {
     private float gastoPorMes;
     private NumberFormat nf = NumberFormat.getInstance(new Locale("es", "ES"));
 
-    LiveData<List<Transaccion>> liveData;
-
     private View vista;
     private static final int NRO_PEDIDO_SET = 1827;
 
@@ -166,7 +164,7 @@ public class TransaccionesFragment extends Fragment {
 
     private void recopilarDatos(){
         gastoPorMes = 0;
-        liveData =  viewModelTransaccion.getTransaccionesDesdeHasta(fechaInicio,fechaFin);
+        LiveData<List<Transaccion>> liveData =  viewModelTransaccion.getTransaccionesDesdeHasta(fechaInicio,fechaFin);
         liveData.observe(getActivity(), new Observer<List<Transaccion>>(){
             @Override
             public void onChanged(List<Transaccion> transaccions) {

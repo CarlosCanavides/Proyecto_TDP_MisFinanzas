@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +15,7 @@ import com.example.proyecto_tdp.adapters.AdapterViewPagerHome;
 import com.google.android.material.tabs.TabLayout;
 import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
+import com.hookedonplay.decoviewlib.charts.SeriesLabel;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
 
 public class HomeFragment extends Fragment{
@@ -24,6 +24,7 @@ public class HomeFragment extends Fragment{
     private TextView tvPorcentaje;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private AdapterViewPagerHome adapterViewPagerHome;
     private View vista;
 
     @Nullable
@@ -34,18 +35,32 @@ public class HomeFragment extends Fragment{
         tvPorcentaje = vista.findViewById(R.id.tv_porcentaje);
         tabLayout = vista.findViewById(R.id.principal_tabLayout);
         viewPager = vista.findViewById(R.id.principal_viewpager);
-        viewPager.setAdapter(new AdapterViewPagerHome(getFragmentManager(),3));
+        inicializarViewPager();
+        inicializarBarraProgreso();
+        return vista;
+    }
+
+    private void inicializarViewPager(){
+        adapterViewPagerHome = new AdapterViewPagerHome(getChildFragmentManager(),3);
+        adapterViewPagerHome.addFragment(new IngresosFijosFragment(),"Ingresos Fijos");
+        adapterViewPagerHome.addFragment(new GastosFijosFragment(),"Gastos fijos");
+        adapterViewPagerHome.addFragment(new PlantillasFragment(),"Plantillas");
+        viewPager.setAdapter(adapterViewPagerHome);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void inicializarBarraProgreso(){
         barraProgreso.configureAngles(230,0);
         SeriesItem seriesItem = new SeriesItem.Builder(Color.parseColor("#FFE2E2E2"))
-                                .setRange(0, 100, 100)
-                                .setInitialVisibility(true)
-                                .build();
+                .setRange(0, 100, 100)
+                .setInitialVisibility(true)
+                .build();
         int backIndex = barraProgreso.addSeries(seriesItem);
         final SeriesItem seriesItem1 = new SeriesItem.Builder(Color.parseColor("#FFFF8800"))
-                                .setRange(0, 100, 0)
-                                .setInitialVisibility(true)
-                                .build();
+                .setRange(0, 100, 0)
+                .setInitialVisibility(true)
+                .setSeriesLabel(new SeriesLabel.Builder("%.0f%%").build())
+                .build();
         int series1Index = barraProgreso.addSeries(seriesItem1);
         barraProgreso.addEvent(new DecoEvent.Builder(25).setIndex(series1Index).setDelay(1000).build());
 
@@ -60,6 +75,5 @@ public class HomeFragment extends Fragment{
 
             }
         });
-        return vista;
     }
 }
