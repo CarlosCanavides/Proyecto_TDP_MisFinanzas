@@ -1,6 +1,7 @@
 package com.example.proyecto_tdp.base_de_datos.repositorios;
 
 import android.app.Application;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 import androidx.room.Room;
@@ -75,6 +76,41 @@ public class RepositorioCategorias {
         @Override
         protected Void doInBackground(Categoria... categoria) {
             categoriaDao.deleteCategoria(categoria[0]);
+            return null;
+        }
+    }
+
+    public static class InsertarCategoriasPorDefectoAsyncTask extends AsyncTask<Void,Void,Void> {
+        private CategoriaDao categoriaDao;
+
+        private InsertarCategoriasPorDefectoAsyncTask(CategoriaDao categoriaDao){
+            this.categoriaDao = categoriaDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Categoria c1 = new Categoria("Comida",Color.parseColor("#f44336"),"Gasto");
+            Categoria c2 = new Categoria("Entretenimiento",Color.parseColor("#f44336"),"Gasto");
+            Categoria c3 = new Categoria("Transporte",Color.parseColor("#f44336"),"Gasto");
+            Categoria c4 = new Categoria("Ropa",Color.parseColor("#f44336"),"Gasto");
+            Categoria c5 = new Categoria("Casa",Color.parseColor("#f44336"),"Gasto");
+            Categoria c6 = new Categoria("Salud y belleza",Color.parseColor("#f44336"),"Gasto");
+            Categoria c7 = new Categoria("Electrónica",Color.parseColor("#f44336"),"Gasto");
+            Categoria c8 = new Categoria("Trabajo",Color.parseColor("#f44336"),"Gasto");
+            Categoria c9 = new Categoria("Niños",Color.parseColor("#f44336"),"Gasto");
+            Categoria c10 = new Categoria("Servicios",Color.parseColor("#f44336"),"Gasto");
+            Categoria c11 = new Categoria("Vacaciones",Color.parseColor("#f44336"),"Gasto");
+            categoriaDao.insertCategoria(c1);
+            categoriaDao.insertCategoria(c2);
+            categoriaDao.insertCategoria(c3);
+            categoriaDao.insertCategoria(c4);
+            categoriaDao.insertCategoria(c5);
+            categoriaDao.insertCategoria(c6);
+            categoriaDao.insertCategoria(c7);
+            categoriaDao.insertCategoria(c8);
+            categoriaDao.insertCategoria(c9);
+            categoriaDao.insertCategoria(c10);
+            categoriaDao.insertCategoria(c11);
             return null;
         }
     }

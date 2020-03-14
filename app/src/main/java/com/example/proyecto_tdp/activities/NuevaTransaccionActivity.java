@@ -16,6 +16,7 @@ import com.example.proyecto_tdp.views.CalculatorInputDialog;
 import com.example.proyecto_tdp.views.CalendarioDialog;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class NuevaTransaccionActivity extends AppCompatActivity{
@@ -34,7 +35,7 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
     private static final int PEDIDO_SELECCIONAR_CATEGORIA = 18;
     private CalculatorInputDialog calculatorInputDialog;
     private CalendarioDialog calendarioDialog;
-    private DateFormat formatFecha =new SimpleDateFormat(Constantes.FORMATO_FECHA);
+    private DateFormat formatFecha = new SimpleDateFormat(Constantes.FORMATO_FECHA);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +90,7 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
                 calendarioDialog.show(getSupportFragmentManager(), getClass().getSimpleName());
             }
         });
-        campoFecha.setText(formatFecha.format(new Date()));
+        campoFecha.setText(formatFecha.format(Calendar.getInstance().getTime()));
     }
 
     private void definirSeleccionarCategoria(){

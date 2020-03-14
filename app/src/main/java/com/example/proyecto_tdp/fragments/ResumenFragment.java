@@ -60,6 +60,7 @@ public class ResumenFragment extends Fragment {
                 meses.clear();
                 mapTransacciones.clear();
                 categoriaGastoPredominante.clear();
+                adapter.notifyDataSetChanged();
                 for(Transaccion t : transaccions){
                     actualizarListaTransaccionesMes(t);
                     actualizarCategoriaGastoPredominante(t);

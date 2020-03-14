@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.proyecto_tdp.Constantes;
@@ -26,7 +24,6 @@ import com.example.proyecto_tdp.view_models.ViewModelSubcategoria;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
 import java.text.DateFormat;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -68,16 +65,21 @@ public class TransaccionesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         vista = inflater.inflate(R.layout.fragment_transacciones, container, false);
-        expTransacciones = vista.findViewById(R.id.expTransacciones);
-        btnMesAnterior = vista.findViewById(R.id.btn_mes_anterior);
-        btnMesSiguiente = vista.findViewById(R.id.btn_mes_siguiente);
-        tvMesTransacciones = vista.findViewById(R.id.transaccion_mes);
-        tvGastoPorMes = vista.findViewById(R.id.transaccion_gasto_por_mes);
+        return vista;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        expTransacciones = view.findViewById(R.id.expTransacciones);
+        btnMesAnterior = view.findViewById(R.id.btn_mes_anterior);
+        btnMesSiguiente = view.findViewById(R.id.btn_mes_siguiente);
+        tvMesTransacciones = view.findViewById(R.id.transaccion_mes);
+        tvGastoPorMes = view.findViewById(R.id.transaccion_gasto_por_mes);
         inicializarListViewTransacciones();
         inicializarPeriodoDeTiempo();
         inicializarViewModel();
         listenerBotonesPrincipales();
-        return vista;
     }
 
     private void inicializarListViewTransacciones(){
@@ -164,8 +166,7 @@ public class TransaccionesFragment extends Fragment {
 
     private void recopilarDatos(){
         gastoPorMes = 0;
-        LiveData<List<Transaccion>> liveData =  viewModelTransaccion.getTransaccionesDesdeHasta(fechaInicio,fechaFin);
-        liveData.observe(getActivity(), new Observer<List<Transaccion>>(){
+        viewModelTransaccion.getTransaccionesDesdeHasta(fechaInicio,fechaFin).observe(getActivity(), new Observer<List<Transaccion>>(){
             @Override
             public void onChanged(List<Transaccion> transaccions) {
                 fechas.clear();
