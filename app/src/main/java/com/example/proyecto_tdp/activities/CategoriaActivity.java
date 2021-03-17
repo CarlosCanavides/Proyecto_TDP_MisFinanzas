@@ -3,7 +3,6 @@ package com.example.proyecto_tdp.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.ExpandableListView;
 import androidx.annotation.Nullable;

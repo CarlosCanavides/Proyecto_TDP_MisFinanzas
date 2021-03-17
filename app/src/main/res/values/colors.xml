@@ -64,4 +64,6 @@
     <color name="text_gasto_ingreso_promedio">#BDBDBD</color>
     <color name="tab_indicator_color">#819EBF</color>
 
+    <color name="background_claro">#F1F0F0</color>
+
 </resources>

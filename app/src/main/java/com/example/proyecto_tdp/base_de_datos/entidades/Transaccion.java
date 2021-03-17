@@ -28,7 +28,7 @@ public class Transaccion {
     @ColumnInfo(name = "precio")
     private float precio;
 
-    @ColumnInfo(name = "categoria", defaultValue = "null")
+    @ColumnInfo(name = "categoria", defaultValue = "NULL")
     private String categoria;
 
     @ColumnInfo(name = "tipoTransaccion")

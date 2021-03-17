@@ -9,22 +9,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_tdp.R;
-import com.example.proyecto_tdp.adapters.AdapterViewPagerHome;
-import com.google.android.material.tabs.TabLayout;
+import com.example.proyecto_tdp.adapters.AdapterTransaccionesFijas;
 import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.charts.SeriesLabel;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeFragment extends Fragment{
 
     private DecoView barraProgreso;
     private TextView tvPorcentaje;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    private AdapterViewPagerHome adapterViewPagerHome;
+    private RecyclerView transaccionesFijas;
+    private AdapterTransaccionesFijas adapterTransaccionesFijas;
     private View vista;
 
     @Nullable
@@ -33,20 +35,16 @@ public class HomeFragment extends Fragment{
         vista = inflater.inflate(R.layout.fragment_home, container, false);
         barraProgreso = vista.findViewById(R.id.progress_bar_circular);
         tvPorcentaje = vista.findViewById(R.id.tv_porcentaje);
-        tabLayout = vista.findViewById(R.id.principal_tabLayout);
-        viewPager = vista.findViewById(R.id.principal_viewpager);
-        inicializarViewPager();
+        transaccionesFijas = vista.findViewById(R.id.recycler_transacciones_fijas);
+        List lista = new ArrayList();
+        lista.add("Ingresos Fijos");
+        lista.add("Gastos Fijos");
+        lista.add("Plantillas");
+        transaccionesFijas.setLayoutManager(new GridLayoutManager(getActivity(),1));
+        adapterTransaccionesFijas = new AdapterTransaccionesFijas(lista);
+        transaccionesFijas.setAdapter(adapterTransaccionesFijas);
         inicializarBarraProgreso();
         return vista;
-    }
-
-    private void inicializarViewPager(){
-        adapterViewPagerHome = new AdapterViewPagerHome(getChildFragmentManager(),3);
-        adapterViewPagerHome.addFragment(new IngresosFijosFragment(),"Ingresos Fijos");
-        adapterViewPagerHome.addFragment(new GastosFijosFragment(),"Gastos fijos");
-        adapterViewPagerHome.addFragment(new PlantillasFragment(),"Plantillas");
-        viewPager.setAdapter(adapterViewPagerHome);
-        tabLayout.setupWithViewPager(viewPager);
     }
 
     private void inicializarBarraProgreso(){

@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_claro">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
@@ -138,23 +139,24 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/espacio_small"
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="@dimen/espacio_small">
+            android:background="@color/background_white">
 
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:stretchColumns="0,1"
-                android:layout_marginTop="@dimen/espacio_mediano">
+                android:background="@color/background_white">
 
                 <TableRow>
                     <LinearLayout
@@ -245,26 +247,28 @@
 
             </TableLayout>
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/principal_tabLayout"
-                android:layout_marginTop="@dimen/espacio_mediano"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabIndicatorColor="@color/colorPrimary"
-                app:tabSelectedTextColor="@color/colorPrimary"
-                app:tabTextAppearance="@style/Widget.TabItem">
-
-            </com.google.android.material.tabs.TabLayout>
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/principal_viewpager"
-                android:layout_width="match_parent"
-                android:layout_height="400dp"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:background="@color/white"/>
-
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Transacciones programadas"
+            android:layout_marginStart="@dimen/espacio_mediano"
+            android:layout_marginTop="@dimen/espacio_mediano"
+            android:layout_marginBottom="@dimen/espacio_mediano"
+            android:textStyle="bold"
+            android:textSize="15dp">
+
+        </TextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_transacciones_fijas"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

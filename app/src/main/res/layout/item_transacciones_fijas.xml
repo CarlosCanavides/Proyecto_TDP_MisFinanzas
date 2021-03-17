@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_claro">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/espacio_small"
+        android:layout_marginEnd="@dimen/espacio_small"
+        android:layout_marginTop="@dimen/espacio_small"
+        android:layout_marginBottom="@dimen/espacio_small"
+        app:cardCornerRadius="7dp"
+        app:cardElevation="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/transaccion_fija_icono"
+                android:layout_width="@dimen/size_circularview"
+                android:layout_height="@dimen/size_circularview"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/espacio_mediano"
+                android:layout_marginEnd="@dimen/espacio_mediano"
+                android:background="@drawable/textview_circular"
+                android:backgroundTint="@color/colorAccent"
+                android:text="T"
+                android:textAlignment="center"
+                android:textColor="@color/background_white"
+                android:textSize="@dimen/text_circularview" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginEnd="@dimen/espacio_small"
+                android:divider="@color/primary_light"
+                android:showDividers="middle">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/size_contenedor_info"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/transaccion_fija_nombre"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/espacio_mediano"
+                            android:layout_marginTop="@dimen/espacio_mediano"
+                            android:layout_marginEnd="@dimen/espacio_mediano"
+                            android:lines="1"
+                            android:singleLine="true"
+                            android:text="HOLAAAA"
+                            android:textStyle="bold|italic"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                            android:textSize="@dimen/size_titulo_item_transaccion"/>
+
+                        <TextView
+                            android:id="@+id/transaccion_fija_info"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/espacio_mediano"
+                            android:layout_marginTop="@dimen/espacio_small"
+                            android:layout_marginEnd="@dimen/espacio_mediano"
+                            android:textStyle="italic"
+                            android:lines="1"
+                            android:singleLine="true"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/transaccion_fija_monto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="$100,00"
+                        android:textStyle="bold"
+                        android:gravity="right"
+                        android:layout_marginEnd="@dimen/espacio_mediano"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/primary_light">
+                </View>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
