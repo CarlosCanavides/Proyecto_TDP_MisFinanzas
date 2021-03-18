@@ -12,9 +12,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.adapters.AdapterCategorias;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
-import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
 import com.example.proyecto_tdp.view_models.ViewModelCategoria;
-import com.example.proyecto_tdp.view_models.ViewModelSubcategoria;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,13 +22,12 @@ import java.util.Map;
 public class CategoriaActivity extends AppCompatActivity {
 
     private List<Categoria> categorias;
-    private Map<Categoria, List<Subcategoria>> mapSubcategorias;
+    private Map<Categoria, List<Categoria>> mapSubcategorias;
     private AdapterCategorias adapterCategorias;
     private ExpandableListView expandableLV;
     private ExpandableListView.OnChildClickListener childClickListener;
     private FloatingActionButton btnAgregarCategoria;
     private ViewModelCategoria viewModelCategoria;
-    private ViewModelSubcategoria viewModelSubcategoria;
     private static final int PEDIDO_NUEVA_CATEGORIA = 18;
     private static final int PEDIDO_SET_CATEGORIA = 26;
     private static final int COLOR_CATEGORIA_POR_DEFECTO = Color.parseColor("#7373FF");
@@ -50,12 +47,12 @@ public class CategoriaActivity extends AppCompatActivity {
         childClickListener = new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Subcategoria subcategoria = mapSubcategorias.get(categorias.get(groupPosition)).get(childPosition);
+                Categoria categoriaSeleccionada = mapSubcategorias.get(categorias.get(groupPosition)).get(childPosition);
                 Intent intent = new Intent(CategoriaActivity.this, NuevaCategoriaActivity.class);
-                intent.putExtra("nombre_subcategoria", subcategoria.getNombreSubcategoria());
-                intent.putExtra("categoria_superior", subcategoria.getCategoriaSuperior());
-                intent.putExtra("color_subcategoria", subcategoria.getColorSubcategoria()+"");
-                intent.putExtra("tipo_subcategoria", subcategoria.getTipoSubcategoria());
+                intent.putExtra("nombre_categoria", categoriaSeleccionada.getNombreCategoria());
+                intent.putExtra("categoria_superior", categoriaSeleccionada.getCategoriaSuperior());
+                intent.putExtra("color_categoria", categoriaSeleccionada.getColorCategoria()+"");
+                intent.putExtra("tipo_subcategoria", categoriaSeleccionada.getTipoCategoria());
                 startActivityForResult(intent, PEDIDO_SET_CATEGORIA);
                 return true;
             }
@@ -70,27 +67,15 @@ public class CategoriaActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Categoria> c) {
                 categorias.clear();
-                categorias.addAll(c);
                 mapSubcategorias.clear();
-                for(Categoria categoria : categorias){
-                    List<Subcategoria> sc = new ArrayList<>();
-                    sc.add(new Subcategoria(categoria.getNombreCategoria()+" General","",categoria.getColorCategoria(),categoria.getTipoCategoria()));
-                    sc.addAll(viewModelSubcategoria.getSubcategoriasHijas(categoria.getNombreCategoria()));
-                    mapSubcategorias.put(categoria,sc);
-                }
-                adapterCategorias.notifyDataSetChanged();
-            }
-        });
-        viewModelSubcategoria = ViewModelProviders.of(this).get(ViewModelSubcategoria.class);
-        viewModelSubcategoria.getAllSubcategorias().observe(this, new Observer<List<Subcategoria>>() {
-            @Override
-            public void onChanged(List<Subcategoria> subC) {
-                mapSubcategorias.clear();
-                for(Categoria categoria : categorias){
-                    List<Subcategoria> sc = new ArrayList<>();
-                    sc.add(new Subcategoria(categoria.getNombreCategoria()+" General","",categoria.getColorCategoria(),categoria.getTipoCategoria()));
-                    sc.addAll(viewModelSubcategoria.getSubcategoriasHijas(categoria.getNombreCategoria()));
-                    mapSubcategorias.put(categoria,sc);
+                for(Categoria categoria : c){
+                    if(categoria.getCategoriaSuperior().equals("NULL")) {
+                        categorias.add(categoria);
+                        List<Categoria> sc = new ArrayList<>();
+                        sc.add(categoria);
+                        sc.addAll(viewModelCategoria.getSubcategorias(categoria.getNombreCategoria()));
+                        mapSubcategorias.put(categoria, sc);
+                    }
                 }
                 adapterCategorias.notifyDataSetChanged();
             }
@@ -121,8 +106,8 @@ public class CategoriaActivity extends AppCompatActivity {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Intent intent = new Intent();
-                Subcategoria subcategoria = mapSubcategorias.get(categorias.get(groupPosition)).get(childPosition);
-                intent.putExtra("id_categoria_elegida", subcategoria.getNombreSubcategoria());
+                Categoria categoria = mapSubcategorias.get(categorias.get(groupPosition)).get(childPosition);
+                intent.putExtra("id_categoria_elegida", categoria.getNombreCategoria());
                 setResult(RESULT_OK, intent);
                 finish();
                 return true;
@@ -141,14 +126,14 @@ public class CategoriaActivity extends AppCompatActivity {
                 String tipoC = data.getStringExtra("tipoC");
 
                 if(nombreCategoria!=null) {
-                    if(categoriaSuperior==null || categoriaSuperior.equals("Seleccionar categoria superior")) {
-                        Categoria categoria = new Categoria(nombreCategoria, colorCategoria, tipoC);
-                        viewModelCategoria.insertarCategoria(categoria);
+                    Categoria categoria;
+                    if(categoriaSuperior==null || categoriaSuperior.equals("Seleccionar categoria") || categoriaSuperior.equals("")) {
+                        categoria = new Categoria(nombreCategoria, "NULL", colorCategoria, tipoC);
                     }
                     else {
-                        Subcategoria subcategoria = new Subcategoria(nombreCategoria,categoriaSuperior,colorCategoria,tipoC);
-                        viewModelSubcategoria.insertarSubcategoria(subcategoria);
+                        categoria = new Categoria(nombreCategoria, categoriaSuperior, colorCategoria, tipoC);
                     }
+                    viewModelCategoria.insertarCategoria(categoria);
                 }
             }
         }
@@ -161,18 +146,16 @@ public class CategoriaActivity extends AppCompatActivity {
                 String idCategoria = data.getStringExtra("idCategoria");
 
                 if(nombreCategoria!=null) {
-                    if(categoriaSuperior==null || categoriaSuperior.equals("") || categoriaSuperior.equals("Categoría superior")){
-                        Categoria categoria = new Categoria(idCategoria, colorCategoria, tipoC);
-                        viewModelCategoria.actualizarCategoria(categoria);
-                        categoria.setNombreCategoria(nombreCategoria);
-                        viewModelCategoria.actualizarCategoria(categoria);
+                    Categoria categoria;
+                    if(categoriaSuperior==null || categoriaSuperior.equals("") || categoriaSuperior.equals("Seleccionar categoria")){
+                        categoria = new Categoria(idCategoria, "NULL", colorCategoria, tipoC);
                     }
                     else {
-                        Subcategoria subcategoria = new Subcategoria(idCategoria,categoriaSuperior,colorCategoria,tipoC);
-                        viewModelSubcategoria.actualizarSubcategoria(subcategoria);
-                        subcategoria.setNombreSubcategoria(nombreCategoria);
-                        viewModelSubcategoria.actualizarSubcategoria(subcategoria);
+                        categoria = new Categoria(idCategoria,categoriaSuperior,colorCategoria,tipoC);
                     }
+                    viewModelCategoria.actualizarCategoria(categoria);
+                    categoria.setNombreCategoria(nombreCategoria);
+                    viewModelCategoria.actualizarCategoria(categoria);
                 }
             }
         }

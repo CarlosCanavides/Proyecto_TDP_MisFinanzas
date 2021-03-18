@@ -24,6 +24,15 @@ public interface CategoriaDao {
     @Query("SELECT * FROM categoria WHERE nombreCategoria LIKE :nombreCategoria LIMIT 1")
     Categoria findByName(String nombreCategoria);
 
+    @Query("SELECT * FROM categoria WHERE categoriaSuperior LIKE NULL")
+    List<Categoria> getCategoriasSuperiores();
+
+    @Query("SELECT * FROM categoria WHERE categoriaSuperior LIKE :categoriaSuperior")
+    List<Categoria> getSubcategorias(String categoriaSuperior);
+
+    @Query("SELECT * FROM categoria WHERE nombreCategoria LIKE :nombreCategoria LIMIT 1")
+    Categoria getCategoria(String nombreCategoria);
+
     @Update
     void upDateCategoria(Categoria... categorias);
 

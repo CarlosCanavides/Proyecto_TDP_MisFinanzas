@@ -9,8 +9,8 @@ import androidx.room.TypeConverters;
 import com.example.proyecto_tdp.base_de_datos.DateConverter;
 import java.util.Date;
 
-@Entity(foreignKeys = @ForeignKey(entity = Subcategoria.class,
-        parentColumns = "nombreSubcategoria",
+@Entity(foreignKeys = @ForeignKey(entity = Categoria.class,
+        parentColumns = "nombreCategoria",
         childColumns = "categoria",
         onDelete = ForeignKey.NO_ACTION))
 public class Transaccion {

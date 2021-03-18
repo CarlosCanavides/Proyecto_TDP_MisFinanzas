@@ -18,10 +18,8 @@ import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.view_models.ViewModelCategoria;
 import com.example.proyecto_tdp.views.SeleccionCategoriaDialog;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class NuevaCategoriaActivity extends AppCompatActivity {
@@ -64,12 +62,12 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
 
     private void inicializarValoresCampos(){
         Intent intent = getIntent();
-        String nombre = intent.getStringExtra("nombre_subcategoria");
+        String nombre = intent.getStringExtra("nombre_categoria");
         String superior = intent.getStringExtra("categoria_superior");
-        int color = intent.getIntExtra("color_subcategoria",COLOR_CATEGORIA_POR_DEFECTO);
-        String tipo = intent.getStringExtra("tipo_subcategoria");
+        int color = intent.getIntExtra("color_categoria",COLOR_CATEGORIA_POR_DEFECTO);
+        String tipo = intent.getStringExtra("tipo_categoria");
         if(superior==null) {
-            superior = "Seleccionar categoria superior";
+            superior = "Seleccionar categoria";
         }
         campoNombre.setText(nombre);
         campoCategoriaSup.setText(superior);
@@ -93,7 +91,11 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
         viewModelCategoria.getAllCategorias().observe(this, new Observer<List<Categoria>>() {
             @Override
             public void onChanged(List<Categoria> categorias) {
-                categoriasSuperiores.addAll(categorias);
+                for(Categoria categoria : categorias) {
+                    if(categoria.getCategoriaSuperior().equals("NULL")) {
+                        categoriasSuperiores.add(categoria);
+                    }
+                }
                 seleccionCategoriaDialog.setCategoriasSuperiores(categorias);
             }
         });
@@ -163,7 +165,7 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
         campoCategoriaSup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                seleccionCategoriaDialog.show(getSupportFragmentManager(),"Seleccionar categoria superior");
+                seleccionCategoriaDialog.show(getSupportFragmentManager(),"Seleccionar categoria");
             }
         });
     }

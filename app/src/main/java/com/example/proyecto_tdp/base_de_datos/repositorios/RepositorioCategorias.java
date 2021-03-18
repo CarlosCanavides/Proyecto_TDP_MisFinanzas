@@ -1,7 +1,6 @@
 package com.example.proyecto_tdp.base_de_datos.repositorios;
 
 import android.app.Application;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 import androidx.room.Room;
@@ -9,6 +8,7 @@ import com.example.proyecto_tdp.base_de_datos.AppDataBase;
 import com.example.proyecto_tdp.base_de_datos.CategoriaDao;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class RepositorioCategorias {
 
@@ -23,6 +23,28 @@ public class RepositorioCategorias {
 
     public LiveData<List<Categoria>> getCategorias(){
         return categorias;
+    }
+
+    public List<Categoria> getSubcategorias(String categoriaSuperior){
+        try {
+            return new RepositorioCategorias.ObtenerSubcategoriasAsyncTask(categoriaDao).execute(categoriaSuperior).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Categoria getCategoria(String categoria){
+        try {
+            return new RepositorioCategorias.ObtenerCategoriaAsyncTask(categoriaDao).execute(categoria).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void insertarCategoria(Categoria categoria){
@@ -80,38 +102,30 @@ public class RepositorioCategorias {
         }
     }
 
-    public static class InsertarCategoriasPorDefectoAsyncTask extends AsyncTask<Void,Void,Void> {
+    public static class ObtenerSubcategoriasAsyncTask extends AsyncTask<String,Void,List<Categoria>> {
         private CategoriaDao categoriaDao;
 
-        private InsertarCategoriasPorDefectoAsyncTask(CategoriaDao categoriaDao){
+        private ObtenerSubcategoriasAsyncTask(CategoriaDao categoriaDao){
             this.categoriaDao = categoriaDao;
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            Categoria c1 = new Categoria("Comida",Color.parseColor("#f44336"),"Gasto");
-            Categoria c2 = new Categoria("Entretenimiento",Color.parseColor("#f44336"),"Gasto");
-            Categoria c3 = new Categoria("Transporte",Color.parseColor("#f44336"),"Gasto");
-            Categoria c4 = new Categoria("Ropa",Color.parseColor("#f44336"),"Gasto");
-            Categoria c5 = new Categoria("Casa",Color.parseColor("#f44336"),"Gasto");
-            Categoria c6 = new Categoria("Salud y belleza",Color.parseColor("#f44336"),"Gasto");
-            Categoria c7 = new Categoria("Electrónica",Color.parseColor("#f44336"),"Gasto");
-            Categoria c8 = new Categoria("Trabajo",Color.parseColor("#f44336"),"Gasto");
-            Categoria c9 = new Categoria("Niños",Color.parseColor("#f44336"),"Gasto");
-            Categoria c10 = new Categoria("Servicios",Color.parseColor("#f44336"),"Gasto");
-            Categoria c11 = new Categoria("Vacaciones",Color.parseColor("#f44336"),"Gasto");
-            categoriaDao.insertCategoria(c1);
-            categoriaDao.insertCategoria(c2);
-            categoriaDao.insertCategoria(c3);
-            categoriaDao.insertCategoria(c4);
-            categoriaDao.insertCategoria(c5);
-            categoriaDao.insertCategoria(c6);
-            categoriaDao.insertCategoria(c7);
-            categoriaDao.insertCategoria(c8);
-            categoriaDao.insertCategoria(c9);
-            categoriaDao.insertCategoria(c10);
-            categoriaDao.insertCategoria(c11);
-            return null;
+        protected List<Categoria> doInBackground(String... categoriaSuperior) {
+            return categoriaDao.getSubcategorias(categoriaSuperior[0]);
         }
     }
+
+    public static class ObtenerCategoriaAsyncTask extends AsyncTask<String,Void,Categoria> {
+        private CategoriaDao categoriaDao;
+
+        private ObtenerCategoriaAsyncTask(CategoriaDao categoriaDao){
+            this.categoriaDao = categoriaDao;
+        }
+
+        @Override
+        protected Categoria doInBackground(String... categoria) {
+            return categoriaDao.getCategoria(categoria[0]);
+        }
+    }
+
 }

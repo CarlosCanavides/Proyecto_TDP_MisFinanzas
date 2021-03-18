@@ -9,16 +9,15 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
-import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
 import java.util.List;
 import java.util.Map;
 
 public class AdapterCategorias extends BaseExpandableListAdapter {
 
     private List<Categoria> categorias;
-    private Map<Categoria, List<Subcategoria>> mapSubcategorias;
+    private Map<Categoria, List<Categoria>> mapSubcategorias;
 
-    public AdapterCategorias(List<Categoria> categorias, Map<Categoria, List<Subcategoria>> mapSubcategorias) {
+    public AdapterCategorias(List<Categoria> categorias, Map<Categoria, List<Categoria>> mapSubcategorias) {
         this.categorias = categorias;
         this.mapSubcategorias = mapSubcategorias;
     }
@@ -31,7 +30,7 @@ public class AdapterCategorias extends BaseExpandableListAdapter {
     @Override
     public int getChildrenCount(int groupPosition) {
         int size = 0;
-        List<Subcategoria> subcategorias = mapSubcategorias.get(categorias.get(groupPosition));
+        List<Categoria> subcategorias = mapSubcategorias.get(categorias.get(groupPosition));
         if(subcategorias!=null){
             size = subcategorias.size();
         }
@@ -82,15 +81,15 @@ public class AdapterCategorias extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        Subcategoria subcategoria =  mapSubcategorias.get(categorias.get(groupPosition)).get(childPosition);
+        Categoria categoria =  mapSubcategorias.get(categorias.get(groupPosition)).get(childPosition);
         convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_subcategoria, null, false);
         TextView tvNombre = convertView.findViewById(R.id.subcategoria_nombre);
         TextView tvLetra = convertView.findViewById(R.id.subcategoria_letra);
-        if(subcategoria!=null) {
-            tvNombre.setText(subcategoria.getNombreSubcategoria());
-            tvLetra.setText(subcategoria.getNombreSubcategoria().charAt(0)+"");
+        if(categoria!=null) {
+            tvNombre.setText(categoria.getNombreCategoria());
+            tvLetra.setText(categoria.getNombreCategoria().charAt(0)+"");
             Drawable bg = tvLetra.getBackground();
-            bg.setColorFilter(subcategoria.getColorSubcategoria(), PorterDuff.Mode.SRC);
+            bg.setColorFilter(categoria.getColorCategoria(), PorterDuff.Mode.SRC);
         }
         return convertView;
     }

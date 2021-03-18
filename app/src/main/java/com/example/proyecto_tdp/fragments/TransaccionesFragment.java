@@ -18,8 +18,9 @@ import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.activities.SetTransaccionActivity;
 import com.example.proyecto_tdp.adapters.AdapterTransacciones;
 import com.example.proyecto_tdp.R;
-import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
+import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
+import com.example.proyecto_tdp.view_models.ViewModelCategoria;
 import com.example.proyecto_tdp.view_models.ViewModelSubcategoria;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
 import java.text.DateFormat;
@@ -59,7 +60,7 @@ public class TransaccionesFragment extends Fragment {
     private static final int NRO_PEDIDO_SET = 1827;
 
     private ViewModelTransaccion viewModelTransaccion;
-    private ViewModelSubcategoria viewModelSubcategoria;
+    private ViewModelCategoria viewModelCategoria;
 
     @Nullable
     @Override
@@ -131,7 +132,7 @@ public class TransaccionesFragment extends Fragment {
 
     private void inicializarViewModel(){
         viewModelTransaccion = ViewModelProviders.of(getActivity()).get(ViewModelTransaccion.class);
-        viewModelSubcategoria = ViewModelProviders.of(getActivity()).get(ViewModelSubcategoria.class);
+        viewModelCategoria = ViewModelProviders.of(getActivity()).get(ViewModelCategoria.class);
         recopilarDatos();
     }
 
@@ -198,8 +199,8 @@ public class TransaccionesFragment extends Fragment {
         else {
             transaccionesRealizadas.add(t);
         }
-        Subcategoria subcategoria = viewModelSubcategoria.getSubcategoriaPorNombre(t.getCategoria());
-        mapColorCategoria.put(t,subcategoria.getColorSubcategoria());
+        Categoria categoria = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
+        mapColorCategoria.put(t,categoria.getColorCategoria());
         gastoPorMes += t.getPrecio();
     }
 

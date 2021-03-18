@@ -12,6 +12,9 @@ public class Categoria {
     @NonNull
     private String nombreCategoria;
 
+    @ColumnInfo(name = "categoriaSuperior", defaultValue = "NULL")
+    private String categoriaSuperior;
+
     @ColumnInfo(name = "colorCategoria")
     private int colorCategoria;
 
@@ -19,8 +22,9 @@ public class Categoria {
     private String tipoCategoria;
 
 
-    public Categoria(@NonNull String nombreCategoria, int colorCategoria, String tipoCategoria) {
+    public Categoria(@NonNull String nombreCategoria, String categoriaSuperior, int colorCategoria, String tipoCategoria) {
         this.nombreCategoria = nombreCategoria;
+        this.categoriaSuperior = categoriaSuperior;
         this.colorCategoria = colorCategoria;
         this.tipoCategoria = tipoCategoria;
     }
@@ -30,8 +34,16 @@ public class Categoria {
         return nombreCategoria;
     }
 
+    public String getCategoriaSuperior() {
+        return categoriaSuperior;
+    }
+
     public void setNombreCategoria(@NonNull String nombreCategoria) {
         this.nombreCategoria = nombreCategoria;
+    }
+
+    public void setCategoriaSuperior(@NonNull String categoriaSuperior) {
+        this.categoriaSuperior = categoriaSuperior;
     }
 
     public int getColorCategoria() {
@@ -54,5 +66,6 @@ public class Categoria {
         nombreCategoria = nuevosDatos.getNombreCategoria();
         colorCategoria = nuevosDatos.getColorCategoria();
         tipoCategoria = nuevosDatos.getTipoCategoria();
+        categoriaSuperior = nuevosDatos.getCategoriaSuperior();
     }
 }
