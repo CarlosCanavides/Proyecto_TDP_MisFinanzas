@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.adapters.AdapterInformeMes;
-import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
+import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
-import com.example.proyecto_tdp.view_models.ViewModelSubcategoria;
+import com.example.proyecto_tdp.view_models.ViewModelCategoria;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -34,13 +34,13 @@ public class GastoMesFregment extends Fragment {
     protected int anio;
     protected int mesNumero;
     private View vista;
-    protected List<Subcategoria> subcategoriasMes;
-    protected Map<String,Float> mapSubcategoriasGasto;
+    protected List<Categoria> categoriasMes;
+    protected Map<String,Float> mapCategoriasGasto;
     protected AdapterInformeMes adapterInforme;
 
-    private RecyclerView recyclerSubcategorias;
+    private RecyclerView recyclerCategorias;
     protected ViewModelTransaccion viewModelTransaccion;
-    protected ViewModelSubcategoria viewModelSubcategoria;
+    protected ViewModelCategoria viewModelCategoria;
     protected Calendar calendar;
     protected DateFormat formatFecha;
     protected String primerDia;
@@ -72,23 +72,23 @@ public class GastoMesFregment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         vista = inflater.inflate(R.layout.fragment_gasto_mes, container, false);
-        recyclerSubcategorias = vista.findViewById(R.id.recycler_informe_categorias);
+        recyclerCategorias = vista.findViewById(R.id.recycler_informe_categorias);
         inicializarLisViewCategorias();
         inicializarViewModels();
         return vista;
     }
 
     private void inicializarLisViewCategorias(){
-        subcategoriasMes = new ArrayList<>();
-        mapSubcategoriasGasto = new HashMap<>();
-        adapterInforme = new AdapterInformeMes(subcategoriasMes, mapSubcategoriasGasto);
-        recyclerSubcategorias.setLayoutManager(new GridLayoutManager(getActivity(),1));
-        recyclerSubcategorias.setAdapter(adapterInforme);
+        categoriasMes = new ArrayList<>();
+        mapCategoriasGasto = new HashMap<>();
+        adapterInforme = new AdapterInformeMes(categoriasMes, mapCategoriasGasto);
+        recyclerCategorias.setLayoutManager(new GridLayoutManager(getActivity(),1));
+        recyclerCategorias.setAdapter(adapterInforme);
     }
 
     private void inicializarViewModels(){
         viewModelTransaccion = ViewModelProviders.of(getActivity()).get(ViewModelTransaccion.class);
-        viewModelSubcategoria = ViewModelProviders.of(getActivity()).get(ViewModelSubcategoria.class);
+        viewModelCategoria = ViewModelProviders.of(getActivity()).get(ViewModelCategoria.class);
         recopilarDatos();
     }
 
@@ -98,17 +98,17 @@ public class GastoMesFregment extends Fragment {
             transaccionesDelMes.observe(getActivity(), new Observer<List<Transaccion>>(){
                 @Override
                 public void onChanged(List<Transaccion> transaccions) {
-                    subcategoriasMes.clear();
-                    mapSubcategoriasGasto.clear();
+                    categoriasMes.clear();
+                    mapCategoriasGasto.clear();
                     for (Transaccion t : transaccions) {
-                        Subcategoria subcategoria = viewModelSubcategoria.getSubcategoriaPorNombre(t.getCategoria());
-                        Float gastoCategoria = mapSubcategoriasGasto.get(subcategoria.getNombreSubcategoria());
+                        Categoria subcategoria = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
+                        Float gastoCategoria = mapCategoriasGasto.get(subcategoria.getNombreCategoria());
                         if (gastoCategoria == null) {
-                            subcategoriasMes.add(subcategoria);
-                            mapSubcategoriasGasto.put(subcategoria.getNombreSubcategoria(), Math.abs(t.getPrecio()));
+                            categoriasMes.add(subcategoria);
+                            mapCategoriasGasto.put(subcategoria.getNombreCategoria(), Math.abs(t.getPrecio()));
                         } else {
-                            mapSubcategoriasGasto.remove(subcategoria.getNombreSubcategoria());
-                            mapSubcategoriasGasto.put(subcategoria.getNombreSubcategoria(), gastoCategoria + Math.abs(t.getPrecio()));
+                            mapCategoriasGasto.remove(subcategoria.getNombreCategoria());
+                            mapCategoriasGasto.put(subcategoria.getNombreCategoria(), gastoCategoria + Math.abs(t.getPrecio()));
                         }
                     }
                     adapterInforme.notifyDataSetChanged();
@@ -131,8 +131,8 @@ public class GastoMesFregment extends Fragment {
 
     public void setDatos(int anio){
         setPeriodoTiempo(anio);
-        subcategoriasMes.clear();
-        mapSubcategoriasGasto.clear();
+        categoriasMes.clear();
+        mapCategoriasGasto.clear();
         recopilarDatos();
     }
 

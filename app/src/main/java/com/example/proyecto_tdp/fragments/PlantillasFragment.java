@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.adapters.AdapterHome;
-import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
+import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
-import com.example.proyecto_tdp.view_models.ViewModelSubcategoria;
+import com.example.proyecto_tdp.view_models.ViewModelCategoria;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +30,7 @@ public class PlantillasFragment extends Fragment {
     private AdapterHome adapterHome;
     private List<Transaccion> transacciones;
     private Map<Transaccion, Integer> mapColorCategoria;
-    private ViewModelSubcategoria viewModelSubcategoria;
+    private ViewModelCategoria viewModelCategoria;
     private ViewModelTransaccion viewModelTransaccion;
 
     @Nullable
@@ -53,7 +53,7 @@ public class PlantillasFragment extends Fragment {
 
     private void inicializarViewModels(){
         viewModelTransaccion = ViewModelProviders.of(getActivity()).get(ViewModelTransaccion.class);
-        viewModelSubcategoria = ViewModelProviders.of(getActivity()).get(ViewModelSubcategoria.class);
+        viewModelCategoria = ViewModelProviders.of(getActivity()).get(ViewModelCategoria.class);
         recopilarDatos();
     }
 
@@ -67,8 +67,8 @@ public class PlantillasFragment extends Fragment {
                     adapterHome.notifyDataSetChanged();
                     transacciones.addAll(transaccions);
                     for(Transaccion t : transaccions){
-                        Subcategoria subcategoria = viewModelSubcategoria.getSubcategoriaPorNombre(t.getCategoria());
-                        mapColorCategoria.put(t,subcategoria.getColorSubcategoria());
+                        Categoria subcategoria = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
+                        mapColorCategoria.put(t,subcategoria.getColorCategoria());
                     }
                     adapterHome.notifyDataSetChanged();
                 }

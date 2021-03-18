@@ -3,7 +3,8 @@ package com.example.proyecto_tdp.views;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
+
+import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.PieData;
@@ -32,8 +33,8 @@ public class GraficoInforme extends PieChart {
         super(context, attrs, defStyle);
     }
 
-    public GraficoInforme inicializarGraficoInforme(GraficoInforme grafico, List<Subcategoria> subcategorias, Map<String,Float> gastos){
-        calcularPorcentajes(subcategorias,gastos);
+    public GraficoInforme inicializarGraficoInforme(GraficoInforme grafico, List<Categoria> categorias, Map<String,Float> gastos){
+        calcularPorcentajes(categorias,gastos);
         grafico.getDescription().setText("");
         grafico.setBackgroundColor(Color.WHITE);
         grafico.animateY(400);
@@ -47,20 +48,20 @@ public class GraficoInforme extends PieChart {
         return grafico;
     }
 
-    private void calcularPorcentajes(List<Subcategoria> subcategorias, Map<String, Float> gastos){
+    private void calcularPorcentajes(List<Categoria> categorias, Map<String, Float> gastos){
         labels = new ArrayList<>();
         porcentajes = new ArrayList<>();
         colores = new ArrayList<>();
         float totalGasto = 0;
         float gastoPorCategoria;
-        for(Subcategoria s : subcategorias){
-            gastoPorCategoria = gastos.get(s.getNombreSubcategoria());
-            labels.add(s.getNombreSubcategoria());
-            colores.add(s.getColorSubcategoria());
+        for(Categoria c : categorias){
+            gastoPorCategoria = gastos.get(c.getNombreCategoria());
+            labels.add(c.getNombreCategoria());
+            colores.add(c.getColorCategoria());
             totalGasto += gastoPorCategoria;
         }
-        for(Subcategoria s : subcategorias) {
-            gastoPorCategoria = gastos.get(s.getNombreSubcategoria());
+        for(Categoria c : categorias) {
+            gastoPorCategoria = gastos.get(c.getNombreCategoria());
             porcentajes.add((gastoPorCategoria*100)/totalGasto);
         }
     }

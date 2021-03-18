@@ -9,20 +9,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_tdp.R;
-import com.example.proyecto_tdp.base_de_datos.entidades.Subcategoria;
+import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.views.GraficoInforme;
 import java.util.List;
 import java.util.Map;
 
 public class AdapterInformeMes extends RecyclerView.Adapter<AdapterInformeMes.ViewHolderInformeMes> {
 
-    private List<Subcategoria> subcategorias;
+    private List<Categoria> categorias;
     private Map<String, Float> gastoPorSubcategoria;
     private static final int TYPE_GRAFICO = 0;
     private static final int TYPE_SUBCATEGORIA = 1;
 
-    public AdapterInformeMes(List<Subcategoria> subcategorias, Map<String, Float> gastoPorSubcategoria) {
-        this.subcategorias = subcategorias;
+    public AdapterInformeMes(List<Categoria> categorias, Map<String, Float> gastoPorSubcategoria) {
+        this.categorias = categorias;
         this.gastoPorSubcategoria = gastoPorSubcategoria;
     }
 
@@ -52,23 +52,23 @@ public class AdapterInformeMes extends RecyclerView.Adapter<AdapterInformeMes.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolderInformeMes holder, int position) {
         if(position==0){
-            holder.graficoInforme.inicializarGraficoInforme(holder.graficoInforme,subcategorias,gastoPorSubcategoria);
+            holder.graficoInforme.inicializarGraficoInforme(holder.graficoInforme, categorias,gastoPorSubcategoria);
         }
         else {
-            Subcategoria subcategoria = subcategorias.get(position-1);
-            if (subcategoria != null) {
-                holder.tvNombreCategoria.setText(subcategoria.getNombreSubcategoria());
-                holder.tvGastoCategoria.setText("- $ " + gastoPorSubcategoria.get(subcategoria.getNombreSubcategoria()));
-                holder.tvIconoCategoria.setText(subcategoria.getNombreSubcategoria().charAt(0)+"");
+            Categoria categoria = categorias.get(position-1);
+            if (categoria != null) {
+                holder.tvNombreCategoria.setText(categoria.getNombreCategoria());
+                holder.tvGastoCategoria.setText("- $ " + gastoPorSubcategoria.get(categoria.getNombreCategoria()));
+                holder.tvIconoCategoria.setText(categoria.getNombreCategoria().charAt(0)+"");
                 Drawable bg = holder.tvIconoCategoria.getBackground();
-                bg.setColorFilter(subcategoria.getColorSubcategoria(), PorterDuff.Mode.SRC);
+                bg.setColorFilter(categoria.getColorCategoria(), PorterDuff.Mode.SRC);
             }
         }
     }
 
     @Override
     public int getItemCount() {
-        return subcategorias.size()+1;
+        return categorias.size()+1;
     }
 
     public class ViewHolderInformeMes extends RecyclerView.ViewHolder {
