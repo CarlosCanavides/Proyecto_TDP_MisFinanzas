@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_tdp.R;
@@ -92,7 +94,6 @@ public class AdapterResumen extends RecyclerView.Adapter<AdapterResumen.ViewHold
     public int getItemCount() {
         return meses.size();
     }
-
 
     public class ViewHolderResumen extends RecyclerView.ViewHolder{
 

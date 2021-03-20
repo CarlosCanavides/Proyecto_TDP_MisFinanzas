@@ -3,7 +3,6 @@ package com.example.proyecto_tdp.views;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
-
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.LegendEntry;

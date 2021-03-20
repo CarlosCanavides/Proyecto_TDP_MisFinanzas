@@ -15,8 +15,8 @@ import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.adapters.AdapterResumen;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +30,7 @@ public class ResumenFragment extends Fragment {
     private List<String> meses;
     private Map<String, List<Transaccion>> mapTransacciones;
     private Map<String, Integer> categoriaGastoPredominante;
-    private DateFormat formatFecha = new SimpleDateFormat("MM/yyyy");
+    private DateTimeFormatter formatFecha = DateTimeFormat.forPattern("MM/yyyy");
 
     private View vista;
     @Nullable
@@ -60,8 +60,7 @@ public class ResumenFragment extends Fragment {
                 meses.clear();
                 mapTransacciones.clear();
                 categoriaGastoPredominante.clear();
-                adapter.notifyDataSetChanged();
-                for(Transaccion t : transaccions){
+                for(Transaccion t : transaccions) {
                     actualizarListaTransaccionesMes(t);
                     actualizarCategoriaGastoPredominante(t);
                 }
@@ -71,7 +70,7 @@ public class ResumenFragment extends Fragment {
     }
 
     private void actualizarListaTransaccionesMes(Transaccion t){
-        String fecha = formatFecha.format(t.getFecha());
+        String fecha = formatFecha.print(t.getFecha().getTime());
         List<Transaccion> listaTransaccionesMes = mapTransacciones.get(fecha);
         if(listaTransaccionesMes==null){
             listaTransaccionesMes = new ArrayList<>();

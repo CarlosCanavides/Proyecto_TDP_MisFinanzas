@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.proyecto_tdp.Constantes;
@@ -22,11 +23,11 @@ import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.view_models.ViewModelCategoria;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
-import java.text.DateFormat;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -44,13 +45,14 @@ public class TransaccionesFragment extends Fragment {
     private ImageButton btnMesSiguiente;
     private TextView tvMesTransacciones;
     private TextView tvGastoPorMes;
-    private DateFormat formatFecha = new SimpleDateFormat(Constantes.FORMATO_FECHA);
-    private DateFormat formatFechaMes = new SimpleDateFormat("MM/yyyy");
+    private DateTimeFormatter formatFecha = DateTimeFormat.forPattern(Constantes.FORMATO_FECHA);
+    private DateTimeFormatter formatFechaMes =  DateTimeFormat.forPattern("MM/yyyy");
 
     private String fechaInicio;
     private String fechaFin;
     private String mesActual;
-    private Calendar calendario;
+    private LocalDate localDate;
+    private LiveData<List<Transaccion>> liveData;
 
     private float gastoPorMes;
     private NumberFormat nf = NumberFormat.getInstance(new Locale("es", "ES"));
@@ -115,18 +117,18 @@ public class TransaccionesFragment extends Fragment {
     }
 
     private void inicializarPeriodoDeTiempo(){
-        calendario = Calendar.getInstance();
-        mesActual = formatFechaMes.format(calendario.getTime());
+        localDate = LocalDate.now();
+        mesActual = formatFechaMes.print(localDate.toDate().getTime());
         setIntervaloTiempo();
     }
 
     private void setIntervaloTiempo(){
-        String mes = formatFechaMes.format(calendario.getTime());
+        String mes = formatFechaMes.print(localDate.toDate().getTime());
         tvMesTransacciones.setText(mes);
-        calendario.set(Calendar.DAY_OF_MONTH,1);
-        fechaInicio = formatFecha.format(calendario.getTime());
-        calendario.set(Calendar.DAY_OF_MONTH, calendario.getActualMaximum(Calendar.DAY_OF_MONTH));
-        fechaFin = formatFecha.format(calendario.getTime());
+        localDate = localDate.withDayOfMonth(1);
+        fechaInicio = formatFecha.print(localDate.toDate().getTime());
+        localDate = localDate.withDayOfMonth(localDate.dayOfMonth().getMaximumValue());
+        fechaFin = formatFecha.print(localDate.toDate().getTime());
     }
 
     private void inicializarViewModel(){
@@ -139,8 +141,9 @@ public class TransaccionesFragment extends Fragment {
         btnMesAnterior.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calendario.set(Calendar.DAY_OF_MONTH,1);
-                calendario.set(Calendar.MONTH, calendario.get(Calendar.MONTH)-1);
+                liveData.removeObservers(getActivity());
+                localDate = localDate.withDayOfMonth(1);
+                localDate = localDate.minusMonths(1);
                 setIntervaloTiempo();
                 recopilarDatos();
                 btnMesSiguiente.setEnabled(true);
@@ -150,11 +153,12 @@ public class TransaccionesFragment extends Fragment {
         btnMesSiguiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calendario.set(Calendar.DAY_OF_MONTH,1);
-                calendario.set(Calendar.MONTH, calendario.get(Calendar.MONTH)+1);
+                liveData.removeObservers(getActivity());
+                localDate = localDate.withDayOfMonth(1);
+                localDate = localDate.plusMonths(1);
                 setIntervaloTiempo();
                 recopilarDatos();
-                if(formatFechaMes.format(calendario.getTime()).equals(mesActual)) {
+                if(formatFechaMes.print(localDate.toDate().getTime()).equals(mesActual)) {
                     btnMesSiguiente.setEnabled(false);
                     btnMesSiguiente.setVisibility(View.GONE);
                 }
@@ -166,15 +170,17 @@ public class TransaccionesFragment extends Fragment {
 
     private void recopilarDatos(){
         gastoPorMes = 0;
-        viewModelTransaccion.getTransaccionesDesdeHasta(fechaInicio,fechaFin).observe(getActivity(), new Observer<List<Transaccion>>(){
+        liveData = viewModelTransaccion.getTransaccionesDesdeHasta(fechaInicio,fechaFin);
+        liveData.observe(getActivity(), new Observer<List<Transaccion>>(){
             @Override
             public void onChanged(List<Transaccion> transaccions) {
                 fechas.clear();
                 mapTransacciones.clear();
                 mapColorCategoria.clear();
+                adapter.refrescar();
                 gastoPorMes = 0;
-                adapter.notifyDataSetChanged();
-                for(Transaccion t : transaccions){
+                mostrarMensaje(""+transaccions.size());
+                for(Transaccion t : transaccions) {
                     actualizarDatos(t);
                 }
                 actualizarTVGastoPorMes();
@@ -187,7 +193,7 @@ public class TransaccionesFragment extends Fragment {
     }
 
     private void actualizarDatos(Transaccion t){
-        String fechaTransaccion = formatFecha.format(t.getFecha());
+        String fechaTransaccion = formatFecha.print(t.getFecha().getTime());
         List<Transaccion> transaccionesRealizadas = mapTransacciones.get(fechaTransaccion);
         if(transaccionesRealizadas==null){
             transaccionesRealizadas = new ArrayList<>();
@@ -199,7 +205,9 @@ public class TransaccionesFragment extends Fragment {
             transaccionesRealizadas.add(t);
         }
         Categoria categoria = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
-        mapColorCategoria.put(t,categoria.getColorCategoria());
+        if(categoria!=null) {
+            mapColorCategoria.put(t, categoria.getColorCategoria());
+        }
         gastoPorMes += t.getPrecio();
     }
 

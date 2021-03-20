@@ -122,14 +122,23 @@ public class AdapterTransacciones extends BaseExpandableListAdapter {
         else {
             tvLetra.setText("S");
         }
-        int colorCategoria = mapColorCategoria.get(transaccion);
-        Drawable bg = tvLetra.getBackground();
-        bg.setColorFilter(colorCategoria, PorterDuff.Mode.SRC);
+        Integer colorCategoria = mapColorCategoria.get(transaccion);
+        if(colorCategoria!=null) {
+            Drawable bg = tvLetra.getBackground();
+            bg.setColorFilter(colorCategoria, PorterDuff.Mode.SRC);
+        }
         return convertView;
     }
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    public void refrescar(){
+        fechas.clear();
+        mapTransacciones.clear();
+        mapColorCategoria.clear();
+        this.notifyDataSetChanged();
     }
 }
