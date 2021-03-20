@@ -27,6 +27,10 @@ public class ViewModelTransaccion extends AndroidViewModel {
         return repositorioTransacciones.getTransaccionesDesdeHasta(desde,hasta);
     }
 
+    public LiveData<List<Transaccion>> getLiveTransaccionesDesdeHasta(String desde, String hasta){
+        return repositorioTransacciones.getLiveTransaccionesDesdeHasta(desde,hasta);
+    }
+
     public void insertarTransaccion(Transaccion transaccion){
         repositorioTransacciones.insertarTransaccion(transaccion);
     }

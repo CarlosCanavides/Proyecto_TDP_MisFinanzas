@@ -28,13 +28,12 @@ public class InformesActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.informes_tabLayout);
         viewPager = findViewById(R.id.informes_viewpager);
 
-        adapterViewpager = new AdapterViewpagerPaginasMes(getSupportFragmentManager(),13, 2019);
+        adapterViewpager = new AdapterViewpagerPaginasMes(getSupportFragmentManager(),13, 2021);
         viewPager.setAdapter(adapterViewpager);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //setupViewPager(viewPager);
-
         tabLayout.setupWithViewPager(viewPager);
     }
 

@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -19,10 +19,10 @@ import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.view_models.ViewModelCategoria;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,12 +36,11 @@ public class GastoMesFregment extends Fragment {
     protected List<Categoria> categoriasMes;
     protected Map<String,Float> mapCategoriasGasto;
     protected AdapterInformeMes adapterInforme;
-
     private RecyclerView recyclerCategorias;
     protected ViewModelTransaccion viewModelTransaccion;
     protected ViewModelCategoria viewModelCategoria;
-    protected Calendar calendar;
-    protected DateFormat formatFecha;
+    protected DateTimeFormatter formatFecha;
+    protected LocalDate localDate;
     protected String primerDia;
     protected String ultimoDia;
 
@@ -62,8 +61,8 @@ public class GastoMesFregment extends Fragment {
             case 11 : mes = Constantes.DICIEMBRE; break;
             case 12 : mes = Constantes.HISTORICO;
         }
-        formatFecha = new SimpleDateFormat(Constantes.FORMATO_FECHA);
-        calendar = Calendar.getInstance();
+        formatFecha = DateTimeFormat.forPattern(Constantes.FORMATO_FECHA);
+        localDate = LocalDate.now();
         setPeriodoTiempo(nroAnio);
     }
 
@@ -88,57 +87,44 @@ public class GastoMesFregment extends Fragment {
     private void inicializarViewModels(){
         viewModelTransaccion = ViewModelProviders.of(getActivity()).get(ViewModelTransaccion.class);
         viewModelCategoria = ViewModelProviders.of(getActivity()).get(ViewModelCategoria.class);
-        viewModelTransaccion.getAllTransacciones().observe(getActivity(), new Observer<List<Transaccion>>() {
-            @Override
-            public void onChanged(List<Transaccion> transaccions) {
-                categoriasMes.clear();
-                mapCategoriasGasto.clear();
-                for (Transaccion t : transaccions) {
-                    Categoria subcategoria = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
-                    Float gastoCategoria = mapCategoriasGasto.get(subcategoria.getNombreCategoria());
-                    if (gastoCategoria == null) {
-                        categoriasMes.add(subcategoria);
-                        mapCategoriasGasto.put(subcategoria.getNombreCategoria(), Math.abs(t.getPrecio()));
-                    } else {
-                        mapCategoriasGasto.remove(subcategoria.getNombreCategoria());
-                        mapCategoriasGasto.put(subcategoria.getNombreCategoria(), gastoCategoria + Math.abs(t.getPrecio()));
-                    }
-                }
-                adapterInforme.notifyDataSetChanged();
-            }
-        });
+        recopilarDatos();
     }
 
     protected void recopilarDatos(){
-        List<Transaccion> transaccionesDelMes = viewModelTransaccion.getTransaccionesDesdeHasta(primerDia,ultimoDia);
-        if(transaccionesDelMes!=null) {
-            categoriasMes.clear();
-            mapCategoriasGasto.clear();
-            for (Transaccion t : transaccionesDelMes) {
-                Categoria categoria = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
-                Float gastoCategoria = mapCategoriasGasto.get(categoria.getNombreCategoria());
-                if (gastoCategoria == null) {
-                    categoriasMes.add(categoria);
-                    mapCategoriasGasto.put(categoria.getNombreCategoria(), Math.abs(t.getPrecio()));
-                } else {
-                    mapCategoriasGasto.remove(categoria.getNombreCategoria());
-                    mapCategoriasGasto.put(categoria.getNombreCategoria(), gastoCategoria + Math.abs(t.getPrecio()));
+        LiveData<List<Transaccion>> liveData = viewModelTransaccion.getLiveTransaccionesDesdeHasta(primerDia,ultimoDia);
+        if(liveData!=null) {
+            liveData.observe(getActivity(), new Observer<List<Transaccion>>() {
+                @Override
+                public void onChanged(List<Transaccion> transaccionesDelMes) {
+                    categoriasMes.clear();
+                    mapCategoriasGasto.clear();
+                    adapterInforme.refesh();
+                    adapterInforme.notifyDataSetChanged();
+                    for (Transaccion t : transaccionesDelMes) {
+                        Categoria categoria = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
+                        Float gastoCategoria = mapCategoriasGasto.get(categoria.getNombreCategoria());
+                        if (gastoCategoria == null) {
+                            categoriasMes.add(categoria);
+                            mapCategoriasGasto.put(categoria.getNombreCategoria(), Math.abs(t.getPrecio()));
+                        } else {
+                            mapCategoriasGasto.remove(categoria.getNombreCategoria());
+                            mapCategoriasGasto.put(categoria.getNombreCategoria(), gastoCategoria + Math.abs(t.getPrecio()));
+                        }
+                    }
+                    adapterInforme.notifyDataSetChanged();
                 }
-            }
-            adapterInforme.notifyDataSetChanged();
+            });
         }
-    }
-
-    private void mostrarMensaje(String mensaje){
-        Toast.makeText(getActivity(), mensaje, Toast.LENGTH_SHORT).show();
     }
 
     protected void setPeriodoTiempo(int nroAnio){
         anio = nroAnio;
-        calendar.set(anio,mesNumero,1);
-        primerDia = formatFecha.format(calendar.getTime());
-        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-        ultimoDia = formatFecha.format(calendar.getTime());
+        localDate = localDate.withDayOfMonth(1);
+        localDate = localDate.withMonthOfYear(mesNumero+1);
+        localDate = localDate.withYear(nroAnio);
+        primerDia = formatFecha.print(localDate.toDate().getTime());
+        localDate = localDate.withDayOfMonth(localDate.dayOfMonth().getMaximumValue());
+        ultimoDia = formatFecha.print(localDate.toDate().getTime());
     }
 
     public void setDatos(int anio){

@@ -18,8 +18,8 @@ public interface TransaccionDao {
     @Query("SELECT * FROM transaccion")
     LiveData<List<Transaccion>> getAllLiveTransacciones();
 
-    /*@Query("SELECT * FROM transaccion WHERE fecha BETWEEN date(:desde) AND date(:hasta)")
-    LiveData<List<Transaccion>> getTransaccionesDesdeHasta(String desde, String hasta);*/
+    @Query("SELECT * FROM transaccion WHERE fecha BETWEEN date(:desde) AND date(:hasta)")
+    LiveData<List<Transaccion>> getLiveTransaccionesDesdeHasta(String desde, String hasta);
 
     @Query("SELECT * FROM transaccion WHERE fecha BETWEEN date(:desde) AND date(:hasta)")
     List<Transaccion> getTransaccionesDesdeHasta(String desde, String hasta);

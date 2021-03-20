@@ -71,6 +71,11 @@ public class AdapterInformeMes extends RecyclerView.Adapter<AdapterInformeMes.Vi
         return categorias.size()+1;
     }
 
+    public void refesh(){
+        categorias.clear();
+        gastoPorSubcategoria.clear();
+    }
+
     public class ViewHolderInformeMes extends RecyclerView.ViewHolder {
 
         private TextView tvNombreCategoria;

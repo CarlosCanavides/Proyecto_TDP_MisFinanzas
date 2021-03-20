@@ -36,6 +36,17 @@ public class RepositorioTransacciones {
         return null;
     }
 
+    public LiveData<List<Transaccion>> getLiveTransaccionesDesdeHasta(String desde, String hasta){
+        try {
+            return new ObtenerLiveTransaccionesDesdeHastaAsyncTask(transaccionDao).execute(desde,hasta).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public void insertarTransaccion(Transaccion transaccion){
         new InsertTransaccionAsyncTask(transaccionDao).execute(transaccion);
     }
@@ -101,6 +112,19 @@ public class RepositorioTransacciones {
         @Override
         protected List<Transaccion> doInBackground(String... periodo) {
             return transaccionDao.getTransaccionesDesdeHasta(periodo[0],periodo[1]);
+        }
+    }
+
+    public static class ObtenerLiveTransaccionesDesdeHastaAsyncTask extends AsyncTask<String,Void,LiveData<List<Transaccion>>> {
+        private TransaccionDao transaccionDao;
+
+        private ObtenerLiveTransaccionesDesdeHastaAsyncTask(TransaccionDao transaccionDao){
+            this.transaccionDao = transaccionDao;
+        }
+
+        @Override
+        protected LiveData<List<Transaccion>> doInBackground(String... periodo) {
+            return transaccionDao.getLiveTransaccionesDesdeHasta(periodo[0],periodo[1]);
         }
     }
 }
