@@ -52,7 +52,6 @@ public class TransaccionesFragment extends Fragment {
     private String fechaFin;
     private String mesActual;
     private LocalDate localDate;
-    private LiveData<List<Transaccion>> liveData;
 
     private float gastoPorMes;
     private NumberFormat nf = NumberFormat.getInstance(new Locale("es", "ES"));
@@ -134,6 +133,27 @@ public class TransaccionesFragment extends Fragment {
     private void inicializarViewModel(){
         viewModelTransaccion = ViewModelProviders.of(getActivity()).get(ViewModelTransaccion.class);
         viewModelCategoria = ViewModelProviders.of(getActivity()).get(ViewModelCategoria.class);
+        viewModelTransaccion.getAllTransacciones().observe(getActivity(), new Observer<List<Transaccion>>() {
+            @Override
+            public void onChanged(List<Transaccion> transaccions) {
+                gastoPorMes = 0;
+                fechas.clear();
+                mapTransacciones.clear();
+                mapColorCategoria.clear();
+                adapter.refrescar();
+                mostrarMensaje(""+transaccions.size());
+                for(Transaccion t : transaccions) {
+                    if(formatFechaMes.print(t.getFecha().getTime()).equals(tvMesTransacciones.getText())) {
+                        actualizarDatos(t);
+                    }
+                }
+                actualizarTVGastoPorMes();
+                adapter.notifyDataSetChanged();
+                for (int i=0; i<fechas.size(); i++){
+                    expTransacciones.expandGroup(i);
+                }
+            }
+        });
         recopilarDatos();
     }
 
@@ -141,7 +161,6 @@ public class TransaccionesFragment extends Fragment {
         btnMesAnterior.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                liveData.removeObservers(getActivity());
                 localDate = localDate.withDayOfMonth(1);
                 localDate = localDate.minusMonths(1);
                 setIntervaloTiempo();
@@ -153,7 +172,6 @@ public class TransaccionesFragment extends Fragment {
         btnMesSiguiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                liveData.removeObservers(getActivity());
                 localDate = localDate.withDayOfMonth(1);
                 localDate = localDate.plusMonths(1);
                 setIntervaloTiempo();
@@ -169,27 +187,21 @@ public class TransaccionesFragment extends Fragment {
     }
 
     private void recopilarDatos(){
+        List<Transaccion> transaccionesDelMes = viewModelTransaccion.getTransaccionesDesdeHasta(fechaInicio,fechaFin);
         gastoPorMes = 0;
-        liveData = viewModelTransaccion.getTransaccionesDesdeHasta(fechaInicio,fechaFin);
-        liveData.observe(getActivity(), new Observer<List<Transaccion>>(){
-            @Override
-            public void onChanged(List<Transaccion> transaccions) {
-                fechas.clear();
-                mapTransacciones.clear();
-                mapColorCategoria.clear();
-                adapter.refrescar();
-                gastoPorMes = 0;
-                mostrarMensaje(""+transaccions.size());
-                for(Transaccion t : transaccions) {
-                    actualizarDatos(t);
-                }
-                actualizarTVGastoPorMes();
-                adapter.notifyDataSetChanged();
-                for (int i=0; i<fechas.size(); i++){
-                    expTransacciones.expandGroup(i);
-                }
-            }
-        });
+        fechas.clear();
+        mapTransacciones.clear();
+        mapColorCategoria.clear();
+        adapter.refrescar();
+        mostrarMensaje(""+transaccionesDelMes.size());
+        for(Transaccion t : transaccionesDelMes) {
+            actualizarDatos(t);
+        }
+        actualizarTVGastoPorMes();
+        adapter.notifyDataSetChanged();
+        for (int i=0; i<fechas.size(); i++){
+            expTransacciones.expandGroup(i);
+        }
     }
 
     private void actualizarDatos(Transaccion t){

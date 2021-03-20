@@ -25,7 +25,7 @@ public class RepositorioTransacciones {
         return transacciones;
     }
 
-    public LiveData<List<Transaccion>> getTransaccionesDesdeHasta(String desde, String hasta){
+    public List<Transaccion> getTransaccionesDesdeHasta(String desde, String hasta){
         try {
             return new ObtenerTransaccionesDesdeHastaAsyncTask(transaccionDao).execute(desde,hasta).get();
         } catch (ExecutionException e) {
@@ -91,7 +91,7 @@ public class RepositorioTransacciones {
         }
     }
 
-    public static class ObtenerTransaccionesDesdeHastaAsyncTask extends AsyncTask<String,Void,LiveData<List<Transaccion>>> {
+    public static class ObtenerTransaccionesDesdeHastaAsyncTask extends AsyncTask<String,Void,List<Transaccion>> {
         private TransaccionDao transaccionDao;
 
         private ObtenerTransaccionesDesdeHastaAsyncTask(TransaccionDao transaccionDao){
@@ -99,7 +99,7 @@ public class RepositorioTransacciones {
         }
 
         @Override
-        protected LiveData<List<Transaccion>> doInBackground(String... periodo) {
+        protected List<Transaccion> doInBackground(String... periodo) {
             return transaccionDao.getTransaccionesDesdeHasta(periodo[0],periodo[1]);
         }
     }

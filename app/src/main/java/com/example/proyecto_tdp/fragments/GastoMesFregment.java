@@ -8,7 +8,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -89,31 +88,44 @@ public class GastoMesFregment extends Fragment {
     private void inicializarViewModels(){
         viewModelTransaccion = ViewModelProviders.of(getActivity()).get(ViewModelTransaccion.class);
         viewModelCategoria = ViewModelProviders.of(getActivity()).get(ViewModelCategoria.class);
-        recopilarDatos();
+        viewModelTransaccion.getAllTransacciones().observe(getActivity(), new Observer<List<Transaccion>>() {
+            @Override
+            public void onChanged(List<Transaccion> transaccions) {
+                categoriasMes.clear();
+                mapCategoriasGasto.clear();
+                for (Transaccion t : transaccions) {
+                    Categoria subcategoria = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
+                    Float gastoCategoria = mapCategoriasGasto.get(subcategoria.getNombreCategoria());
+                    if (gastoCategoria == null) {
+                        categoriasMes.add(subcategoria);
+                        mapCategoriasGasto.put(subcategoria.getNombreCategoria(), Math.abs(t.getPrecio()));
+                    } else {
+                        mapCategoriasGasto.remove(subcategoria.getNombreCategoria());
+                        mapCategoriasGasto.put(subcategoria.getNombreCategoria(), gastoCategoria + Math.abs(t.getPrecio()));
+                    }
+                }
+                adapterInforme.notifyDataSetChanged();
+            }
+        });
     }
 
     protected void recopilarDatos(){
-        LiveData<List<Transaccion>> transaccionesDelMes = viewModelTransaccion.getTransaccionesDesdeHasta(primerDia,ultimoDia);
+        List<Transaccion> transaccionesDelMes = viewModelTransaccion.getTransaccionesDesdeHasta(primerDia,ultimoDia);
         if(transaccionesDelMes!=null) {
-            transaccionesDelMes.observe(getActivity(), new Observer<List<Transaccion>>(){
-                @Override
-                public void onChanged(List<Transaccion> transaccions) {
-                    categoriasMes.clear();
-                    mapCategoriasGasto.clear();
-                    for (Transaccion t : transaccions) {
-                        Categoria subcategoria = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
-                        Float gastoCategoria = mapCategoriasGasto.get(subcategoria.getNombreCategoria());
-                        if (gastoCategoria == null) {
-                            categoriasMes.add(subcategoria);
-                            mapCategoriasGasto.put(subcategoria.getNombreCategoria(), Math.abs(t.getPrecio()));
-                        } else {
-                            mapCategoriasGasto.remove(subcategoria.getNombreCategoria());
-                            mapCategoriasGasto.put(subcategoria.getNombreCategoria(), gastoCategoria + Math.abs(t.getPrecio()));
-                        }
-                    }
-                    adapterInforme.notifyDataSetChanged();
+            categoriasMes.clear();
+            mapCategoriasGasto.clear();
+            for (Transaccion t : transaccionesDelMes) {
+                Categoria categoria = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
+                Float gastoCategoria = mapCategoriasGasto.get(categoria.getNombreCategoria());
+                if (gastoCategoria == null) {
+                    categoriasMes.add(categoria);
+                    mapCategoriasGasto.put(categoria.getNombreCategoria(), Math.abs(t.getPrecio()));
+                } else {
+                    mapCategoriasGasto.remove(categoria.getNombreCategoria());
+                    mapCategoriasGasto.put(categoria.getNombreCategoria(), gastoCategoria + Math.abs(t.getPrecio()));
                 }
-            });
+            }
+            adapterInforme.notifyDataSetChanged();
         }
     }
 
