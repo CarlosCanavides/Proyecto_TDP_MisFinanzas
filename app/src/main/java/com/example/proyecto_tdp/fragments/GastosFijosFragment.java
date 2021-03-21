@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.adapters.AdapterHome;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
-import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
+import com.example.proyecto_tdp.base_de_datos.entidades.TransaccionFija;
 import com.example.proyecto_tdp.view_models.ViewModelCategoria;
-import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
+import com.example.proyecto_tdp.view_models.ViewModelTransaccionFija;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,10 +28,11 @@ public class GastosFijosFragment extends Fragment {
     private View vista;
     private RecyclerView gastos;
     private AdapterHome adapterHome;
-    private List<Transaccion> transacciones;
-    private Map<Transaccion, Integer> mapColorCategoria;
+    private List<TransaccionFija> transaccionesFijas;
+    private Map<TransaccionFija, Integer> mapColorCategoria;
     private ViewModelCategoria viewModelCategoria;
-    private ViewModelTransaccion viewModelTransaccion;
+    private ViewModelTransaccionFija viewModelTransaccionFija;
+    private Observer<List<TransaccionFija>> observer;
 
     @Nullable
     @Override
@@ -44,35 +45,36 @@ public class GastosFijosFragment extends Fragment {
     }
 
     private void inicializarListView(){
-        transacciones = new ArrayList<>();
+        transaccionesFijas = new ArrayList<>();
         mapColorCategoria = new HashMap<>();
-        adapterHome = new AdapterHome(transacciones,mapColorCategoria);
+        adapterHome = new AdapterHome(transaccionesFijas,mapColorCategoria);
         gastos.setLayoutManager(new GridLayoutManager(getActivity(),1));
         gastos.setAdapter(adapterHome);
     }
 
     private void inicializarViewModels(){
-        viewModelTransaccion = ViewModelProviders.of(getActivity()).get(ViewModelTransaccion.class);
+        viewModelTransaccionFija = ViewModelProviders.of(getActivity()).get(ViewModelTransaccionFija.class);
         viewModelCategoria = ViewModelProviders.of(getActivity()).get(ViewModelCategoria.class);
         recopilarDatos();
     }
 
     private void recopilarDatos() {
-        LiveData<List<Transaccion>> t = viewModelTransaccion.getAllTransacciones();
-        if (t != null) {
-            t.observe(getActivity(), new Observer<List<Transaccion>>() {
-                @Override
-                public void onChanged(List<Transaccion> transaccions) {
-                    transacciones.clear();
-                    adapterHome.notifyDataSetChanged();
-                    transacciones.addAll(transaccions);
-                    for(Transaccion t : transaccions){
-                        Categoria subcategoria = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
-                        mapColorCategoria.put(t,subcategoria.getColorCategoria());
-                    }
-                    adapterHome.notifyDataSetChanged();
+        LiveData<List<TransaccionFija>> t = viewModelTransaccionFija.getAllTransaccionesFijas();
+        observer = new Observer<List<TransaccionFija>>() {
+            @Override
+            public void onChanged(List<TransaccionFija> transaccions) {
+                transaccionesFijas.clear();
+                adapterHome.notifyDataSetChanged();
+                transaccionesFijas.addAll(transaccions);
+                for(TransaccionFija t : transaccions){
+                    Categoria categoria = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
+                    mapColorCategoria.put(t,categoria.getColorCategoria());
                 }
-            });
+                adapterHome.notifyDataSetChanged();
+            }
+        };
+        if (t != null) {
+            t.observe(getActivity(), observer);
         }
     }
 }

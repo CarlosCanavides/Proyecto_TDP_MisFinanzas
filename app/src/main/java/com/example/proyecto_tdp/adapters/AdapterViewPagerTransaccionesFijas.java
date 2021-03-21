@@ -8,13 +8,13 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterViewPagerHome extends FragmentPagerAdapter {
+public class AdapterViewPagerTransaccionesFijas extends FragmentPagerAdapter {
 
     private int numeroPaginas;
     private List<Fragment> fragments;
     private List<String> titulos;
 
-    public AdapterViewPagerHome(@NonNull FragmentManager fm, int behavior) {
+    public AdapterViewPagerTransaccionesFijas(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
         numeroPaginas = behavior;
         fragments = new ArrayList<>(behavior);

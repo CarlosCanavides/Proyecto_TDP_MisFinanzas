@@ -9,17 +9,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_tdp.R;
-import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
+import com.example.proyecto_tdp.base_de_datos.entidades.TransaccionFija;
 import java.util.List;
 import java.util.Map;
 
 public class AdapterHome extends RecyclerView.Adapter<AdapterHome.ViewHolderHome>{
 
-    private List<Transaccion> transacciones;
-    private Map<Transaccion, Integer> mapColorCategoria;
+    private List<TransaccionFija> transaccionesFijas;
+    private Map<TransaccionFija, Integer> mapColorCategoria;
 
-    public AdapterHome(List<Transaccion> transacciones, Map<Transaccion, Integer> mapColorCategoria) {
-        this.transacciones = transacciones;
+    public AdapterHome(List<TransaccionFija> transaccionesFijas, Map<TransaccionFija, Integer> mapColorCategoria) {
+        this.transaccionesFijas = transaccionesFijas;
         this.mapColorCategoria = mapColorCategoria;
     }
 
@@ -32,14 +32,20 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.ViewHolderHome
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderHome holder, int position) {
-        Transaccion transaccion = transacciones.get(position);
+        TransaccionFija transaccion = transaccionesFijas.get(position);
         holder.tvNombre.setText(transaccion.getTitulo());
         holder.tvCategoria.setText(transaccion.getCategoria());
         holder.tvIdentificacion.setText(transaccion.getEtiqueta());
         if(transaccion.getCategoria()!=null && transaccion.getCategoria().length()>0) {
             holder.tvLetra.setText(transaccion.getCategoria().charAt(0) + "");
         }
-        holder.tvPrecio.setText(transaccion.getPrecio()+"");
+        float precio = transaccion.getPrecio();
+        if(precio>=0){
+            holder.tvPrecio.setText("+$"+precio);
+        }
+        else {
+            holder.tvPrecio.setText("-$"+Math.abs(precio));
+        }
         Drawable bg = holder.tvLetra.getBackground();
         int colorCategoria = mapColorCategoria.get(transaccion);
         bg.setColorFilter(colorCategoria, PorterDuff.Mode.SRC);
@@ -47,7 +53,7 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.ViewHolderHome
 
     @Override
     public int getItemCount() {
-        return transacciones.size();
+        return transaccionesFijas.size();
     }
 
     public class ViewHolderHome extends RecyclerView.ViewHolder{

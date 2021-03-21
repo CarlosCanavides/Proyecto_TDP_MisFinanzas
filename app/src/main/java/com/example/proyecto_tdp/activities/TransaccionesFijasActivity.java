@@ -5,34 +5,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import com.example.proyecto_tdp.R;
-import com.example.proyecto_tdp.adapters.AdapterViewPagerHome;
+import com.example.proyecto_tdp.adapters.AdapterViewPagerTransaccionesFijas;
 import com.example.proyecto_tdp.fragments.GastosFijosFragment;
 import com.example.proyecto_tdp.fragments.IngresosFijosFragment;
-import com.example.proyecto_tdp.fragments.PlantillasFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 public class TransaccionesFijasActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
-    private AdapterViewPagerHome adapterViewPagerHome;
+    private AdapterViewPagerTransaccionesFijas adapterViewPagerTransaccionesFijas;
+    private FloatingActionButton btnAgregarNuevaTransaccionFija;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transacciones_fijas);
-
-        tabLayout = findViewById(R.id.principal_tabLayout);
-        viewPager = findViewById(R.id.principal_viewpager);
+        btnAgregarNuevaTransaccionFija = findViewById(R.id.btn_agregar_transaccion_fija);
+        tabLayout = findViewById(R.id.tabLayout_transacciones_fijas);
+        viewPager = findViewById(R.id.viewpager_transacciones_fijas);
         inicializarViewPager();
     }
 
     private void inicializarViewPager(){
-        adapterViewPagerHome = new AdapterViewPagerHome(getSupportFragmentManager(),3);
-        adapterViewPagerHome.addFragment(new IngresosFijosFragment(),"Ingresos Fijos");
-        adapterViewPagerHome.addFragment(new GastosFijosFragment(),"Gastos fijos");
-        adapterViewPagerHome.addFragment(new PlantillasFragment(),"Plantillas");
-        viewPager.setAdapter(adapterViewPagerHome);
+        adapterViewPagerTransaccionesFijas = new AdapterViewPagerTransaccionesFijas(getSupportFragmentManager(),2);
+        adapterViewPagerTransaccionesFijas.addFragment(new IngresosFijosFragment(),"Ingresos Fijos");
+        adapterViewPagerTransaccionesFijas.addFragment(new GastosFijosFragment(),"Gastos fijos");
+        viewPager.setAdapter(adapterViewPagerTransaccionesFijas);
         tabLayout.setupWithViewPager(viewPager);
     }
 }

@@ -1,111 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.TransaccionesFijasActivity"
-    android:orientation="vertical">
-
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:stretchColumns="0,1"
-        android:layout_marginTop="@dimen/espacio_mediano">
-
-        <TableRow>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/espacio_small"
-                android:layout_marginBottom="@dimen/espacio_small">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icon_flecha_arriva"
-                    android:background="@drawable/background_ingreso_promedio"
-                    android:paddingBottom="12dp"
-                    android:paddingTop="12dp"
-                    android:paddingStart="@dimen/espacio_mediano"
-                    android:paddingEnd="@dimen/espacio_mediano"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="@dimen/espacio_mediano">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ingreso promedio"
-                        android:textSize="13sp"
-                        android:textStyle="italic|bold"
-                        android:textColor="@color/text_gasto_ingreso_promedio"
-                        android:layout_marginBottom="@dimen/espacio_small"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="$2.350"
-                        android:textStyle="bold"
-                        android:textColor="@color/primary_text"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/espacio_small"
-                android:layout_marginBottom="@dimen/espacio_small">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icon_flecha_abajo"
-                    android:background="@drawable/background_gasto_promedio"
-                    android:paddingBottom="12dp"
-                    android:paddingTop="12dp"
-                    android:paddingStart="@dimen/espacio_mediano"
-                    android:paddingEnd="@dimen/espacio_mediano"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="@dimen/espacio_mediano">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Gasto promedio"
-                        android:textSize="13sp"
-                        android:textStyle="italic|bold"
-                        android:textColor="@color/text_gasto_ingreso_promedio"
-                        android:layout_marginBottom="@dimen/espacio_small"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="$2.350"
-                        android:textStyle="bold"
-                        android:textColor="@color/primary_text"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </TableRow>
-
-    </TableLayout>
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/principal_tabLayout"
-        android:layout_marginTop="@dimen/espacio_mediano"
+        android:id="@+id/tabLayout_transacciones_fijas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabIndicatorColor="@color/colorPrimary"
@@ -115,10 +16,19 @@
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/principal_viewpager"
+        android:id="@+id/viewpager_transacciones_fijas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:background="@color/white"/>
 
-</LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_agregar_transaccion_fija"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/add_white"
+        android:layout_gravity="bottom|right"
+        android:layout_marginEnd="@dimen/espacio_mediano"
+        android:layout_marginBottom="@dimen/espacio_mediano"/>
+
+</FrameLayout>

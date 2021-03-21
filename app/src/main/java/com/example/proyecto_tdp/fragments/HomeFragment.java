@@ -13,18 +13,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
-import com.example.proyecto_tdp.adapters.AdapterTransaccionesFijas;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
 import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.charts.SeriesLabel;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment{
@@ -34,8 +30,6 @@ public class HomeFragment extends Fragment{
     private TextView tvIngresoTotal;
     private TextView tvGastoPromedio;
     private TextView tvIngresoPromedio;
-    private RecyclerView transaccionesFijas;
-    private AdapterTransaccionesFijas adapterTransaccionesFijas;
     private View vista;
     private ViewModelTransaccion viewModelTransaccion;
     private float gastoTotal;
@@ -53,14 +47,6 @@ public class HomeFragment extends Fragment{
         tvIngresoTotal = vista.findViewById(R.id.tv_ingreso_total);
         tvGastoPromedio = vista.findViewById(R.id.tv_ingreso_promedio);
         tvIngresoPromedio = vista.findViewById(R.id.tv_gasto_promedio);
-        transaccionesFijas = vista.findViewById(R.id.recycler_transacciones_fijas);
-        ArrayList<String> lista = new ArrayList<String>();
-        lista.add("Ingresos Fijos");
-        lista.add("Gastos Fijos");
-        lista.add("Plantillas");
-        transaccionesFijas.setLayoutManager(new GridLayoutManager(getActivity(),1));
-        adapterTransaccionesFijas = new AdapterTransaccionesFijas(lista);
-        transaccionesFijas.setAdapter(adapterTransaccionesFijas);
         tvIngresoPromedio.setText("$0");
         tvGastoPromedio.setText("$0");
         inicializarBarraProgreso();
@@ -124,7 +110,7 @@ public class HomeFragment extends Fragment{
                     tvBalance.setText("-$"+Math.abs(balance));
                 }
                 else {
-                    tvBalance.setText("+$"+balance);
+                    tvBalance.setText("$"+balance);
                 }
                 actualizarBarraDeProgreso();
                 Log.e("AQUIIIIIIIIIIIIIIIII",""+seriePrincipalIndex);
