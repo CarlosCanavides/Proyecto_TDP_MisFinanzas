@@ -41,7 +41,14 @@ public class TransaccionFija {
     @ColumnInfo(name = "info")
     private String info;
 
-    public TransaccionFija(String titulo, String etiqueta, float precio, String categoria, String tipoTransaccion, Date fecha, String info) {
+    @ColumnInfo(name = "frecuencia")
+    private String frecuencia;
+
+    @ColumnInfo(name = "fechaFinal")
+    @TypeConverters(DateConverter.class)
+    private Date fechaFinal;
+
+    public TransaccionFija(String titulo, String etiqueta, float precio, String categoria, String tipoTransaccion, Date fecha, String info, String frecuencia, Date fechaFinal) {
         this.titulo = titulo;
         this.etiqueta = etiqueta;
         this.precio = precio;
@@ -51,6 +58,8 @@ public class TransaccionFija {
         this.tipoTransaccion = tipoTransaccion;
         this.fecha = fecha;
         this.info = info;
+        this.frecuencia = frecuencia;
+        this.fechaFinal = fechaFinal;
     }
 
     @NonNull
@@ -116,5 +125,21 @@ public class TransaccionFija {
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public String getFrecuencia(){
+        return frecuencia;
+    }
+
+    public void setFrecuencia(String frecuencia){
+        this.frecuencia = frecuencia;
+    }
+
+    public Date getFechaFinal() {
+        return fechaFinal;
+    }
+
+    public void setFechaFinal(Date fecha) {
+        this.fechaFinal = fecha;
     }
 }
