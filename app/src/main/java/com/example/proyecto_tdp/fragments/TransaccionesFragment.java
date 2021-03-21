@@ -141,7 +141,6 @@ public class TransaccionesFragment extends Fragment {
                 mapTransacciones.clear();
                 mapColorCategoria.clear();
                 adapter.refrescar();
-                mostrarMensaje(""+transaccions.size());
                 for(Transaccion t : transaccions) {
                     if(formatFechaMes.print(t.getFecha().getTime()).equals(tvMesTransacciones.getText())) {
                         actualizarDatos(t);
@@ -193,7 +192,6 @@ public class TransaccionesFragment extends Fragment {
         mapTransacciones.clear();
         mapColorCategoria.clear();
         adapter.refrescar();
-        mostrarMensaje(""+transaccionesDelMes.size());
         for(Transaccion t : transaccionesDelMes) {
             actualizarDatos(t);
         }
@@ -248,7 +246,7 @@ public class TransaccionesFragment extends Fragment {
                 try {
                     monto = nf.parse(precio).floatValue();
                 }catch (Exception e) {
-                    mostrarMensaje("El monto ingresado debe ser mayor a 0");
+                    e.printStackTrace();
                 }
 
                 if(id!=-1) {
@@ -270,9 +268,5 @@ public class TransaccionesFragment extends Fragment {
                 }
             }
         }
-    }
-
-    private void mostrarMensaje(String mensaje){
-        Toast.makeText(getActivity(), mensaje, Toast.LENGTH_SHORT).show();
     }
 }
