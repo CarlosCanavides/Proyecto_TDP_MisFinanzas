@@ -53,8 +53,8 @@ public class GraficoResumen extends PieChart{
     }
 
     private void setColores(Resources recursos){
-        colores[0] = recursos.getColor(R.color.green_intermedium);
-        colores[1] = recursos.getColor(R.color.red);
+        colores[0] = recursos.getColor(R.color.color_precios_positivos);
+        colores[1] = recursos.getColor(R.color.color_precios_negativos);
     }
 
     private void calcularPorcentajes(float ingreso, float gasto){

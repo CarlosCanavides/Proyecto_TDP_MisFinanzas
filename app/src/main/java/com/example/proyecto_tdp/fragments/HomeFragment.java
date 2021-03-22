@@ -62,7 +62,7 @@ public class HomeFragment extends Fragment{
 
     private void inicializarBarraProgreso(){
         barraProgreso.configureAngles(230,0);
-        SeriesItem serieDeFondo = new SeriesItem.Builder(Color.parseColor("#FFE2E2E2"))
+        SeriesItem serieDeFondo = new SeriesItem.Builder(Color.parseColor("#DBE4F0"))
                 .setRange(0, 100, 100)
                 .setInitialVisibility(true)
                 .build();
@@ -138,7 +138,7 @@ public class HomeFragment extends Fragment{
         if(porcentajeRestante<33){
             colorBarraProgreso = Color.parseColor("#C62828");
         } else if (porcentajeRestante >= 33 && porcentajeRestante < 66) {
-                colorBarraProgreso = Color.parseColor("#FDD835");
+                colorBarraProgreso = Color.parseColor("#F6CE55");
                } else {
                     colorBarraProgreso = Color.parseColor("#00C853");
                }

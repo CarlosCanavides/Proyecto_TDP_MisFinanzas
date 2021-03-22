@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activities.NuevaCategoriaActivity"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/color_anti_flash">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,6 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:textColor="@color/colorAccent"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/espacio_mediano"/>
 
@@ -110,15 +111,19 @@
                     android:layout_height="wrap_content"
                     android:text="Gasto"
                     android:textSize="15sp"
+                    android:textColor="@color/primary_text"
                     android:layout_marginEnd="@dimen/espacio_big"
-                    android:checked="true"/>
+                    android:checked="true"
+                    android:buttonTint="@color/color_precios_negativos"/>
 
                 <RadioButton
                     android:id="@+id/radiobtn_categoria_tipo_ingreso"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ingreso"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp"
+                    android:textColor="@color/primary_text"
+                    android:buttonTint="@color/color_precios_positivos"/>
 
             </RadioGroup>
 
@@ -169,6 +174,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nombre"
+                android:textColor="@color/primary_text"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/espacio_mediano"/>
 
@@ -210,7 +216,7 @@
                 android:background="@drawable/estilo_boton_aceptar"
                 android:text="ACEPTAR"
                 android:textSize="12sp"
-                android:textColor="#E57373"
+                android:textColor="@color/color_precios_positivos"
                 android:layout_marginTop="@dimen/espacio_mediano"
                 android:layout_marginEnd="@dimen/espacio_mediano"
                 android:layout_marginStart="@dimen/espacio_mediano"

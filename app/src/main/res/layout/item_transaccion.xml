@@ -65,6 +65,7 @@
                         android:layout_marginTop="@dimen/espacio_small"
                         android:layout_marginEnd="@dimen/espacio_mediano"
                         android:textStyle="italic|bold"
+                        android:textColor="@color/primary_text"
                         android:lines="1"
                         android:singleLine="true"/>
 

@@ -109,11 +109,11 @@ public class AdapterTransacciones extends BaseExpandableListAdapter {
         String monto = String.format( "%.2f", Math.abs(transaccion.getPrecio()));
         if(transaccion.getTipoTransaccion().equals("Gasto")){
             tvPrecio.setText("- $ "+monto);
-            tvPrecio.setTextColor(convertView.getResources().getColor(R.color.red));
+            tvPrecio.setTextColor(convertView.getResources().getColor(R.color.color_precios_negativos));
         }
         else{
             tvPrecio.setText("+ $ "+monto);
-            tvPrecio.setTextColor(convertView.getResources().getColor(R.color.green_intermedium));
+            tvPrecio.setTextColor(convertView.getResources().getColor(R.color.color_precios_positivos));
         }
 
         if(transaccion.getCategoria()!=null && transaccion.getCategoria().length() > 0) {

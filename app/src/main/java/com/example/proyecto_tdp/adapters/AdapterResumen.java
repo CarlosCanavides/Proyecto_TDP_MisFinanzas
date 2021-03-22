@@ -74,8 +74,8 @@ public class AdapterResumen extends RecyclerView.Adapter<AdapterResumen.ViewHold
         String categoriaMayor = "";
         while(it.hasNext()){
             Map.Entry<String,Integer> entry = (Map.Entry<String, Integer>) it.next();
-            if(entry.getValue()>mayor){
-                mayor = entry.getValue();
+            if(Math.abs(entry.getValue())>mayor){
+                mayor = Math.abs(entry.getValue());
                 categoriaMayor = entry.getKey();
             }
         }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#1565C0</color>
+    <color name="colorPrimary">#1754CD</color>
     <color name="colorPrimaryDark">#003c8f</color>
     <color name="colorAccent">#FF5722</color>
 
@@ -9,8 +9,8 @@
     <color name="colorPrimary1">#5365CA</color>
 
     <color name="primary_light">#C5CAE9</color>
-    <color name="primary_text">#212121</color>
-    <color name="secondary_text">#757575</color>
+    <color name="primary_text">#123362</color>
+    <color name="secondary_text">#C9D1D9</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
 
@@ -35,10 +35,10 @@
     <color name="green_dark">#00600f</color>
     <color name="black">#000000</color>
 
-    <color name="color_titulo_transaccion">#BDBDBD</color>
+    <color name="color_titulo_transaccion">#C9D1D9</color>
     <color name="color_campo_transaccion">#757575</color>
-    <color name="color_tabIndicator_seleccionado">#757575</color>
-    <color name="color_tabIndicator_no_seleccionado">#BDBDBD</color>
+    <color name="color_tabIndicator_seleccionado">#123362</color>
+    <color name="color_tabIndicator_no_seleccionado">#C9D1D9</color>
     <color name="color_divider_recyclerview_informes">#DFDFDF</color>
 
     <color name="color_btn_cancelar">#E57373</color>
@@ -59,11 +59,19 @@
     <color name="transparent">#00ffffff</color>
     <color name="link_text">#1EA1F2</color>
 
-    <color name="green_ingreso_promedio">#D2EFDF</color>
-    <color name="red_gasto_promedio">#F6DFE1</color>
+    <color name="green_ingreso_promedio">#DFEDE8</color>
+    <color name="red_gasto_promedio">#F1E3E3</color>
     <color name="text_gasto_ingreso_promedio">#BDBDBD</color>
     <color name="tab_indicator_color">#819EBF</color>
 
     <color name="background_claro">#F1F0F0</color>
+    <color name="color_letras_azules">#123362</color>
+    <color name="color_anti_flash">#F2F3F3</color>
+    <color name="color_fondo_barra_de_progreso">#FAFAFA</color>
 
+    <color name="color_navigationbtn">#F8F8FA</color>
+    <color name="color_burbuja">#1B5AD0</color>
+    <color name="color_numeros_naranja">#EA7C77</color>
+    <color name="color_precios_positivos">#11D396</color>
+    <color name="color_precios_negativos">#ED747C</color>
 </resources>

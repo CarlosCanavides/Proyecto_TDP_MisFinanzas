@@ -16,7 +16,8 @@
             android:layout_gravity="left|center_vertical"
             android:text="12/2019"
             android:textSize="@dimen/text_transacciones_mes"
-            android:layout_marginStart="@dimen/espacio_mediano"/>
+            android:layout_marginStart="@dimen/espacio_mediano"
+            android:textColor="@color/primary_text"/>
 
         <TextView
             android:id="@+id/encabezado_section_gp"

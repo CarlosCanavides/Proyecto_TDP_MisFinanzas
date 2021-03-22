@@ -9,8 +9,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/espacio_small"
-        android:layout_marginEnd="@dimen/espacio_small"
+        android:layout_marginStart="@dimen/espacio_mediano"
+        android:layout_marginEnd="@dimen/espacio_mediano"
         android:layout_marginTop="@dimen/espacio_small"
         android:layout_marginBottom="@dimen/espacio_small"
         app:cardCornerRadius="7dp"
@@ -92,12 +92,6 @@
                         android:layout_marginEnd="@dimen/espacio_mediano"/>
 
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/primary_light">
-                </View>
 
             </LinearLayout>
 
