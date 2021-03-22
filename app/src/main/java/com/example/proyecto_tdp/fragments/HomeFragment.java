@@ -1,22 +1,30 @@
 package com.example.proyecto_tdp.fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.proyecto_tdp.Constantes;
+import com.example.proyecto_tdp.MainActivity;
 import com.example.proyecto_tdp.R;
+import com.example.proyecto_tdp.activities.PlantillasActivity;
+import com.example.proyecto_tdp.activities.TransaccionesFijasActivity;
+import com.example.proyecto_tdp.base_de_datos.entidades.Plantilla;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
+import com.example.proyecto_tdp.base_de_datos.entidades.TransaccionFija;
+import com.example.proyecto_tdp.view_models.ViewModelPlantilla;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
+import com.example.proyecto_tdp.view_models.ViewModelTransaccionFija;
 import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.charts.SeriesLabel;
@@ -30,13 +38,22 @@ public class HomeFragment extends Fragment{
     private TextView tvIngresoTotal;
     private TextView tvGastoPromedio;
     private TextView tvIngresoPromedio;
+    private TextView tvCantidadPlantillas;
+    private TextView tvCantidadGastosFijos;
+    private TextView tvCantidadIngresosFijos;
+    private LinearLayout panelPlantillas;
+    private LinearLayout panelGastosFijos;
+    private LinearLayout panelIngresosFijos;
     private View vista;
     private ViewModelTransaccion viewModelTransaccion;
+    private ViewModelPlantilla viewModelPlantilla;
+    private ViewModelTransaccionFija viewModelTransaccionFija;
     private float gastoTotal;
     private float ingresoTotal;
     private int seriePrincipalIndex;
-    private Observer<List<Transaccion>> observer;
-    private LiveData<List<Transaccion>> liveData;
+    private Observer<List<Plantilla>> observerPlantillas;
+    private Observer<List<Transaccion>> observerTransacciones;
+    private Observer<List<TransaccionFija>> observerTransaccionesFijas;
 
     @Nullable
     @Override
@@ -47,17 +64,29 @@ public class HomeFragment extends Fragment{
         tvIngresoTotal = vista.findViewById(R.id.tv_ingreso_total);
         tvGastoPromedio = vista.findViewById(R.id.tv_ingreso_promedio);
         tvIngresoPromedio = vista.findViewById(R.id.tv_gasto_promedio);
+        tvCantidadPlantillas = vista.findViewById(R.id.tv_cantidad_plantillas);
+        tvCantidadGastosFijos = vista.findViewById(R.id.tv_cantidad_gastos_fijos);
+        tvCantidadIngresosFijos = vista.findViewById(R.id.tv_cantidad_ingresos_fijos);
+        panelPlantillas = vista.findViewById(R.id.panel_plantillas);
+        panelGastosFijos = vista.findViewById(R.id.panel_gastos_fijos);
+        panelIngresosFijos = vista.findViewById(R.id.panel_ingresos_fijos);
+        tvCantidadPlantillas.setText("0");
+        tvCantidadGastosFijos.setText("0");
+        tvCantidadIngresosFijos.setText("0");
         tvIngresoPromedio.setText("$0");
         tvGastoPromedio.setText("$0");
         inicializarBarraProgreso();
         inicializarViewModel();
+        inicializarPanelesTransaccionesProgramadas();
         return vista;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        liveData.removeObserver(observer);
+        viewModelPlantilla.removeOberver(observerPlantillas);
+        viewModelTransaccion.removeObserver(observerTransacciones);
+        viewModelTransaccionFija.removeObserver(observerTransaccionesFijas);
     }
 
     private void inicializarBarraProgreso(){
@@ -86,7 +115,15 @@ public class HomeFragment extends Fragment{
     private void inicializarViewModel() {
         gastoTotal=0;
         ingresoTotal=0;
-        observer = new Observer<List<Transaccion>>() {
+        inicializarObservers();
+        viewModelPlantilla = ViewModelProviders.of(getActivity()).get(ViewModelPlantilla.class);
+        viewModelTransaccion = ViewModelProviders.of(getActivity()).get(ViewModelTransaccion.class);
+        viewModelTransaccionFija = ViewModelProviders.of(getActivity()).get(ViewModelTransaccionFija.class);
+        viewModelTransaccion.getAllTransacciones().observe(getActivity(), observerTransacciones);
+    }
+
+    private void inicializarObservers() {
+        observerTransacciones = new Observer<List<Transaccion>>() {
             @Override
             public void onChanged(List<Transaccion> transaccions) {
                 gastoTotal=0;
@@ -120,10 +157,52 @@ public class HomeFragment extends Fragment{
                 }
             }
         };
+        observerTransaccionesFijas = new Observer<List<TransaccionFija>>() {
+            @Override
+            public void onChanged(List<TransaccionFija> transaccionFijas) {
+                int cantidadGF = 0;
+                int cantidadIF = 0;
+                for (TransaccionFija t : transaccionFijas){
+                    if(t.getTipoTransaccion().equals(Constantes.GASTO)){
+                        cantidadGF++;
+                    }
+                    else {
+                        cantidadIF++;
+                    }
+                }
+                tvCantidadGastosFijos.setText(""+cantidadGF);
+                tvCantidadIngresosFijos.setText(""+cantidadIF);
+            }
+        };
+        observerPlantillas = new Observer<List<Plantilla>>() {
+            @Override
+            public void onChanged(List<Plantilla> plantillas) {
+                tvCantidadPlantillas.setText(""+plantillas.size());
+            }
+        };
+    }
 
-        viewModelTransaccion = ViewModelProviders.of(getActivity()).get(ViewModelTransaccion.class);
-        liveData = viewModelTransaccion.getAllTransacciones();
-        liveData.observe(getActivity(), observer);
+    private void inicializarPanelesTransaccionesProgramadas(){
+        panelPlantillas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PlantillasActivity.class);
+            }
+        });
+        panelGastosFijos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), TransaccionesFijasActivity.class);
+                startActivity(intent);
+            }
+        });
+        panelIngresosFijos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), TransaccionesFijasActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void actualizarBarraDeProgreso(){

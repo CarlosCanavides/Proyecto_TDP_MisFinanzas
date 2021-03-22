@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.TransaccionesFijasActivity"></activity>
+        <activity android:name=".activities.PlantillasActivity"></activity>
+        <activity android:name=".activities.TransaccionesFijasActivity" />
         <activity
             android:name=".activities.InformesActivity"
             android:theme="@style/AppTheme.NoActionBar" />

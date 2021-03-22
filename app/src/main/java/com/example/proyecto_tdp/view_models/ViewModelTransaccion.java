@@ -4,6 +4,8 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.base_de_datos.repositorios.RepositorioTransacciones;
 import java.util.List;
@@ -21,6 +23,10 @@ public class ViewModelTransaccion extends AndroidViewModel {
 
     public LiveData<List<Transaccion>> getAllTransacciones(){
         return transacciones;
+    }
+
+    public void removeObserver(Observer<List<Transaccion>> observer){
+        transacciones.removeObserver(observer);
     }
 
     public List<Transaccion> getTransaccionesDesdeHasta(String desde, String hasta){

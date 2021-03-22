@@ -64,6 +64,8 @@ public class IngresosFijosFragment extends Fragment {
             @Override
             public void onChanged(List<TransaccionFija> transaccions) {
                 transaccionesFijas.clear();
+                mapColorCategoria.clear();
+                adapterHome.refresh();
                 adapterHome.notifyDataSetChanged();
                 transaccionesFijas.addAll(transaccions);
                 for(TransaccionFija t : transaccions){
