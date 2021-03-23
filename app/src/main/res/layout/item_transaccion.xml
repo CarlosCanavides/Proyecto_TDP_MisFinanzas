@@ -56,7 +56,7 @@
                         android:singleLine="true"
                         android:text="HOLAAAA"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
-                        android:textColor="@color/color_titulo_transaccion"
+                        android:textColor="@color/secondary_text"
                         android:textSize="@dimen/size_titulo_item_transaccion"
                         android:fontFamily="@font/urwdin_md"/>
 

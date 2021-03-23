@@ -22,6 +22,7 @@ public class Constantes {
     public static final String GASTO = "Gasto";
     public static final String INGRESO = "Ingreso";
 
+    public static final String SELECCIONAR_FRECUENCIA = "Seleccionar Frecuencia";
     public static final String FRECUENCIA_SOLO_UNA_VEZ = "Solo una vez";
     public static final String FRECUENCIA_UNA_VEZ_AL_MES = "Una vez al mes";
     public static final String FRECUENCIA_UNA_VEZ_AL_ANIO = "Una vez al anio";

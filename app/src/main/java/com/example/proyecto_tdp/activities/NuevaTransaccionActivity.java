@@ -4,9 +4,13 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +20,7 @@ import com.example.proyecto_tdp.views.CalculatorInputDialog;
 import com.example.proyecto_tdp.views.CalendarioDialog;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -29,12 +34,18 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
     private EditText campoInfo;
     private RadioButton btnGasto;
     private RadioButton btnIngreso;
+    private CheckBox btnPlantilla;
+    private CheckBox btnTransaccionFija;
+    private Spinner listaFrecuencias;
+    private TextView campoFechaFinal;
+    private LinearLayout panelFechaFinal;
     private Button btnAceptar;
     private Button btnCancelar;
 
     private static final int PEDIDO_SELECCIONAR_CATEGORIA = 18;
     private CalculatorInputDialog calculatorInputDialog;
     private CalendarioDialog calendarioDialog;
+    private CalendarioDialog calendarioFechaFinalDialog;
     private DateFormat formatFecha = new SimpleDateFormat(Constantes.FORMATO_FECHA);
 
     @Override
@@ -46,16 +57,24 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
         campoTitulo = findViewById(R.id.campo_transaccion_titulo);
         campoEtiqueta = findViewById(R.id.campo_transaccion_etiqueta);
         campoFecha = findViewById(R.id.campo_transaccion_fecha);
+        campoFechaFinal = findViewById(R.id.campo_transaccion_fecha_final);
         campoInfo = findViewById(R.id.campo_transaccion_info);
         btnGasto = findViewById(R.id.radiobtn_transaccion_gasto);
         btnIngreso = findViewById(R.id.radiobtn_transaccion_ingreso);
+        btnPlantilla = findViewById(R.id.chk_agregar_plantilla);
+        btnTransaccionFija = findViewById(R.id.chk_agregar_transaccion_fija);
+        listaFrecuencias = findViewById(R.id.lista_desplegable_frecuencia);
+        panelFechaFinal = findViewById(R.id.panel_transaccion_fecha_final);
         btnAceptar = findViewById(R.id.btn_transaccion_aceptar);
         btnCancelar = findViewById(R.id.btn_transaccion_cancelar);
+        panelFechaFinal.setVisibility(View.GONE);
+        listaFrecuencias.setVisibility(View.GONE);
         btnGasto.setChecked(true);
 
         definirIngresarMonto();
         definirSeleccionarFecha();
         definirSeleccionarCategoria();
+        definirOpcionesAvanzadas();
         listenerBotonesPrincipales();
     }
 
@@ -100,6 +119,64 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
             public void onClick(View v) {
                 Intent intent = new Intent(NuevaTransaccionActivity.this, CategoriaActivity.class);
                 startActivityForResult(intent,PEDIDO_SELECCIONAR_CATEGORIA);
+            }
+        });
+    }
+
+    private void definirOpcionesAvanzadas(){
+        ArrayList<String> opcionesFrecuencia = new ArrayList<>();
+        opcionesFrecuencia.add(Constantes.SELECCIONAR_FRECUENCIA);
+        opcionesFrecuencia.add(Constantes.FRECUENCIA_SOLO_UNA_VEZ);
+        opcionesFrecuencia.add(Constantes.FRECUENCIA_UNA_VEZ_AL_MES);
+        opcionesFrecuencia.add(Constantes.FRECUENCIA_UNA_VEZ_AL_ANIO);
+        ArrayAdapter<CharSequence> adapterFrecuencia = new ArrayAdapter(this, android.R.layout.simple_list_item_1, opcionesFrecuencia);
+        listaFrecuencias.setAdapter(adapterFrecuencia);
+        btnPlantilla.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnTransaccionFija.setChecked(false);
+                if(btnPlantilla.isChecked()) {
+                    panelFechaFinal.setVisibility(View.GONE);
+                    listaFrecuencias.setVisibility(View.GONE);
+                    campoFecha.setText("No necesita fecha");
+                    campoFecha.setClickable(false);
+                    campoFechaFinal.setText("Seleccionar fecha final");
+                }
+                else {
+                    campoFecha.setText(formatFecha.format(Calendar.getInstance().getTime()));
+                    campoFecha.setClickable(true);
+                }
+            }
+        });
+        btnTransaccionFija.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnPlantilla.setChecked(false);
+                if(btnTransaccionFija.isChecked()){
+                    panelFechaFinal.setVisibility(View.VISIBLE);
+                    listaFrecuencias.setVisibility(View.VISIBLE);
+                    listaFrecuencias.setSelection(0);
+                    campoFecha.setText(formatFecha.format(Calendar.getInstance().getTime()));
+                    campoFecha.setClickable(true);
+                }
+                else {
+                    panelFechaFinal.setVisibility(View.GONE);
+                    listaFrecuencias.setVisibility(View.GONE);
+                    campoFechaFinal.setText("Seleccionar fecha final");
+                }
+            }
+        });
+        calendarioFechaFinalDialog = new CalendarioDialog();
+        calendarioFechaFinalDialog.setListener(new CalendarioDialog.OnSelectDateListener() {
+            @Override
+            public void onSelectDate(Date date) throws Exception {
+                campoFechaFinal.setText(formatFecha.format(date));
+            }
+        });
+        campoFechaFinal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calendarioFechaFinalDialog.show(getSupportFragmentManager(), getClass().getSimpleName());
             }
         });
     }
