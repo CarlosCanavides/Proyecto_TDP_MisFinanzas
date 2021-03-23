@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import com.example.proyecto_tdp.fragments.GastosFijosFragment;
+import com.example.proyecto_tdp.fragments.IngresosFijosFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterViewPagerTransaccionesFijas extends FragmentPagerAdapter {
+public class AdapterViewPagerTransaccionesFijas extends FragmentStatePagerAdapter {
 
     private int numeroPaginas;
     private List<Fragment> fragments;
@@ -19,11 +21,10 @@ public class AdapterViewPagerTransaccionesFijas extends FragmentPagerAdapter {
         numeroPaginas = behavior;
         fragments = new ArrayList<>(behavior);
         titulos = new ArrayList<>(behavior);
-    }
-
-    public void addFragment(Fragment fragment, String label){
-        fragments.add(fragment);
-        titulos.add(label);
+        fragments.add(new IngresosFijosFragment());
+        fragments.add(new GastosFijosFragment());
+        titulos.add("Ingresos Fijos");
+        titulos.add("Gastos Fijos");
     }
 
     @NonNull

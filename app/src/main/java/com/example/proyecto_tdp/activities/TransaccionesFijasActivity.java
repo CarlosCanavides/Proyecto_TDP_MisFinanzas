@@ -2,6 +2,7 @@ package com.example.proyecto_tdp.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
@@ -26,6 +27,7 @@ public class TransaccionesFijasActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private Toolbar toolbar;
     private AdapterViewPagerTransaccionesFijas adapterViewPagerTransaccionesFijas;
     private ViewModelTransaccionFija viewModelTransaccionFija;
     private FloatingActionButton btnAgregarNuevaTransaccionFija;
@@ -40,15 +42,16 @@ public class TransaccionesFijasActivity extends AppCompatActivity {
         btnAgregarNuevaTransaccionFija = findViewById(R.id.btn_agregar_transaccion_fija);
         tabLayout = findViewById(R.id.tabLayout_transacciones_fijas);
         viewPager = findViewById(R.id.viewpager_transacciones_fijas);
+        toolbar   = findViewById(R.id.transaccion_fijas_toolbar);
         viewModelTransaccionFija = ViewModelProviders.of(this).get(ViewModelTransaccionFija.class);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         inicializarViewPager();
         inicializarBtnAgregarTransaccionFija();
     }
 
     private void inicializarViewPager(){
         adapterViewPagerTransaccionesFijas = new AdapterViewPagerTransaccionesFijas(getSupportFragmentManager(),2);
-        adapterViewPagerTransaccionesFijas.addFragment(new IngresosFijosFragment(),"Ingresos Fijos");
-        adapterViewPagerTransaccionesFijas.addFragment(new GastosFijosFragment(),"Gastos fijos");
         viewPager.setAdapter(adapterViewPagerTransaccionesFijas);
         tabLayout.setupWithViewPager(viewPager);
     }

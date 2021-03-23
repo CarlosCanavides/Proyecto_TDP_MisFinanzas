@@ -1,34 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout_transacciones_fijas"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabIndicatorColor="@color/colorPrimary"
-        app:tabSelectedTextColor="@color/colorPrimary"
-        app:tabTextAppearance="@style/Widget.TabItem">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-    </com.google.android.material.tabs.TabLayout>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/transaccion_fijas_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewpager_transacciones_fijas"
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:background="@color/white"/>
+        android:layout_height="match_parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_agregar_transaccion_fija"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/add_white"
-        android:layout_gravity="bottom|right"
-        android:layout_marginEnd="@dimen/espacio_mediano"
-        android:layout_marginBottom="@dimen/espacio_mediano"/>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager_transacciones_fijas"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:background="@color/white">
 
-</FrameLayout>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout_transacciones_fijas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabIndicatorColor="@color/colorPrimary"
+                app:tabSelectedTextColor="@color/colorPrimary"
+                app:tabTextAppearance="@style/tab_text"
+                android:background="@color/color_background_tablayout_tf">
+
+            </com.google.android.material.tabs.TabLayout>
+
+        </androidx.viewpager.widget.ViewPager>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_agregar_transaccion_fija"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add_white"
+            android:layout_gravity="bottom|right"
+            android:layout_marginEnd="@dimen/espacio_mediano"
+            android:layout_marginBottom="@dimen/espacio_mediano"/>
+
+    </FrameLayout>
+
+</LinearLayout>

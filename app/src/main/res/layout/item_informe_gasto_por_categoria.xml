@@ -20,7 +20,6 @@
             android:layout_marginStart="@dimen/espacio_big"
             android:layout_marginEnd="@dimen/espacio_mediano"
             android:background="@drawable/textview_circular"
-            android:backgroundTint="@color/colorAccent"
             android:textAlignment="center"
             android:textColor="@color/background_white"
             android:textSize="@dimen/text_circularview"

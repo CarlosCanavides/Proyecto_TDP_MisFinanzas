@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.PlantillasActivity"></activity>
-        <activity android:name=".activities.TransaccionesFijasActivity" />
+        <activity android:name=".activities.TransaccionesFijasActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activities.InformesActivity"
             android:theme="@style/AppTheme.NoActionBar" />

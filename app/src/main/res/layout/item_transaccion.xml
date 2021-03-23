@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="85dp"
         android:orientation="horizontal"
-        android:background="@color/color_anti_flash">
+        android:background="@color/color_fondo_transacciones">
 
         <TextView
             android:id="@+id/idImagen"

@@ -22,4 +22,8 @@
         <item name="textAllCaps">false</item>
     </style>
 
+    <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/urwdin_md</item>
+    </style>
+
 </resources>

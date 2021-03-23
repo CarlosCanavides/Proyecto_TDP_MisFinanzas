@@ -187,6 +187,7 @@ public class HomeFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PlantillasActivity.class);
+                startActivity(intent);
             }
         });
         panelGastosFijos.setOnClickListener(new View.OnClickListener() {

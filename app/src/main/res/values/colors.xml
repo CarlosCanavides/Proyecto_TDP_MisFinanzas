@@ -74,6 +74,9 @@
     <color name="color_numeros_naranja">#EA7C77</color>
     <color name="color_precios_positivos">#0EB87A</color>
     <color name="color_precios_negativos">#E12E48</color>
+    <color name="color_background_tablayout_tf">#D5DEEF</color>
     <color name="color_encabezado_fecha_transacciones_start">#D5DEEF</color>
     <color name="color_encabezado_fecha_transacciones_end">#F2F3F3</color>
+    <color name="color_transacciones_programadas">#F9FAF9</color>
+    <color name="color_fondo_transacciones">#F9FAF9</color>
 </resources>
