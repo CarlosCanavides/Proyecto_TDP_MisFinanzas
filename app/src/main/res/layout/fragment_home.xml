@@ -51,8 +51,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Saldo disponible"
-                        android:textColor="@color/color_letras_azules"
-                        android:textStyle="italic|bold"/>
+                        android:textColor="@color/colorPrimary"
+                        android:fontFamily="@font/urwdin_bold"/>
 
                 </LinearLayout>
 
@@ -76,20 +76,21 @@
                         android:id="@+id/tv_balance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="$6.320"
+                        android:text="$ 6.320"
                         android:textSize="30sp"
                         android:textColor="@color/color_letras_azules"
-                        android:textStyle="bold"
-                        android:layout_gravity="center_horizontal"/>
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/urwdin_bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="de un total de"
-                        android:textSize="12sp"
+                        android:textSize="13sp"
                         android:textStyle="italic"
                         android:textColor="@color/colorSecondaryText"
-                        android:layout_gravity="center_horizontal"/>
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/urwdin_light"/>
 
                     <TextView
                         android:id="@+id/tv_ingreso_total"
@@ -191,19 +192,20 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Ingreso promedio"
+                                    android:text="Ingreso Promedio"
                                     android:textSize="13sp"
-                                    android:textStyle="italic|bold"
+                                    android:textStyle="bold"
                                     android:textColor="@color/secondary_text"
-                                    android:layout_marginBottom="@dimen/espacio_small"/>
+                                    android:layout_marginBottom="@dimen/espacio_small"
+                                    android:fontFamily="@font/urwdin_md"/>
 
                                 <TextView
                                     android:id="@+id/tv_ingreso_promedio"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="$2.350"
-                                    android:textStyle="bold"
-                                    android:textColor="@color/primary_text"/>
+                                    android:text="$ 3,214"
+                                    android:textColor="@color/primary_text"
+                                    android:fontFamily="@font/urwdin_bold"/>
 
                             </LinearLayout>
 
@@ -236,17 +238,18 @@
                                     android:layout_height="wrap_content"
                                     android:text="Gasto promedio"
                                     android:textSize="13sp"
-                                    android:textStyle="italic|bold"
+                                    android:textStyle="bold"
                                     android:textColor="@color/secondary_text"
-                                    android:layout_marginBottom="@dimen/espacio_small"/>
+                                    android:layout_marginBottom="@dimen/espacio_small"
+                                    android:fontFamily="@font/urwdin_md"/>
 
                                 <TextView
                                     android:id="@+id/tv_gasto_promedio"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="$2.350"
-                                    android:textStyle="bold"
-                                    android:textColor="@color/primary_text"/>
+                                    android:text="$ 2.350"
+                                    android:textColor="@color/primary_text"
+                                    android:fontFamily="@font/urwdin_bold"/>
 
                             </LinearLayout>
 
@@ -262,12 +265,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Transacciones Programadas"
-                android:layout_marginStart="@dimen/espacio_mediano"
+                android:layout_marginStart="@dimen/espacio_big"
                 android:layout_marginTop="@dimen/espacio_big"
                 android:layout_marginBottom="@dimen/espacio_big"
-                android:textStyle="bold"
-                android:textSize="15dp"
-                android:textColor="@color/primary_text">
+                android:textSize="19sp"
+                android:textColor="@color/primary_text"
+                android:fontFamily="@font/urwdin_bold">
             </TextView>
 
             <androidx.cardview.widget.CardView
@@ -299,7 +302,8 @@
                         android:text="T"
                         android:textAlignment="center"
                         android:textColor="@color/background_white"
-                        android:textSize="@dimen/text_circularview" />
+                        android:textSize="@dimen/text_circularview"
+                        android:fontFamily="@font/urwdin_md"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -329,10 +333,10 @@
                                     android:lines="1"
                                     android:singleLine="true"
                                     android:text="Ingresos Fijos"
-                                    android:textStyle="bold|italic"
                                     android:textColor="@color/primary_text"
                                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
-                                    android:textSize="@dimen/size_titulo_item_transaccion"/>
+                                    android:textSize="@dimen/size_titulo_item_transaccion"
+                                    android:fontFamily="@font/urwdin_bold"/>
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -340,11 +344,11 @@
                                     android:layout_marginStart="@dimen/espacio_mediano"
                                     android:layout_marginTop="@dimen/espacio_small"
                                     android:layout_marginEnd="@dimen/espacio_mediano"
-                                    android:textStyle="italic"
                                     android:textColor="@color/secondary_text"
                                     android:text="18 Monday June"
                                     android:lines="1"
-                                    android:singleLine="true"/>
+                                    android:singleLine="true"
+                                    android:fontFamily="@font/urwdin_md"/>
 
                             </LinearLayout>
 
@@ -354,10 +358,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:text="100"
-                                android:textStyle="bold"
                                 android:textColor="@color/color_numeros_naranja"
                                 android:gravity="right"
-                                android:layout_marginEnd="@dimen/espacio_mediano"/>
+                                android:layout_marginEnd="@dimen/espacio_mediano"
+                                android:fontFamily="@font/urwdin_bold"/>
 
                         </LinearLayout>
 
@@ -396,7 +400,8 @@
                         android:text="T"
                         android:textAlignment="center"
                         android:textColor="@color/background_white"
-                        android:textSize="@dimen/text_circularview" />
+                        android:textSize="@dimen/text_circularview"
+                        android:fontFamily="@font/urwdin_md"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -426,10 +431,10 @@
                                     android:lines="1"
                                     android:singleLine="true"
                                     android:text="Gastos Fijos"
-                                    android:textStyle="bold|italic"
                                     android:textColor="@color/primary_text"
                                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
-                                    android:textSize="@dimen/size_titulo_item_transaccion"/>
+                                    android:textSize="@dimen/size_titulo_item_transaccion"
+                                    android:fontFamily="@font/urwdin_bold"/>
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -437,11 +442,11 @@
                                     android:layout_marginStart="@dimen/espacio_mediano"
                                     android:layout_marginTop="@dimen/espacio_small"
                                     android:layout_marginEnd="@dimen/espacio_mediano"
-                                    android:textStyle="italic"
                                     android:textColor="@color/secondary_text"
                                     android:text="18 Monday June"
                                     android:lines="1"
-                                    android:singleLine="true"/>
+                                    android:singleLine="true"
+                                    android:fontFamily="@font/urwdin_md"/>
 
                             </LinearLayout>
 
@@ -451,10 +456,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:text="100"
-                                android:textStyle="bold"
                                 android:textColor="@color/color_numeros_naranja"
                                 android:gravity="right"
-                                android:layout_marginEnd="@dimen/espacio_mediano"/>
+                                android:layout_marginEnd="@dimen/espacio_mediano"
+                                android:fontFamily="@font/urwdin_bold"/>
 
                         </LinearLayout>
 
@@ -494,7 +499,8 @@
                         android:text="T"
                         android:textAlignment="center"
                         android:textColor="@color/background_white"
-                        android:textSize="@dimen/text_circularview" />
+                        android:textSize="@dimen/text_circularview"
+                        android:fontFamily="@font/urwdin_md"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -525,10 +531,10 @@
                                     android:lines="1"
                                     android:singleLine="true"
                                     android:text="Plantillas"
-                                    android:textStyle="bold|italic"
                                     android:textColor="@color/primary_text"
                                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
-                                    android:textSize="@dimen/size_titulo_item_transaccion"/>
+                                    android:textSize="@dimen/size_titulo_item_transaccion"
+                                    android:fontFamily="@font/urwdin_bold"/>
 
                                 <TextView
                                     android:id="@+id/transaccion_fija_info"
@@ -537,11 +543,11 @@
                                     android:layout_marginStart="@dimen/espacio_mediano"
                                     android:layout_marginTop="@dimen/espacio_small"
                                     android:layout_marginEnd="@dimen/espacio_mediano"
-                                    android:textStyle="italic"
                                     android:textColor="@color/secondary_text"
                                     android:text="18 Monday June"
                                     android:lines="1"
-                                    android:singleLine="true"/>
+                                    android:singleLine="true"
+                                    android:fontFamily="@font/urwdin_md"/>
 
                             </LinearLayout>
 
@@ -551,10 +557,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:text="100"
-                                android:textStyle="bold"
                                 android:textColor="@color/color_numeros_naranja"
                                 android:gravity="right"
-                                android:layout_marginEnd="@dimen/espacio_mediano"/>
+                                android:layout_marginEnd="@dimen/espacio_mediano"
+                                android:fontFamily="@font/urwdin_bold"/>
 
                         </LinearLayout>
 

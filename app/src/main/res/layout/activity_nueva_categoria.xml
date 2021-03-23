@@ -27,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:fontFamily="@font/urwdin_md"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/espacio_mediano"/>
 
@@ -51,6 +52,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textColor="@color/colorAccent"
+            android:fontFamily="@font/urwdin_md"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/espacio_mediano"/>
 
@@ -74,6 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:fontFamily="@font/urwdin_md"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/espacio_mediano"
             android:maxLines="1"
@@ -112,6 +115,7 @@
                     android:text="Gasto"
                     android:textSize="15sp"
                     android:textColor="@color/primary_text"
+                    android:fontFamily="@font/urwdin_md"
                     android:layout_marginEnd="@dimen/espacio_big"
                     android:checked="true"
                     android:buttonTint="@color/color_precios_negativos"/>
@@ -123,7 +127,8 @@
                     android:text="Ingreso"
                     android:textSize="15sp"
                     android:textColor="@color/primary_text"
-                    android:buttonTint="@color/color_precios_positivos"/>
+                    android:buttonTint="@color/color_precios_positivos"
+                    android:fontFamily="@font/urwdin_md"/>
 
             </RadioGroup>
 
@@ -137,7 +142,7 @@
         android:text="Vista previa :"
         android:textSize="14sp"
         android:textColor="@color/secondary_text"
-        android:textStyle="italic"
+        android:fontFamily="@font/urwdin_light"
         android:layout_marginTop="@dimen/espacio_big"
         android:layout_marginStart="@dimen/espacio_mediano"/>
 
@@ -160,7 +165,8 @@
             android:text="H"
             android:textAlignment="center"
             android:textColor="@color/background_white"
-            android:textSize="@dimen/text_circularview" />
+            android:textSize="@dimen/text_circularview"
+            android:fontFamily="@font/urwdin_md"/>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -173,10 +179,11 @@
                 android:id="@+id/vista_previa_categoria_nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nombre"
-                android:textColor="@color/primary_text"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/espacio_mediano"/>
+                android:layout_marginStart="@dimen/espacio_mediano"
+                android:fontFamily="@font/urwdin_md"
+                android:text="Nombre"
+                android:textColor="@color/primary_text" />
 
             <View
                 android:layout_width="match_parent"
@@ -204,6 +211,7 @@
                 android:text="CANCELAR"
                 android:textSize="12sp"
                 android:textColor="@color/white"
+                android:fontFamily="@font/urwdin_bold"
                 android:layout_marginTop="@dimen/espacio_mediano"
                 android:layout_marginStart="@dimen/espacio_mediano"
                 android:layout_marginEnd="@dimen/espacio_mediano"
@@ -217,6 +225,7 @@
                 android:text="ACEPTAR"
                 android:textSize="12sp"
                 android:textColor="@color/color_precios_positivos"
+                android:fontFamily="@font/urwdin_bold"
                 android:layout_marginTop="@dimen/espacio_mediano"
                 android:layout_marginEnd="@dimen/espacio_mediano"
                 android:layout_marginStart="@dimen/espacio_mediano"

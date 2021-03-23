@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/background_white"
+    android:background="@color/color_anti_flash"
     android:orientation="vertical">
 
     <LinearLayout
@@ -30,7 +30,8 @@
             android:text="12/2019"
             android:textColor="@color/background_white"
             android:background="@color/colorPrimaryDark"
-            android:textSize="@dimen/text_transacciones_mes"/>
+            android:textSize="@dimen/text_transacciones_mes"
+            android:fontFamily="@font/urwdin_bold"/>
 
         <ImageButton
             android:id="@+id/btn_mes_siguiente"
@@ -56,7 +57,8 @@
             android:textColor="@color/background_white"
             android:background="@color/colorPrimaryDark"
             android:textSize="@dimen/text_transacciones_mes"
-            android:layout_marginBottom="@dimen/espacio_mediano"/>
+            android:layout_marginBottom="@dimen/espacio_mediano"
+            android:fontFamily="@font/urwdin_md"/>
 
     </LinearLayout>
 

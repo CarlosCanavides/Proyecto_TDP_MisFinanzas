@@ -24,7 +24,8 @@
             android:textAlignment="center"
             android:textColor="@color/background_white"
             android:textSize="@dimen/text_circularview"
-            android:gravity="center_vertical"/>
+            android:gravity="center_vertical"
+            android:fontFamily="@font/urwdin_md"/>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -42,7 +43,8 @@
                 android:layout_marginStart="@dimen/espacio_mediano"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/primary_text"/>
+                android:textColor="@color/primary_text"
+                android:fontFamily="@font/urwdin_bold"/>
 
             <TextView
                 android:id="@+id/informes_gasto_categoria"
@@ -51,7 +53,8 @@
                 android:layout_gravity="center_vertical|right"
                 android:textColor="@color/color_numeros_naranja"
                 android:layout_marginEnd="@dimen/espacio_mediano"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:fontFamily="@font/urwdin_bold"/>
 
         </FrameLayout>
 

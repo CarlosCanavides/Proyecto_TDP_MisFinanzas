@@ -39,7 +39,8 @@
             android:paddingRight="15dp"
             android:text="@string/calculator_0"
             android:textSize="30sp"
-            android:gravity="end"/>
+            android:gravity="end"
+            android:fontFamily="@font/urwdin_demi"/>
 
         <ImageButton
             android:background="@color/white"

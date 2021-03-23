@@ -144,16 +144,16 @@ public class HomeFragment extends Fragment{
                 tvIngresoTotal.setText("$"+ingresoTotal);
                 float balance = ingresoTotal+gastoTotal;
                 if(balance<0){
-                    tvBalance.setText("-$"+Math.abs(balance));
+                    tvBalance.setText("-$ "+Math.abs(balance));
                 }
                 else {
-                    tvBalance.setText("$"+balance);
+                    tvBalance.setText("$ "+balance);
                 }
                 actualizarBarraDeProgreso();
                 Log.e("AQUIIIIIIIIIIIIIIIII",""+seriePrincipalIndex);
                 if(cantidadTransaccionesGasto!=0 && cantidadTransaccionesIngreso!=0) {
-                    tvIngresoPromedio.setText("$" + ingresoTotal / cantidadTransaccionesIngreso);
-                    tvGastoPromedio.setText("$" + Math.abs(gastoTotal) / cantidadTransaccionesGasto);
+                    tvIngresoPromedio.setText("$ " + ingresoTotal / cantidadTransaccionesIngreso);
+                    tvGastoPromedio.setText("$ " + Math.abs(gastoTotal) / cantidadTransaccionesGasto);
                 }
             }
         };

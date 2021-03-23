@@ -26,9 +26,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$"
-                    android:textSize="40sp"
+                    android:textSize="35sp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="@dimen/espacio_mediano"/>
+                    android:layout_marginEnd="@dimen/espacio_mediano"
+                    android:fontFamily="@font/urwdin_demi"/>
 
                 <TextView
                     android:id="@+id/set_campo_precio"
@@ -36,7 +37,8 @@
                     android:layout_height="wrap_content"
                     android:text="10.0"
                     android:textSize="40sp"
-                    android:textAlignment="center"/>
+                    android:textAlignment="center"
+                    android:fontFamily="@font/urwdin_demi"/>
 
             </LinearLayout>
 
@@ -71,7 +73,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_campos_transaccion"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/espacio_mediano"/>
+                android:layout_marginStart="@dimen/espacio_mediano"
+                android:fontFamily="@font/urwdin_md"/>
 
         </LinearLayout>
 
@@ -106,14 +109,19 @@
                         android:layout_height="wrap_content"
                         android:text="Gasto"
                         android:textSize="@dimen/text_campos_transaccion"
-                        android:layout_marginEnd="@dimen/espacio_big"/>
+                        android:checked="true"
+                        android:buttonTint="@color/color_precios_negativos"
+                        android:layout_marginEnd="@dimen/espacio_big"
+                        android:fontFamily="@font/urwdin_md"/>
 
                     <RadioButton
                         android:id="@+id/radiobtn_setTransaccion_ingreso"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ingreso"
-                        android:textSize="@dimen/text_campos_transaccion"/>
+                        android:textSize="@dimen/text_campos_transaccion"
+                        android:buttonTint="@color/color_precios_positivos"
+                        android:fontFamily="@font/urwdin_md"/>
 
                 </RadioGroup>
 
@@ -140,7 +148,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_campos_transaccion"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/espacio_mediano"/>
+                android:layout_marginStart="@dimen/espacio_mediano"
+                android:fontFamily="@font/urwdin_md"/>
 
         </LinearLayout>
 
@@ -163,7 +172,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_campos_transaccion"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/espacio_mediano"/>
+                android:layout_marginStart="@dimen/espacio_mediano"
+                android:fontFamily="@font/urwdin_md"/>
 
         </LinearLayout>
 
@@ -187,7 +197,8 @@
                 android:textSize="@dimen/text_campos_transaccion"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/espacio_mediano"
-                android:background="@drawable/background_campo_transaccion"/>
+                android:background="@drawable/background_campo_transaccion"
+                android:fontFamily="@font/urwdin_md"/>
 
         </LinearLayout>
 
@@ -210,7 +221,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_campos_transaccion"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/espacio_mediano"/>
+                android:layout_marginStart="@dimen/espacio_mediano"
+                android:fontFamily="@font/urwdin_md"/>
 
         </LinearLayout>
 
@@ -232,13 +244,15 @@
                     android:layout_height="wrap_content"
                     android:text="Eliminar"
                     android:textColor="@color/colorAccent"
-                    android:background="@color/icons"/>
+                    android:background="@color/icons"
+                    android:fontFamily="@font/urwdin_bold"/>
                 <Button
                     android:id="@+id/btn_aceptar_set"
                     android:layout_height="wrap_content"
                     android:background="@color/icons"
                     android:text="Aceptar"
-                    android:textColor="@color/colorAccent"/>
+                    android:textColor="@color/colorAccent"
+                    android:fontFamily="@font/urwdin_bold"/>
             </TableRow>
         </TableLayout>
     </LinearLayout>

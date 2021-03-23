@@ -7,7 +7,8 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="40sp">
+        android:layout_height="40sp"
+        android:background="@drawable/background_encabezado_fecha_transacciones">
 
         <TextView
             android:id="@+id/encabezado_section_fecha"
@@ -17,7 +18,8 @@
             android:text="12/2019"
             android:textSize="@dimen/text_transacciones_mes"
             android:layout_marginStart="@dimen/espacio_mediano"
-            android:textColor="@color/primary_text"/>
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/urwdin_bold"/>
 
         <TextView
             android:id="@+id/encabezado_section_gp"
@@ -27,7 +29,8 @@
             android:text="$-1320"
             android:textSize="@dimen/text_transacciones_mes"
             android:textColor="@color/colorAccent"
-            android:layout_marginEnd="@dimen/espacio_mediano"/>
+            android:layout_marginEnd="@dimen/espacio_mediano"
+            android:fontFamily="@font/urwdin_bold"/>
 
     </FrameLayout>
 

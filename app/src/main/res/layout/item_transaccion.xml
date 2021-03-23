@@ -8,7 +8,8 @@
         android:id="@+id/contenedor_NameInfo"
         android:layout_width="match_parent"
         android:layout_height="85dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@color/color_anti_flash">
 
         <TextView
             android:id="@+id/idImagen"
@@ -22,7 +23,8 @@
             android:text="H"
             android:textAlignment="center"
             android:textColor="@color/background_white"
-            android:textSize="@dimen/text_circularview" />
+            android:textSize="@dimen/text_circularview"
+            android:fontFamily="@font/urwdin_md"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,7 +57,8 @@
                         android:text="HOLAAAA"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
                         android:textColor="@color/color_titulo_transaccion"
-                        android:textSize="@dimen/size_titulo_item_transaccion" />
+                        android:textSize="@dimen/size_titulo_item_transaccion"
+                        android:fontFamily="@font/urwdin_md"/>
 
                     <TextView
                         android:id="@+id/itemTransaccion_categoria"
@@ -64,10 +67,10 @@
                         android:layout_marginStart="@dimen/espacio_mediano"
                         android:layout_marginTop="@dimen/espacio_small"
                         android:layout_marginEnd="@dimen/espacio_mediano"
-                        android:textStyle="italic|bold"
                         android:textColor="@color/primary_text"
                         android:lines="1"
-                        android:singleLine="true"/>
+                        android:singleLine="true"
+                        android:fontFamily="@font/urwdin_bold"/>
 
                     <TextView
                         android:id="@+id/itemTransaccion_etiqueta"
@@ -79,7 +82,8 @@
                         android:layout_marginTop="@dimen/espacio_small"
                         android:layout_marginEnd="@dimen/espacio_mediano"
                         android:lines="1"
-                        android:singleLine="true"/>
+                        android:singleLine="true"
+                        android:fontFamily="@font/urwdin_md"/>
 
                 </LinearLayout>
 
@@ -90,7 +94,8 @@
                     android:layout_gravity="center_vertical"
                     android:text="$100,00"
                     android:gravity="right"
-                    android:layout_marginEnd="@dimen/espacio_mediano"/>
+                    android:layout_marginEnd="@dimen/espacio_mediano"
+                    android:fontFamily="@font/urwdin_md"/>
 
             </LinearLayout>
 

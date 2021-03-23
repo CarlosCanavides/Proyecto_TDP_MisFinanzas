@@ -24,7 +24,8 @@
             android:text="a"
             android:textAlignment="center"
             android:textColor="@color/background_white"
-            android:textSize="@dimen/text_circularviewSubcategoria" />
+            android:textSize="@dimen/text_circularviewSubcategoria"
+            android:fontFamily="@font/urwdin_md"/>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -39,7 +40,8 @@
                 android:layout_height="wrap_content"
                 android:text="Nombre"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/espacio_mediano"/>
+                android:layout_marginStart="@dimen/espacio_mediano"
+                android:fontFamily="@font/urwdin_md"/>
 
             <View
                 android:layout_width="match_parent"

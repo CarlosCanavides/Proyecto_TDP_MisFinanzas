@@ -23,7 +23,8 @@
             android:text="H"
             android:textAlignment="center"
             android:textColor="@color/background_white"
-            android:textSize="@dimen/text_circularview" />
+            android:textSize="@dimen/text_circularview"
+            android:fontFamily="@font/urwdin_md"/>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -38,7 +39,9 @@
                 android:layout_height="wrap_content"
                 android:text="Nombre"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/espacio_mediano"/>
+                android:layout_marginStart="@dimen/espacio_mediano"
+                android:fontFamily="@font/urwdin_bold"
+                android:textSize="16sp"/>
 
             <View
                 android:layout_width="match_parent"

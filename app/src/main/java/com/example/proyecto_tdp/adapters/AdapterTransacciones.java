@@ -81,11 +81,11 @@ public class AdapterTransacciones extends BaseExpandableListAdapter {
         String resultadoFinal = String.format( "%.2f", Math.abs(resultado));
         if(resultado<0){
             tvGP.setText("- $ "+resultadoFinal);
-            tvGP.setTextColor(convertView.getResources().getColor(R.color.red));
+            tvGP.setTextColor(convertView.getResources().getColor(R.color.color_precios_negativos));
         }
         else {
             tvGP.setText("+ $ "+resultadoFinal);
-            tvGP.setTextColor(convertView.getResources().getColor(R.color.green_intermedium));
+            tvGP.setTextColor(convertView.getResources().getColor(R.color.color_precios_positivos));
         }
         return convertView;
     }
