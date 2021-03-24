@@ -153,6 +153,44 @@
             android:clipToPadding="false"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="13dp"
+                android:layout_marginEnd="13dp"
+                android:layout_marginBottom="@dimen/espacio_small"
+                android:layout_marginTop="@dimen/espacio_small">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/urwdin_bold"
+                    android:text="Transacciones De Gasto"
+                    android:textColor="@color/secondary_text_titulo"
+                    android:layout_alignParentStart="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/urwdin_bold"
+                    android:text="% 38"
+                    android:textColor="@color/primary_text"/>
+
+            </RelativeLayout>
+
+            <ProgressBar
+                style="@style/MyProgressBar"
+                android:theme="@style/MyProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:progress="70"
+                android:secondaryProgress="100"
+                android:layout_marginStart="13dp"
+                android:layout_marginEnd="13dp"
+                android:layout_marginBottom="@dimen/espacio_mediano"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

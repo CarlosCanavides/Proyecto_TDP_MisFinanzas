@@ -26,4 +26,12 @@
         <item name="android:fontFamily">@font/urwdin_md</item>
     </style>
 
+    <style name="MyProgressBar" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="colorButtonNormal">#E73019</item>
+        <item name="colorControlActivated">#4FEBA2</item>
+        <item name="colorControlHighlight">#E73019</item>
+        <item name="android:progressDrawable">@drawable/barra_progreso_horizontal_personalizada</item>
+        <item name="android:minWidth">200dp</item>
+    </style>
+
 </resources>

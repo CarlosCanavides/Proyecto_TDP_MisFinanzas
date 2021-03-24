@@ -220,7 +220,7 @@ public class HomeFragment extends Fragment{
         } else if (porcentajeRestante >= 33 && porcentajeRestante < 66) {
                 colorBarraProgreso = Color.parseColor("#F6CE55");
                } else {
-                    colorBarraProgreso = Color.parseColor("#00C853");
+                    colorBarraProgreso = Color.parseColor("#4FEBA2");
                }
         barraProgreso.addEvent(new DecoEvent.Builder((int) porcentajeRestante)
                 .setIndex(seriePrincipalIndex)
