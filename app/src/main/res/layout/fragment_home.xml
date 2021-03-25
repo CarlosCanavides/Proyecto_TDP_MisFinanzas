@@ -69,11 +69,12 @@
                         android:id="@+id/tv_balance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="$ 6.320"
+                        android:text="$ 6,320"
                         android:textSize="30sp"
                         android:textColor="@color/color_letras_azules"
                         android:layout_gravity="center_horizontal"
-                        android:fontFamily="@font/urwdin_bold"/>
+                        android:fontFamily="@font/franklin_md"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -168,7 +169,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:fontFamily="@font/urwdin_bold"
-                    android:text="% 38"
+                    android:text="38 %"
                     android:textColor="@color/primary_text"/>
 
             </RelativeLayout>
@@ -235,7 +236,8 @@
                                     android:layout_height="wrap_content"
                                     android:text="$ 3,214"
                                     android:textColor="@color/primary_text"
-                                    android:fontFamily="@font/urwdin_bold"/>
+                                    android:fontFamily="@font/franklin_md"
+                                    android:textStyle="bold"/>
 
                             </LinearLayout>
 
@@ -277,9 +279,10 @@
                                     android:id="@+id/tv_gasto_promedio"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="$ 2.350"
+                                    android:text="$ 2,350"
                                     android:textColor="@color/primary_text"
-                                    android:fontFamily="@font/urwdin_bold"/>
+                                    android:fontFamily="@font/franklin_md"
+                                    android:textStyle="bold"/>
 
                             </LinearLayout>
 

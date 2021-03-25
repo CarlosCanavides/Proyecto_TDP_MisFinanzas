@@ -26,6 +26,10 @@ import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.luseen.spacenavigation.SpaceItem;
+import com.luseen.spacenavigation.SpaceNavigationView;
+import com.luseen.spacenavigation.SpaceOnClickListener;
+
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import java.text.NumberFormat;
@@ -75,8 +79,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        CurveBottomBar cbb = findViewById(R.id.curvedBottomBar);
-        cbb.inflateMenu(R.menu.menu);
+        BottomNavigationView cbb = findViewById(R.id.curvedBottomBar);
+        cbb.setBackground(null);
+
         cbb.setOnNavigationItemSelectedListener(navListener);
 
     }

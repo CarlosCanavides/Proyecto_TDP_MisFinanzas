@@ -81,4 +81,6 @@
     <color name="color_encabezado_fecha_transacciones_end">#F2F3F3</color>
     <color name="color_transacciones_programadas">#F9FAF9</color>
     <color name="color_fondo_transacciones">#F9FAF9</color>
+
+    <color name="color_barra_de_navegacion">#F8F9FB</color>
 </resources>

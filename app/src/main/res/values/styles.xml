@@ -34,4 +34,23 @@
         <item name="android:minWidth">200dp</item>
     </style>
 
+
+
+    <style name="MyBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconTint">@drawable/barra_de_navegacion_selector</item>
+        <item name="itemTextColor">@drawable/barra_de_navegacion_selector</item>
+        <item name="itemTextAppearanceActive">@style/MyBottomNavigationView.TextAppearance.Active</item>
+        <item name="itemTextAppearanceInactive">@style/MyBottomNavigationView.TextAppearance</item>
+    </style>
+
+    <style name="MyBottomNavigationView.TextAppearance" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">10sp</item>
+        <item name="fontFamily">@font/urwdin_md</item>
+    </style>
+
+    <style name="MyBottomNavigationView.TextAppearance.Active" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">11sp</item>
+        <item name="fontFamily">@font/franklin_md</item>
+    </style>
+
 </resources>

@@ -57,4 +57,5 @@ dependencies {
     implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
 
     implementation 'joda-time:joda-time:2.10.10'
+    compile 'com.github.armcha:SpaceNavigationView:1.6.0'
 }

@@ -7,7 +7,7 @@
         android:id="@+id/nav_escritorio"
         android:icon="@drawable/icon_home"
         android:title="@string/item_escritorio"
-        app:showAsAction="withText" />
+        app:showAsAction="withText"/>
 
     <item
         android:id="@+id/nav_transacciones"
