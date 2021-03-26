@@ -1,4 +1,4 @@
-package com.example.proyecto_tdp.activities;
+package com.example.proyecto_tdp.activities.agregar_datos;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;

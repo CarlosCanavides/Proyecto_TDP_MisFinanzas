@@ -9,18 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.PlantillasActivity"></activity>
-        <activity android:name=".activities.TransaccionesFijasActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activities.modificar_datos.SetTransaccionFijaActivity"></activity>
+        <activity android:name=".activities.modificar_datos.SetPlantillaActivity" />
+        <activity android:name=".activities.agregar_datos.NuevaTransaccionFijaActivity" />
+        <activity android:name=".activities.agregar_datos.NuevaPlantillaActivity" />
+        <activity android:name=".activities.PlantillasActivity" />
+        <activity
+            android:name=".activities.TransaccionesFijasActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.InformesActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.NuevaCategoriaActivity" />
+        <activity android:name=".activities.agregar_datos.NuevaCategoriaActivity" />
         <activity
             android:name=".activities.CategoriaActivity"
             android:label="@string/title_activity_categorias" />
-        <activity android:name=".activities.SetTransaccionActivity" />
-        <activity android:name=".activities.NuevaTransaccionActivity" />
+        <activity android:name=".activities.modificar_datos.SetTransaccionActivity" />
+        <activity android:name=".activities.agregar_datos.NuevaTransaccionActivity" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

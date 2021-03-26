@@ -1,4 +1,4 @@
-package com.example.proyecto_tdp.activities;
+package com.example.proyecto_tdp.activities.modificar_datos;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
+import com.example.proyecto_tdp.activities.CategoriaActivity;
 import com.example.proyecto_tdp.views.CalculatorInputDialog;
 import com.example.proyecto_tdp.views.CalendarioDialog;
 import java.text.DateFormat;

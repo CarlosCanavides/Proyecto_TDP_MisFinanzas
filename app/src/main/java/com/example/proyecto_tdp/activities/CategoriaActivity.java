@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.proyecto_tdp.R;
+import com.example.proyecto_tdp.activities.agregar_datos.NuevaCategoriaActivity;
 import com.example.proyecto_tdp.adapters.AdapterCategorias;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.view_models.ViewModelCategoria;

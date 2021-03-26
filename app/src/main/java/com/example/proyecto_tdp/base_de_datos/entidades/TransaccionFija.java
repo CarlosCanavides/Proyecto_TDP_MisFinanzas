@@ -48,7 +48,10 @@ public class TransaccionFija {
     @TypeConverters(DateConverter.class)
     private Date fechaFinal;
 
-    public TransaccionFija(String titulo, String etiqueta, float precio, String categoria, String tipoTransaccion, Date fecha, String info, String frecuencia, Date fechaFinal) {
+    @ColumnInfo(name = "cantidadEjecucionesRestantes")
+    private int cantidadEjecucionesRestantes;
+
+    public TransaccionFija(String titulo, String etiqueta, float precio, String categoria, String tipoTransaccion, Date fecha, String info, String frecuencia, Date fechaFinal, int cantidadEjecucionesRestantes) {
         this.titulo = titulo;
         this.etiqueta = etiqueta;
         this.precio = precio;
@@ -60,6 +63,7 @@ public class TransaccionFija {
         this.info = info;
         this.frecuencia = frecuencia;
         this.fechaFinal = fechaFinal;
+        this.cantidadEjecucionesRestantes = cantidadEjecucionesRestantes;
     }
 
     @NonNull
@@ -141,5 +145,13 @@ public class TransaccionFija {
 
     public void setFechaFinal(Date fecha) {
         this.fechaFinal = fecha;
+    }
+
+    public int getCantidadEjecucionesRestantes(){
+        return cantidadEjecucionesRestantes;
+    }
+
+    public void setCantidadEjecucionesRestantes(int cantidadEjecucionesRestantes){
+        this.cantidadEjecucionesRestantes = cantidadEjecucionesRestantes;
     }
 }

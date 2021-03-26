@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.NuevaCategoriaActivity"
+    tools:context=".activities.agregar_datos.NuevaCategoriaActivity"
     android:orientation="vertical"
     android:background="@color/color_anti_flash">
 

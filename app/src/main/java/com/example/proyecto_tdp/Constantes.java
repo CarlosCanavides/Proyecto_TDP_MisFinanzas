@@ -24,6 +24,29 @@ public class Constantes {
 
     public static final String SELECCIONAR_FRECUENCIA = "Seleccionar Frecuencia";
     public static final String FRECUENCIA_SOLO_UNA_VEZ = "Solo una vez";
+    public static final String FRECUENCIA_UNA_VEZ_A_LA_SEMANA = "Una vez a la semana";
     public static final String FRECUENCIA_UNA_VEZ_AL_MES = "Una vez al mes";
     public static final String FRECUENCIA_UNA_VEZ_AL_ANIO = "Una vez al anio";
+
+    public static final String CAMPO_ID = "ID";
+    public static final String CAMPO_TITULO = "titulo";
+    public static final String CAMPO_PRECIO = "precio";
+    public static final String CAMPO_FECHA = "fecha";
+    public static final String CAMPO_CATEGORIA = "categoria";
+    public static final String CAMPO_ETIQUETA = "etiqueta";
+    public static final String CAMPO_INFO = "info";
+    public static final String CAMPO_TIPO = "tipo";
+    public static final String CAMPO_FECHA_FINAL = "fecha final";
+    public static final String CAMPO_FRECUENCIA = "frecuencia";
+    public static final String BOX_PLANTILLA_SELECCIONADO = "box plantilla seleccionada";
+    public static final String BOX_TRANSACCION_FIJA_SELECCIONADO = "box TF seleccionada";
+
+    public static final int PEDIDO_NUEVA_PLANTILLA = 1;
+    public static final int PEDIDO_NUEVA_TRANSACCION = 2;
+    public static final int PEDIDO_NUEVA_TRANSACCION_FIJA = 3;
+
+    public static final int PEDIDO_SET_PLANTILLA = 4;
+    public static final int PEDIDO_SET_TRANSACCION = 5;
+    public static final int PEDIDO_SET_TRANSACCION_FIJA = 6;
+
 }

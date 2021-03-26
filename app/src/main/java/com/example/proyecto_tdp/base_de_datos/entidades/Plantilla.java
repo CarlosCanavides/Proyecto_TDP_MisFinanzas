@@ -34,7 +34,7 @@ public class Plantilla {
     @ColumnInfo(name = "info")
     private String info;
 
-    public Plantilla(String titulo, String etiqueta, float precio, String categoria, String tipoTransaccion, String info) {
+    public Plantilla(String titulo, float precio, String etiqueta, String categoria, String tipoTransaccion, String info) {
         this.titulo = titulo;
         this.etiqueta = etiqueta;
         this.precio = precio;

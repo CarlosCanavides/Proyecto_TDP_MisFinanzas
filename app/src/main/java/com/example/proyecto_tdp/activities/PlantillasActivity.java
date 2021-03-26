@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
+import com.example.proyecto_tdp.activities.agregar_datos.NuevaTransaccionActivity;
 import com.example.proyecto_tdp.adapters.AdapterPlantillas;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Plantilla;

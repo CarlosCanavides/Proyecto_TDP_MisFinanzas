@@ -14,10 +14,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import com.akshay.library.CurveBottomBar;
+
 import com.example.proyecto_tdp.activities.CategoriaActivity;
 import com.example.proyecto_tdp.activities.InformesActivity;
-import com.example.proyecto_tdp.activities.NuevaTransaccionActivity;
+import com.example.proyecto_tdp.activities.agregar_datos.NuevaTransaccionActivity;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.fragments.HomeFragment;
 import com.example.proyecto_tdp.fragments.ResumenFragment;
@@ -26,14 +26,10 @@ import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.luseen.spacenavigation.SpaceItem;
-import com.luseen.spacenavigation.SpaceNavigationView;
-import com.luseen.spacenavigation.SpaceOnClickListener;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.Locale;
 

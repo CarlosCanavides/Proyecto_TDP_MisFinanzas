@@ -9,10 +9,13 @@ import androidx.room.TypeConverters;
 import com.example.proyecto_tdp.base_de_datos.DateConverter;
 import java.util.Date;
 
-@Entity(foreignKeys = @ForeignKey(entity = Categoria.class,
+@Entity(foreignKeys = {@ForeignKey(entity = Categoria.class,
         parentColumns = "nombreCategoria",
         childColumns = "categoria",
-        onDelete = ForeignKey.NO_ACTION))
+        onDelete = ForeignKey.NO_ACTION),
+        @ForeignKey(entity = TransaccionFija.class,
+        parentColumns = "id",
+        childColumns = "transaccionFijaPadre")})
 public class Transaccion {
 
     @PrimaryKey(autoGenerate = true)
@@ -31,6 +34,9 @@ public class Transaccion {
     @ColumnInfo(name = "categoria", defaultValue = "NULL")
     private String categoria;
 
+    @ColumnInfo(name = "transaccionFijaPadre")
+    private int transaccionFijaPadre;
+
     @ColumnInfo(name = "tipoTransaccion")
     private String tipoTransaccion;
 
@@ -41,7 +47,7 @@ public class Transaccion {
     @ColumnInfo(name = "info")
     private String info;
 
-    public Transaccion(String titulo, String etiqueta, float precio, String categoria, String tipoTransaccion, Date fecha, String info) {
+    public Transaccion(String titulo, String etiqueta, float precio, String categoria, String tipoTransaccion, Date fecha, String info, int transaccionFijaPadre) {
         this.titulo = titulo;
         this.etiqueta = etiqueta;
         this.precio = precio;
@@ -51,6 +57,7 @@ public class Transaccion {
         this.tipoTransaccion = tipoTransaccion;
         this.fecha = fecha;
         this.info = info;
+        this.transaccionFijaPadre = transaccionFijaPadre;
     }
 
     @NonNull
@@ -126,5 +133,13 @@ public class Transaccion {
         fecha = nuevosDatos.getFecha();
         categoria = nuevosDatos.getCategoria();
         etiqueta = nuevosDatos.getEtiqueta();
+    }
+
+    public int getTransaccionFijaPadre(){
+        return transaccionFijaPadre;
+    }
+
+    public void setTransaccionFijaPadre(int transaccionFijaPadre){
+        this.transaccionFijaPadre = transaccionFijaPadre;
     }
 }
