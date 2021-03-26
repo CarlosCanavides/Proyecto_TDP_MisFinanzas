@@ -1,9 +1,334 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.modificar_datos.SetTransaccionFijaActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/contenedor_botones"
+        android:layout_alignParentTop="true">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_above="@id/contenedor_botones">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/espacio_mediano"
+                        android:layout_marginBottom="@dimen/espacio_mediano">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$"
+                            android:textSize="35sp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="@dimen/espacio_mediano"
+                            android:fontFamily="@font/urwdin_demi"/>
+
+                        <TextView
+                            android:id="@+id/set_tf_campo_precio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0,00"
+                            android:textSize="40sp"
+                            android:textAlignment="center"
+                            android:fontFamily="@font/urwdin_demi"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/divider"
+                        android:layout_gravity="bottom"
+                        android:layout_marginStart="@dimen/margen_iconos_transaccion"
+                        android:layout_marginEnd="@dimen/margen_iconos_transaccion">
+                    </View>
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="@dimen/margen_iconos_transaccion"
+                    android:layout_marginEnd="@dimen/margen_iconos_transaccion"
+                    android:layout_marginTop="@dimen/margen_iconos_transaccion">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_categoria"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:id="@+id/set_tf_campo_categoria"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_campos_transaccion"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/espacio_mediano"
+                        android:textAlignment="textEnd"
+                        tools:ignore="RtlCompat"
+                        android:background="@drawable/background_campo_transaccion"
+                        android:fontFamily="@font/urwdin_md"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="@dimen/margen_iconos_transaccion"
+                    android:layout_marginEnd="@dimen/margen_iconos_transaccion">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_tipo_transaccion"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/espacio_mediano"/>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical">
+
+                        <RadioGroup
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_gravity="center_horizontal|center_vertical">
+
+                            <RadioButton
+                                android:id="@+id/set_tf_radiobtn_gasto"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Gasto"
+                                android:checked="true"
+                                android:textSize="@dimen/text_campos_transaccion"
+                                android:layout_marginEnd="@dimen/espacio_big"
+                                android:fontFamily="@font/urwdin_md"
+                                android:buttonTint="@color/color_precios_negativos"/>
+
+                            <RadioButton
+                                android:id="@+id/set_tf_radiobtn_ingreso"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ingreso"
+                                android:textSize="@dimen/text_campos_transaccion"
+                                android:fontFamily="@font/urwdin_md"
+                                android:buttonTint="@color/color_precios_positivos"/>
+
+                        </RadioGroup>
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="@dimen/margen_iconos_transaccion"
+                    android:layout_marginEnd="@dimen/margen_iconos_transaccion">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_titulo"
+                        android:layout_gravity="center_vertical"/>
+
+                    <EditText
+                        android:id="@+id/set_tf_campo_titulo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_campos_transaccion"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/espacio_mediano"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:fontFamily="@font/urwdin_md"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="@dimen/margen_iconos_transaccion"
+                    android:layout_marginEnd="@dimen/margen_iconos_transaccion">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_etiqueta"
+                        android:layout_gravity="center_vertical"/>
+
+                    <EditText
+                        android:id="@+id/set_tf_campo_etiqueta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_campos_transaccion"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/espacio_mediano"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:fontFamily="@font/urwdin_md"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="@dimen/margen_iconos_transaccion"
+                    android:layout_marginEnd="@dimen/margen_iconos_transaccion">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_fecha"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:id="@+id/set_tf_campo_fecha"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_campos_transaccion"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/espacio_mediano"
+                        android:fontFamily="@font/urwdin_md"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="@dimen/margen_iconos_transaccion"
+                    android:layout_marginEnd="@dimen/margen_iconos_transaccion"
+                    android:layout_marginBottom="@dimen/espacio_mediano">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_apunte"
+                        android:layout_gravity="center_vertical"/>
+
+                    <EditText
+                        android:id="@+id/set_tf_campo_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_campos_transaccion"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/espacio_mediano"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:fontFamily="@font/urwdin_md"/>
+
+                </LinearLayout>
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Transacción Fija"
+                    android:layout_marginStart="@dimen/espacio_mediano"
+                    android:fontFamily="@font/urwdin_md"
+                    android:textSize="@dimen/text_campos_transaccion"
+                    android:layout_marginBottom="@dimen/espacio_mediano"
+                    android:buttonTint="@color/colorPrimary"
+                    android:clickable="false"
+                    android:checked="true"/>
+
+                <Spinner
+                    android:id="@+id/set_tf_frecuencia"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="@dimen/text_campos_transaccion"
+                    android:layout_marginEnd="@dimen/text_campos_transaccion"
+                    android:background="@color/color_background_spinner">
+                </Spinner>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="@dimen/margen_iconos_transaccion"
+                    android:layout_marginEnd="@dimen/margen_iconos_transaccion"
+                    android:layout_marginBottom="@dimen/espacio_mediano">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_fecha"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:id="@+id/set_tf_campo_fecha_final"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_campos_transaccion"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/espacio_mediano"
+                        android:text="Seleccionar fecha final"
+                        android:fontFamily="@font/urwdin_md"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/contenedor_botones">
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:stretchColumns="0,1">
+            <TableRow>
+                <Button
+                    android:id="@+id/set_tf_btn_cancelar"
+                    android:layout_height="wrap_content"
+                    android:text="Cancelar"
+                    android:textColor="@color/color_precios_negativos"
+                    android:background="@color/icons"
+                    android:fontFamily="@font/urwdin_bold"/>
+                <Button
+                    android:id="@+id/set_tf_btn_aceptar"
+                    android:layout_height="wrap_content"
+                    android:background="@color/icons"
+                    android:text="Aceptar"
+                    android:textColor="@color/color_precios_positivos"
+                    android:fontFamily="@font/urwdin_bold"/>
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
+</RelativeLayout>
