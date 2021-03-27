@@ -70,7 +70,7 @@
                             android:fontFamily="@font/urwdin_bold"/>
 
                         <TextView
-                            android:id="@+id/transaccion_fija_info"
+                            android:id="@+id/transaccion_fija_fechas"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/espacio_mediano"
@@ -84,7 +84,7 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/transaccion_fija_monto"
+                        android:id="@+id/transaccion_fija_precio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"

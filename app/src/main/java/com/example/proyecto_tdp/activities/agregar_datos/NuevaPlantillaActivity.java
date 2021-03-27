@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.proyecto_tdp.R;
+
 public class NuevaPlantillaActivity extends AppCompatActivity {
 
     @Override

@@ -83,7 +83,6 @@ public class EstrategiaSoloTransaccionesFijas extends EstrategiaGeneral{
 
     private void setTransaccionFija(Intent datos){
         TransaccionFija transaccionFijaModificada;
-        Transaccion transaccionModificada;
         obtenerDatosPrincipales(datos);
         calendario = LocalDate.now();
         String fechaInicioActual = datos.getStringExtra(Constantes.CAMPO_FECHA);

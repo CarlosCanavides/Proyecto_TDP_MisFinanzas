@@ -1,70 +1,106 @@
 package com.example.proyecto_tdp.adapters;
 
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
+import com.example.proyecto_tdp.base_de_datos.entidades.TransaccionFija;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
-public class AdapterTransaccionesFijas extends RecyclerView.Adapter<AdapterTransaccionesFijas.ViewHolderTransaccionesFijas>{
+public class AdapterTransaccionesFijas extends BaseExpandableListAdapter {
 
-    private List<String> transaccionesFijas;
-    private Resources recursos;
+    private List<String> frecuencias;
+    private Map<String,List<TransaccionFija>> mapTransaccionesFijas;
+    private DateTimeFormatter formatoFecha;
 
-    public AdapterTransaccionesFijas(List<String> transaccionesFijas) {
-        this.transaccionesFijas = transaccionesFijas;
-    }
-
-    @NonNull
-    @Override
-    public ViewHolderTransaccionesFijas onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transacciones_fijas, null, false);
-        recursos = view.getResources();
-        return new ViewHolderTransaccionesFijas(view);
+    public AdapterTransaccionesFijas(List<String> frecuencias, Map<String,List<TransaccionFija>> mapTransaccionesFijas) {
+        this.frecuencias = frecuencias;
+        this.mapTransaccionesFijas = mapTransaccionesFijas;
+        formatoFecha = DateTimeFormat.forPattern(Constantes.FORMATO_FECHA);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolderTransaccionesFijas holder, int position) {
-        holder.tvNombreTransaccionFija.setText(transaccionesFijas.get(position));
-        holder.tvInfoTransaccionFija.setText("");
-        holder.tvIconoTransaccionFija.setText("T");
-        holder.tvMontoTransaccionFija.setText("$352,56");
-        Drawable bg = holder.tvIconoTransaccionFija.getBackground();
-        switch (position){
-            case 0 : bg.setColorFilter(Color.blue(10), PorterDuff.Mode.SRC); break;
-            case 1 : bg.setColorFilter(Color.blue(10), PorterDuff.Mode.SRC); break;
-            case 2 : bg.setColorFilter(Color.parseColor("#F6DFE1"), PorterDuff.Mode.SRC); break;
-            default: bg.setColorFilter(Color.parseColor("#F6DFE1"), PorterDuff.Mode.SRC);
+    public int getGroupCount() {
+        return frecuencias.size();
+    }
+
+    @Override
+    public int getChildrenCount(int groupPosition) {
+        int size = 0;
+        List<TransaccionFija> transaccionFijas = mapTransaccionesFijas.get(frecuencias.get(groupPosition));
+        if(transaccionFijas!=null){
+            size = transaccionFijas.size();
         }
-
-        bg.setColorFilter(Color.parseColor("#7373FF"), PorterDuff.Mode.SRC);
+        return size;
     }
 
     @Override
-    public int getItemCount() {
-        return transaccionesFijas.size();
+    public Object getGroup(int groupPosition) {
+        return frecuencias.get(groupPosition);
     }
 
-    public class ViewHolderTransaccionesFijas extends RecyclerView.ViewHolder {
+    @Override
+    public Object getChild(int groupPosition, int childPosition) {
+        return mapTransaccionesFijas.get(frecuencias.get(groupPosition));
+    }
 
-        private TextView tvNombreTransaccionFija;
-        private TextView tvInfoTransaccionFija;
-        private TextView tvMontoTransaccionFija;
-        private TextView tvIconoTransaccionFija;
+    @Override
+    public long getGroupId(int groupPosition) {
+        return 0;
+    }
 
-        public ViewHolderTransaccionesFijas(@NonNull View itemView) {
-            super(itemView);
-            tvNombreTransaccionFija = itemView.findViewById(R.id.transaccion_fija_nombre);
-            tvInfoTransaccionFija = itemView.findViewById(R.id.transaccion_fija_info);
-            tvMontoTransaccionFija = itemView.findViewById(R.id.transaccion_fija_monto);
-            tvIconoTransaccionFija = itemView.findViewById(R.id.transaccion_fija_icono);
+    @Override
+    public long getChildId(int groupPosition, int childPosition) {
+        return 0;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return false;
+    }
+
+    @Override
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return true;
+    }
+
+    @Override
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+        String frecuencia = frecuencias.get(groupPosition);
+        convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_encabezado_tf_frecuencia,null,false);
+        TextView tvFrecuencia = convertView.findViewById(R.id.encabezado_frecuencia);
+        tvFrecuencia.setText(frecuencia);
+        return convertView;
+    }
+
+    @Override
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        TransaccionFija transaccionFija = mapTransaccionesFijas.get(frecuencias.get(groupPosition)).get(childPosition);
+        TextView tvLetra = convertView.findViewById(R.id.transaccion_fija_icono);
+        TextView tvFechas = convertView.findViewById(R.id.transaccion_fija_fechas);
+        TextView tvTitulo = convertView.findViewById(R.id.transaccion_fija_nombre);
+        TextView tvPrecio = convertView.findViewById(R.id.transaccion_fija_precio);
+        tvLetra.setText(transaccionFija.getCategoria().charAt(0));
+        tvTitulo.setText(transaccionFija.getTitulo());
+        tvPrecio.setText(transaccionFija.getPrecio()+"");
+        float precio = transaccionFija.getPrecio();
+        if(precio>=0){
+            tvPrecio.setText("+ $ "+precio);
         }
+        else {
+            tvPrecio.setText("- $ "+Math.abs(precio));
+        }
+        tvFechas.setText(formatoFecha.print(transaccionFija.getFecha().getTime())+" | "+formatoFecha.print(transaccionFija.getFechaFinal().getTime()));
+        return convertView;
+    }
+
+    public void refresh(){
+        mapTransaccionesFijas.clear();
     }
 }

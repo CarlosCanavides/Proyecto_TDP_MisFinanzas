@@ -1,5 +1,7 @@
 package com.example.proyecto_tdp;
 
+import android.graphics.Color;
+
 public class Constantes {
 
     public static final String ENERO = "Enero";
@@ -45,6 +47,12 @@ public class Constantes {
     public static final String CAMPO_FRECUENCIA_ANTERIOR = "frecuencia anterior";
     public static final String CAMPO_EJECUCIONES_RESTANTES = "campo ejecuciones restantes";
 
+    public static final String CAMPO_TIPO_CATEGORIA = "tipo categoria";
+    public static final String CAMPO_COLOR_CATEGORIA = "color categoria";
+    public static final String CAMPO_NOMBRE_CATEGORIA = "nombre categoria";
+    public static final String CAMPO_CATEGORIA_SUPERIOR = "categoria superior";
+    public static final int COLOR_CATEGORIA_POR_DEFECTO = Color.parseColor("#7373FF");
+
     public static final int PEDIDO_NUEVA_PLANTILLA = 1;
     public static final int PEDIDO_NUEVA_TRANSACCION = 2;
     public static final int PEDIDO_NUEVA_TRANSACCION_FIJA = 3;
@@ -54,5 +62,4 @@ public class Constantes {
     public static final int PEDIDO_SET_PLANTILLA = 4;
     public static final int PEDIDO_SET_TRANSACCION = 5;
     public static final int PEDIDO_SET_TRANSACCION_FIJA = 6;
-
 }

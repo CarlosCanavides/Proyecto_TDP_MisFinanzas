@@ -64,11 +64,11 @@ public class SetPlantillaActivity extends AppCompatActivity {
         campoEtiqueta.setText(intent.getStringExtra(Constantes.CAMPO_ETIQUETA));
         campoCategoria.setText(intent.getStringExtra(Constantes.CAMPO_CATEGORIA));
         String tipo = intent.getStringExtra(Constantes.CAMPO_TIPO);
-        if(btnGasto.getText().toString().equals(tipo)){
-            btnGasto.setChecked(true);
+        if(Constantes.INGRESO.equals(tipo)){
+            btnIngreso.setChecked(true);
         }
         else {
-            btnIngreso.setChecked(true);
+            btnGasto.setChecked(true);
         }
     }
 

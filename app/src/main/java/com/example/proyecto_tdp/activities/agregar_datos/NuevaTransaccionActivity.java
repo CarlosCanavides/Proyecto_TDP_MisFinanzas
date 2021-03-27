@@ -186,27 +186,27 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String precio = campoPrecio.getText().toString();
-                String categoria = campoCategoria.getText().toString();
-                String titulo = campoTitulo.getText().toString();
-                String etiqueta = campoEtiqueta.getText().toString();
-                String fecha = campoFecha.getText().toString();
                 String info = campoInfo.getText().toString();
-                String tipoT;
+                String fecha = campoFecha.getText().toString();
+                String titulo = campoTitulo.getText().toString();
+                String precio = campoPrecio.getText().toString();
+                String etiqueta = campoEtiqueta.getText().toString();
+                String categoria = campoCategoria.getText().toString();
+                String tipo;
                 if(btnGasto.isChecked()){
-                    tipoT = btnGasto.getText().toString();
+                    tipo = btnGasto.getText().toString();
                 }
                 else {
-                    tipoT = btnIngreso.getText().toString();
+                    tipo = btnIngreso.getText().toString();
                 }
                 Intent intent = new Intent();
-                intent.putExtra("precio", precio);
-                intent.putExtra("categoria", categoria);
-                intent.putExtra("tipoT", tipoT);
-                intent.putExtra("titulo", titulo);
-                intent.putExtra("etiqueta", etiqueta);
-                intent.putExtra("fecha", fecha);
-                intent.putExtra("info", info);
+                intent.putExtra(Constantes.CAMPO_INFO, info);
+                intent.putExtra(Constantes.CAMPO_TIPO, tipo);
+                intent.putExtra(Constantes.CAMPO_FECHA, fecha);
+                intent.putExtra(Constantes.CAMPO_TITULO, titulo);
+                intent.putExtra(Constantes.CAMPO_PRECIO, precio);
+                intent.putExtra(Constantes.CAMPO_ETIQUETA, etiqueta);
+                intent.putExtra(Constantes.CAMPO_CATEGORIA, categoria);
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -215,8 +215,6 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = getIntent();
-                setResult(RESULT_CANCELED, intent);
                 finish();
             }
         });

@@ -65,6 +65,11 @@ public class AdapterTransacciones extends BaseExpandableListAdapter {
     }
 
     @Override
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return true;
+    }
+
+    @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         String fecha = fechas.get(groupPosition);
         convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_encabezado_transacciones_fecha,null,false);
@@ -128,11 +133,6 @@ public class AdapterTransacciones extends BaseExpandableListAdapter {
             bg.setColorFilter(colorCategoria, PorterDuff.Mode.SRC);
         }
         return convertView;
-    }
-
-    @Override
-    public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return true;
     }
 
     public void refrescar(){
