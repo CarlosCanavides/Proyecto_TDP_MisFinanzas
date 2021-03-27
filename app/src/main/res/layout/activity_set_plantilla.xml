@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_above="@id/set_contenedor_botones">
+        android:layout_above="@id/set_contenedor_botones"
+        android:background="@color/color_anti_flash">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -28,19 +29,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$"
-                    android:textSize="35sp"
+                    android:textSize="39sp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="@dimen/espacio_mediano"
-                    android:fontFamily="@font/urwdin_demi"/>
+                    android:fontFamily="@font/franklin_md"/>
 
                 <TextView
                     android:id="@+id/set_plantilla_campo_precio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="10.0"
+                    android:text="10"
                     android:textSize="40sp"
                     android:textAlignment="center"
-                    android:fontFamily="@font/urwdin_demi"/>
+                    android:fontFamily="@font/franklin_md"/>
 
             </LinearLayout>
 
@@ -74,8 +75,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_campos_transaccion"
+                android:text="Seleccionar Catergoria"
+                android:textAlignment="viewEnd"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/espacio_mediano"
+                android:layout_marginEnd="@dimen/espacio_small"
                 android:fontFamily="@font/urwdin_md"/>
 
         </LinearLayout>
@@ -221,12 +225,12 @@
                     android:layout_height="wrap_content"
                     android:text="Eliminar"
                     android:textColor="@color/colorAccent"
-                    android:background="@color/icons"
+                    android:background="@color/color_botones_de_decision"
                     android:fontFamily="@font/urwdin_bold"/>
                 <Button
                     android:id="@+id/set_plantilla_btn_aceptar"
                     android:layout_height="wrap_content"
-                    android:background="@color/icons"
+                    android:background="@color/color_botones_de_decision"
                     android:text="Aceptar"
                     android:textColor="@color/colorAccent"
                     android:fontFamily="@font/urwdin_bold"/>

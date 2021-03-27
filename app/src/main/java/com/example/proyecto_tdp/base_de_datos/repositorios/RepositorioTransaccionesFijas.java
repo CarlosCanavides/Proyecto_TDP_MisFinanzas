@@ -59,6 +59,10 @@ public class RepositorioTransaccionesFijas {
         new RepositorioTransaccionesFijas.EliminarTransaccionFijaAsyncTask(transaccionFijaDao).execute(transaccion);
     }
 
+    public void eliminarTransaccionFija(int id){
+        new RepositorioTransaccionesFijas.EliminarTransaccionFijaIDAsyncTask(transaccionFijaDao).execute(id);
+    }
+
     public static class InsertTransaccionFijaAsyncTask extends AsyncTask<TransaccionFija,Void,Void> {
         private TransaccionFijaDao transaccionFijaDao;
 
@@ -97,6 +101,20 @@ public class RepositorioTransaccionesFijas {
         @Override
         protected Void doInBackground(TransaccionFija... transaccions) {
             transaccionFijaDao.deleteTransaccionFija(transaccions[0]);
+            return null;
+        }
+    }
+
+    public static class EliminarTransaccionFijaIDAsyncTask extends AsyncTask<Integer,Void,Void> {
+        private TransaccionFijaDao transaccionFijaDao;
+
+        private EliminarTransaccionFijaIDAsyncTask(TransaccionFijaDao transaccionFijaDao){
+            this.transaccionFijaDao = transaccionFijaDao;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... id) {
+            transaccionFijaDao.eliminarTransaccionFija(id[0]);
             return null;
         }
     }

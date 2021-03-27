@@ -59,6 +59,9 @@ public class RepositorioTransacciones {
         new EliminarTransaccionAsyncTask(transaccionDao).execute(transaccion);
     }
 
+    public void eliminarTransaccionesHijas(int idPadre){
+        new EliminarTransaccionesHijasAsyncTask(transaccionDao).execute(idPadre);
+    }
 
     public static class InsertTransaccionAsyncTask extends AsyncTask<Transaccion,Void,Void> {
         private TransaccionDao transaccionDao;
@@ -98,6 +101,20 @@ public class RepositorioTransacciones {
         @Override
         protected Void doInBackground(Transaccion... transaccions) {
             transaccionDao.deleteTransaccion(transaccions[0]);
+            return null;
+        }
+    }
+
+    public static class EliminarTransaccionesHijasAsyncTask extends AsyncTask<Integer,Void,Void> {
+        private TransaccionDao transaccionDao;
+
+        private EliminarTransaccionesHijasAsyncTask(TransaccionDao transaccionDao){
+            this.transaccionDao = transaccionDao;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... idPadre) {
+            transaccionDao.eliminarTransaccionesHijas(idPadre[0]);
             return null;
         }
     }

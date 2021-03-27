@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.PlantillasActivity">
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_plantillas"
@@ -33,6 +28,4 @@
             android:layout_marginEnd="@dimen/espacio_mediano"
             android:layout_marginBottom="@dimen/espacio_mediano"/>
 
-    </FrameLayout>
-
-</LinearLayout>
+</FrameLayout>

@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_above="@id/set_contenedor_botones">
+        android:layout_above="@id/set_contenedor_botones"
+        android:background="@color/color_anti_flash">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -26,19 +27,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$"
-                    android:textSize="35sp"
+                    android:textSize="39sp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="@dimen/espacio_mediano"
-                    android:fontFamily="@font/urwdin_demi"/>
+                    android:fontFamily="@font/franklin_md"/>
 
                 <TextView
-                    android:id="@+id/set_campo_precio"
+                    android:id="@+id/set_transaccion_campo_precio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="10.0"
                     android:textSize="40sp"
                     android:textAlignment="center"
-                    android:fontFamily="@font/urwdin_demi"/>
+                    android:fontFamily="@font/franklin_md"/>
 
             </LinearLayout>
 
@@ -68,7 +69,7 @@
                 android:layout_gravity="center_vertical"/>
 
             <TextView
-                android:id="@+id/set_campo_categoria"
+                android:id="@+id/set_transaccion_campo_categoria"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_campos_transaccion"
@@ -104,7 +105,7 @@
                     android:layout_gravity="center_horizontal|center_vertical">
 
                     <RadioButton
-                        android:id="@+id/radiobtn_setTransaccion_gasto"
+                        android:id="@+id/set_transaccion_radiobtn_gasto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Gasto"
@@ -115,7 +116,7 @@
                         android:fontFamily="@font/urwdin_md"/>
 
                     <RadioButton
-                        android:id="@+id/radiobtn_setTransaccion_ingreso"
+                        android:id="@+id/set_transaccion_radiobtn_ingreso"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ingreso"
@@ -143,7 +144,7 @@
                 android:layout_gravity="center_vertical"/>
 
             <EditText
-                android:id="@+id/set_campo_titulo"
+                android:id="@+id/set_transaccion_campo_titulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_campos_transaccion"
@@ -167,7 +168,7 @@
                 android:layout_gravity="center_vertical"/>
 
             <EditText
-                android:id="@+id/set_campo_etiqueta"
+                android:id="@+id/set_transaccion_campo_etiqueta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_campos_transaccion"
@@ -191,7 +192,7 @@
                 android:layout_gravity="center_vertical"/>
 
             <TextView
-                android:id="@+id/set_campo_fecha"
+                android:id="@+id/set_transaccion_campo_fecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_campos_transaccion"
@@ -216,7 +217,7 @@
                 android:layout_gravity="center_vertical"/>
 
             <EditText
-                android:id="@+id/set_campo_info"
+                android:id="@+id/set_transaccion_campo_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_campos_transaccion"
@@ -240,16 +241,16 @@
             android:stretchColumns="0,1">
             <TableRow>
                 <Button
-                    android:id="@+id/btn_eliminar"
+                    android:id="@+id/set_transaccion_btn_eliminar"
                     android:layout_height="wrap_content"
                     android:text="Eliminar"
                     android:textColor="@color/colorAccent"
-                    android:background="@color/icons"
+                    android:background="@color/color_botones_de_decision"
                     android:fontFamily="@font/urwdin_bold"/>
                 <Button
-                    android:id="@+id/btn_aceptar_set"
+                    android:id="@+id/set_transaccion_btn_aceptar"
                     android:layout_height="wrap_content"
-                    android:background="@color/icons"
+                    android:background="@color/color_botones_de_decision"
                     android:text="Aceptar"
                     android:textColor="@color/colorAccent"
                     android:fontFamily="@font/urwdin_bold"/>

@@ -13,6 +13,7 @@ import android.view.View;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.activities.agregar_datos.NuevaTransaccionActivity;
+import com.example.proyecto_tdp.activities.modificar_datos.SetPlantillaActivity;
 import com.example.proyecto_tdp.adapters.AdapterPlantillas;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Plantilla;
@@ -26,7 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class PlantillasActivity extends AppCompatActivity {
+public class PlantillasActivity extends AppCompatActivity implements AdapterPlantillas.OnPlantillaListener {
 
     private RecyclerView recyclerView;
     private FloatingActionButton btnAgregarPlantilla;
@@ -36,8 +37,7 @@ public class PlantillasActivity extends AppCompatActivity {
     private ViewModelCategoria viewModelCategoria;
     private ViewModelPlantilla viewModelPlantilla;
     private Observer<List<Plantilla>> observer;
-    private static final int PEDIDO_NUEVA_PLANTILLA = 18;
-    private NumberFormat nf = NumberFormat.getInstance(new Locale("es", "ES"));
+    private NumberFormat formatoNumero;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,7 @@ public class PlantillasActivity extends AppCompatActivity {
         setTitle("Plantillas");
         recyclerView = findViewById(R.id.recycler_plantillas);
         btnAgregarPlantilla = findViewById(R.id.btn_agregar_plantilla);
+        formatoNumero = NumberFormat.getInstance(new Locale("es", "ES"));
         inicializarListView();
         inicializarViewModels();
         inicializarBtnAgregarPlantilla();
@@ -57,10 +58,24 @@ public class PlantillasActivity extends AppCompatActivity {
         viewModelPlantilla.removeOberver(observer);
     }
 
+    @Override
+    public void onPlantillaClick(int position) {
+        Plantilla plantilla = plantillas.get(position);
+        Intent intent = new Intent(this, SetPlantillaActivity.class);
+        intent.putExtra(Constantes.CAMPO_ID, plantilla.getId());
+        intent.putExtra(Constantes.CAMPO_INFO, plantilla.getInfo());
+        intent.putExtra(Constantes.CAMPO_TIPO, plantilla.getTipoTransaccion());
+        intent.putExtra(Constantes.CAMPO_TITULO, plantilla.getTitulo());
+        intent.putExtra(Constantes.CAMPO_PRECIO, String.format( "%.2f", Math.abs(plantilla.getPrecio())));
+        intent.putExtra(Constantes.CAMPO_ETIQUETA, plantilla.getEtiqueta());
+        intent.putExtra(Constantes.CAMPO_CATEGORIA, plantilla.getCategoria());
+        startActivityForResult(intent, Constantes.PEDIDO_SET_PLANTILLA);
+    }
+
     private void inicializarListView(){
         plantillas = new ArrayList<>();
         mapColorCategoria = new HashMap<>();
-        adapterPlantillas = new AdapterPlantillas(plantillas,mapColorCategoria);
+        adapterPlantillas = new AdapterPlantillas(plantillas,mapColorCategoria,this);
         recyclerView.setLayoutManager(new GridLayoutManager(this,1));
         recyclerView.setAdapter(adapterPlantillas);
     }
@@ -72,8 +87,8 @@ public class PlantillasActivity extends AppCompatActivity {
     }
 
     private void recopilarDatos() {
-        LiveData<List<Plantilla>> t = viewModelPlantilla.getAllPlantillas();
-        if (t != null) {
+        LiveData<List<Plantilla>> liveDataPlantillas = viewModelPlantilla.getAllPlantillas();
+        if (liveDataPlantillas != null) {
             observer = new Observer<List<Plantilla>>() {
                 @Override
                 public void onChanged(List<Plantilla> transaccions) {
@@ -89,7 +104,7 @@ public class PlantillasActivity extends AppCompatActivity {
                     adapterPlantillas.notifyDataSetChanged();
                 }
             };
-            t.observe(this, observer);
+            liveDataPlantillas.observe(this, observer);
         }
     }
 
@@ -98,7 +113,7 @@ public class PlantillasActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PlantillasActivity.this, NuevaTransaccionActivity.class);
-                startActivityForResult(intent,PEDIDO_NUEVA_PLANTILLA);
+                startActivityForResult(intent, Constantes.PEDIDO_NUEVA_PLANTILLA);
             }
         });
     }
@@ -106,32 +121,9 @@ public class PlantillasActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==PEDIDO_NUEVA_PLANTILLA){
+        if(requestCode==Constantes.PEDIDO_NUEVA_PLANTILLA){
             if(resultCode==RESULT_OK){
-                String precio = data.getStringExtra("precio");
-                String categoria = data.getStringExtra("categoria");
-                String tipoTransaccion = data.getStringExtra("tipoT");
-                String titulo = data.getStringExtra("titulo");
-                String etiqueta = data.getStringExtra("etiqueta");
-                String info = data.getStringExtra("info");
 
-                float monto = 0;
-                try {
-                    monto = nf.parse(precio).floatValue();
-                }catch (Exception e) {
-                    e.printStackTrace();
-                }
-                if(titulo.equals("")){
-                    titulo = "Sin título";
-                }
-                if(categoria.equals("Seleccionar categoria")){
-                    categoria = "";
-                }
-                if(tipoTransaccion.equals(Constantes.GASTO)){
-                    monto = monto*(-1);
-                }
-                Plantilla nueva = new Plantilla(titulo, etiqueta, monto, categoria, tipoTransaccion, info);
-                viewModelPlantilla.insertarPlantilla(nueva);
             }
         }
     }

@@ -17,17 +17,19 @@ public class AdapterPlantillas extends RecyclerView.Adapter<AdapterPlantillas.Vi
 
     private List<Plantilla> plantillas;
     private Map<Plantilla, Integer> mapColorCategoria;
+    private OnPlantillaListener onPlantillaListener;
 
-    public AdapterPlantillas(List<Plantilla> plantillas, Map<Plantilla, Integer> mapColorCategoria) {
+    public AdapterPlantillas(List<Plantilla> plantillas, Map<Plantilla, Integer> mapColorCategoria, OnPlantillaListener onPlantillaListener) {
         this.plantillas = plantillas;
         this.mapColorCategoria = mapColorCategoria;
+        this.onPlantillaListener = onPlantillaListener;
     }
 
     @NonNull
     @Override
     public AdapterPlantillas.ViewHolderPlantilla onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transaccion, null, false);
-        return new AdapterPlantillas.ViewHolderPlantilla(view);
+        return new AdapterPlantillas.ViewHolderPlantilla(view,onPlantillaListener);
     }
 
     @Override
@@ -61,21 +63,33 @@ public class AdapterPlantillas extends RecyclerView.Adapter<AdapterPlantillas.Vi
         return plantillas.size();
     }
 
-    public class ViewHolderPlantilla extends RecyclerView.ViewHolder{
+    public class ViewHolderPlantilla extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView tvNombre;
         private TextView tvCategoria;
         private TextView tvIdentificacion;
         private TextView tvLetra;
         private TextView tvPrecio;
+        private OnPlantillaListener onPlantillaListener;
 
-        public ViewHolderPlantilla(@NonNull View itemView) {
+        public ViewHolderPlantilla(@NonNull View itemView, OnPlantillaListener onPlantillaListener) {
             super(itemView);
             tvNombre = itemView.findViewById(R.id.itemTransaccion_nombre);
             tvCategoria = itemView.findViewById(R.id.itemTransaccion_categoria);
             tvIdentificacion = itemView.findViewById(R.id.itemTransaccion_etiqueta);
             tvLetra = itemView.findViewById(R.id.idImagen);
             tvPrecio = itemView.findViewById(R.id.itemTransaccion_precio);
+            itemView.setOnClickListener(this);
+            this.onPlantillaListener = onPlantillaListener;
         }
+
+        @Override
+        public void onClick(View v) {
+            onPlantillaListener.onPlantillaClick(getAdapterPosition() );
+        }
+    }
+
+    public interface OnPlantillaListener{
+        void onPlantillaClick(int position);
     }
 }

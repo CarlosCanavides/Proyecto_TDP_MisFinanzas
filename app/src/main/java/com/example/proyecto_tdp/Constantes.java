@@ -40,10 +40,16 @@ public class Constantes {
     public static final String CAMPO_FRECUENCIA = "frecuencia";
     public static final String BOX_PLANTILLA_SELECCIONADO = "box plantilla seleccionada";
     public static final String BOX_TRANSACCION_FIJA_SELECCIONADO = "box TF seleccionada";
+    public static final String CAMPO_FECHA_FINAL_ANTERIOR = "fecha final anterior";
+    public static final String CAMPO_FECHA_INICIO_ANTERIOR = "fecha inicio anterior";
+    public static final String CAMPO_FRECUENCIA_ANTERIOR = "frecuencia anterior";
+    public static final String CAMPO_EJECUCIONES_RESTANTES = "campo ejecuciones restantes";
 
     public static final int PEDIDO_NUEVA_PLANTILLA = 1;
     public static final int PEDIDO_NUEVA_TRANSACCION = 2;
     public static final int PEDIDO_NUEVA_TRANSACCION_FIJA = 3;
+
+    public static final int PEDIDO_SELECCIONAR_CATEGORIA = 26;
 
     public static final int PEDIDO_SET_PLANTILLA = 4;
     public static final int PEDIDO_SET_TRANSACCION = 5;

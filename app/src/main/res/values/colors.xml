@@ -83,4 +83,5 @@
     <color name="color_fondo_transacciones">#F9FAF9</color>
 
     <color name="color_barra_de_navegacion">#F8F9FB</color>
+    <color name="color_botones_de_decision">#F8F9FB</color>
 </resources>

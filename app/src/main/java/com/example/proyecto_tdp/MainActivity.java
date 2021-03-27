@@ -14,7 +14,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-
 import com.example.proyecto_tdp.activities.CategoriaActivity;
 import com.example.proyecto_tdp.activities.InformesActivity;
 import com.example.proyecto_tdp.activities.agregar_datos.NuevaTransaccionActivity;
@@ -26,7 +25,6 @@ import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import java.text.NumberFormat;
@@ -189,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                 if(fecha != null) {
                     fechaDate = formatFecha.parseDateTime(fecha).toDate();
                 }
-                Transaccion nuevaTransaccion = new Transaccion(titulo, etiqueta, monto, categoria, tipoTransaccion, fechaDate, info);
+                Transaccion nuevaTransaccion = new Transaccion(titulo, etiqueta, monto, categoria, tipoTransaccion, fechaDate, info,0);
                 viewModelTransaccion.insertarTransaccion(nuevaTransaccion);
             }
         }

@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -20,14 +19,18 @@ import com.example.proyecto_tdp.adapters.AdapterTransacciones;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
+import com.example.proyecto_tdp.verificador_estrategia.EstrategiaDeVerificacion;
+import com.example.proyecto_tdp.verificador_estrategia.VerificadorParaTransacciones;
 import com.example.proyecto_tdp.view_models.ViewModelCategoria;
+import com.example.proyecto_tdp.view_models.ViewModelPlantilla;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
+import com.example.proyecto_tdp.view_models.ViewModelTransaccionFija;
+
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -46,6 +49,7 @@ public class TransaccionesFragment extends Fragment {
     private TextView tvGastoPorMes;
     private DateTimeFormatter formatFecha = DateTimeFormat.forPattern(Constantes.FORMATO_FECHA);
     private DateTimeFormatter formatFechaMes =  DateTimeFormat.forPattern("MM/yyyy");
+    private EstrategiaDeVerificacion estrategiaDeVerificacion;
 
     private String fechaInicio;
     private String fechaFin;
@@ -60,6 +64,8 @@ public class TransaccionesFragment extends Fragment {
 
     private ViewModelTransaccion viewModelTransaccion;
     private ViewModelCategoria viewModelCategoria;
+    private ViewModelPlantilla viewModelPlantilla;
+    private ViewModelTransaccionFija viewModelTransaccionFija;
 
     @Nullable
     @Override
@@ -80,6 +86,7 @@ public class TransaccionesFragment extends Fragment {
         inicializarPeriodoDeTiempo();
         inicializarViewModel();
         listenerBotonesPrincipales();
+        estrategiaDeVerificacion = new VerificadorParaTransacciones(viewModelPlantilla,viewModelTransaccion,viewModelTransaccionFija);
     }
 
     private void inicializarListViewTransacciones(){
@@ -130,7 +137,9 @@ public class TransaccionesFragment extends Fragment {
     }
 
     private void inicializarViewModel(){
+        viewModelPlantilla = ViewModelProviders.of(getActivity()).get(ViewModelPlantilla.class);
         viewModelTransaccion = ViewModelProviders.of(getActivity()).get(ViewModelTransaccion.class);
+        viewModelTransaccionFija = ViewModelProviders.of(getActivity()).get(ViewModelTransaccionFija.class);
         viewModelCategoria = ViewModelProviders.of(getActivity()).get(ViewModelCategoria.class);
         viewModelTransaccion.getAllTransacciones().observe(getActivity(), new Observer<List<Transaccion>>() {
             @Override
@@ -230,42 +239,6 @@ public class TransaccionesFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == NRO_PEDIDO_SET) {
-            if (resultCode == -1) {
-                int id = data.getIntExtra("id",-1);
-                String precio = data.getStringExtra("precio");
-                String categoria = data.getStringExtra("categoria");
-                String tipoTransaccion = data.getStringExtra("tipoT");
-                String titulo = data.getStringExtra("titulo");
-                String etiqueta = data.getStringExtra("etiqueta");
-                String fecha = data.getStringExtra("fecha");
-                String info = data.getStringExtra("info");
 
-                float monto = 0;
-                try {
-                    monto = nf.parse(precio).floatValue();
-                }catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                if(id!=-1) {
-                    if(tipoTransaccion.equals("Gasto")){
-                        monto = monto*(-1);
-                    }
-                    Transaccion nueva = new Transaccion(titulo, etiqueta, monto, categoria, tipoTransaccion, new Date(), info);
-                    nueva.setId(id);
-                    viewModelTransaccion.actualizarTransaccion(nueva);
-                }
-            }
-            else if (resultCode == 0) {
-                int id = data.getIntExtra("id",-1);
-                if(id!=-1) {
-                    Transaccion t = new Transaccion("","",0,"","",new Date(),"");
-                    t.setId(id);
-                    viewModelTransaccion.actualizarTransaccion(t);
-                    viewModelTransaccion.eliminarTransaccion(t);
-                }
-            }
-        }
     }
 }

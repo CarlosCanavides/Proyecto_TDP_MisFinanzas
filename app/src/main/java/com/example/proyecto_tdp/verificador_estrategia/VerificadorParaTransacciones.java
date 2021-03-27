@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.Locale;
 import static android.app.Activity.RESULT_OK;
 
-public class VerificadorParaTransacciones{
+public class VerificadorParaTransacciones implements EstrategiaDeVerificacion{
 
     protected ViewModelPlantilla viewModelPlantilla;
     protected ViewModelTransaccion viewModelTransaccion;
@@ -34,8 +34,8 @@ public class VerificadorParaTransacciones{
         formatoDeNumero = NumberFormat.getInstance(new Locale("es", "ES"));
     }
 
-    public void verificar(int codigoPedido, int codigoEntregado, int estadoDelResultado, Intent datos) {
-        if(codigoPedido==codigoEntregado && datos!=null){
+    public void verificar(int codigoPedido, int estadoDelResultado, Intent datos) {
+        if(datos!=null){
             if(codigoPedido==Constantes.PEDIDO_NUEVA_PLANTILLA || codigoPedido==Constantes.PEDIDO_NUEVA_TRANSACCION || codigoPedido==Constantes.PEDIDO_NUEVA_TRANSACCION_FIJA){
                 ejecutarInserccion(estadoDelResultado,datos);
             }
@@ -115,7 +115,6 @@ public class VerificadorParaTransacciones{
                 if(fechaInicio.before(calendario.toDate())){
                     calendario = new LocalDate(fechaInicio);
                     nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,0);
-                    viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
                     while ((fechaFinal.after(calendario.toDate())||fechaFinal.compareTo(calendario.toDate())==0) && hoy.after(calendario.toDate())){
                         cantidadDeEjecucionesTotales++;
                         cantidadDeEjecucionesRealizadas++;
@@ -128,7 +127,7 @@ public class VerificadorParaTransacciones{
                         calendario.plusDays(7);
                     }
                     nuevaTransaccionFija.setCantidadEjecucionesRestantes(cantidadDeEjecucionesTotales-cantidadDeEjecucionesRealizadas);
-                    viewModelTransaccionFija.actualizarTransaccionFija(nuevaTransaccionFija);
+                    viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
                 }
                 else {
                     calendario = new LocalDate(fechaInicio);

@@ -38,4 +38,7 @@ public interface TransaccionDao {
 
     @Delete
     void deleteTransaccion(Transaccion transacciones);
+
+    @Query("DELETE FROM transaccion WHERE transaccionFijaPadre LIKE :idPadre")
+    void eliminarTransaccionesHijas(int idPadre);
 }
