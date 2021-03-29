@@ -7,11 +7,20 @@ import android.widget.ArrayAdapter;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.activities.CategoriaActivity;
 import com.example.proyecto_tdp.activities.agregar_datos.NuevaTransaccionFijaActivity;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 
 public class SetTransaccionFijaActivity extends NuevaTransaccionFijaActivity {
+
+    protected String precioAnterior;
+    protected String categoriaAnterior;
+    protected String tipoAnterior;
+    protected String tituloAnterior;
+    protected String etiquetaAnterior;
+    protected String infoAnterior;
+    protected String fechaInicioAnterior;
+    protected String fechaFinalAnterior;
+    protected String frecuenciaAnterior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,28 +30,56 @@ public class SetTransaccionFijaActivity extends NuevaTransaccionFijaActivity {
     @Override
     protected void inicializarValoresCampos() {
         Intent intent = getIntent();
-        campoInfo.setText(intent.getStringExtra(Constantes.CAMPO_INFO));
-        campoFecha.setText(intent.getStringExtra(Constantes.CAMPO_FECHA));
-        campoTitulo.setText(intent.getStringExtra(Constantes.CAMPO_TITULO));
-        campoPrecio.setText(intent.getStringExtra(Constantes.CAMPO_PRECIO));
-        campoEtiqueta.setText(intent.getStringExtra(Constantes.CAMPO_ETIQUETA));
-        campoCategoria.setText(intent.getStringExtra(Constantes.CAMPO_CATEGORIA));
-        campoFechaFinal.setText(intent.getStringExtra(Constantes.CAMPO_FECHA_FINAL));
-        String tipo = intent.getStringExtra(Constantes.CAMPO_TIPO);
-        if(btnGasto.getText().toString().equals(tipo)){
-            btnGasto.setChecked(true);
+        tipoAnterior = intent.getStringExtra(Constantes.CAMPO_TIPO);
+        infoAnterior = intent.getStringExtra(Constantes.CAMPO_INFO);
+        precioAnterior = intent.getStringExtra(Constantes.CAMPO_PRECIO);
+        tituloAnterior = intent.getStringExtra(Constantes.CAMPO_TITULO);
+        etiquetaAnterior = intent.getStringExtra(Constantes.CAMPO_ETIQUETA);
+        fechaInicioAnterior = intent.getStringExtra(Constantes.CAMPO_FECHA);
+        fechaFinalAnterior = intent.getStringExtra(Constantes.CAMPO_FECHA_FINAL);
+        categoriaAnterior = intent.getStringExtra(Constantes.CAMPO_CATEGORIA);
+        frecuenciaAnterior = intent.getStringExtra(Constantes.CAMPO_FRECUENCIA);
+        campoInfo.setText(infoAnterior);
+        campoTitulo.setText(tituloAnterior);
+        campoPrecio.setText(precioAnterior);
+        campoFecha.setText(fechaInicioAnterior);
+        campoEtiqueta.setText(etiquetaAnterior);
+        campoFechaFinal.setText(fechaFinalAnterior);
+        if(categoriaAnterior==null){
+            campoCategoria.setText("Seleccionar Categoria");
         }
         else {
+            campoCategoria.setText(categoriaAnterior);
+        }
+        if(tipoAnterior.equals(Constantes.GASTO)){
+            btnGasto.setChecked(true);
+            btnIngreso.setChecked(false);
+        }
+        else {
+            btnGasto.setChecked(false);
             btnIngreso.setChecked(true);
         }
         btnCancelar.setText("Eliminar");
         ArrayList<String> opcionesFrecuencia = new ArrayList<>();
         opcionesFrecuencia.add(Constantes.SELECCIONAR_FRECUENCIA);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_SOLO_UNA_VEZ);
+        opcionesFrecuencia.add(Constantes.FRECUENCIA_UNA_VEZ_A_LA_SEMANA);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_UNA_VEZ_AL_MES);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_UNA_VEZ_AL_ANIO);
         ArrayAdapter<String> adapterFrecuencia = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, opcionesFrecuencia);
         frecuencia.setAdapter(adapterFrecuencia);
+
+        if(frecuenciaAnterior.equals(Constantes.FRECUENCIA_SOLO_UNA_VEZ)){
+            frecuencia.setSelection(1);
+        }else if(frecuenciaAnterior.equals(Constantes.FRECUENCIA_UNA_VEZ_A_LA_SEMANA)){
+            frecuencia.setSelection(2);
+        }else if(frecuenciaAnterior.equals(Constantes.FRECUENCIA_UNA_VEZ_AL_MES)){
+            frecuencia.setSelection(3);
+        }else if(frecuenciaAnterior.equals(Constantes.FRECUENCIA_UNA_VEZ_AL_ANIO)){
+            frecuencia.setSelection(4);
+        }else {
+            frecuencia.setSelection(0);
+        }
     }
 
     @Override
@@ -78,14 +115,17 @@ public class SetTransaccionFijaActivity extends NuevaTransaccionFijaActivity {
                 }
                 int id = getIntent().getIntExtra(Constantes.CAMPO_ID,-1);
                 Intent intent = new Intent();
+                insertarDatosAnteriores(intent);
                 intent.putExtra(Constantes.CAMPO_INFO, info);
                 intent.putExtra(Constantes.CAMPO_TIPO, tipo);
                 intent.putExtra(Constantes.CAMPO_TITULO, titulo);
                 intent.putExtra(Constantes.CAMPO_ETIQUETA, etiqueta);
-                intent.putExtra(Constantes.CAMPO_CATEGORIA, categoria);
                 intent.putExtra(Constantes.CAMPO_FECHA, fechaInicio);
                 intent.putExtra(Constantes.CAMPO_FECHA_FINAL, fechaFinal);
                 intent.putExtra(Constantes.CAMPO_FRECUENCIA, frecuenciaSeleccionada);
+                if(!categoria.equals("Seleccionar Categoria") && !categoria.equals("")){
+                    intent.putExtra(Constantes.CAMPO_CATEGORIA, categoria);
+                }
                 try {
                     if(tipo.equals(Constantes.INGRESO)){
                         intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue());
@@ -112,5 +152,28 @@ public class SetTransaccionFijaActivity extends NuevaTransaccionFijaActivity {
                 finish();
             }
         });
+    }
+
+    private void insertarDatosAnteriores(Intent intent){
+        intent.putExtra(Constantes.CAMPO_INFO_ANTERIOR, infoAnterior);
+        intent.putExtra(Constantes.CAMPO_TIPO_ANTERIOR, tipoAnterior);
+        intent.putExtra(Constantes.CAMPO_TITULO_ANTERIOR, tituloAnterior);
+        intent.putExtra(Constantes.CAMPO_ETIQUETA_ANTERIOR, etiquetaAnterior);
+        intent.putExtra(Constantes.CAMPO_FECHA_INICIO_ANTERIOR, fechaInicioAnterior);
+        intent.putExtra(Constantes.CAMPO_FECHA_FINAL_ANTERIOR, fechaFinalAnterior);
+        intent.putExtra(Constantes.CAMPO_FRECUENCIA_ANTERIOR, frecuenciaAnterior);
+        if(categoriaAnterior!=null){
+            intent.putExtra(Constantes.CAMPO_CATEGORIA_ANTERIOR, categoriaAnterior);
+        }
+        try {
+            if(tipoAnterior.equals(Constantes.INGRESO)){
+                intent.putExtra(Constantes.CAMPO_PRECIO_ANTERIOR, formatoNumero.parse(precioAnterior).floatValue());
+            }
+            else {
+                intent.putExtra(Constantes.CAMPO_PRECIO_ANTERIOR, formatoNumero.parse(precioAnterior).floatValue()*(-1));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

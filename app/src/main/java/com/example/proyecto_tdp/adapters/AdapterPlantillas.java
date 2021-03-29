@@ -1,5 +1,6 @@
 package com.example.proyecto_tdp.adapters;
 
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.base_de_datos.entidades.Plantilla;
 import java.util.List;
@@ -35,18 +38,29 @@ public class AdapterPlantillas extends RecyclerView.Adapter<AdapterPlantillas.Vi
     @Override
     public void onBindViewHolder(@NonNull AdapterPlantillas.ViewHolderPlantilla holder, int position) {
         Plantilla plantilla = plantillas.get(position);
-        holder.tvNombre.setText(plantilla.getTitulo());
-        holder.tvCategoria.setText(plantilla.getCategoria());
         holder.tvIdentificacion.setText(plantilla.getEtiqueta());
-        if(plantilla.getCategoria()!=null && plantilla.getCategoria().length()>0) {
+        if(plantilla.getCategoria()!=null) {
+            holder.tvCategoria.setText(plantilla.getCategoria());
             holder.tvLetra.setText(plantilla.getCategoria().charAt(0) + "");
+        }
+        else {
+            holder.tvLetra.setText("S");
+            holder.tvCategoria.setText(Constantes.SIN_CATEGORIA);
+        }
+        if(plantilla.getTitulo().equals("")){
+            holder.tvNombre.setText("Sin título");
+        }
+        else {
+            holder.tvNombre.setText(plantilla.getTitulo());
         }
         float precio = plantilla.getPrecio();
         if(precio>=0){
-            holder.tvPrecio.setText("+$"+precio);
+            holder.tvPrecio.setText("+ $ "+precio);
+            holder.tvPrecio.setTextColor(Color.parseColor("#0EB87A"));
         }
         else {
-            holder.tvPrecio.setText("-$"+Math.abs(precio));
+            holder.tvPrecio.setText("- $ "+Math.abs(precio));
+            holder.tvPrecio.setTextColor(Color.parseColor("#E12E48"));
         }
         Drawable bg = holder.tvLetra.getBackground();
         int colorCategoria = mapColorCategoria.get(plantilla);

@@ -22,6 +22,7 @@ import com.example.proyecto_tdp.fragments.ResumenFragment;
 import com.example.proyecto_tdp.fragments.TransaccionesFragment;
 import com.example.proyecto_tdp.verificador_estrategia.EstrategiaDeVerificacion;
 import com.example.proyecto_tdp.verificador_estrategia.EstrategiaIngresoDeDatos;
+import com.example.proyecto_tdp.verificador_estrategia.EstrategiaTFPendientes;
 import com.example.proyecto_tdp.view_models.ViewModelPlantilla;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccionFija;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewModelTransaccion viewModelTransaccion;
     private ViewModelTransaccionFija viewModelTransaccionFija;
     private EstrategiaDeVerificacion estrategiaDeVerificacion;
+    private EstrategiaTFPendientes estrategiaTFPendientes;
     private Toolbar toolbar;
     private NavigationView navigationDrawer;
     private FloatingActionButton btnAgregar;
@@ -48,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("Wallet");
         toolbar = findViewById(R.id.toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
         btnAgregar = findViewById(R.id.floatingActionButton);
@@ -73,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
         viewModelTransaccion = ViewModelProviders.of(this).get(ViewModelTransaccion.class);
         viewModelTransaccionFija = ViewModelProviders.of(this).get(ViewModelTransaccionFija.class);
         estrategiaDeVerificacion = new EstrategiaIngresoDeDatos(viewModelPlantilla,viewModelTransaccion,viewModelTransaccionFija);
+        estrategiaTFPendientes = new EstrategiaTFPendientes(viewModelTransaccion,viewModelTransaccionFija);
+        estrategiaTFPendientes.insertarTFPendientes();
     }
 
     private void inicializarBotonPrincipal(){
@@ -109,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_informes:
                         Intent intent1 = new Intent(MainActivity.this, InformesActivity.class);
                         startActivity(intent1);
-                        titulo = R.string.item_informes;
                         break;
                 }
                 setTitle(titulo);

@@ -16,6 +16,7 @@ import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.view_models.ViewModelCategoria;
+import com.example.proyecto_tdp.views.AvisoDialog;
 import com.example.proyecto_tdp.views.SeleccionCategoriaDialog;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,7 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
     protected TextView nombreCategoriaVP;
     protected AmbilWarnaDialog paletaColores;
     protected SeleccionCategoriaDialog seleccionCategoriaDialog;
+    protected AvisoDialog avisoDialog;
     protected List<Categoria> categoriasSuperiores;
     protected ViewModelCategoria viewModelCategoria;
 
@@ -58,6 +60,7 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
         listenerBotonesPrincipales();
         definirSeleccionarColor();
         definirSeleccionarCategoriaSuperior();
+        definirMensajeDeAviso();
     }
 
     protected void inicializarValoresCampos(){
@@ -89,24 +92,26 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
         btnConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.putExtra(Constantes.CAMPO_COLOR_CATEGORIA,colorActual);
-                intent.putExtra(Constantes.CAMPO_NOMBRE_CATEGORIA,campoNombre.getText().toString());
-                intent.putExtra(Constantes.CAMPO_CATEGORIA_SUPERIOR,campoCategoriaSup.getText().toString());
-                String tipo;
-                if(btnGasto.isChecked()){
-                    tipo = Constantes.GASTO;
+                if(verificarDatosPrincipales()){
+                    String id = getIntent().getStringExtra(Constantes.CAMPO_ID);
+                    Intent intent = new Intent();
+                    intent.putExtra(Constantes.CAMPO_COLOR_CATEGORIA,colorActual);
+                    intent.putExtra(Constantes.CAMPO_NOMBRE_CATEGORIA,campoNombre.getText().toString());
+                    intent.putExtra(Constantes.CAMPO_CATEGORIA_SUPERIOR,campoCategoriaSup.getText().toString());
+                    String tipo;
+                    if(btnGasto.isChecked()){
+                        tipo = Constantes.GASTO;
+                    }
+                    else {
+                        tipo = Constantes.INGRESO;
+                    }
+                    intent.putExtra(Constantes.CAMPO_TIPO_CATEGORIA,tipo);
+                    if(id!=null){
+                        intent.putExtra(Constantes.CAMPO_ID,id);
+                    }
+                    setResult(RESULT_OK, intent);
+                    finish();
                 }
-                else {
-                    tipo = Constantes.INGRESO;
-                }
-                intent.putExtra(Constantes.CAMPO_TIPO_CATEGORIA,tipo);
-                String id = getIntent().getStringExtra(Constantes.CAMPO_ID);
-                if(id!=null){
-                    intent.putExtra(Constantes.CAMPO_ID,id);
-                }
-                setResult(RESULT_OK, intent);
-                finish();
             }
         });
         btnCancelar.setOnClickListener(new View.OnClickListener() {
@@ -156,5 +161,22 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
                 seleccionCategoriaDialog.show(getSupportFragmentManager(),"Seleccionar categoria");
             }
         });
+    }
+
+    protected void definirMensajeDeAviso(){
+        avisoDialog = new AvisoDialog("Aviso","Faltan completar datos importantes");
+    }
+
+    protected boolean verificarDatosPrincipales(){
+        boolean verificado = false;
+        String nombre = campoNombre.getText().toString();
+        if(nombre.equals("")){
+            avisoDialog.setMensaje("Falta dato Principal: Para ingresar una nueva categoria debe completar el campo TITULO");
+            avisoDialog.show(getSupportFragmentManager(),"Aviso");
+        }
+        else {
+            verificado = true;
+        }
+        return verificado;
     }
 }

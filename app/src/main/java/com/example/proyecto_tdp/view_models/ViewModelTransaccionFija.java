@@ -24,6 +24,10 @@ public class ViewModelTransaccionFija extends AndroidViewModel {
         return transaccionesFijas;
     }
 
+    public List<TransaccionFija> getAllTransaccionesFijasPendientes(){
+        return repositorioTransaccionesFijas.getAllTransaccionesFijasPendientes();
+    }
+
     public void removeObserver(Observer<List<TransaccionFija>> observer){
         transaccionesFijas.removeObserver(observer);
     }

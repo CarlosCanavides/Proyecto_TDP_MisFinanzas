@@ -1,6 +1,7 @@
 package com.example.proyecto_tdp.fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -113,8 +114,15 @@ public class IngresosFijosFragment extends Fragment {
                 List<TransaccionFija> transaccionFijas;
                 for(TransaccionFija t : transaccions) {
                     if (t.getTipoTransaccion().equals(Constantes.INGRESO)) {
-                        Categoria subcategoria = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
-                        mapColorCategoria.put(t, subcategoria.getColorCategoria());
+                        Categoria categoria;
+                        String nombreCategoria = t.getCategoria();
+                        if(nombreCategoria==null){
+                            categoria = new Categoria(Constantes.SIN_CATEGORIA,null, Color.parseColor("#FF5722"),Constantes.GASTO);
+                        }
+                        else {
+                            categoria = viewModelCategoria.getCategoriaPorNombre(nombreCategoria);
+                        }
+                        mapColorCategoria.put(t, categoria.getColorCategoria());
                         frecuencia = t.getFrecuencia();
                         transaccionFijas = mapTransaccionesFijas.get(frecuencia);
                         if (transaccionFijas == null) {

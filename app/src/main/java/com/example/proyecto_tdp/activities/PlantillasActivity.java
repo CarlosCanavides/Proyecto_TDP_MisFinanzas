@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import com.example.proyecto_tdp.Constantes;
@@ -29,15 +30,15 @@ import java.util.Map;
 
 public class PlantillasActivity extends AppCompatActivity implements AdapterPlantillas.OnPlantillaListener {
 
-    private List<Plantilla> plantillas;
-    private Map<Plantilla, Integer> mapColorCategoria;
-    private AdapterPlantillas adapterPlantillas;
-    private RecyclerView recyclerView;
-    private FloatingActionButton btnAgregarPlantilla;
-    private ViewModelCategoria viewModelCategoria;
-    private ViewModelPlantilla viewModelPlantilla;
-    private Observer<List<Plantilla>> observer;
-    private EstrategiaDeVerificacion estrategiaDeVerificacion;
+    protected List<Plantilla> plantillas;
+    protected Map<Plantilla, Integer> mapColorCategoria;
+    protected AdapterPlantillas adapterPlantillas;
+    protected RecyclerView recyclerView;
+    protected FloatingActionButton btnAgregarPlantilla;
+    protected ViewModelCategoria viewModelCategoria;
+    protected ViewModelPlantilla viewModelPlantilla;
+    protected Observer<List<Plantilla>> observer;
+    protected EstrategiaDeVerificacion estrategiaDeVerificacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,9 @@ public class PlantillasActivity extends AppCompatActivity implements AdapterPlan
                     plantillas.addAll(transaccions);
                     for(Plantilla t : transaccions){
                         Categoria subcategoria = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
+                        if(subcategoria==null){
+                            subcategoria = new Categoria(Constantes.SIN_CATEGORIA,null, Color.parseColor("#FF5722"),Constantes.GASTO);
+                        }
                         mapColorCategoria.put(t,subcategoria.getColorCategoria());
                     }
                     adapterPlantillas.notifyDataSetChanged();

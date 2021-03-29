@@ -165,6 +165,7 @@
                     android:layout_alignParentStart="true"/>
 
                 <TextView
+                    android:id="@+id/porcentaje_transacciones_gasto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -175,6 +176,7 @@
             </RelativeLayout>
 
             <ProgressBar
+                android:id="@+id/barra_progreso_horizontal"
                 style="@style/MyProgressBar"
                 android:theme="@style/MyProgressBar"
                 android:layout_width="match_parent"

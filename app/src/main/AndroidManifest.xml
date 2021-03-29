@@ -9,23 +9,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.SeleccionarCategoriaActivity"></activity>
+        <activity android:name=".activities.SeleccionarPlantillaActivity"></activity>
+        <activity android:name=".activities.SeleccionarCategoriaActivity" />
         <activity android:name=".activities.modificar_datos.SetCategoriaActivity" />
         <activity android:name=".activities.modificar_datos.SetTransaccionFijaActivity" />
         <activity android:name=".activities.modificar_datos.SetPlantillaActivity" />
         <activity android:name=".activities.agregar_datos.NuevaTransaccionFijaActivity" />
         <activity android:name=".activities.agregar_datos.NuevaPlantillaActivity" />
-        <activity android:name=".activities.PlantillasActivity" />
+        <activity android:name=".activities.PlantillasActivity"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".activities.TransaccionesFijasActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".activities.InformesActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".activities.agregar_datos.NuevaCategoriaActivity" />
         <activity
             android:name=".activities.CategoriaActivity"
-            android:label="@string/title_activity_categorias" />
+            android:label="@string/title_activity_categorias"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".activities.modificar_datos.SetTransaccionActivity" />
         <activity android:name=".activities.agregar_datos.NuevaTransaccionActivity" />
         <activity

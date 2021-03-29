@@ -18,6 +18,9 @@ public interface TransaccionFijaDao {
     @Query("SELECT * FROM transaccionFija")
     LiveData<List<TransaccionFija>> getAllLiveTransaccionesFijas();
 
+    @Query("SELECT * FROM transaccionFija WHERE fechaProximaEjecucion NOT LIKE null")
+    List<TransaccionFija> getAllTransaccionesFijasPendientes();
+
     @Query("SELECT * FROM transaccionFija WHERE fecha BETWEEN date(:desde) AND date(:hasta)")
     LiveData<List<TransaccionFija>> getLiveTransaccionesFijasDesdeHasta(String desde, String hasta);
 

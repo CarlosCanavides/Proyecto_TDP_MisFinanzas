@@ -23,7 +23,13 @@ public class SetPlantillaActivity extends NuevaPlantillaActivity {
         campoTitulo.setText(intent.getStringExtra(Constantes.CAMPO_TITULO));
         campoPrecio.setText(intent.getStringExtra(Constantes.CAMPO_PRECIO));
         campoEtiqueta.setText(intent.getStringExtra(Constantes.CAMPO_ETIQUETA));
-        campoCategoria.setText(intent.getStringExtra(Constantes.CAMPO_CATEGORIA));
+        String categoria = intent.getStringExtra(Constantes.CAMPO_CATEGORIA);
+        if(categoria==null){
+            campoCategoria.setText("Seleccionar Categoria");
+        }
+        else {
+            campoCategoria.setText(categoria);
+        }
         String tipo = intent.getStringExtra(Constantes.CAMPO_TIPO);
         if(Constantes.INGRESO.equals(tipo)){
             btnIngreso.setChecked(true);
@@ -49,6 +55,7 @@ public class SetPlantillaActivity extends NuevaPlantillaActivity {
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Integer id = getIntent().getIntExtra(Constantes.CAMPO_ID,-1);
                 String info = campoInfo.getText().toString();
                 String titulo = campoTitulo.getText().toString();
                 String precio = campoPrecio.getText().toString();
@@ -67,7 +74,9 @@ public class SetPlantillaActivity extends NuevaPlantillaActivity {
                 intent.putExtra(Constantes.CAMPO_TIPO, tipo);
                 intent.putExtra(Constantes.CAMPO_TITULO, titulo);
                 intent.putExtra(Constantes.CAMPO_ETIQUETA, etiqueta);
-                intent.putExtra(Constantes.CAMPO_CATEGORIA, categoria);
+                if(!categoria.equals("Seleccionar Categoria") && !categoria.equals("")){
+                    intent.putExtra(Constantes.CAMPO_CATEGORIA, categoria);
+                }
                 try {
                     if(tipo.equals(Constantes.INGRESO)){
                         intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue());
@@ -78,7 +87,6 @@ public class SetPlantillaActivity extends NuevaPlantillaActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                int id = getIntent().getIntExtra(Constantes.CAMPO_ID,-1);
                 if(id!=-1){
                     intent.putExtra(Constantes.CAMPO_ID,id);
                 }

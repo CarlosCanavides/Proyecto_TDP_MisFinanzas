@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +17,6 @@ import com.example.proyecto_tdp.views.CalculatorInputDialog;
 import com.example.proyecto_tdp.views.CalendarioDialog;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Date;
@@ -89,7 +87,7 @@ public class SetTransaccionActivity extends AppCompatActivity {
         campoPrecio.setText(precio);
         campoEtiqueta.setText(etiqueta);
         if(categoria==null){
-            campoCategoria.setText("Seleccionar categoria");
+            campoCategoria.setText("Seleccionar Categoria");
         }
         else {
             campoCategoria.setText(categoria);
@@ -180,7 +178,7 @@ public class SetTransaccionActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                if(!categoria.equals("Seleccionar categoria") && !categoria.equals("")){
+                if(!categoria.equals("Seleccionar Categoria") && !categoria.equals("")){
                     intent.putExtra(Constantes.CAMPO_CATEGORIA, categoria);
                 }
                 if(id!=-1){
@@ -211,6 +209,33 @@ public class SetTransaccionActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 String idCategoriaElegida = data.getStringExtra("id_categoria_elegida");
                 campoCategoria.setText(idCategoriaElegida);
+            }
+        }
+        else if(requestCode==Constantes.PEDIDO_SELECCIONAR_PLANTILLA){
+            if(resultCode==RESULT_OK && data!=null){
+                String info = data.getStringExtra(Constantes.CAMPO_INFO);
+                String tipo = data.getStringExtra(Constantes.CAMPO_TIPO);
+                String titulo = data.getStringExtra(Constantes.CAMPO_TITULO);
+                String etiqueta = data.getStringExtra(Constantes.CAMPO_ETIQUETA);
+                String categoria = data.getStringExtra(Constantes.CAMPO_CATEGORIA);
+                String precio = data.getStringExtra(Constantes.CAMPO_PRECIO);
+                if(!categoria.equals(Constantes.SIN_CATEGORIA)){
+                    campoCategoria.setText(categoria);
+                }
+                if(!titulo.equals("Sin título")){
+                    campoTitulo.setText(titulo);
+                }
+                campoInfo.setText(info);
+                campoEtiqueta.setText(etiqueta);
+                campoPrecio.setText(precio);
+                if(tipo.equals(Constantes.GASTO)){
+                    btnGasto.setChecked(true);
+                    btnIngreso.setChecked(false);
+                }
+                else {
+                    btnGasto.setChecked(false);
+                    btnIngreso.setChecked(true);
+                }
             }
         }
     }

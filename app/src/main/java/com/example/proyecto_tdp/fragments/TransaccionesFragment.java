@@ -2,7 +2,6 @@ package com.example.proyecto_tdp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -210,8 +209,9 @@ public class TransaccionesFragment extends Fragment {
         else {
             transaccionesRealizadas.add(t);
         }
-        Categoria categoria = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
-        if(categoria!=null) {
+        String nombreCategoria = t.getCategoria();
+        if(nombreCategoria!=null){
+            Categoria categoria = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
             mapColorCategoria.put(t, categoria.getColorCategoria());
         }
         gastoPorMes += t.getPrecio();

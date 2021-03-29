@@ -92,7 +92,6 @@
                         android:layout_marginStart="@dimen/espacio_mediano"
                         android:textAlignment="textEnd"
                         tools:ignore="RtlCompat"
-                        android:background="@drawable/background_campo_transaccion"
                         android:fontFamily="@font/urwdin_md"/>
 
                 </LinearLayout>

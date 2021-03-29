@@ -51,7 +51,10 @@ public class TransaccionFija {
     @ColumnInfo(name = "cantidadEjecucionesRestantes")
     private int cantidadEjecucionesRestantes;
 
-    public TransaccionFija(String titulo, String etiqueta, float precio, String categoria, String tipoTransaccion, Date fecha, String info, String frecuencia, Date fechaFinal, int cantidadEjecucionesRestantes) {
+    @ColumnInfo(name = "fechaProximaEjecucion")
+    private Date fechaProximaEjecucion;
+
+    public TransaccionFija(String titulo, String etiqueta, float precio, String categoria, String tipoTransaccion, Date fecha, String info, String frecuencia, Date fechaFinal, int cantidadEjecucionesRestantes, Date fechaProximaEjecucion) {
         this.titulo = titulo;
         this.etiqueta = etiqueta;
         this.precio = precio;
@@ -62,6 +65,7 @@ public class TransaccionFija {
         this.frecuencia = frecuencia;
         this.fechaFinal = fechaFinal;
         this.cantidadEjecucionesRestantes = cantidadEjecucionesRestantes;
+        this.fechaProximaEjecucion = fechaProximaEjecucion;
     }
 
     @NonNull
@@ -151,5 +155,13 @@ public class TransaccionFija {
 
     public void setCantidadEjecucionesRestantes(int cantidadEjecucionesRestantes){
         this.cantidadEjecucionesRestantes = cantidadEjecucionesRestantes;
+    }
+
+    public Date getFechaProximaEjecucion(){
+        return fechaProximaEjecucion;
+    }
+
+    public void setFechaProximaEjecucion(Date fechaProximaEjecucion){
+        this.fechaProximaEjecucion = fechaProximaEjecucion;
     }
 }

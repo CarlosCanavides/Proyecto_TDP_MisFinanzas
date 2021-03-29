@@ -40,7 +40,7 @@ public class EstrategiaSoloPlantillas extends EstrategiaGeneral {
 
     private void setPlantilla(Intent datos){
         obtenerDatosPrincipales(datos);
-        id = datos.getIntExtra(Constantes.CAMPO_ID,0);
+        id = datos.getIntExtra(Constantes.CAMPO_ID,-1);
         Plantilla plantillaModificada = new Plantilla(titulo,precio,etiqueta,categoria,tipo,info);
         plantillaModificada.setId(id);
         viewModelPlantilla.actualizarPlantilla(plantillaModificada);

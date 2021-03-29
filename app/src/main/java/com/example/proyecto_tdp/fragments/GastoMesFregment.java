@@ -109,7 +109,7 @@ public class GastoMesFregment extends Fragment {
                             nombreCategoria = t.getCategoria();
                         }
                         else {
-                            categoria = new Categoria("Sin categoria",null, Color.parseColor("#FF5722"),Constantes.GASTO);
+                            categoria = new Categoria(Constantes.SIN_CATEGORIA,null, Color.parseColor("#FF5722"),Constantes.GASTO);
                             nombreCategoria = "Sin categoria";
                         }
                         Float gastoCategoria = mapCategoriasGasto.get(nombreCategoria);

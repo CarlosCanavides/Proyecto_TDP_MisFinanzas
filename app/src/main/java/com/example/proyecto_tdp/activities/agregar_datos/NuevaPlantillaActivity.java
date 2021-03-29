@@ -12,8 +12,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
-import com.example.proyecto_tdp.activities.CategoriaActivity;
 import com.example.proyecto_tdp.activities.SeleccionarCategoriaActivity;
+import com.example.proyecto_tdp.views.AvisoDialog;
 import com.example.proyecto_tdp.views.CalculatorInputDialog;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -32,6 +32,7 @@ public class NuevaPlantillaActivity extends AppCompatActivity {
     protected Button btnCancelar;
     protected NumberFormat formatoNumero;
     protected CalculatorInputDialog calculatorInputDialog;
+    protected AvisoDialog avisoDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class NuevaPlantillaActivity extends AppCompatActivity {
         definirIngresarMonto();
         definirSeleccionarCategoria();
         listenerBotonesPrincipales();
+        definirMensajeDeAviso();
     }
 
     protected void inicializarValoresCampos(){
@@ -96,37 +98,41 @@ public class NuevaPlantillaActivity extends AppCompatActivity {
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String info = campoInfo.getText().toString();
-                String titulo = campoTitulo.getText().toString();
-                String precio = campoPrecio.getText().toString();
-                String etiqueta = campoEtiqueta.getText().toString();
-                String categoria = campoCategoria.getText().toString();
-                String tipo;
-                if(btnGasto.isChecked()){
-                    tipo = btnGasto.getText().toString();
-                }
-                else {
-                    tipo = btnIngreso.getText().toString();
-                }
-
-                Intent intent = new Intent();
-                intent.putExtra(Constantes.CAMPO_INFO, info);
-                intent.putExtra(Constantes.CAMPO_TIPO, tipo);
-                intent.putExtra(Constantes.CAMPO_TITULO, titulo);
-                intent.putExtra(Constantes.CAMPO_ETIQUETA, etiqueta);
-                intent.putExtra(Constantes.CAMPO_CATEGORIA, categoria);
-                try {
-                    if(tipo.equals(Constantes.INGRESO)){
-                        intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue());
+                if(verificarDatosPrincipales()){
+                    String info = campoInfo.getText().toString();
+                    String titulo = campoTitulo.getText().toString();
+                    String precio = campoPrecio.getText().toString();
+                    String etiqueta = campoEtiqueta.getText().toString();
+                    String categoria = campoCategoria.getText().toString();
+                    String tipo;
+                    if(btnGasto.isChecked()){
+                        tipo = btnGasto.getText().toString();
                     }
                     else {
-                        intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue()*(-1));
+                        tipo = btnIngreso.getText().toString();
                     }
-                } catch (ParseException e) {
-                    e.printStackTrace();
+
+                    Intent intent = new Intent();
+                    intent.putExtra(Constantes.CAMPO_INFO, info);
+                    intent.putExtra(Constantes.CAMPO_TIPO, tipo);
+                    intent.putExtra(Constantes.CAMPO_TITULO, titulo);
+                    intent.putExtra(Constantes.CAMPO_ETIQUETA, etiqueta);
+                    if(!categoria.equals("Seleccionar Categoria") && !categoria.equals("")){
+                        intent.putExtra(Constantes.CAMPO_CATEGORIA, categoria);
+                    }
+                    try {
+                        if(tipo.equals(Constantes.INGRESO)){
+                            intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue());
+                        }
+                        else {
+                            intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue()*(-1));
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    setResult(RESULT_OK, intent);
+                    finish();
                 }
-                setResult(RESULT_OK, intent);
-                finish();
             }
         });
 
@@ -138,6 +144,29 @@ public class NuevaPlantillaActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    protected void definirMensajeDeAviso(){
+        avisoDialog = new AvisoDialog("Aviso","Faltan completar datos importantes");
+    }
+
+    protected boolean verificarDatosPrincipales(){
+        boolean verificado = false;
+        String precio = campoPrecio.getText().toString();
+        float precioFinal = -1f;
+        try {
+            precioFinal = formatoNumero.parse(precio).floatValue();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(precioFinal<=0){
+            avisoDialog.setMensaje("Falta dato principal: Para ingresar una nueva plantilla debe completar al menos el campo PRECIO");
+            avisoDialog.show(getSupportFragmentManager(),"Aviso");
+        }
+        else {
+            verificado = true;
+        }
+        return verificado;
     }
 
     @Override

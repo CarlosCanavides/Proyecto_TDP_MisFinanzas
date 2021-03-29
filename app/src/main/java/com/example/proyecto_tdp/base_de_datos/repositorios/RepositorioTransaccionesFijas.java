@@ -47,6 +47,17 @@ public class RepositorioTransaccionesFijas {
         return null;
     }
 
+    public List<TransaccionFija> getAllTransaccionesFijasPendientes(){
+        try {
+            return new RepositorioTransaccionesFijas.ObtenerTransaccionesFijasPendientesAsyncTask(transaccionFijaDao).execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public void insertarTransaccionFija(TransaccionFija transaccion){
         new RepositorioTransaccionesFijas.InsertTransaccionFijaAsyncTask(transaccionFijaDao).execute(transaccion);
     }
@@ -142,6 +153,19 @@ public class RepositorioTransaccionesFijas {
         @Override
         protected LiveData<List<TransaccionFija>> doInBackground(String... periodo) {
             return transaccionFijaDao.getLiveTransaccionesFijasDesdeHasta(periodo[0],periodo[1]);
+        }
+    }
+
+    public static class ObtenerTransaccionesFijasPendientesAsyncTask extends AsyncTask<Void,Void,List<TransaccionFija>> {
+        private TransaccionFijaDao transaccionFijaDao;
+
+        private ObtenerTransaccionesFijasPendientesAsyncTask(TransaccionFijaDao transaccionFijaDao){
+            this.transaccionFijaDao = transaccionFijaDao;
+        }
+
+        @Override
+        protected List<TransaccionFija> doInBackground(Void... voids) {
+            return transaccionFijaDao.getAllTransaccionesFijasPendientes();
         }
     }
 }

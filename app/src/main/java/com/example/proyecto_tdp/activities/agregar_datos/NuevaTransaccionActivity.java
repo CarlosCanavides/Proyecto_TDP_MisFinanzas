@@ -3,6 +3,8 @@ package com.example.proyecto_tdp.activities.agregar_datos;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,7 +18,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
+import com.example.proyecto_tdp.activities.PlantillasActivity;
 import com.example.proyecto_tdp.activities.SeleccionarCategoriaActivity;
+import com.example.proyecto_tdp.activities.SeleccionarPlantillaActivity;
+import com.example.proyecto_tdp.views.AvisoDialog;
 import com.example.proyecto_tdp.views.CalculatorInputDialog;
 import com.example.proyecto_tdp.views.CalendarioDialog;
 import java.text.DateFormat;
@@ -47,10 +52,10 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
     private Button btnAceptar;
     private Button btnCancelar;
 
-    private static final int PEDIDO_SELECCIONAR_CATEGORIA = 18;
-    private CalculatorInputDialog calculatorInputDialog;
+    protected AvisoDialog avisoDialog;
     private CalendarioDialog calendarioDialog;
     private CalendarioDialog calendarioFechaFinalDialog;
+    private CalculatorInputDialog calculatorInputDialog;
     private DateFormat formatFecha = new SimpleDateFormat(Constantes.FORMATO_FECHA);
     protected NumberFormat formatoNumero;
 
@@ -83,6 +88,20 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
         definirSeleccionarCategoria();
         definirOpcionesAvanzadas();
         listenerBotonesPrincipales();
+        definirMensajeDeAviso();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_seleccionar_plantilla,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(this, SeleccionarPlantillaActivity.class);
+        startActivityForResult(intent,Constantes.PEDIDO_SELECCIONAR_PLANTILLA);
+        return super.onOptionsItemSelected(item);
     }
 
     private void definirIngresarMonto(){
@@ -125,7 +144,7 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(NuevaTransaccionActivity.this, SeleccionarCategoriaActivity.class);
-                startActivityForResult(intent,PEDIDO_SELECCIONAR_CATEGORIA);
+                startActivityForResult(intent,Constantes.PEDIDO_SELECCIONAR_CATEGORIA);
             }
         });
     }
@@ -193,48 +212,50 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String info = campoInfo.getText().toString();
-                String fecha = campoFecha.getText().toString();
-                String titulo = campoTitulo.getText().toString();
-                String precio = campoPrecio.getText().toString();
-                String etiqueta = campoEtiqueta.getText().toString();
-                String categoria = campoCategoria.getText().toString();
-                String fechaFinal = campoFechaFinal.getText().toString();
-                String frecuencia = (String) adapterFrecuencia.getItem(listaFrecuencias.getSelectedItemPosition());
-                String tipo;
-                if(btnGasto.isChecked()){
-                    tipo = btnGasto.getText().toString();
-                }
-                else {
-                    tipo = btnIngreso.getText().toString();
-                }
-                Intent intent = new Intent();
-                intent.putExtra(Constantes.CAMPO_INFO, info);
-                intent.putExtra(Constantes.CAMPO_TIPO, tipo);
-                intent.putExtra(Constantes.CAMPO_FECHA, fecha);
-                intent.putExtra(Constantes.CAMPO_TITULO, titulo);
-                intent.putExtra(Constantes.CAMPO_ETIQUETA, etiqueta);
-                intent.putExtra(Constantes.BOX_PLANTILLA_SELECCIONADO, btnPlantilla.isChecked());
-                intent.putExtra(Constantes.BOX_TRANSACCION_FIJA_SELECCIONADO, btnTransaccionFija.isChecked());
-                intent.putExtra(Constantes.CAMPO_FECHA_FINAL, fechaFinal);
-                if(frecuencia!=null && !frecuencia.equals(Constantes.SELECCIONAR_FRECUENCIA)){
-                    intent.putExtra(Constantes.CAMPO_FRECUENCIA,frecuencia);
-                }
-                if(!categoria.equals("Seleccionar categoria") && !categoria.equals("")){
-                    intent.putExtra(Constantes.CAMPO_CATEGORIA, categoria);
-                }
-                try {
-                    if(tipo.equals(Constantes.INGRESO)){
-                        intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue());
+                if(verificarDatosPrincipales()){
+                    String info = campoInfo.getText().toString();
+                    String fecha = campoFecha.getText().toString();
+                    String titulo = campoTitulo.getText().toString();
+                    String precio = campoPrecio.getText().toString();
+                    String etiqueta = campoEtiqueta.getText().toString();
+                    String categoria = campoCategoria.getText().toString();
+                    String fechaFinal = campoFechaFinal.getText().toString();
+                    String frecuencia = (String) adapterFrecuencia.getItem(listaFrecuencias.getSelectedItemPosition());
+                    String tipo;
+                    if(btnGasto.isChecked()){
+                        tipo = btnGasto.getText().toString();
                     }
                     else {
-                        intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue()*(-1));
+                        tipo = btnIngreso.getText().toString();
                     }
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                    Intent intent = new Intent();
+                    intent.putExtra(Constantes.CAMPO_INFO, info);
+                    intent.putExtra(Constantes.CAMPO_TIPO, tipo);
+                    intent.putExtra(Constantes.CAMPO_FECHA, fecha);
+                    intent.putExtra(Constantes.CAMPO_TITULO, titulo);
+                    intent.putExtra(Constantes.CAMPO_ETIQUETA, etiqueta);
+                    intent.putExtra(Constantes.BOX_PLANTILLA_SELECCIONADO, btnPlantilla.isChecked());
+                    intent.putExtra(Constantes.BOX_TRANSACCION_FIJA_SELECCIONADO, btnTransaccionFija.isChecked());
+                    intent.putExtra(Constantes.CAMPO_FECHA_FINAL, fechaFinal);
+                    if(frecuencia!=null && !frecuencia.equals(Constantes.SELECCIONAR_FRECUENCIA)){
+                        intent.putExtra(Constantes.CAMPO_FRECUENCIA,frecuencia);
+                    }
+                    if(!categoria.equals("Seleccionar categoria") && !categoria.equals("")){
+                        intent.putExtra(Constantes.CAMPO_CATEGORIA, categoria);
+                    }
+                    try {
+                        if(tipo.equals(Constantes.INGRESO)){
+                            intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue());
+                        }
+                        else {
+                            intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue()*(-1));
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    setResult(RESULT_OK, intent);
+                    finish();
                 }
-                setResult(RESULT_OK, intent);
-                finish();
             }
         });
 
@@ -248,13 +269,63 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
         });
     }
 
+    protected void definirMensajeDeAviso(){
+        avisoDialog = new AvisoDialog("Aviso","Faltan completar datos importantes");
+    }
+
+    protected boolean verificarDatosPrincipales(){
+        boolean verificado = false;
+        String precio = campoPrecio.getText().toString();
+        float precioFinal = -1f;
+        try {
+            precioFinal = formatoNumero.parse(precio).floatValue();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(precioFinal<=0){
+            avisoDialog.setMensaje("Falta dato principal: Para ingresar una nueva transaccion debe completar al menos el campo PRECIO");
+            avisoDialog.show(getSupportFragmentManager(),"Aviso");
+        }
+        else {
+            verificado = true;
+        }
+        return verificado;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PEDIDO_SELECCIONAR_CATEGORIA) {
+        if (requestCode == Constantes.PEDIDO_SELECCIONAR_CATEGORIA) {
             if (resultCode == RESULT_OK) {
                 String idCategoriaElegida = data.getStringExtra("id_categoria_elegida");
                 campoCategoria.setText(idCategoriaElegida);
+            }
+        }
+        else if(requestCode==Constantes.PEDIDO_SELECCIONAR_PLANTILLA){
+            if(resultCode==RESULT_OK && data!=null){
+                String info = data.getStringExtra(Constantes.CAMPO_INFO);
+                String tipo = data.getStringExtra(Constantes.CAMPO_TIPO);
+                String titulo = data.getStringExtra(Constantes.CAMPO_TITULO);
+                String etiqueta = data.getStringExtra(Constantes.CAMPO_ETIQUETA);
+                String categoria = data.getStringExtra(Constantes.CAMPO_CATEGORIA);
+                String precio = data.getStringExtra(Constantes.CAMPO_PRECIO);
+                if(!categoria.equals(Constantes.SIN_CATEGORIA)){
+                    campoCategoria.setText(categoria);
+                }
+                if(!titulo.equals("Sin título")){
+                    campoTitulo.setText(titulo);
+                }
+                campoInfo.setText(info);
+                campoEtiqueta.setText(etiqueta);
+                campoPrecio.setText(precio);
+                if(tipo.equals(Constantes.GASTO)){
+                    btnGasto.setChecked(true);
+                    btnIngreso.setChecked(false);
+                }
+                else {
+                    btnGasto.setChecked(false);
+                    btnIngreso.setChecked(true);
+                }
             }
         }
     }

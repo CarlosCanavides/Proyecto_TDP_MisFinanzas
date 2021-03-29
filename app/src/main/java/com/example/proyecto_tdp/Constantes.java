@@ -23,6 +23,7 @@ public class Constantes {
 
     public static final String GASTO = "Gasto";
     public static final String INGRESO = "Ingreso";
+    public static final String SIN_CATEGORIA = "Sin categoria";
 
     public static final String SELECCIONAR_FRECUENCIA = "Seleccionar Frecuencia";
     public static final String FRECUENCIA_SOLO_UNA_VEZ = "Solo una vez";
@@ -31,22 +32,29 @@ public class Constantes {
     public static final String FRECUENCIA_UNA_VEZ_AL_ANIO = "Una vez al anio";
 
     public static final String CAMPO_ID = "ID";
-    public static final String CAMPO_ID_TF_PADRE = "ID transaccion fija padre";
-    public static final String CAMPO_TITULO = "titulo";
-    public static final String CAMPO_PRECIO = "precio";
-    public static final String CAMPO_FECHA = "fecha";
-    public static final String CAMPO_CATEGORIA = "categoria";
-    public static final String CAMPO_ETIQUETA = "etiqueta";
     public static final String CAMPO_INFO = "info";
     public static final String CAMPO_TIPO = "tipo";
-    public static final String CAMPO_FECHA_FINAL = "fecha final";
+    public static final String CAMPO_FECHA = "fecha";
+    public static final String CAMPO_TITULO = "titulo";
+    public static final String CAMPO_PRECIO = "precio";
+    public static final String CAMPO_ETIQUETA = "etiqueta";
+    public static final String CAMPO_CATEGORIA = "categoria";
     public static final String CAMPO_FRECUENCIA = "frecuencia";
+    public static final String CAMPO_FECHA_FINAL = "fecha final";
+    public static final String CAMPO_ID_TF_PADRE = "ID transaccion fija padre";
     public static final String BOX_PLANTILLA_SELECCIONADO = "box plantilla seleccionada";
     public static final String BOX_TRANSACCION_FIJA_SELECCIONADO = "box TF seleccionada";
-    public static final String CAMPO_FECHA_FINAL_ANTERIOR = "fecha final anterior";
-    public static final String CAMPO_FECHA_INICIO_ANTERIOR = "fecha inicio anterior";
-    public static final String CAMPO_FRECUENCIA_ANTERIOR = "frecuencia anterior";
     public static final String CAMPO_EJECUCIONES_RESTANTES = "campo ejecuciones restantes";
+
+    public static final String CAMPO_INFO_ANTERIOR = "info_anterior";
+    public static final String CAMPO_TIPO_ANTERIOR = "tipo_anterior";
+    public static final String CAMPO_TITULO_ANTERIOR = "titulo_anterior";
+    public static final String CAMPO_PRECIO_ANTERIOR = "precio_anterior";
+    public static final String CAMPO_ETIQUETA_ANTERIOR = "etiqueta_anterior";
+    public static final String CAMPO_CATEGORIA_ANTERIOR = "categoria_anterior";
+    public static final String CAMPO_FRECUENCIA_ANTERIOR = "frecuencia_anterior";
+    public static final String CAMPO_FECHA_FINAL_ANTERIOR = "fecha_final_anterior";
+    public static final String CAMPO_FECHA_INICIO_ANTERIOR = "fecha_inicio_anterior";
 
     public static final String CAMPO_TIPO_CATEGORIA = "tipo categoria";
     public static final String CAMPO_COLOR_CATEGORIA = "color categoria";
@@ -65,4 +73,5 @@ public class Constantes {
     public static final int PEDIDO_SET_TRANSACCION_FIJA = 8;
 
     public static final int PEDIDO_SELECCIONAR_CATEGORIA = 9;
+    public static final int PEDIDO_SELECCIONAR_PLANTILLA = 10;
 }
