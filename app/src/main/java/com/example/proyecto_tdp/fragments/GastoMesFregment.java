@@ -1,5 +1,6 @@
 package com.example.proyecto_tdp.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -101,14 +102,23 @@ public class GastoMesFregment extends Fragment {
                     adapterInforme.refesh();
                     adapterInforme.notifyDataSetChanged();
                     for (Transaccion t : transaccionesDelMes) {
-                        Categoria categoria = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
-                        Float gastoCategoria = mapCategoriasGasto.get(categoria.getNombreCategoria());
+                        Categoria categoria;
+                        String nombreCategoria;
+                        if(t.getCategoria()!=null){
+                            categoria = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
+                            nombreCategoria = t.getCategoria();
+                        }
+                        else {
+                            categoria = new Categoria("Sin categoria",null, Color.parseColor("#FF5722"),Constantes.GASTO);
+                            nombreCategoria = "Sin categoria";
+                        }
+                        Float gastoCategoria = mapCategoriasGasto.get(nombreCategoria);
                         if (gastoCategoria == null) {
                             categoriasMes.add(categoria);
                             mapCategoriasGasto.put(categoria.getNombreCategoria(), Math.abs(t.getPrecio()));
                         } else {
-                            mapCategoriasGasto.remove(categoria.getNombreCategoria());
-                            mapCategoriasGasto.put(categoria.getNombreCategoria(), gastoCategoria + Math.abs(t.getPrecio()));
+                            mapCategoriasGasto.remove(nombreCategoria);
+                            mapCategoriasGasto.put(nombreCategoria, gastoCategoria + Math.abs(t.getPrecio()));
                         }
                     }
                     adapterInforme.notifyDataSetChanged();

@@ -30,6 +30,9 @@ public interface TransaccionDao {
     @Query("SELECT * FROM transaccion WHERE (fecha>=(:desde) AND fecha<=(:hasta))")
     LiveData<List<Transaccion>> getTransaccionesMes(String desde, String hasta);
 
+    @Query("DELETE FROM transaccion WHERE id LIKE :id")
+    void eliminarTransaccion(int id);
+
     @Update
     void upDateTransaccion(Transaccion... transaccions);
 

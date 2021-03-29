@@ -8,13 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.views.GraficoResumen;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -22,14 +21,16 @@ import java.util.Map;
 public class AdapterResumen extends RecyclerView.Adapter<AdapterResumen.ViewHolderResumen> {
 
     private List<String> meses;
-    private Map<String, List<Transaccion>> listaResumen;
-    private Map<String,Integer> categoriaGastoPredominante;
+    private Map<String,List<Transaccion>> listaResumen;
+    private Map<String, HashMap<String,Float>> categoriaGastoPredominante;
+    private Map<String,Integer> mapColorCategoria;
     private Resources recursos;
 
-    public AdapterResumen(List<String> meses, Map<String, List<Transaccion>> listaResumen, Map<String,Integer> categoriaGastoPredominante) {
+    public AdapterResumen(List<String> meses, Map<String,List<Transaccion>> listaResumen, Map<String,HashMap<String,Float>> categoriaGastoPredominante, Map<String,Integer> mapColorCategoria) {
         this.meses = meses;
         this.listaResumen = listaResumen;
         this.categoriaGastoPredominante = categoriaGastoPredominante;
+        this.mapColorCategoria = mapColorCategoria;
     }
 
     @NonNull
@@ -69,11 +70,11 @@ public class AdapterResumen extends RecyclerView.Adapter<AdapterResumen.ViewHold
         }
         viewHolderResumen.grafico.inicializarGrafico(viewHolderResumen.grafico,ingresos,gastos,recursos);
 
-        Iterator it = categoriaGastoPredominante.entrySet().iterator();
-        int mayor = 0;
+        Iterator it = categoriaGastoPredominante.get(meses.get(i)).entrySet().iterator();
+        Float mayor = 0.f;
         String categoriaMayor = "";
         while(it.hasNext()){
-            Map.Entry<String,Integer> entry = (Map.Entry<String, Integer>) it.next();
+            Map.Entry<String,Float> entry = (Map.Entry<String, Float>) it.next();
             if(Math.abs(entry.getValue())>mayor){
                 mayor = Math.abs(entry.getValue());
                 categoriaMayor = entry.getKey();
@@ -85,7 +86,12 @@ public class AdapterResumen extends RecyclerView.Adapter<AdapterResumen.ViewHold
         else {
             viewHolderResumen.tvColorCategoria.setVisibility(View.VISIBLE);
             Drawable bg = viewHolderResumen.tvColorCategoria.getBackground();
-            bg.setColorFilter(Color.parseColor("#7373FF"), PorterDuff.Mode.SRC);
+            if(!categoriaMayor.equals("Sin categoria")){
+                bg.setColorFilter(mapColorCategoria.get(categoriaMayor), PorterDuff.Mode.SRC);
+            }
+            else {
+                bg.setColorFilter(Color.parseColor("#FF5722"), PorterDuff.Mode.SRC);
+            }
         }
         viewHolderResumen.tvCategoriaPredominante.setText(categoriaMayor);
     }
@@ -118,5 +124,13 @@ public class AdapterResumen extends RecyclerView.Adapter<AdapterResumen.ViewHold
             tvColorCategoria = itemView.findViewById(R.id.circulo_color_categoria);
             grafico = itemView.findViewById(R.id.resumen_grafico);
         }
+    }
+
+    public void refresh(){
+        meses.clear();
+        listaResumen.clear();
+        categoriaGastoPredominante.clear();
+        mapColorCategoria.clear();
+        notifyDataSetChanged();
     }
 }

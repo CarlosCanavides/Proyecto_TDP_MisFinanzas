@@ -5,7 +5,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
-
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.base_de_datos.repositorios.RepositorioTransacciones;
 import java.util.List;
@@ -47,6 +46,10 @@ public class ViewModelTransaccion extends AndroidViewModel {
 
     public void eliminarTransaccion(Transaccion transaccion){
         repositorioTransacciones.eliminarTransaccion(transaccion);
+    }
+
+    public void eliminarTransaccion(int id){
+        repositorioTransacciones.eliminarTransaccion(id);
     }
 
     public void eliminarTransaccionesHijas(int idPadre){

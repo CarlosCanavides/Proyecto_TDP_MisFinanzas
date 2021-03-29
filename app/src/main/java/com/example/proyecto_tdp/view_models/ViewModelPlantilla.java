@@ -5,9 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
-
 import com.example.proyecto_tdp.base_de_datos.entidades.Plantilla;
-import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.base_de_datos.repositorios.RepositorioPlantillas;
 import java.util.List;
 
@@ -34,8 +32,8 @@ public class ViewModelPlantilla extends AndroidViewModel {
         repositorioPlantillas.insertarPlantilla(plantilla);
     }
 
-    public void actualizarPlantilla(Plantilla plantillas){
-        repositorioPlantillas.actualizarPlantilla(plantillas);
+    public void actualizarPlantilla(Plantilla plantilla){
+        repositorioPlantillas.actualizarPlantilla(plantilla);
     }
 
     public void eliminarPlantilla(Plantilla plantilla){

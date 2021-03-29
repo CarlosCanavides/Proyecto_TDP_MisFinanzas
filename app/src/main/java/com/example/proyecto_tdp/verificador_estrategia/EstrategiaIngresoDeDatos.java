@@ -1,6 +1,8 @@
 package com.example.proyecto_tdp.verificador_estrategia;
 
 import android.content.Intent;
+import android.util.Log;
+
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.base_de_datos.entidades.Plantilla;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
@@ -16,7 +18,7 @@ import java.util.Date;
 import java.util.Locale;
 import static android.app.Activity.RESULT_OK;
 
-public class VerificadorParaTransacciones implements EstrategiaDeVerificacion{
+public class EstrategiaIngresoDeDatos implements EstrategiaDeVerificacion{
 
     protected ViewModelPlantilla viewModelPlantilla;
     protected ViewModelTransaccion viewModelTransaccion;
@@ -25,7 +27,7 @@ public class VerificadorParaTransacciones implements EstrategiaDeVerificacion{
     protected NumberFormat formatoDeNumero;
     protected LocalDate calendario;
 
-    public VerificadorParaTransacciones(ViewModelPlantilla vmP, ViewModelTransaccion vmT, ViewModelTransaccionFija vmTF){
+    public EstrategiaIngresoDeDatos(ViewModelPlantilla vmP, ViewModelTransaccion vmT, ViewModelTransaccionFija vmTF){
         viewModelPlantilla = vmP;
         viewModelTransaccion = vmT;
         viewModelTransaccionFija = vmTF;
@@ -58,8 +60,8 @@ public class VerificadorParaTransacciones implements EstrategiaDeVerificacion{
                 String fecha = datos.getStringExtra(Constantes.CAMPO_FECHA);
                 Date fechaDate = formatoDeFecha.parseDateTime(fecha).toDate();
                 calendario = LocalDate.now();
-                if(!esTransaccionFija(datos) && !fechaDate.after(calendario.toDate())){
-                    Transaccion nuevaTransaccion = new Transaccion(titulo,etiqueta,precio,categoria,tipo,fechaDate,info,0);
+                if(!esTransaccionFija(datos) && !fechaDate.after(calendario.toDate())) {
+                    Transaccion nuevaTransaccion = new Transaccion(titulo, etiqueta, precio, categoria, tipo, fechaDate, info, null);
                     viewModelTransaccion.insertarTransaccion(nuevaTransaccion);
                 }
                 else {

@@ -16,14 +16,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
-import com.example.proyecto_tdp.activities.CategoriaActivity;
+import com.example.proyecto_tdp.activities.SeleccionarCategoriaActivity;
 import com.example.proyecto_tdp.views.CalculatorInputDialog;
 import com.example.proyecto_tdp.views.CalendarioDialog;
 import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class NuevaTransaccionActivity extends AppCompatActivity{
 
@@ -38,6 +41,7 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
     private CheckBox btnPlantilla;
     private CheckBox btnTransaccionFija;
     private Spinner listaFrecuencias;
+    private ArrayAdapter<CharSequence> adapterFrecuencia;
     private TextView campoFechaFinal;
     private LinearLayout panelFechaFinal;
     private Button btnAceptar;
@@ -48,6 +52,7 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
     private CalendarioDialog calendarioDialog;
     private CalendarioDialog calendarioFechaFinalDialog;
     private DateFormat formatFecha = new SimpleDateFormat(Constantes.FORMATO_FECHA);
+    protected NumberFormat formatoNumero;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +76,7 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
         panelFechaFinal.setVisibility(View.GONE);
         listaFrecuencias.setVisibility(View.GONE);
         btnGasto.setChecked(true);
+        formatoNumero = NumberFormat.getInstance(new Locale("es", "ES"));
 
         definirIngresarMonto();
         definirSeleccionarFecha();
@@ -118,7 +124,7 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
         campoCategoria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NuevaTransaccionActivity.this, CategoriaActivity.class);
+                Intent intent = new Intent(NuevaTransaccionActivity.this, SeleccionarCategoriaActivity.class);
                 startActivityForResult(intent,PEDIDO_SELECCIONAR_CATEGORIA);
             }
         });
@@ -128,9 +134,10 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
         ArrayList<String> opcionesFrecuencia = new ArrayList<>();
         opcionesFrecuencia.add(Constantes.SELECCIONAR_FRECUENCIA);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_SOLO_UNA_VEZ);
+        opcionesFrecuencia.add(Constantes.FRECUENCIA_UNA_VEZ_A_LA_SEMANA);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_UNA_VEZ_AL_MES);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_UNA_VEZ_AL_ANIO);
-        ArrayAdapter<CharSequence> adapterFrecuencia = new ArrayAdapter(this, android.R.layout.simple_list_item_1, opcionesFrecuencia);
+        adapterFrecuencia = new ArrayAdapter(this, android.R.layout.simple_list_item_1, opcionesFrecuencia);
         listaFrecuencias.setAdapter(adapterFrecuencia);
         btnPlantilla.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,6 +199,8 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
                 String precio = campoPrecio.getText().toString();
                 String etiqueta = campoEtiqueta.getText().toString();
                 String categoria = campoCategoria.getText().toString();
+                String fechaFinal = campoFechaFinal.getText().toString();
+                String frecuencia = (String) adapterFrecuencia.getItem(listaFrecuencias.getSelectedItemPosition());
                 String tipo;
                 if(btnGasto.isChecked()){
                     tipo = btnGasto.getText().toString();
@@ -204,9 +213,26 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
                 intent.putExtra(Constantes.CAMPO_TIPO, tipo);
                 intent.putExtra(Constantes.CAMPO_FECHA, fecha);
                 intent.putExtra(Constantes.CAMPO_TITULO, titulo);
-                intent.putExtra(Constantes.CAMPO_PRECIO, precio);
                 intent.putExtra(Constantes.CAMPO_ETIQUETA, etiqueta);
-                intent.putExtra(Constantes.CAMPO_CATEGORIA, categoria);
+                intent.putExtra(Constantes.BOX_PLANTILLA_SELECCIONADO, btnPlantilla.isChecked());
+                intent.putExtra(Constantes.BOX_TRANSACCION_FIJA_SELECCIONADO, btnTransaccionFija.isChecked());
+                intent.putExtra(Constantes.CAMPO_FECHA_FINAL, fechaFinal);
+                if(frecuencia!=null && !frecuencia.equals(Constantes.SELECCIONAR_FRECUENCIA)){
+                    intent.putExtra(Constantes.CAMPO_FRECUENCIA,frecuencia);
+                }
+                if(!categoria.equals("Seleccionar categoria") && !categoria.equals("")){
+                    intent.putExtra(Constantes.CAMPO_CATEGORIA, categoria);
+                }
+                try {
+                    if(tipo.equals(Constantes.INGRESO)){
+                        intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue());
+                    }
+                    else {
+                        intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue()*(-1));
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -215,6 +241,8 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = getIntent();
+                setResult(RESULT_CANCELED, intent);
                 finish();
             }
         });

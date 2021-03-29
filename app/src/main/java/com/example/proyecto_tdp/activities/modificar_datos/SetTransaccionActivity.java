@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,12 +13,16 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
-import com.example.proyecto_tdp.activities.CategoriaActivity;
+import com.example.proyecto_tdp.activities.SeleccionarCategoriaActivity;
 import com.example.proyecto_tdp.views.CalculatorInputDialog;
 import com.example.proyecto_tdp.views.CalendarioDialog;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Date;
+import java.util.Locale;
 
 public class SetTransaccionActivity extends AppCompatActivity {
 
@@ -34,6 +39,7 @@ public class SetTransaccionActivity extends AppCompatActivity {
     private CalculatorInputDialog calculatorInputDialog;
     private CalendarioDialog calendarioDialog;
     private DateTimeFormatter formatoFecha;
+    protected NumberFormat formatoNumero;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,7 @@ public class SetTransaccionActivity extends AppCompatActivity {
         btnAceptar = findViewById(R.id.set_transaccion_btn_aceptar);
         btnEliminar = findViewById(R.id.set_transaccion_btn_eliminar);
         formatoFecha = DateTimeFormat.forPattern(Constantes.FORMATO_FECHA);
+        formatoNumero = NumberFormat.getInstance(new Locale("es", "ES"));
 
         inicializarValoresCampos();
         definirIngresarMonto();
@@ -69,13 +76,24 @@ public class SetTransaccionActivity extends AppCompatActivity {
 
     private void inicializarValoresCampos(){
         Intent intent = getIntent();
-        campoInfo.setText(intent.getStringExtra(Constantes.CAMPO_INFO));
-        campoFecha.setText(intent.getStringExtra(Constantes.CAMPO_FECHA));
-        campoTitulo.setText(intent.getStringExtra(Constantes.CAMPO_TITULO));
-        campoPrecio.setText(intent.getStringExtra(Constantes.CAMPO_PRECIO));
-        campoEtiqueta.setText(intent.getStringExtra(Constantes.CAMPO_ETIQUETA));
-        campoCategoria.setText(intent.getStringExtra(Constantes.CAMPO_CATEGORIA));
+        String info = intent.getStringExtra(Constantes.CAMPO_INFO);
+        String fecha = intent.getStringExtra(Constantes.CAMPO_FECHA);
+        String titulo = intent.getStringExtra(Constantes.CAMPO_TITULO);
+        String precio = intent.getStringExtra(Constantes.CAMPO_PRECIO);
+        String etiqueta = intent.getStringExtra(Constantes.CAMPO_ETIQUETA);
+        String categoria = intent.getStringExtra(Constantes.CAMPO_CATEGORIA);
         String tipo = intent.getStringExtra(Constantes.CAMPO_TIPO);
+        campoInfo.setText(info);
+        campoFecha.setText(fecha);
+        campoTitulo.setText(titulo);
+        campoPrecio.setText(precio);
+        campoEtiqueta.setText(etiqueta);
+        if(categoria==null){
+            campoCategoria.setText("Seleccionar categoria");
+        }
+        else {
+            campoCategoria.setText(categoria);
+        }
         if(btnGasto.getText().toString().equals(tipo)){
             btnGasto.setChecked(true);
         }
@@ -121,7 +139,7 @@ public class SetTransaccionActivity extends AppCompatActivity {
         campoCategoria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SetTransaccionActivity.this, CategoriaActivity.class);
+                Intent intent = new Intent(SetTransaccionActivity.this, SeleccionarCategoriaActivity.class);
                 startActivityForResult(intent,Constantes.PEDIDO_SELECCIONAR_CATEGORIA);
             }
         });
@@ -144,18 +162,32 @@ public class SetTransaccionActivity extends AppCompatActivity {
                 else {
                     tipo = btnIngreso.getText().toString();
                 }
-
+                Integer id = getIntent().getIntExtra(Constantes.CAMPO_ID,-1);
+                Integer idTFPadre = getIntent().getIntExtra(Constantes.CAMPO_ID_TF_PADRE,-1);
                 Intent intent = new Intent();
                 intent.putExtra(Constantes.CAMPO_INFO, info);
                 intent.putExtra(Constantes.CAMPO_TIPO, tipo);
                 intent.putExtra(Constantes.CAMPO_FECHA, fecha);
                 intent.putExtra(Constantes.CAMPO_TITULO, titulo);
-                intent.putExtra(Constantes.CAMPO_PRECIO, precio);
                 intent.putExtra(Constantes.CAMPO_ETIQUETA, etiqueta);
-                intent.putExtra(Constantes.CAMPO_CATEGORIA, categoria);
-                int id = getIntent().getIntExtra(Constantes.CAMPO_ID,-1);
+                try {
+                    if(tipo.equals(Constantes.INGRESO)){
+                        intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue());
+                    }
+                    else {
+                        intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue()*(-1));
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if(!categoria.equals("Seleccionar categoria") && !categoria.equals("")){
+                    intent.putExtra(Constantes.CAMPO_CATEGORIA, categoria);
+                }
                 if(id!=-1){
                     intent.putExtra(Constantes.CAMPO_ID,id);
+                }
+                if(idTFPadre!=-1){
+                    intent.putExtra(Constantes.CAMPO_ID_TF_PADRE,idTFPadre);
                 }
                 setResult(RESULT_OK, intent);
                 finish();

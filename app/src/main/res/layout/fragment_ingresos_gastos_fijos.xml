@@ -6,6 +6,9 @@
     <ExpandableListView
         android:id="@+id/exp_ingresos_gastos_fijos"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/color_anti_flash"
+        android:divider="@color/color_anti_flash"
+        android:childDivider="@color/color_anti_flash"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

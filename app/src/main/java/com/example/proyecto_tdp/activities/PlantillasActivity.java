@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
+import com.example.proyecto_tdp.activities.agregar_datos.NuevaPlantillaActivity;
 import com.example.proyecto_tdp.activities.modificar_datos.SetPlantillaActivity;
 import com.example.proyecto_tdp.adapters.AdapterPlantillas;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
@@ -28,11 +29,11 @@ import java.util.Map;
 
 public class PlantillasActivity extends AppCompatActivity implements AdapterPlantillas.OnPlantillaListener {
 
-    private RecyclerView recyclerView;
-    private FloatingActionButton btnAgregarPlantilla;
-    private AdapterPlantillas adapterPlantillas;
     private List<Plantilla> plantillas;
     private Map<Plantilla, Integer> mapColorCategoria;
+    private AdapterPlantillas adapterPlantillas;
+    private RecyclerView recyclerView;
+    private FloatingActionButton btnAgregarPlantilla;
     private ViewModelCategoria viewModelCategoria;
     private ViewModelPlantilla viewModelPlantilla;
     private Observer<List<Plantilla>> observer;
@@ -111,14 +112,7 @@ public class PlantillasActivity extends AppCompatActivity implements AdapterPlan
         btnAgregarPlantilla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PlantillasActivity.this, SetPlantillaActivity.class);
-                intent.putExtra(Constantes.CAMPO_ID,"");
-                intent.putExtra(Constantes.CAMPO_INFO,"");
-                intent.putExtra(Constantes.CAMPO_TIPO,"");
-                intent.putExtra(Constantes.CAMPO_TITULO,"");
-                intent.putExtra(Constantes.CAMPO_PRECIO,"");
-                intent.putExtra(Constantes.CAMPO_ETIQUETA,"");
-                intent.putExtra(Constantes.CAMPO_CATEGORIA,"");
+                Intent intent = new Intent(PlantillasActivity.this, NuevaPlantillaActivity.class);
                 startActivityForResult(intent, Constantes.PEDIDO_NUEVA_PLANTILLA);
             }
         });

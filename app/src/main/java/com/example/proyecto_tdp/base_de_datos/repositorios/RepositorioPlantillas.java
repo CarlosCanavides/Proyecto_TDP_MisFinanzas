@@ -54,7 +54,7 @@ public class RepositorioPlantillas {
         private PlantillaDao plantillaDao;
 
         private ActualizarPlantillaAsyncTask(PlantillaDao plantillaDao){
-            this.plantillaDao = this.plantillaDao;
+            this.plantillaDao = plantillaDao;
         }
 
         @Override

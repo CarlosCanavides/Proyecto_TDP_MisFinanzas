@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
-import com.example.proyecto_tdp.activities.agregar_datos.NuevaTransaccionActivity;
+import com.example.proyecto_tdp.activities.agregar_datos.NuevaTransaccionFijaActivity;
 import com.example.proyecto_tdp.adapters.AdapterViewPagerTransaccionesFijas;
 import com.example.proyecto_tdp.verificador_estrategia.EstrategiaDeVerificacion;
 import com.example.proyecto_tdp.verificador_estrategia.EstrategiaSoloTransaccionesFijas;
@@ -59,7 +59,7 @@ public class TransaccionesFijasActivity extends AppCompatActivity {
         btnAgregarNuevaTransaccionFija.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TransaccionesFijasActivity.this, NuevaTransaccionActivity.class);
+                Intent intent = new Intent(TransaccionesFijasActivity.this, NuevaTransaccionFijaActivity.class);
                 startActivityForResult(intent, Constantes.PEDIDO_NUEVA_TRANSACCION_FIJA);
             }
         });

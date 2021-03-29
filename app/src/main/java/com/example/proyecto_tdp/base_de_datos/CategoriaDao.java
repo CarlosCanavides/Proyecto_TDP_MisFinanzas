@@ -33,6 +33,9 @@ public interface CategoriaDao {
     @Query("SELECT * FROM categoria WHERE nombreCategoria LIKE :nombreCategoria LIMIT 1")
     Categoria getCategoria(String nombreCategoria);
 
+    @Query("DELETE FROM categoria WHERE nombreCategoria LIKE :id")
+    void eliminarCategoria(String id);
+
     @Update
     void upDateCategoria(Categoria... categorias);
 

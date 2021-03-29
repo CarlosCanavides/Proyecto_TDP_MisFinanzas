@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.modificar_datos.SetTransaccionFijaActivity"></activity>
+        <activity android:name=".activities.SeleccionarCategoriaActivity"></activity>
+        <activity android:name=".activities.modificar_datos.SetCategoriaActivity" />
+        <activity android:name=".activities.modificar_datos.SetTransaccionFijaActivity" />
         <activity android:name=".activities.modificar_datos.SetPlantillaActivity" />
         <activity android:name=".activities.agregar_datos.NuevaTransaccionFijaActivity" />
         <activity android:name=".activities.agregar_datos.NuevaPlantillaActivity" />

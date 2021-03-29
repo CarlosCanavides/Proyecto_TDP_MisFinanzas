@@ -1,5 +1,6 @@
 package com.example.proyecto_tdp.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,7 @@ public class AdapterTransaccionesFijas extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return mapTransaccionesFijas.get(frecuencias.get(groupPosition));
+        return mapTransaccionesFijas.get(frecuencias.get(groupPosition)).get(childPosition);
     }
 
     @Override
@@ -82,11 +83,12 @@ public class AdapterTransaccionesFijas extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         TransaccionFija transaccionFija = mapTransaccionesFijas.get(frecuencias.get(groupPosition)).get(childPosition);
+        convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transacciones_fijas, null, false);
         TextView tvLetra = convertView.findViewById(R.id.transaccion_fija_icono);
         TextView tvFechas = convertView.findViewById(R.id.transaccion_fija_fechas);
         TextView tvTitulo = convertView.findViewById(R.id.transaccion_fija_nombre);
         TextView tvPrecio = convertView.findViewById(R.id.transaccion_fija_precio);
-        tvLetra.setText(transaccionFija.getCategoria().charAt(0));
+        tvLetra.setText(transaccionFija.getCategoria().charAt(0)+"");
         tvTitulo.setText(transaccionFija.getTitulo());
         tvPrecio.setText(transaccionFija.getPrecio()+"");
         float precio = transaccionFija.getPrecio();
@@ -96,11 +98,13 @@ public class AdapterTransaccionesFijas extends BaseExpandableListAdapter {
         else {
             tvPrecio.setText("- $ "+Math.abs(precio));
         }
+        Log.e("AQUIIIIIIIIIIIIIIIII","inserte una nueva transaccion fija en el mapeo");
         tvFechas.setText(formatoFecha.print(transaccionFija.getFecha().getTime())+" | "+formatoFecha.print(transaccionFija.getFechaFinal().getTime()));
         return convertView;
     }
 
     public void refresh(){
         mapTransaccionesFijas.clear();
+        this.notifyDataSetChanged();
     }
 }

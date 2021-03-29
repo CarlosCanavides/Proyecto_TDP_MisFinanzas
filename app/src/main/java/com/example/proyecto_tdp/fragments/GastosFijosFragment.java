@@ -2,6 +2,7 @@ package com.example.proyecto_tdp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,12 +30,11 @@ import java.util.Map;
 
 public class GastosFijosFragment extends Fragment {
 
-    private View vista;
     private ExpandableListView gastos;
-    private AdapterTransaccionesFijas adapterTransaccionesFijas;
-    private Map<String,List<TransaccionFija>> mapTransaccionesFijas;
     private List<String> frecuencias;
     private Map<TransaccionFija, Integer> mapColorCategoria;
+    private Map<String,List<TransaccionFija>> mapTransaccionesFijas;
+    private AdapterTransaccionesFijas adapterTransaccionesFijas;
     private DateTimeFormatter formatoFecha;
     private ViewModelCategoria viewModelCategoria;
     private ViewModelTransaccionFija viewModelTransaccionFija;
@@ -43,7 +43,7 @@ public class GastosFijosFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        vista = inflater.inflate(R.layout.fragment_ingresos_gastos_fijos, container, false);
+        View vista = inflater.inflate(R.layout.fragment_ingresos_gastos_fijos, container, false);
         gastos = vista.findViewById(R.id.exp_ingresos_gastos_fijos);
         formatoFecha = DateTimeFormat.forPattern(Constantes.FORMATO_FECHA);
         inicializarListView();
@@ -119,14 +119,17 @@ public class GastosFijosFragment extends Fragment {
                         frecuencia = t.getFrecuencia();
                         transaccionFijas = mapTransaccionesFijas.get(frecuencia);
                         if (transaccionFijas == null) {
-                            transaccionFijas = new ArrayList<>();
+                            transaccionFijas = new ArrayList<TransaccionFija>();
                             transaccionFijas.add(t);
                             mapTransaccionesFijas.put(frecuencia, transaccionFijas);
                         } else {
                             transaccionFijas.add(t);
                         }
-                        adapterTransaccionesFijas.notifyDataSetChanged();
                     }
+                }
+                adapterTransaccionesFijas.notifyDataSetChanged();
+                for (int i=0; i<frecuencias.size(); i++){
+                    gastos.expandGroup(i);
                 }
             }
         };

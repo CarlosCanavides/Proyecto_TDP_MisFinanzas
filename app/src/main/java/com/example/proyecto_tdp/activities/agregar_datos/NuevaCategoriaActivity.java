@@ -1,8 +1,6 @@
 package com.example.proyecto_tdp.activities.agregar_datos;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -25,21 +23,20 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class NuevaCategoriaActivity extends AppCompatActivity {
 
-    private int colorActual;
-    private Button btnCancelar;
-    private Button btnConfirmar;
-    private Button campoCategoriaSup;
-    private RadioButton btnGasto;
-    private RadioButton btnIngreso;
-    private EditText campoNombre;
-    private TextView campoColor;
-    private TextView iconoCategoriaVP;
-    private TextView nombreCategoriaVP;
-    private AmbilWarnaDialog paletaColores;
-    private SeleccionCategoriaDialog seleccionCategoriaDialog;
-    private List<Categoria> categoriasSuperiores;
-    private ViewModelCategoria viewModelCategoria;
-    private Observer<List<Categoria>> observador;
+    protected int colorActual;
+    protected Button btnCancelar;
+    protected Button btnConfirmar;
+    protected Button campoCategoriaSup;
+    protected RadioButton btnGasto;
+    protected RadioButton btnIngreso;
+    protected EditText campoNombre;
+    protected TextView campoColor;
+    protected TextView iconoCategoriaVP;
+    protected TextView nombreCategoriaVP;
+    protected AmbilWarnaDialog paletaColores;
+    protected SeleccionCategoriaDialog seleccionCategoriaDialog;
+    protected List<Categoria> categoriasSuperiores;
+    protected ViewModelCategoria viewModelCategoria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,67 +54,42 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
         nombreCategoriaVP = findViewById(R.id.vista_previa_categoria_nombre);
 
         inicializarValoresCampos();
+        inicializarViewModel();
         listenerBotonesPrincipales();
         definirSeleccionarColor();
         definirSeleccionarCategoriaSuperior();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        viewModelCategoria.eliminarObservador(observador);
+    protected void inicializarValoresCampos(){
+        colorActual = Constantes.COLOR_CATEGORIA_POR_DEFECTO;
+        campoColor.setText(colorActual+"");
+        campoNombre.setText("");
+        campoCategoriaSup.setText("Seleccionar categoria");
+        btnGasto.setChecked(true);
+        btnIngreso.setChecked(false);
+        iconoCategoriaVP.setText("");
+        nombreCategoriaVP.setText("");
     }
 
-    private void inicializarValoresCampos(){
-        Intent intent = getIntent();
-        String tipo = intent.getStringExtra(Constantes.CAMPO_TIPO_CATEGORIA);
-        String nombre = intent.getStringExtra(Constantes.CAMPO_NOMBRE_CATEGORIA);
-        String superior = intent.getStringExtra(Constantes.CAMPO_CATEGORIA_SUPERIOR);
-        int color = intent.getIntExtra(Constantes.CAMPO_COLOR_CATEGORIA,Constantes.COLOR_CATEGORIA_POR_DEFECTO);
-        if(superior==null) {
-            superior = "Seleccionar categoria";
-        }
-        colorActual = color;
-        campoColor.setText(color+"");
-        campoNombre.setText(nombre);
-        campoCategoriaSup.setText(superior);
-        if(tipo!=null) {
-            if (tipo.equals(Constantes.GASTO)) {
-                btnGasto.setChecked(true);
-            } else {
-                btnIngreso.setChecked(true);
-            }
-        }
-        if(nombre!=null){
-            if(nombre.length()!=0) {
-                iconoCategoriaVP.setText(nombre.charAt(0)+"");
-            }
-            nombreCategoriaVP.setText(nombre);
-        }
+    protected void inicializarViewModel(){
         categoriasSuperiores = new ArrayList<>();
         viewModelCategoria =  ViewModelProviders.of(this).get(ViewModelCategoria.class);
-        LiveData<List<Categoria>> liveData = viewModelCategoria.getAllCategorias();
-        if(liveData!=null){
-            observador = new Observer<List<Categoria>>() {
-                @Override
-                public void onChanged(List<Categoria> categorias) {
-                    for(Categoria categoria : categorias) {
-                        if(categoria.getCategoriaSuperior().equals("NULL")) {
-                            categoriasSuperiores.add(categoria);
-                        }
-                    }
-                    seleccionCategoriaDialog.setCategoriasSuperiores(categorias);
+        List<Categoria>  todasLasCategorias = viewModelCategoria.getCategorias();
+        if(todasLasCategorias!=null){
+            for(Categoria categoria : todasLasCategorias) {
+                if(categoria.getCategoriaSuperior()==null) {
+                    categoriasSuperiores.add(categoria);
                 }
-            };
-            liveData.observe(this,observador);
+            }
+            seleccionCategoriaDialog.setCategoriasSuperiores(todasLasCategorias);
         }
     }
 
-    private void listenerBotonesPrincipales(){
+    protected void listenerBotonesPrincipales(){
         btnConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = getIntent();
+                Intent intent = new Intent();
                 intent.putExtra(Constantes.CAMPO_COLOR_CATEGORIA,colorActual);
                 intent.putExtra(Constantes.CAMPO_NOMBRE_CATEGORIA,campoNombre.getText().toString());
                 intent.putExtra(Constantes.CAMPO_CATEGORIA_SUPERIOR,campoCategoriaSup.getText().toString());
@@ -129,6 +101,10 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
                     tipo = Constantes.INGRESO;
                 }
                 intent.putExtra(Constantes.CAMPO_TIPO_CATEGORIA,tipo);
+                String id = getIntent().getStringExtra(Constantes.CAMPO_ID);
+                if(id!=null){
+                    intent.putExtra(Constantes.CAMPO_ID,id);
+                }
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -136,12 +112,14 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = getIntent();
+                setResult(RESULT_CANCELED,intent);
                 finish();
             }
         });
     }
 
-    private void definirSeleccionarColor(){
+    protected void definirSeleccionarColor(){
         final Context context = this;
         campoColor.setText(colorActual+"");
         campoColor.setOnClickListener(new View.OnClickListener() {
@@ -164,7 +142,7 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
         });
     }
 
-    private void definirSeleccionarCategoriaSuperior(){
+    protected void definirSeleccionarCategoriaSuperior(){
         seleccionCategoriaDialog = new SeleccionCategoriaDialog(categoriasSuperiores,
                                    new SeleccionCategoriaDialog.SeleccionCategoriaListener(){
                                    @Override

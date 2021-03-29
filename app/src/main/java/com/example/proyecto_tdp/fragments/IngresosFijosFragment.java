@@ -20,10 +20,8 @@ import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.TransaccionFija;
 import com.example.proyecto_tdp.view_models.ViewModelCategoria;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccionFija;
-
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,12 +29,11 @@ import java.util.Map;
 
 public class IngresosFijosFragment extends Fragment {
 
-    private View vista;
     private ExpandableListView ingresos;
-    private AdapterTransaccionesFijas adapterTransaccionesFijas;
     private List<String> frecuencias;
     private Map<TransaccionFija, Integer> mapColorCategoria;
     private Map<String, List<TransaccionFija>> mapTransaccionesFijas;
+    private AdapterTransaccionesFijas adapterTransaccionesFijas;
     private DateTimeFormatter formatoFecha;
     private ViewModelCategoria viewModelCategoria;
     private ViewModelTransaccionFija viewModelTransaccionFija;
@@ -45,7 +42,7 @@ public class IngresosFijosFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        vista = inflater.inflate(R.layout.fragment_ingresos_gastos_fijos, container, false);
+        View vista = inflater.inflate(R.layout.fragment_ingresos_gastos_fijos, container, false);
         ingresos = vista.findViewById(R.id.exp_ingresos_gastos_fijos);
         formatoFecha = DateTimeFormat.forPattern(Constantes.FORMATO_FECHA);
         inicializarListView();
@@ -127,8 +124,11 @@ public class IngresosFijosFragment extends Fragment {
                         } else {
                             transaccionFijas.add(t);
                         }
-                        adapterTransaccionesFijas.notifyDataSetChanged();
                     }
+                }
+                adapterTransaccionesFijas.notifyDataSetChanged();
+                for (int i=0; i<frecuencias.size(); i++){
+                    ingresos.expandGroup(i);
                 }
             }
         };

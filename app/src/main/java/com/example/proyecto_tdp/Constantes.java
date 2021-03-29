@@ -31,6 +31,7 @@ public class Constantes {
     public static final String FRECUENCIA_UNA_VEZ_AL_ANIO = "Una vez al anio";
 
     public static final String CAMPO_ID = "ID";
+    public static final String CAMPO_ID_TF_PADRE = "ID transaccion fija padre";
     public static final String CAMPO_TITULO = "titulo";
     public static final String CAMPO_PRECIO = "precio";
     public static final String CAMPO_FECHA = "fecha";
@@ -53,13 +54,15 @@ public class Constantes {
     public static final String CAMPO_CATEGORIA_SUPERIOR = "categoria superior";
     public static final int COLOR_CATEGORIA_POR_DEFECTO = Color.parseColor("#7373FF");
 
-    public static final int PEDIDO_NUEVA_PLANTILLA = 1;
-    public static final int PEDIDO_NUEVA_TRANSACCION = 2;
-    public static final int PEDIDO_NUEVA_TRANSACCION_FIJA = 3;
+    public static final int PEDIDO_NUEVA_CATEGORIA = 1;
+    public static final int PEDIDO_NUEVA_PLANTILLA = 2;
+    public static final int PEDIDO_NUEVA_TRANSACCION = 3;
+    public static final int PEDIDO_NUEVA_TRANSACCION_FIJA = 4;
 
-    public static final int PEDIDO_SELECCIONAR_CATEGORIA = 26;
+    public static final int PEDIDO_SET_CATEGORIA = 5;
+    public static final int PEDIDO_SET_PLANTILLA = 6;
+    public static final int PEDIDO_SET_TRANSACCION = 7;
+    public static final int PEDIDO_SET_TRANSACCION_FIJA = 8;
 
-    public static final int PEDIDO_SET_PLANTILLA = 4;
-    public static final int PEDIDO_SET_TRANSACCION = 5;
-    public static final int PEDIDO_SET_TRANSACCION_FIJA = 6;
+    public static final int PEDIDO_SELECCIONAR_CATEGORIA = 9;
 }

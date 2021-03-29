@@ -59,6 +59,9 @@ public class RepositorioCategorias {
         new EliminarCategoriaAsyncTask(categoriaDao).execute(categoria);
     }
 
+    public void eliminarCategoria(String idCategoria){
+        new EliminarCategoriaIDAsyncTask(categoriaDao).execute(idCategoria);
+    }
 
     public static class InsertCategoriaAsyncTask extends AsyncTask<Categoria,Void,Void> {
         private CategoriaDao categoriaDao;
@@ -98,6 +101,20 @@ public class RepositorioCategorias {
         @Override
         protected Void doInBackground(Categoria... categoria) {
             categoriaDao.deleteCategoria(categoria[0]);
+            return null;
+        }
+    }
+
+    public static class EliminarCategoriaIDAsyncTask extends AsyncTask<String,Void,Void> {
+        private CategoriaDao categoriaDao;
+
+        private EliminarCategoriaIDAsyncTask(CategoriaDao categoriaDao){
+            this.categoriaDao = categoriaDao;
+        }
+
+        @Override
+        protected Void doInBackground(String... idCategoria) {
+            categoriaDao.eliminarCategoria(idCategoria[0]);
             return null;
         }
     }

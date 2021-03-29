@@ -22,11 +22,11 @@ public interface PlantillaDao {
     Plantilla findByName(String titulo);
 
     @Update
-    void upDatePlantilla(Plantilla... transaccions);
+    void upDatePlantilla(Plantilla... plantillas);
 
     @Insert
-    void insertPlantilla(Plantilla... transacciones);
+    void insertPlantilla(Plantilla... plantillas);
 
     @Delete
-    void deletePlantilla(Plantilla transacciones);
+    void deletePlantilla(Plantilla plantilla);
 }

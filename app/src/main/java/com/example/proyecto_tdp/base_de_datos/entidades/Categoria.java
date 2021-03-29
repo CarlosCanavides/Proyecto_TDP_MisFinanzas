@@ -12,7 +12,7 @@ public class Categoria {
     @NonNull
     private String nombreCategoria;
 
-    @ColumnInfo(name = "categoriaSuperior", defaultValue = "NULL")
+    @ColumnInfo(name = "categoriaSuperior")
     private String categoriaSuperior;
 
     @ColumnInfo(name = "colorCategoria")

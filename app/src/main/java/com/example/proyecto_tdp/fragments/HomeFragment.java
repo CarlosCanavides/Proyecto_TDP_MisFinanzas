@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.proyecto_tdp.Constantes;
-import com.example.proyecto_tdp.MainActivity;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.activities.PlantillasActivity;
 import com.example.proyecto_tdp.activities.TransaccionesFijasActivity;
@@ -44,7 +43,6 @@ public class HomeFragment extends Fragment{
     private LinearLayout panelPlantillas;
     private LinearLayout panelGastosFijos;
     private LinearLayout panelIngresosFijos;
-    private View vista;
     private ViewModelTransaccion viewModelTransaccion;
     private ViewModelPlantilla viewModelPlantilla;
     private ViewModelTransaccionFija viewModelTransaccionFija;
@@ -58,7 +56,7 @@ public class HomeFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        vista = inflater.inflate(R.layout.fragment_home, container, false);
+        View vista = inflater.inflate(R.layout.fragment_home, container, false);
         barraProgreso = vista.findViewById(R.id.progress_bar_circular);
         tvBalance = vista.findViewById(R.id.tv_balance);
         tvIngresoTotal = vista.findViewById(R.id.tv_ingreso_total);
@@ -70,11 +68,7 @@ public class HomeFragment extends Fragment{
         panelPlantillas = vista.findViewById(R.id.panel_plantillas);
         panelGastosFijos = vista.findViewById(R.id.panel_gastos_fijos);
         panelIngresosFijos = vista.findViewById(R.id.panel_ingresos_fijos);
-        tvCantidadPlantillas.setText("0");
-        tvCantidadGastosFijos.setText("0");
-        tvCantidadIngresosFijos.setText("0");
-        tvIngresoPromedio.setText("$0");
-        tvGastoPromedio.setText("$0");
+        inicializarCampos();
         inicializarBarraProgreso();
         inicializarViewModel();
         inicializarPanelesTransaccionesProgramadas();
@@ -87,6 +81,14 @@ public class HomeFragment extends Fragment{
         viewModelPlantilla.removeOberver(observerPlantillas);
         viewModelTransaccion.removeObserver(observerTransacciones);
         viewModelTransaccionFija.removeObserver(observerTransaccionesFijas);
+    }
+
+    private void inicializarCampos(){
+        tvCantidadPlantillas.setText("0");
+        tvCantidadGastosFijos.setText("0");
+        tvCantidadIngresosFijos.setText("0");
+        tvIngresoPromedio.setText("$0");
+        tvGastoPromedio.setText("$0");
     }
 
     private void inicializarBarraProgreso(){

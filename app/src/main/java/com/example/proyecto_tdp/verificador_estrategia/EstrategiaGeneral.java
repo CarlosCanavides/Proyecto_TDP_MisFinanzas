@@ -5,7 +5,7 @@ import com.example.proyecto_tdp.Constantes;
 
 public abstract class EstrategiaGeneral implements EstrategiaDeVerificacion{
 
-    protected int id;
+    protected Integer id;
     protected float precio;
     protected String tipo;
     protected String info;

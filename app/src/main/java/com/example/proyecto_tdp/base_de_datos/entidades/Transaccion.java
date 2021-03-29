@@ -31,11 +31,11 @@ public class Transaccion {
     @ColumnInfo(name = "precio")
     private float precio;
 
-    @ColumnInfo(name = "categoria", defaultValue = "NULL")
+    @ColumnInfo(name = "categoria")
     private String categoria;
 
     @ColumnInfo(name = "transaccionFijaPadre")
-    private int transaccionFijaPadre;
+    private Integer transaccionFijaPadre;
 
     @ColumnInfo(name = "tipoTransaccion")
     private String tipoTransaccion;
@@ -47,13 +47,11 @@ public class Transaccion {
     @ColumnInfo(name = "info")
     private String info;
 
-    public Transaccion(String titulo, String etiqueta, float precio, String categoria, String tipoTransaccion, Date fecha, String info, int transaccionFijaPadre) {
+    public Transaccion(String titulo, String etiqueta, float precio, String categoria, String tipoTransaccion, Date fecha, String info, Integer transaccionFijaPadre) {
         this.titulo = titulo;
         this.etiqueta = etiqueta;
         this.precio = precio;
-        if(categoria!=null && categoria!="") {
-            this.categoria = categoria;
-        }
+        this.categoria = categoria;
         this.tipoTransaccion = tipoTransaccion;
         this.fecha = fecha;
         this.info = info;
@@ -135,11 +133,11 @@ public class Transaccion {
         etiqueta = nuevosDatos.getEtiqueta();
     }
 
-    public int getTransaccionFijaPadre(){
+    public Integer getTransaccionFijaPadre(){
         return transaccionFijaPadre;
     }
 
-    public void setTransaccionFijaPadre(int transaccionFijaPadre){
+    public void setTransaccionFijaPadre(Integer transaccionFijaPadre){
         this.transaccionFijaPadre = transaccionFijaPadre;
     }
 }

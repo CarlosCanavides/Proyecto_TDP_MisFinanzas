@@ -21,7 +21,8 @@
             android:divider="@color/background_white"
             android:groupIndicator="@android:drawable/screen_background_light_transparent"
             android:indicatorLeft="3dip"
-            android:indicatorRight="0dip">
+            android:indicatorRight="0dip"
+            android:background="@color/color_anti_flash">
 
         </ExpandableListView>
 

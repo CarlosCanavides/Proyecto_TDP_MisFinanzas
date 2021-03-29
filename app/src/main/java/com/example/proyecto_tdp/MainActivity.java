@@ -21,7 +21,7 @@ import com.example.proyecto_tdp.fragments.HomeFragment;
 import com.example.proyecto_tdp.fragments.ResumenFragment;
 import com.example.proyecto_tdp.fragments.TransaccionesFragment;
 import com.example.proyecto_tdp.verificador_estrategia.EstrategiaDeVerificacion;
-import com.example.proyecto_tdp.verificador_estrategia.VerificadorParaTransacciones;
+import com.example.proyecto_tdp.verificador_estrategia.EstrategiaIngresoDeDatos;
 import com.example.proyecto_tdp.view_models.ViewModelPlantilla;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccionFija;
@@ -37,12 +37,12 @@ public class MainActivity extends AppCompatActivity {
     private ViewModelPlantilla viewModelPlantilla;
     private ViewModelTransaccion viewModelTransaccion;
     private ViewModelTransaccionFija viewModelTransaccionFija;
+    private EstrategiaDeVerificacion estrategiaDeVerificacion;
     private Toolbar toolbar;
     private NavigationView navigationDrawer;
     private FloatingActionButton btnAgregar;
     private BottomNavigationView barraNavegacion;
     private DrawerLayout drawerLayout;
-    private EstrategiaDeVerificacion estrategiaDeVerificacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         viewModelPlantilla = ViewModelProviders.of(this).get(ViewModelPlantilla.class);
         viewModelTransaccion = ViewModelProviders.of(this).get(ViewModelTransaccion.class);
         viewModelTransaccionFija = ViewModelProviders.of(this).get(ViewModelTransaccionFija.class);
-        estrategiaDeVerificacion = new VerificadorParaTransacciones(viewModelPlantilla,viewModelTransaccion,viewModelTransaccionFija);
+        estrategiaDeVerificacion = new EstrategiaIngresoDeDatos(viewModelPlantilla,viewModelTransaccion,viewModelTransaccionFija);
     }
 
     private void inicializarBotonPrincipal(){
@@ -163,7 +163,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        estrategiaDeVerificacion.verificar(requestCode,resultCode,data);
+        if(requestCode==Constantes.PEDIDO_NUEVA_TRANSACCION) {
+            estrategiaDeVerificacion.verificar(requestCode, resultCode, data);
+        }
     }
 
     @Override

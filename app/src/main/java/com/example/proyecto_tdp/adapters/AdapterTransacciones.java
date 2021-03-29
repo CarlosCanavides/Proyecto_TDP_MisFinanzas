@@ -99,14 +99,26 @@ public class AdapterTransacciones extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         Transaccion transaccion = mapTransacciones.get(fechas.get(groupPosition)).get(childPosition);
         convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transaccion,null,false);
-        TextView tvNombre = convertView.findViewById(R.id.itemTransaccion_nombre);
+        TextView tvTitulo = convertView.findViewById(R.id.itemTransaccion_nombre);
         TextView tvCategoria = convertView.findViewById(R.id.itemTransaccion_categoria);
         TextView tvIdentificacion = convertView.findViewById(R.id.itemTransaccion_etiqueta);
         TextView tvLetra = convertView.findViewById(R.id.idImagen);
         TextView tvPrecio = convertView.findViewById(R.id.itemTransaccion_precio);
 
-        tvCategoria.setText(transaccion.getCategoria());
-        tvNombre.setText(transaccion.getTitulo());
+        String categoria = transaccion.getCategoria();
+        String titulo = transaccion.getTitulo();
+        if(categoria==null || categoria.equals("")){
+            tvCategoria.setText("Sin categoria");
+        }
+        else {
+            tvCategoria.setText(categoria);
+        }
+        if(titulo.equals("")){
+            tvTitulo.setText("Sin titulo");
+        }
+        else {
+            tvTitulo.setText(titulo);
+        }
         if(!transaccion.getEtiqueta().equals("")) {
             tvIdentificacion.setText(" " + transaccion.getEtiqueta() + " ");
         }

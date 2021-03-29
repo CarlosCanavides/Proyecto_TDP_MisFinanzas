@@ -2,6 +2,7 @@ package com.example.proyecto_tdp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +21,9 @@ import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.verificador_estrategia.EstrategiaDeVerificacion;
-import com.example.proyecto_tdp.verificador_estrategia.VerificadorParaTransacciones;
+import com.example.proyecto_tdp.verificador_estrategia.EstrategiaSoloTransacciones;
 import com.example.proyecto_tdp.view_models.ViewModelCategoria;
-import com.example.proyecto_tdp.view_models.ViewModelPlantilla;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
-import com.example.proyecto_tdp.view_models.ViewModelTransaccionFija;
-
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -38,39 +36,31 @@ import java.util.Map;
 
 public class TransaccionesFragment extends Fragment {
 
+    private TextView tvGastoPorMes;
+    private TextView tvMesTransacciones;
+    private ImageButton btnMesAnterior;
+    private ImageButton btnMesSiguiente;
     private ExpandableListView expTransacciones;
     private List<String> fechas;
     private Map<String, List<Transaccion>> mapTransacciones;
     private Map<Transaccion, Integer> mapColorCategoria;
     private AdapterTransacciones adapter;
-    private ImageButton btnMesAnterior;
-    private ImageButton btnMesSiguiente;
-    private TextView tvMesTransacciones;
-    private TextView tvGastoPorMes;
-    private DateTimeFormatter formatFecha = DateTimeFormat.forPattern(Constantes.FORMATO_FECHA);
-    private DateTimeFormatter formatFechaMes =  DateTimeFormat.forPattern("MM/yyyy");
-    private EstrategiaDeVerificacion estrategiaDeVerificacion;
-
+    private ViewModelCategoria viewModelCategoria;
+    private ViewModelTransaccion viewModelTransaccion;
+    private LocalDate localDate;
     private String fechaInicio;
     private String fechaFin;
     private String mesActual;
-    private LocalDate localDate;
-
     private float gastoPorMes;
-    private NumberFormat nf = NumberFormat.getInstance(new Locale("es", "ES"));
-
-    private View vista;
-    private static final int NRO_PEDIDO_SET = 1827;
-
-    private ViewModelTransaccion viewModelTransaccion;
-    private ViewModelCategoria viewModelCategoria;
-    private ViewModelPlantilla viewModelPlantilla;
-    private ViewModelTransaccionFija viewModelTransaccionFija;
+    private EstrategiaDeVerificacion estrategiaDeVerificacion;
+    private DateTimeFormatter formatFechaMes =  DateTimeFormat.forPattern("MM/yyyy");
+    private DateTimeFormatter formatFecha = DateTimeFormat.forPattern(Constantes.FORMATO_FECHA);
+    private NumberFormat formatoNumero = NumberFormat.getInstance(new Locale("es", "ES"));
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        vista = inflater.inflate(R.layout.fragment_transacciones, container, false);
+        View vista = inflater.inflate(R.layout.fragment_transacciones, container, false);
         return vista;
     }
 
@@ -86,7 +76,6 @@ public class TransaccionesFragment extends Fragment {
         inicializarPeriodoDeTiempo();
         inicializarViewModel();
         listenerBotonesPrincipales();
-        estrategiaDeVerificacion = new VerificadorParaTransacciones(viewModelPlantilla,viewModelTransaccion,viewModelTransaccionFija);
     }
 
     private void inicializarListViewTransacciones(){
@@ -95,7 +84,6 @@ public class TransaccionesFragment extends Fragment {
         mapColorCategoria = new HashMap<>();
         adapter = new AdapterTransacciones(fechas,mapTransacciones,mapColorCategoria);
         expTransacciones.setAdapter(adapter);
-
         expTransacciones.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
@@ -107,15 +95,16 @@ public class TransaccionesFragment extends Fragment {
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Transaccion transaccion = mapTransacciones.get(fechas.get(groupPosition)).get(childPosition);
                 Intent intent = new Intent(getActivity(), SetTransaccionActivity.class);
-                intent.putExtra("id", transaccion.getId());
-                intent.putExtra("precio", String.format( "%.2f", Math.abs(transaccion.getPrecio())));
-                intent.putExtra("categoria", transaccion.getCategoria());
-                intent.putExtra("tipoT", transaccion.getTipoTransaccion());
-                intent.putExtra("titulo", transaccion.getTitulo());
-                intent.putExtra("etiqueta", transaccion.getEtiqueta());
-                intent.putExtra("fecha", transaccion.getFecha());
-                intent.putExtra("info", transaccion.getInfo());
-                startActivityForResult(intent, NRO_PEDIDO_SET);
+                intent.putExtra(Constantes.CAMPO_ID, transaccion.getId());
+                intent.putExtra(Constantes.CAMPO_ID_TF_PADRE, transaccion.getTransaccionFijaPadre());
+                intent.putExtra(Constantes.CAMPO_PRECIO, String.format( "%.2f", Math.abs(transaccion.getPrecio())));
+                intent.putExtra(Constantes.CAMPO_CATEGORIA, transaccion.getCategoria());
+                intent.putExtra(Constantes.CAMPO_TIPO, transaccion.getTipoTransaccion());
+                intent.putExtra(Constantes.CAMPO_TITULO, transaccion.getTitulo());
+                intent.putExtra(Constantes.CAMPO_ETIQUETA, transaccion.getEtiqueta());
+                intent.putExtra(Constantes.CAMPO_FECHA, formatFecha.print(transaccion.getFecha().getTime()));
+                intent.putExtra(Constantes.CAMPO_INFO, transaccion.getInfo());
+                startActivityForResult(intent, Constantes.PEDIDO_SET_TRANSACCION);
                 return true;
             }
         });
@@ -137,10 +126,9 @@ public class TransaccionesFragment extends Fragment {
     }
 
     private void inicializarViewModel(){
-        viewModelPlantilla = ViewModelProviders.of(getActivity()).get(ViewModelPlantilla.class);
-        viewModelTransaccion = ViewModelProviders.of(getActivity()).get(ViewModelTransaccion.class);
-        viewModelTransaccionFija = ViewModelProviders.of(getActivity()).get(ViewModelTransaccionFija.class);
         viewModelCategoria = ViewModelProviders.of(getActivity()).get(ViewModelCategoria.class);
+        viewModelTransaccion = ViewModelProviders.of(getActivity()).get(ViewModelTransaccion.class);
+        estrategiaDeVerificacion = new EstrategiaSoloTransacciones(viewModelTransaccion);
         viewModelTransaccion.getAllTransacciones().observe(getActivity(), new Observer<List<Transaccion>>() {
             @Override
             public void onChanged(List<Transaccion> transaccions) {
@@ -239,6 +227,8 @@ public class TransaccionesFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
+        if(requestCode==Constantes.PEDIDO_SET_TRANSACCION){
+            estrategiaDeVerificacion.verificar(requestCode,resultCode,data);
+        }
     }
 }

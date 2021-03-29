@@ -18,7 +18,6 @@ public class EstrategiaSoloTransaccionesFijas extends EstrategiaGeneral{
     protected ViewModelTransaccionFija viewModelTransaccionFija;
     protected DateTimeFormatter formatoDeFecha;
     protected LocalDate calendario;
-
     protected Date fechaInicio;
     protected Date fechaFinal;
     protected String frecuencia;

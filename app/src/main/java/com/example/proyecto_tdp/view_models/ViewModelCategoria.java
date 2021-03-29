@@ -24,6 +24,10 @@ public class ViewModelCategoria extends AndroidViewModel {
         return categorias;
     }
 
+    public List<Categoria> getCategorias(){
+        return categorias.getValue();
+    }
+
     public void eliminarObservador(Observer<List<Categoria>> observador){
         categorias.removeObserver(observador);
     }
@@ -47,5 +51,9 @@ public class ViewModelCategoria extends AndroidViewModel {
 
     public void eliminarCategoria(Categoria categoria){
         repositorioCategorias.eliminarCategoria(categoria);
+    }
+
+    public void eliminarCategoria(String idCategoria){
+        repositorioCategorias.eliminarCategoria(idCategoria);
     }
 }

@@ -25,7 +25,7 @@ public class Plantilla {
     @ColumnInfo(name = "precio")
     private float precio;
 
-    @ColumnInfo(name = "categoria", defaultValue = "NULL")
+    @ColumnInfo(name = "categoria")
     private String categoria;
 
     @ColumnInfo(name = "tipoTransaccion")
@@ -38,9 +38,7 @@ public class Plantilla {
         this.titulo = titulo;
         this.etiqueta = etiqueta;
         this.precio = precio;
-        if(categoria!=null && categoria!="") {
-            this.categoria = categoria;
-        }
+        this.categoria = categoria;
         this.tipoTransaccion = tipoTransaccion;
         this.info = info;
     }
