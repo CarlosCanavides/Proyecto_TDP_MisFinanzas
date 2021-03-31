@@ -17,7 +17,12 @@ public class DateConverter{
         if(fechaString != null) {
             fechaDate = formatFecha.parseDateTime(fechaString);
         }
-        return fechaDate.toDate();
+        if(fechaDate!=null){
+            return fechaDate.toDate();
+        }
+        else {
+            return null;
+        }
     }
 
     @TypeConverter

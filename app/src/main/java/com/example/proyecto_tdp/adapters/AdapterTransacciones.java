@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
+import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import java.util.List;
 import java.util.Map;
@@ -16,12 +18,12 @@ public class AdapterTransacciones extends BaseExpandableListAdapter {
 
     private List<String> fechas;
     private Map<String, List<Transaccion>> mapTransacciones;
-    private Map<Transaccion, Integer> mapColorCategoria;
+    private Map<Transaccion,Categoria> mapCategoriaDeTransaccion;
 
-    public AdapterTransacciones(List<String> fechas, Map<String, List<Transaccion>> mapTransacciones, Map<Transaccion, Integer> mapColorCategoria) {
+    public AdapterTransacciones(List<String> fechas, Map<String, List<Transaccion>> mapTransacciones, Map<Transaccion,Categoria> mapCategoriaDeTransaccion) {
         this.fechas = fechas;
         this.mapTransacciones = mapTransacciones;
-        this.mapColorCategoria = mapColorCategoria;
+        this.mapCategoriaDeTransaccion = mapCategoriaDeTransaccion;
     }
 
     @Override
@@ -105,13 +107,19 @@ public class AdapterTransacciones extends BaseExpandableListAdapter {
         TextView tvLetra = convertView.findViewById(R.id.idImagen);
         TextView tvPrecio = convertView.findViewById(R.id.itemTransaccion_precio);
 
-        String categoria = transaccion.getCategoria();
+        Categoria categoria = mapCategoriaDeTransaccion.get(transaccion);
         String titulo = transaccion.getTitulo();
-        if(categoria==null || categoria.equals("")){
-            tvCategoria.setText("Sin categoria");
+        if(categoria==null){
+            tvLetra.setText("S");
+            tvCategoria.setText(Constantes.SIN_CATEGORIA);
         }
         else {
-            tvCategoria.setText(categoria);
+            tvCategoria.setText(categoria.getNombreCategoria());
+            Drawable bg = tvLetra.getBackground();
+            bg.setColorFilter(categoria.getColorCategoria(), PorterDuff.Mode.SRC);
+            if(categoria.getNombreCategoria().length() > 0) {
+                tvLetra.setText(categoria.getNombreCategoria().charAt(0)+"");
+            }
         }
         if(titulo.equals("")){
             tvTitulo.setText("Sin titulo");
@@ -132,25 +140,13 @@ public class AdapterTransacciones extends BaseExpandableListAdapter {
             tvPrecio.setText("+ $ "+monto);
             tvPrecio.setTextColor(convertView.getResources().getColor(R.color.color_precios_positivos));
         }
-
-        if(transaccion.getCategoria()!=null && transaccion.getCategoria().length() > 0) {
-            tvLetra.setText(transaccion.getCategoria().charAt(0)+"");
-        }
-        else {
-            tvLetra.setText("S");
-        }
-        Integer colorCategoria = mapColorCategoria.get(transaccion);
-        if(colorCategoria!=null) {
-            Drawable bg = tvLetra.getBackground();
-            bg.setColorFilter(colorCategoria, PorterDuff.Mode.SRC);
-        }
         return convertView;
     }
 
     public void refrescar(){
         fechas.clear();
         mapTransacciones.clear();
-        mapColorCategoria.clear();
+        mapCategoriaDeTransaccion.clear();
         this.notifyDataSetChanged();
     }
 }

@@ -35,11 +35,11 @@
             app:xTabMode="scrollable"
             app:xTabIndicatorHeight="7dp"
             app:xTabIndicatorWidth="7dp"
-            app:xTabIndicatorColor="@color/color_tabIndicator_no_seleccionado"
+            app:xTabIndicatorColor="@color/colorPrimary"
             app:xTabTextColor="@color/color_tabIndicator_no_seleccionado"
             app:xTabSelectedTextColor="@color/color_tabIndicator_seleccionado"
             app:tabIndicator="@drawable/tab_indicator_circular"
-            android:background="@color/white"
+            android:background="@color/color_anti_flash"
             app:tabIndicatorGravity="bottom"
             app:xTabPaddingStart="4dp"
             app:xTabPaddingEnd="4dp"
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:background="@color/white"/>
+            android:background="@color/color_anti_flash"/>
 
     </LinearLayout>
 

@@ -28,22 +28,14 @@ public class RepositorioTransacciones {
     public List<Transaccion> getTransaccionesDesdeHasta(String desde, String hasta){
         try {
             return new ObtenerTransaccionesDesdeHastaAsyncTask(transaccionDao).execute(desde,hasta).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        }catch(ExecutionException|InterruptedException e){e.printStackTrace();}
         return null;
     }
 
     public LiveData<List<Transaccion>> getLiveTransaccionesDesdeHasta(String desde, String hasta){
         try {
             return new ObtenerLiveTransaccionesDesdeHastaAsyncTask(transaccionDao).execute(desde,hasta).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        }catch(ExecutionException|InterruptedException e){e.printStackTrace();}
         return null;
     }
 
@@ -59,11 +51,11 @@ public class RepositorioTransacciones {
         new EliminarTransaccionAsyncTask(transaccionDao).execute(transaccion);
     }
 
-    public void eliminarTransaccion(int id){
+    public void eliminarTransaccionPorID(String id){
         new EliminarTransaccionIDAsyncTask(transaccionDao).execute(id);
     }
 
-    public void eliminarTransaccionesHijas(int idPadre){
+    public void eliminarTransaccionesHijas(String idPadre){
         new EliminarTransaccionesHijasAsyncTask(transaccionDao).execute(idPadre);
     }
 
@@ -75,8 +67,8 @@ public class RepositorioTransacciones {
         }
 
         @Override
-        protected Void doInBackground(Transaccion... transaccions) {
-            transaccionDao.insertTransaccion(transaccions[0]);
+        protected Void doInBackground(Transaccion... transaccion) {
+            transaccionDao.insertTransaccion(transaccion[0]);
             return null;
         }
     }
@@ -89,8 +81,8 @@ public class RepositorioTransacciones {
         }
 
         @Override
-        protected Void doInBackground(Transaccion... transaccions) {
-            transaccionDao.upDateTransaccion(transaccions[0]);
+        protected Void doInBackground(Transaccion... transaccion) {
+            transaccionDao.upDateTransaccion(transaccion[0]);
             return null;
         }
     }
@@ -103,13 +95,13 @@ public class RepositorioTransacciones {
         }
 
         @Override
-        protected Void doInBackground(Transaccion... transaccions) {
-            transaccionDao.deleteTransaccion(transaccions[0]);
+        protected Void doInBackground(Transaccion... transaccion) {
+            transaccionDao.deleteTransaccion(transaccion[0]);
             return null;
         }
     }
 
-    public static class EliminarTransaccionIDAsyncTask extends AsyncTask<Integer,Void,Void> {
+    public static class EliminarTransaccionIDAsyncTask extends AsyncTask<String,Void,Void> {
         private TransaccionDao transaccionDao;
 
         private EliminarTransaccionIDAsyncTask(TransaccionDao transaccionDao){
@@ -117,13 +109,13 @@ public class RepositorioTransacciones {
         }
 
         @Override
-        protected Void doInBackground(Integer... id) {
+        protected Void doInBackground(String... id) {
             transaccionDao.eliminarTransaccion(id[0]);
             return null;
         }
     }
 
-    public static class EliminarTransaccionesHijasAsyncTask extends AsyncTask<Integer,Void,Void> {
+    public static class EliminarTransaccionesHijasAsyncTask extends AsyncTask<String,Void,Void> {
         private TransaccionDao transaccionDao;
 
         private EliminarTransaccionesHijasAsyncTask(TransaccionDao transaccionDao){
@@ -131,7 +123,7 @@ public class RepositorioTransacciones {
         }
 
         @Override
-        protected Void doInBackground(Integer... idPadre) {
+        protected Void doInBackground(String... idPadre) {
             transaccionDao.eliminarTransaccionesHijas(idPadre[0]);
             return null;
         }

@@ -24,16 +24,16 @@ public interface CategoriaDao {
     @Query("SELECT * FROM categoria WHERE nombreCategoria LIKE :nombreCategoria LIMIT 1")
     Categoria findByName(String nombreCategoria);
 
-    @Query("SELECT * FROM categoria WHERE categoriaSuperior LIKE NULL")
+    @Query("SELECT * FROM categoria WHERE categoriaSuperior is NULL")
     List<Categoria> getCategoriasSuperiores();
 
-    @Query("SELECT * FROM categoria WHERE categoriaSuperior LIKE :categoriaSuperior")
-    List<Categoria> getSubcategorias(String categoriaSuperior);
+    @Query("SELECT * FROM categoria WHERE categoriaSuperior LIKE :idCategoriaSuperior")
+    List<Categoria> getSubcategorias(String idCategoriaSuperior);
 
-    @Query("SELECT * FROM categoria WHERE nombreCategoria LIKE :nombreCategoria LIMIT 1")
-    Categoria getCategoria(String nombreCategoria);
+    @Query("SELECT * FROM categoria WHERE id LIKE :id LIMIT 1")
+    Categoria getCategoria(String id);
 
-    @Query("DELETE FROM categoria WHERE nombreCategoria LIKE :id")
+    @Query("DELETE FROM categoria WHERE id LIKE :id")
     void eliminarCategoria(String id);
 
     @Update

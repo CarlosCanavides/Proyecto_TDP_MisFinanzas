@@ -1,7 +1,6 @@
 package com.example.proyecto_tdp.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.adapters.AdapterResumen;
@@ -33,7 +31,7 @@ public class ResumenFragment extends Fragment {
     private List<String> meses;
     private Map<String, List<Transaccion>> mapTransacciones;
     private Map<String,HashMap<String, Float>> categoriaGastoPredominante;
-    private Map<String, Integer> mapColorCategoria;
+    private Map<String,Categoria> mapCategoriasPredominantes;
     private AdapterResumen adapter;
     private DateTimeFormatter formatoFecha = DateTimeFormat.forPattern("MM/yyyy");
     private ViewModelCategoria viewModelCategoria;
@@ -53,8 +51,8 @@ public class ResumenFragment extends Fragment {
         meses = new ArrayList<>();
         mapTransacciones = new HashMap<>();
         categoriaGastoPredominante = new HashMap<>();
-        mapColorCategoria = new HashMap<>();
-        adapter = new AdapterResumen(meses,mapTransacciones,categoriaGastoPredominante,mapColorCategoria);
+        mapCategoriasPredominantes = new HashMap<>();
+        adapter = new AdapterResumen(meses,mapTransacciones,categoriaGastoPredominante, mapCategoriasPredominantes);
         recyclerTransacciones.setAdapter(adapter);
     }
 
@@ -67,7 +65,7 @@ public class ResumenFragment extends Fragment {
                 meses.clear();
                 mapTransacciones.clear();
                 categoriaGastoPredominante.clear();
-                mapColorCategoria.clear();
+                mapCategoriasPredominantes.clear();
                 adapter.refresh();
                 for(Transaccion t : transaccions) {
                     actualizarListaTransaccionesMes(t);
@@ -100,17 +98,17 @@ public class ResumenFragment extends Fragment {
         String categoria = t.getCategoria();
         Categoria categoriaObjeto = null;
         if(categoria!=null){
-            categoriaObjeto = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
+            categoriaObjeto = viewModelCategoria.getCategoriaPorID(t.getCategoria());
         }
         if(categoria==null && t.getTipoTransaccion().equals(Constantes.GASTO)){
-            categoria = "Sin categoria";
+            categoria = Constantes.SIN_CATEGORIA;
         }
         if(categoria!=null && t.getTipoTransaccion().equals(Constantes.GASTO)) {
             Float aux = mapGastoPredominanteMes.get(categoria);
             if (aux == null) {
                 mapGastoPredominanteMes.put(categoria, Math.abs(t.getPrecio()));
                 if(categoriaObjeto!=null) {
-                    mapColorCategoria.put(categoria, categoriaObjeto.getColorCategoria());
+                    mapCategoriasPredominantes.put(categoria, categoriaObjeto);
                 }
             } else {
                 Float nuevoValor = aux + t.getPrecio();

@@ -32,13 +32,12 @@ public class ViewModelCategoria extends AndroidViewModel {
         categorias.removeObserver(observador);
     }
 
-    public List<Categoria> getSubcategorias(String categoriaSuperior){
-        List<Categoria> subcategorias = repositorioCategorias.getSubcategorias(categoriaSuperior);
-        return subcategorias;
+    public List<Categoria> getSubcategorias(String idCategoriaSuperior){
+        return repositorioCategorias.getSubcategorias(idCategoriaSuperior);
     }
 
-    public Categoria getCategoriaPorNombre(String categoria){
-        return repositorioCategorias.getCategoria(categoria);
+    public Categoria getCategoriaPorID(String idCategoria){
+        return repositorioCategorias.getCategoriaPorID(idCategoria);
     }
 
     public void insertarCategoria(Categoria categoria){
@@ -54,6 +53,6 @@ public class ViewModelCategoria extends AndroidViewModel {
     }
 
     public void eliminarCategoria(String idCategoria){
-        repositorioCategorias.eliminarCategoria(idCategoria);
+        repositorioCategorias.eliminarCategoriaPorID(idCategoria);
     }
 }

@@ -46,7 +46,7 @@ public class EstrategiaIngresoDeDatos implements EstrategiaDeVerificacion{
         if(estadoDelResultado==RESULT_OK){
             String titulo = datos.getStringExtra(Constantes.CAMPO_TITULO);
             String etiqueta = datos.getStringExtra(Constantes.CAMPO_ETIQUETA);
-            String categoria = datos.getStringExtra(Constantes.CAMPO_CATEGORIA);
+            String categoria = datos.getStringExtra(Constantes.CAMPO_ID_CATEGORIA);
             String tipo = datos.getStringExtra(Constantes.CAMPO_TIPO);
             String info = datos.getStringExtra(Constantes.CAMPO_INFO);
             float precio = datos.getFloatExtra(Constantes.CAMPO_PRECIO,0);
@@ -74,8 +74,16 @@ public class EstrategiaIngresoDeDatos implements EstrategiaDeVerificacion{
                     else {
                         fechaFinalDate = fechaDate;
                         frecuencia = Constantes.FRECUENCIA_SOLO_UNA_VEZ;
-                        nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaDate,info,frecuencia,fechaFinalDate,1,fechaDate);
-                        viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
+                        if(fechaDate.before(calendario.toDate()) || fechaDate.compareTo(calendario.toDate())==0){
+                            nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaDate,info,frecuencia,fechaFinalDate,0,null);
+                            viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
+                            Transaccion nuevaTransaccion = new Transaccion(titulo, etiqueta, precio, categoria, tipo, fechaDate, info, nuevaTransaccionFija.getId());
+                            viewModelTransaccion.insertarTransaccion(nuevaTransaccion);
+                        }
+                        else {
+                            nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaDate,info,frecuencia,fechaFinalDate,1,fechaDate);
+                            viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
+                        }
                     }
                 }
             }
@@ -112,13 +120,13 @@ public class EstrategiaIngresoDeDatos implements EstrategiaDeVerificacion{
             int cantidadDeEjecucionesRealizadas = 0;
             Date hoy = LocalDate.now().toDate();
             if(frecuencia.equals(Constantes.FRECUENCIA_UNA_VEZ_A_LA_SEMANA)){
-                if(fechaInicio.before(calendario.toDate())){
+                if(fechaInicio.before(hoy)){
                     calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
                     nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,0,fechaInicio);
                     while ((fechaFinal.after(calendario.toDate())||fechaFinal.compareTo(calendario.toDate())==0) && hoy.after(calendario.toDate())){
                         cantidadDeEjecucionesTotales++;
                         cantidadDeEjecucionesRealizadas++;
-                        nuevaTransaccion = new Transaccion(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,nuevaTransaccionFija.getId());
+                        nuevaTransaccion = new Transaccion(titulo,etiqueta,precio,categoria,tipo,calendario.toDate(),info,nuevaTransaccionFija.getId());
                         viewModelTransaccion.insertarTransaccion(nuevaTransaccion);
                         calendario = calendario.plusDays(7);
                     }
@@ -145,14 +153,13 @@ public class EstrategiaIngresoDeDatos implements EstrategiaDeVerificacion{
                 }
             }
             else if(frecuencia.equals(Constantes.FRECUENCIA_UNA_VEZ_AL_MES)){
-                if(fechaInicio.before(calendario.toDate())){
+                if(fechaInicio.before(hoy)){
                     calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
                     nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,0,fechaInicio);
-                    viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
                     while ((fechaFinal.after(calendario.toDate())||fechaFinal.compareTo(calendario.toDate())==0) && hoy.after(calendario.toDate())){
                         cantidadDeEjecucionesTotales++;
                         cantidadDeEjecucionesRealizadas++;
-                        nuevaTransaccion = new Transaccion(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,nuevaTransaccionFija.getId());
+                        nuevaTransaccion = new Transaccion(titulo,etiqueta,precio,categoria,tipo,calendario.toDate(),info,nuevaTransaccionFija.getId());
                         viewModelTransaccion.insertarTransaccion(nuevaTransaccion);
                         calendario = calendario.plusMonths(1);
                     }
@@ -166,7 +173,7 @@ public class EstrategiaIngresoDeDatos implements EstrategiaDeVerificacion{
                     }
                     nuevaTransaccionFija.setCantidadEjecucionesRestantes(cantidadDeEjecucionesTotales-cantidadDeEjecucionesRealizadas);
                     nuevaTransaccionFija.setFechaProximaEjecucion(proximaEjecucion);
-                    viewModelTransaccionFija.actualizarTransaccionFija(nuevaTransaccionFija);
+                    viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
                 }
                 else {
                     calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
@@ -179,14 +186,13 @@ public class EstrategiaIngresoDeDatos implements EstrategiaDeVerificacion{
                 }
             }
             else {
-                if(fechaInicio.before(calendario.toDate())){
+                if(fechaInicio.before(hoy)){
                     calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
                     nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,0,fechaInicio);
-                    viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
                     while ((fechaFinal.after(calendario.toDate())||fechaFinal.compareTo(calendario.toDate())==0) && hoy.after(calendario.toDate())){
                         cantidadDeEjecucionesTotales++;
                         cantidadDeEjecucionesRealizadas++;
-                        nuevaTransaccion = new Transaccion(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,nuevaTransaccionFija.getId());
+                        nuevaTransaccion = new Transaccion(titulo,etiqueta,precio,categoria,tipo,calendario.toDate(),info,nuevaTransaccionFija.getId());
                         viewModelTransaccion.insertarTransaccion(nuevaTransaccion);
                         calendario = calendario.plusYears(1);
                     }
@@ -200,7 +206,7 @@ public class EstrategiaIngresoDeDatos implements EstrategiaDeVerificacion{
                     }
                     nuevaTransaccionFija.setCantidadEjecucionesRestantes(cantidadDeEjecucionesTotales-cantidadDeEjecucionesRealizadas);
                     nuevaTransaccionFija.setFechaProximaEjecucion(proximaEjecucion);
-                    viewModelTransaccionFija.actualizarTransaccionFija(nuevaTransaccionFija);
+                    viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
                 }
                 else {
                     calendario = new LocalDate(fechaInicio);

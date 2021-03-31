@@ -30,7 +30,8 @@
             android:textSize="@dimen/text_transacciones_mes"
             android:textColor="@color/colorAccent"
             android:layout_marginEnd="@dimen/espacio_mediano"
-            android:fontFamily="@font/urwdin_bold"/>
+            android:fontFamily="@font/franklin_md"
+            android:textStyle="bold"/>
 
     </FrameLayout>
 

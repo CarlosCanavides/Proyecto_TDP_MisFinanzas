@@ -31,14 +31,14 @@ public class NuevaPlantillaActivity extends AppCompatActivity {
     protected Button btnAceptar;
     protected Button btnCancelar;
     protected NumberFormat formatoNumero;
-    protected CalculatorInputDialog calculatorInputDialog;
     protected AvisoDialog avisoDialog;
+    protected CalculatorInputDialog calculatorInputDialog;
+    protected String idCategoriaElegida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_plantilla);
-
         campoInfo = findViewById(R.id.set_plantilla_campo_info);
         campoTitulo = findViewById(R.id.set_plantilla_campo_titulo);
         campoPrecio = findViewById(R.id.set_plantilla_campo_precio);
@@ -49,7 +49,6 @@ public class NuevaPlantillaActivity extends AppCompatActivity {
         btnAceptar = findViewById(R.id.set_plantilla_btn_aceptar);
         btnCancelar = findViewById(R.id.set_plantilla_btn_eliminar);
         formatoNumero = NumberFormat.getInstance(new Locale("es", "ES"));
-
         inicializarValoresCampos();
         definirIngresarMonto();
         definirSeleccionarCategoria();
@@ -62,7 +61,7 @@ public class NuevaPlantillaActivity extends AppCompatActivity {
         campoTitulo.setText("");
         campoPrecio.setText("0,00");
         campoEtiqueta.setText("");
-        campoCategoria.setText("Seleccionar Categoria");
+        campoCategoria.setText(Constantes.SELECCIONAR_CATEGORIA);
         btnGasto.setChecked(true);
         btnIngreso.setChecked(false);
     }
@@ -103,13 +102,12 @@ public class NuevaPlantillaActivity extends AppCompatActivity {
                     String titulo = campoTitulo.getText().toString();
                     String precio = campoPrecio.getText().toString();
                     String etiqueta = campoEtiqueta.getText().toString();
-                    String categoria = campoCategoria.getText().toString();
                     String tipo;
                     if(btnGasto.isChecked()){
-                        tipo = btnGasto.getText().toString();
+                        tipo = Constantes.GASTO;
                     }
                     else {
-                        tipo = btnIngreso.getText().toString();
+                        tipo = Constantes.INGRESO;
                     }
 
                     Intent intent = new Intent();
@@ -117,8 +115,8 @@ public class NuevaPlantillaActivity extends AppCompatActivity {
                     intent.putExtra(Constantes.CAMPO_TIPO, tipo);
                     intent.putExtra(Constantes.CAMPO_TITULO, titulo);
                     intent.putExtra(Constantes.CAMPO_ETIQUETA, etiqueta);
-                    if(!categoria.equals("Seleccionar Categoria") && !categoria.equals("")){
-                        intent.putExtra(Constantes.CAMPO_CATEGORIA, categoria);
+                    if(idCategoriaElegida!=null){
+                        intent.putExtra(Constantes.CAMPO_ID_CATEGORIA,idCategoriaElegida);
                     }
                     try {
                         if(tipo.equals(Constantes.INGRESO)){
@@ -127,9 +125,7 @@ public class NuevaPlantillaActivity extends AppCompatActivity {
                         else {
                             intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue()*(-1));
                         }
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                    }catch(ParseException e){e.printStackTrace();}
                     setResult(RESULT_OK, intent);
                     finish();
                 }
@@ -174,8 +170,9 @@ public class NuevaPlantillaActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constantes.PEDIDO_SELECCIONAR_CATEGORIA) {
             if (resultCode == RESULT_OK) {
-                String idCategoriaElegida = data.getStringExtra("id_categoria_elegida");
-                campoCategoria.setText(idCategoriaElegida);
+                idCategoriaElegida = data.getStringExtra(Constantes.ID_CATEGORIA_ELEGIDA);
+                String nombreCategoriaElegida = data.getStringExtra(Constantes.NOMBRE_CATEGORIA_ELEGIDA);
+                campoCategoria.setText(nombreCategoriaElegida);
             }
         }
     }

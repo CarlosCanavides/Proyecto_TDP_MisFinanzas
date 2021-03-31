@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class SetTransaccionFijaActivity extends NuevaTransaccionFijaActivity {
 
     protected String precioAnterior;
-    protected String categoriaAnterior;
+    protected String idCategoriaAnterior;
     protected String tipoAnterior;
     protected String tituloAnterior;
     protected String etiquetaAnterior;
@@ -21,6 +21,7 @@ public class SetTransaccionFijaActivity extends NuevaTransaccionFijaActivity {
     protected String fechaInicioAnterior;
     protected String fechaFinalAnterior;
     protected String frecuenciaAnterior;
+    protected String idTransaccionFija;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,9 @@ public class SetTransaccionFijaActivity extends NuevaTransaccionFijaActivity {
     @Override
     protected void inicializarValoresCampos() {
         Intent intent = getIntent();
+        idTransaccionFija = intent.getStringExtra(Constantes.CAMPO_ID);
+        idCategoriaAnterior = intent.getStringExtra(Constantes.CAMPO_ID_CATEGORIA);
+        idCategoriaElegida = idCategoriaAnterior;
         tipoAnterior = intent.getStringExtra(Constantes.CAMPO_TIPO);
         infoAnterior = intent.getStringExtra(Constantes.CAMPO_INFO);
         precioAnterior = intent.getStringExtra(Constantes.CAMPO_PRECIO);
@@ -37,19 +41,19 @@ public class SetTransaccionFijaActivity extends NuevaTransaccionFijaActivity {
         etiquetaAnterior = intent.getStringExtra(Constantes.CAMPO_ETIQUETA);
         fechaInicioAnterior = intent.getStringExtra(Constantes.CAMPO_FECHA);
         fechaFinalAnterior = intent.getStringExtra(Constantes.CAMPO_FECHA_FINAL);
-        categoriaAnterior = intent.getStringExtra(Constantes.CAMPO_CATEGORIA);
         frecuenciaAnterior = intent.getStringExtra(Constantes.CAMPO_FRECUENCIA);
+        String nombreCategoriaAnterior = intent.getStringExtra(Constantes.CAMPO_NOMBRE_CATEGORIA);
         campoInfo.setText(infoAnterior);
         campoTitulo.setText(tituloAnterior);
         campoPrecio.setText(precioAnterior);
         campoFecha.setText(fechaInicioAnterior);
         campoEtiqueta.setText(etiquetaAnterior);
         campoFechaFinal.setText(fechaFinalAnterior);
-        if(categoriaAnterior==null){
-            campoCategoria.setText("Seleccionar Categoria");
+        if(idCategoriaAnterior==null){
+            campoCategoria.setText(Constantes.SELECCIONAR_CATEGORIA);
         }
         else {
-            campoCategoria.setText(categoriaAnterior);
+            campoCategoria.setText(nombreCategoriaAnterior);
         }
         if(tipoAnterior.equals(Constantes.GASTO)){
             btnGasto.setChecked(true);
@@ -98,49 +102,50 @@ public class SetTransaccionFijaActivity extends NuevaTransaccionFijaActivity {
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String info = campoInfo.getText().toString();
-                String titulo = campoTitulo.getText().toString();
-                String precio = campoPrecio.getText().toString();
-                String etiqueta = campoEtiqueta.getText().toString();
-                String categoria = campoCategoria.getText().toString();
-                String fechaInicio = campoFecha.getText().toString();
-                String fechaFinal = campoFechaFinal.getText().toString();
-                String frecuenciaSeleccionada = frecuencia.getSelectedItem().toString();
-                String tipo;
-                if(btnGasto.isChecked()){
-                    tipo = btnGasto.getText().toString();
-                }
-                else {
-                    tipo = btnIngreso.getText().toString();
-                }
-                int id = getIntent().getIntExtra(Constantes.CAMPO_ID,-1);
-                Intent intent = new Intent();
-                insertarDatosAnteriores(intent);
-                intent.putExtra(Constantes.CAMPO_INFO, info);
-                intent.putExtra(Constantes.CAMPO_TIPO, tipo);
-                intent.putExtra(Constantes.CAMPO_TITULO, titulo);
-                intent.putExtra(Constantes.CAMPO_ETIQUETA, etiqueta);
-                intent.putExtra(Constantes.CAMPO_FECHA, fechaInicio);
-                intent.putExtra(Constantes.CAMPO_FECHA_FINAL, fechaFinal);
-                intent.putExtra(Constantes.CAMPO_FRECUENCIA, frecuenciaSeleccionada);
-                if(!categoria.equals("Seleccionar Categoria") && !categoria.equals("")){
-                    intent.putExtra(Constantes.CAMPO_CATEGORIA, categoria);
-                }
-                try {
-                    if(tipo.equals(Constantes.INGRESO)){
-                        intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue());
+                if(verificarDatosPrincipales()){
+                    String info = campoInfo.getText().toString();
+                    String titulo = campoTitulo.getText().toString();
+                    String precio = campoPrecio.getText().toString();
+                    String etiqueta = campoEtiqueta.getText().toString();
+                    String fechaInicio = campoFecha.getText().toString();
+                    String fechaFinal = campoFechaFinal.getText().toString();
+                    String frecuenciaSeleccionada = frecuencia.getSelectedItem().toString();
+                    String tipo;
+                    if(btnGasto.isChecked()){
+                        tipo = btnGasto.getText().toString();
                     }
                     else {
-                        intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue()*(-1));
+                        tipo = btnIngreso.getText().toString();
                     }
-                } catch (ParseException e) {
-                    e.printStackTrace();
+
+                    Intent intent = new Intent();
+                    insertarDatosAnteriores(intent);
+                    intent.putExtra(Constantes.CAMPO_INFO, info);
+                    intent.putExtra(Constantes.CAMPO_TIPO, tipo);
+                    intent.putExtra(Constantes.CAMPO_TITULO, titulo);
+                    intent.putExtra(Constantes.CAMPO_ETIQUETA, etiqueta);
+                    intent.putExtra(Constantes.CAMPO_FECHA, fechaInicio);
+                    intent.putExtra(Constantes.CAMPO_FECHA_FINAL, fechaFinal);
+                    intent.putExtra(Constantes.CAMPO_FRECUENCIA, frecuenciaSeleccionada);
+                    if(idCategoriaElegida!=null){
+                        intent.putExtra(Constantes.CAMPO_ID_CATEGORIA,idCategoriaElegida);
+                    }
+                    if(idTransaccionFija!=null){
+                        intent.putExtra(Constantes.CAMPO_ID,idTransaccionFija);
+                    }
+                    try {
+                        if(tipo.equals(Constantes.INGRESO)){
+                            intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue());
+                        }
+                        else {
+                            intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue()*(-1));
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    setResult(RESULT_OK, intent);
+                    finish();
                 }
-                if(id!=-1){
-                    intent.putExtra(Constantes.CAMPO_ID,id);
-                }
-                setResult(RESULT_OK, intent);
-                finish();
             }
         });
 
@@ -162,8 +167,8 @@ public class SetTransaccionFijaActivity extends NuevaTransaccionFijaActivity {
         intent.putExtra(Constantes.CAMPO_FECHA_INICIO_ANTERIOR, fechaInicioAnterior);
         intent.putExtra(Constantes.CAMPO_FECHA_FINAL_ANTERIOR, fechaFinalAnterior);
         intent.putExtra(Constantes.CAMPO_FRECUENCIA_ANTERIOR, frecuenciaAnterior);
-        if(categoriaAnterior!=null){
-            intent.putExtra(Constantes.CAMPO_CATEGORIA_ANTERIOR, categoriaAnterior);
+        if(idCategoriaAnterior!=null){
+            intent.putExtra(Constantes.CAMPO_ID_CATEGORIA_ANTERIOR, idCategoriaAnterior);
         }
         try {
             if(tipoAnterior.equals(Constantes.INGRESO)){

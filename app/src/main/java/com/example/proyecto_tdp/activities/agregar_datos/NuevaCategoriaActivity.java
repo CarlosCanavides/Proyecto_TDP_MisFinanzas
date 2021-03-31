@@ -1,7 +1,8 @@
 package com.example.proyecto_tdp.activities.agregar_datos;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -39,12 +40,12 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
     protected AvisoDialog avisoDialog;
     protected List<Categoria> categoriasSuperiores;
     protected ViewModelCategoria viewModelCategoria;
+    protected String idCategoriaSuperior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_categoria);
-
         btnGasto = findViewById(R.id.radiobtn_categoria_tipo_gasto);
         btnIngreso = findViewById(R.id.radiobtn_categoria_tipo_ingreso);
         btnCancelar = findViewById(R.id.btn_cancelar_nueva_categoria);
@@ -54,7 +55,6 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
         campoCategoriaSup = findViewById(R.id.campo_categoria_superior);
         iconoCategoriaVP = findViewById(R.id.vista_previa_icono_categoria);
         nombreCategoriaVP = findViewById(R.id.vista_previa_categoria_nombre);
-
         inicializarValoresCampos();
         inicializarViewModel();
         listenerBotonesPrincipales();
@@ -67,7 +67,7 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
         colorActual = Constantes.COLOR_CATEGORIA_POR_DEFECTO;
         campoColor.setText(colorActual+"");
         campoNombre.setText("");
-        campoCategoriaSup.setText("Seleccionar categoria");
+        campoCategoriaSup.setText(Constantes.SELECCIONAR_CATEGORIA);
         btnGasto.setChecked(true);
         btnIngreso.setChecked(false);
         iconoCategoriaVP.setText("");
@@ -76,16 +76,21 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
 
     protected void inicializarViewModel(){
         categoriasSuperiores = new ArrayList<>();
-        viewModelCategoria =  ViewModelProviders.of(this).get(ViewModelCategoria.class);
-        List<Categoria>  todasLasCategorias = viewModelCategoria.getCategorias();
-        if(todasLasCategorias!=null){
-            for(Categoria categoria : todasLasCategorias) {
-                if(categoria.getCategoriaSuperior()==null) {
-                    categoriasSuperiores.add(categoria);
+        viewModelCategoria =  new ViewModelProvider(this).get(ViewModelCategoria.class);
+        viewModelCategoria.getAllCategorias().observe(this,new Observer<List<Categoria>>() {
+            @Override
+            public void onChanged(List<Categoria> todasLasCategorias) {
+                categoriasSuperiores.clear();
+                if(todasLasCategorias!=null){
+                    for(Categoria categoria : todasLasCategorias) {
+                        if(categoria.getCategoriaSuperior()==null) {
+                            categoriasSuperiores.add(categoria);
+                        }
+                    }
+                    seleccionCategoriaDialog.setCategoriasSuperiores(categoriasSuperiores);
                 }
             }
-            seleccionCategoriaDialog.setCategoriasSuperiores(todasLasCategorias);
-        }
+        });
     }
 
     protected void listenerBotonesPrincipales(){
@@ -93,11 +98,9 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(verificarDatosPrincipales()){
-                    String id = getIntent().getStringExtra(Constantes.CAMPO_ID);
                     Intent intent = new Intent();
                     intent.putExtra(Constantes.CAMPO_COLOR_CATEGORIA,colorActual);
                     intent.putExtra(Constantes.CAMPO_NOMBRE_CATEGORIA,campoNombre.getText().toString());
-                    intent.putExtra(Constantes.CAMPO_CATEGORIA_SUPERIOR,campoCategoriaSup.getText().toString());
                     String tipo;
                     if(btnGasto.isChecked()){
                         tipo = Constantes.GASTO;
@@ -106,8 +109,8 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
                         tipo = Constantes.INGRESO;
                     }
                     intent.putExtra(Constantes.CAMPO_TIPO_CATEGORIA,tipo);
-                    if(id!=null){
-                        intent.putExtra(Constantes.CAMPO_ID,id);
+                    if(idCategoriaSuperior!=null){
+                        intent.putExtra(Constantes.CAMPO_ID_CATEGORIA_SUPERIOR,idCategoriaSuperior);
                     }
                     setResult(RESULT_OK, intent);
                     finish();
@@ -151,8 +154,9 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
         seleccionCategoriaDialog = new SeleccionCategoriaDialog(categoriasSuperiores,
                                    new SeleccionCategoriaDialog.SeleccionCategoriaListener(){
                                    @Override
-                                   public void onSelectCategoria(String idCategoriaSeleccionada){
-                                       campoCategoriaSup.setText(idCategoriaSeleccionada);
+                                   public void onSelectCategoria(String idCategoriaSeleccionada, String nombreCategoriaSeleccionada){
+                                       idCategoriaSuperior = idCategoriaSeleccionada;
+                                       campoCategoriaSup.setText(nombreCategoriaSeleccionada);
                                    }
         });
         campoCategoriaSup.setOnClickListener(new View.OnClickListener() {

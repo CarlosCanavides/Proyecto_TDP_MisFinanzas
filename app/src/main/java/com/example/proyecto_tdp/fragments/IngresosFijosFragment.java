@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
@@ -19,7 +20,10 @@ import com.example.proyecto_tdp.activities.modificar_datos.SetTransaccionFijaAct
 import com.example.proyecto_tdp.adapters.AdapterTransaccionesFijas;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.TransaccionFija;
+import com.example.proyecto_tdp.verificador_estrategia.EstrategiaDeVerificacion;
+import com.example.proyecto_tdp.verificador_estrategia.EstrategiaSoloTransaccionesFijas;
 import com.example.proyecto_tdp.view_models.ViewModelCategoria;
+import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccionFija;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -32,13 +36,14 @@ public class IngresosFijosFragment extends Fragment {
 
     private ExpandableListView ingresos;
     private List<String> frecuencias;
-    private Map<TransaccionFija, Integer> mapColorCategoria;
+    private Map<String,Categoria> mapCategorias;
     private Map<String, List<TransaccionFija>> mapTransaccionesFijas;
     private AdapterTransaccionesFijas adapterTransaccionesFijas;
     private DateTimeFormatter formatoFecha;
     private ViewModelCategoria viewModelCategoria;
     private ViewModelTransaccionFija viewModelTransaccionFija;
     private Observer<List<TransaccionFija>> observer;
+    private EstrategiaDeVerificacion estrategiaDeVerificacion;
 
     @Nullable
     @Override
@@ -51,21 +56,15 @@ public class IngresosFijosFragment extends Fragment {
         return vista;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        viewModelTransaccionFija.removeObserver(observer);
-    }
-
     private void inicializarListView(){
         frecuencias = new ArrayList<>();
         frecuencias.add(Constantes.FRECUENCIA_SOLO_UNA_VEZ);
         frecuencias.add(Constantes.FRECUENCIA_UNA_VEZ_A_LA_SEMANA);
         frecuencias.add(Constantes.FRECUENCIA_UNA_VEZ_AL_MES);
         frecuencias.add(Constantes.FRECUENCIA_UNA_VEZ_AL_ANIO);
-        mapColorCategoria = new HashMap<>();
+        mapCategorias = new HashMap<>();
         mapTransaccionesFijas = new HashMap<>();
-        adapterTransaccionesFijas = new AdapterTransaccionesFijas(frecuencias,mapTransaccionesFijas);
+        adapterTransaccionesFijas = new AdapterTransaccionesFijas(frecuencias,mapTransaccionesFijas,mapCategorias);
         ingresos.setAdapter(adapterTransaccionesFijas);
 
         ingresos.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -85,19 +84,21 @@ public class IngresosFijosFragment extends Fragment {
                 intent.putExtra(Constantes.CAMPO_TITULO, transaccionFija.getTitulo());
                 intent.putExtra(Constantes.CAMPO_PRECIO, String.format( "%.2f", Math.abs(transaccionFija.getPrecio())));
                 intent.putExtra(Constantes.CAMPO_ETIQUETA, transaccionFija.getEtiqueta());
-                intent.putExtra(Constantes.CAMPO_CATEGORIA, transaccionFija.getCategoria());
+                intent.putExtra(Constantes.CAMPO_ID_CATEGORIA, transaccionFija.getCategoria());
                 intent.putExtra(Constantes.CAMPO_FECHA, formatoFecha.print(transaccionFija.getFecha().getTime()));
                 intent.putExtra(Constantes.CAMPO_FECHA_FINAL, formatoFecha.print(transaccionFija.getFechaFinal().getTime()));
                 intent.putExtra(Constantes.CAMPO_FRECUENCIA, transaccionFija.getFrecuencia());
-                startActivityForResult(intent, Constantes.PEDIDO_SET_TRANSACCION_FIJA);
+                getActivity().startActivityForResult(intent, Constantes.PEDIDO_SET_TRANSACCION_FIJA);
                 return true;
             }
         });
     }
 
     private void inicializarViewModels(){
+        ViewModelTransaccion viewModelTransaccion = new ViewModelProvider(this).get(ViewModelTransaccion.class);
         viewModelTransaccionFija = ViewModelProviders.of(getActivity()).get(ViewModelTransaccionFija.class);
         viewModelCategoria = ViewModelProviders.of(getActivity()).get(ViewModelCategoria.class);
+        estrategiaDeVerificacion = new EstrategiaSoloTransaccionesFijas(viewModelTransaccion,viewModelTransaccionFija);
         recopilarDatos();
     }
 
@@ -106,7 +107,7 @@ public class IngresosFijosFragment extends Fragment {
         observer = new Observer<List<TransaccionFija>>() {
             @Override
             public void onChanged(List<TransaccionFija> transaccions) {
-                mapColorCategoria.clear();
+                mapCategorias.clear();
                 mapTransaccionesFijas.clear();
                 adapterTransaccionesFijas.refresh();
                 adapterTransaccionesFijas.notifyDataSetChanged();
@@ -115,14 +116,11 @@ public class IngresosFijosFragment extends Fragment {
                 for(TransaccionFija t : transaccions) {
                     if (t.getTipoTransaccion().equals(Constantes.INGRESO)) {
                         Categoria categoria;
-                        String nombreCategoria = t.getCategoria();
-                        if(nombreCategoria==null){
-                            categoria = new Categoria(Constantes.SIN_CATEGORIA,null, Color.parseColor("#FF5722"),Constantes.GASTO);
+                        String idCategoria = t.getCategoria();
+                        if(idCategoria!=null){
+                            categoria = viewModelCategoria.getCategoriaPorID(idCategoria);
+                            mapCategorias.put(idCategoria,categoria);
                         }
-                        else {
-                            categoria = viewModelCategoria.getCategoriaPorNombre(nombreCategoria);
-                        }
-                        mapColorCategoria.put(t, categoria.getColorCategoria());
                         frecuencia = t.getFrecuencia();
                         transaccionFijas = mapTransaccionesFijas.get(frecuencia);
                         if (transaccionFijas == null) {
@@ -143,5 +141,10 @@ public class IngresosFijosFragment extends Fragment {
         if (t != null) {
             t.observe(getActivity(), observer);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
     }
 }

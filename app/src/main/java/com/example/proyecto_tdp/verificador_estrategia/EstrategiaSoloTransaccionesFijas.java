@@ -1,6 +1,7 @@
 package com.example.proyecto_tdp.verificador_estrategia;
 
 import android.content.Intent;
+import android.util.Log;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.base_de_datos.entidades.TransaccionFija;
@@ -56,7 +57,7 @@ public class EstrategiaSoloTransaccionesFijas extends EstrategiaGeneral{
         String fechaF = datos.getStringExtra(Constantes.CAMPO_FECHA_FINAL);
         fechaFinal = formatoDeFecha.parseDateTime(fechaF).toDate();
         frecuencia = datos.getStringExtra(Constantes.CAMPO_FRECUENCIA);
-        id = datos.getIntExtra(Constantes.CAMPO_ID,-1);
+        id = datos.getStringExtra(Constantes.CAMPO_ID);
     }
 
     protected boolean hayModificacion(Intent datos){
@@ -70,7 +71,7 @@ public class EstrategiaSoloTransaccionesFijas extends EstrategiaGeneral{
         String etiquetaAnterior = datos.getStringExtra(Constantes.CAMPO_ETIQUETA_ANTERIOR);
         String fechaInicioAnterior = datos.getStringExtra(Constantes.CAMPO_FECHA_INICIO_ANTERIOR);
         String fechaFinalAnterior = datos.getStringExtra(Constantes.CAMPO_FECHA_FINAL_ANTERIOR);
-        String categoriaAnterior = datos.getStringExtra(Constantes.CAMPO_CATEGORIA_ANTERIOR);
+        String categoriaAnterior = datos.getStringExtra(Constantes.CAMPO_ID_CATEGORIA_ANTERIOR);
         String frecuenciaAnterior = datos.getStringExtra(Constantes.CAMPO_FRECUENCIA_ANTERIOR);
         if(tipoAnterior.equals(tipo)&&infoAnterior.equals(info)&&precio==precioAnterior&&tituloAnterior.equals(titulo)
             &&etiquetaAnterior.equals(etiqueta)&&fechaInicioAnterior.equals(fechaInicioActual)
@@ -103,7 +104,6 @@ public class EstrategiaSoloTransaccionesFijas extends EstrategiaGeneral{
     }
 
     private void setTransaccionFija(Intent datos){
-        TransaccionFija transaccionFijaModificada;
         obtenerDatosPrincipales(datos);
         if(hayModificacion(datos)){
             eliminarTransaccionFija(datos);
@@ -112,9 +112,10 @@ public class EstrategiaSoloTransaccionesFijas extends EstrategiaGeneral{
     }
 
     private void eliminarTransaccionFija(Intent datos){
-        id = datos.getIntExtra(Constantes.CAMPO_ID,-1);
-        if(id!=-1) {
-            viewModelTransaccion.eliminarTransaccionesHijas(id);
+        id = datos.getStringExtra(Constantes.CAMPO_ID);
+        if(id!=null) {
+            //Log.e("AQUII estoy en ETF"," aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+            //viewModelTransaccion.eliminarTransaccionesHijas(id);
             viewModelTransaccionFija.eliminarTransaccionFija(id);
         }
     }
@@ -129,6 +130,7 @@ public class EstrategiaSoloTransaccionesFijas extends EstrategiaGeneral{
         else {
             nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaInicio,0,null);
             viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
+            Log.e("AQUII en insertar TFUM","IDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"+nuevaTransaccionFija.getId()+"");
             nuevaTransaccion = new Transaccion(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,nuevaTransaccionFija.getId());
             viewModelTransaccion.insertarTransaccion(nuevaTransaccion);
         }
@@ -182,7 +184,8 @@ public class EstrategiaSoloTransaccionesFijas extends EstrategiaGeneral{
         if(fechaInicio.before(hoy)){
             calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
             nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,0,fechaInicio);
-            while (fechaFinal.after(calendario.toDate()) && hoy.after(calendario.toDate())){
+            Log.e("AQUII en insertar TFUM","IDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"+nuevaTransaccionFija.getId()+"");
+            while ((fechaFinal.after(calendario.toDate())||fechaFinal.compareTo(calendario.toDate())==0) && hoy.after(calendario.toDate())){
                 cantidadDeEjecucionesTotales++;
                 cantidadDeEjecucionesRealizadas++;
                 nuevaTransaccion = new Transaccion(titulo,etiqueta,precio,categoria,tipo,calendario.toDate(),info,nuevaTransaccionFija.getId());
@@ -193,7 +196,7 @@ public class EstrategiaSoloTransaccionesFijas extends EstrategiaGeneral{
             if(fechaFinal.after(calendario.toDate())){
                 proximaEjecucion = calendario.toDate();
             }
-            while (fechaFinal.after(calendario.toDate())){
+            while (fechaFinal.after(calendario.toDate()) || fechaFinal.compareTo(calendario.toDate())==0){
                 cantidadDeEjecucionesTotales++;
                 calendario = calendario.plusMonths(1);
             }
@@ -203,7 +206,7 @@ public class EstrategiaSoloTransaccionesFijas extends EstrategiaGeneral{
         }
         else {
             calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
-            while (fechaFinal.after(calendario.toDate())){
+            while (fechaFinal.after(calendario.toDate()) || fechaFinal.compareTo(calendario.toDate())==0){
                 cantidadDeEjecucionesTotales++;
                 calendario = calendario.plusMonths(1);
             }

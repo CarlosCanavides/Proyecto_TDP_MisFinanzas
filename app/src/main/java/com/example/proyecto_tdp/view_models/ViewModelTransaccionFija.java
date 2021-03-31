@@ -52,7 +52,7 @@ public class ViewModelTransaccionFija extends AndroidViewModel {
         repositorioTransaccionesFijas.eliminarTransaccionFija(transaccion);
     }
 
-    public void eliminarTransaccionFija(int id){
-        repositorioTransaccionesFijas.eliminarTransaccionFija(id);
+    public void eliminarTransaccionFija(String id){
+        repositorioTransaccionesFijas.eliminarTransaccionFijaPorID(id);
     }
 }

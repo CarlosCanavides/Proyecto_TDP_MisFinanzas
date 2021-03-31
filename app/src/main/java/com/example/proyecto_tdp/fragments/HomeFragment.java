@@ -3,7 +3,6 @@ package com.example.proyecto_tdp.fragments;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,8 +76,8 @@ public class HomeFragment extends Fragment{
         barraProgresoHorizontal = view.findViewById(R.id.barra_progreso_horizontal);
         tvBalance = view.findViewById(R.id.tv_balance);
         tvIngresoTotal = view.findViewById(R.id.tv_ingreso_total);
-        tvGastoPromedio = view.findViewById(R.id.tv_ingreso_promedio);
-        tvIngresoPromedio = view.findViewById(R.id.tv_gasto_promedio);
+        tvGastoPromedio = view.findViewById(R.id.tv_gasto_promedio);
+        tvIngresoPromedio = view.findViewById(R.id.tv_ingreso_promedio);
         tvCantidadPlantillas = view.findViewById(R.id.tv_cantidad_plantillas);
         tvCantidadGastosFijos = view.findViewById(R.id.tv_cantidad_gastos_fijos);
         tvCantidadIngresosFijos = view.findViewById(R.id.tv_cantidad_ingresos_fijos);
@@ -165,19 +164,21 @@ public class HomeFragment extends Fragment{
                         cantidadTransaccionesGasto++;
                     }
                 }
-                tvIngresoTotal.setText("$"+ingresoTotal);
+                tvIngresoTotal.setText("$"+String.format( "%.2f",ingresoTotal));
                 float balance = ingresoTotal+gastoTotal;
                 if(balance<0){
-                    tvBalance.setText("- $ "+Math.abs(balance));
+                    tvBalance.setText("- $ "+String.format( "%.2f",Math.abs(balance)));
                 }
                 else {
-                    tvBalance.setText("$ "+balance);
+                    tvBalance.setText("$ "+String.format( "%.2f",balance));
                 }
                 actualizarBarraDeProgreso();
                 Log.e("AQUII estoy enel change",""+transaccions.size());
-                if(cantidadTransaccionesGasto!=0 && cantidadTransaccionesIngreso!=0) {
-                    tvIngresoPromedio.setText("$ " + ingresoTotal / cantidadTransaccionesIngreso);
-                    tvGastoPromedio.setText("$ " + Math.abs(gastoTotal) / cantidadTransaccionesGasto);
+                if(cantidadTransaccionesGasto>0) {
+                    tvGastoPromedio.setText("$ "+String.format( "%.2f",Math.abs(gastoTotal)/cantidadTransaccionesGasto));
+                }
+                if(cantidadTransaccionesIngreso>0){
+                    tvIngresoPromedio.setText("$ "+String.format( "%.2f",ingresoTotal/cantidadTransaccionesIngreso));
                 }
                 int cantidadTotalTransacciones = cantidadTransaccionesGasto+cantidadTransaccionesIngreso;
                 if(cantidadTransaccionesGasto==0){
@@ -187,6 +188,7 @@ public class HomeFragment extends Fragment{
                 else {
                     if (cantidadTransaccionesIngreso == 0) {
                         barraProgresoHorizontal.setProgress(0);
+                        barraProgresoHorizontal.refreshDrawableState();
                         tvPorcentajeTransaccionesGasto.setText("100 %");
                     }
                     else {

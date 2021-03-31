@@ -39,6 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nombre"
+                android:textColor="@color/secondary_text"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/espacio_mediano"
                 android:fontFamily="@font/urwdin_md"/>

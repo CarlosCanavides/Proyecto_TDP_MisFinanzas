@@ -27,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:textColor="@color/primary_text"
             android:fontFamily="@font/urwdin_md"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/espacio_mediano"/>
@@ -76,6 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:textColor="@color/primary_text"
             android:fontFamily="@font/urwdin_md"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/espacio_mediano"

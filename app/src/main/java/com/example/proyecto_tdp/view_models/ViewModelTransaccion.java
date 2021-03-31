@@ -48,11 +48,11 @@ public class ViewModelTransaccion extends AndroidViewModel {
         repositorioTransacciones.eliminarTransaccion(transaccion);
     }
 
-    public void eliminarTransaccion(int id){
-        repositorioTransacciones.eliminarTransaccion(id);
+    public void eliminarTransaccion(String id){
+        repositorioTransacciones.eliminarTransaccionPorID(id);
     }
 
-    public void eliminarTransaccionesHijas(int idPadre){
+    public void eliminarTransaccionesHijas(String idPadre){
         repositorioTransacciones.eliminarTransaccionesHijas(idPadre);
     }
 }

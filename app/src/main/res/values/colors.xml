@@ -60,8 +60,6 @@
     <color name="transparent">#00ffffff</color>
     <color name="link_text">#1EA1F2</color>
 
-    <color name="green_ingreso_promedio">#DFEDE8</color>
-    <color name="red_gasto_promedio">#F1E3E3</color>
     <color name="text_gasto_ingreso_promedio">#BDBDBD</color>
     <color name="tab_indicator_color">#819EBF</color>
 
@@ -75,13 +73,25 @@
     <color name="color_numeros_naranja">#EA7C77</color>
     <color name="color_precios_positivos">#0EB87A</color>
     <color name="color_precios_negativos">#E12E48</color>
+    <color name="color_precio_balance">#1754CD</color>
     <color name="color_background_spinner">#D5DEEF</color>
     <color name="color_background_tablayout_tf">#D5DEEF</color>
     <color name="color_encabezado_fecha_transacciones_start">#D5DEEF</color>
     <color name="color_encabezado_fecha_transacciones_end">#F2F3F3</color>
-    <color name="color_transacciones_programadas">#F9FAF9</color>
+    <color name="color_transacciones_programadas_no_seleccionada">#F9FAF9</color>
+    <color name="color_transacciones_programadas_seleccionada">#F2F3F3</color>
     <color name="color_fondo_transacciones">#F9FAF9</color>
+    <color name="color_resumen_transacciones">#FFFFFF</color>
 
     <color name="color_barra_de_navegacion">#F8F9FB</color>
     <color name="color_botones_de_decision">#F8F9FB</color>
+    <color name="color_tab_informe_mes">#F8F9FB</color>
+
+    <color name="color_icon_flecha_arriba">#17BF63</color>
+    <color name="color_icon_flecha_abajo">#E02835</color>
+    <color name="green_ingreso_promedio">#DFEDE8</color>
+    <color name="red_gasto_promedio">#F1E3E3</color>
+
+    <color name="color_componentes_navdrawer">#657188</color>
+    <color name="color_encabezado_navdrawer">#FF5722</color>
 </resources>

@@ -28,6 +28,7 @@
                     android:layout_height="wrap_content"
                     android:text="$"
                     android:textSize="39sp"
+                    android:textColor="@color/primary_text"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="@dimen/espacio_mediano"
                     android:fontFamily="@font/franklin_md"/>
@@ -38,6 +39,7 @@
                     android:layout_height="wrap_content"
                     android:text="10.0"
                     android:textSize="40sp"
+                    android:textColor="@color/primary_text"
                     android:textAlignment="center"
                     android:fontFamily="@font/franklin_md"/>
 
@@ -73,6 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_campos_transaccion"
+                android:textColor="@color/primary_text"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/espacio_mediano"
                 android:fontFamily="@font/urwdin_md"/>
@@ -110,6 +113,7 @@
                         android:layout_height="wrap_content"
                         android:text="Gasto"
                         android:textSize="@dimen/text_campos_transaccion"
+                        android:textColor="@color/primary_text"
                         android:checked="true"
                         android:buttonTint="@color/color_precios_negativos"
                         android:layout_marginEnd="@dimen/espacio_big"
@@ -121,6 +125,7 @@
                         android:layout_height="wrap_content"
                         android:text="Ingreso"
                         android:textSize="@dimen/text_campos_transaccion"
+                        android:textColor="@color/primary_text"
                         android:buttonTint="@color/color_precios_positivos"
                         android:fontFamily="@font/urwdin_md"/>
 
@@ -148,6 +153,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_campos_transaccion"
+                android:textColor="@color/primary_text"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/espacio_mediano"
                 android:fontFamily="@font/urwdin_md"/>
@@ -172,6 +178,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_campos_transaccion"
+                android:textColor="@color/primary_text"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/espacio_mediano"
                 android:fontFamily="@font/urwdin_md"/>
@@ -196,9 +203,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_campos_transaccion"
+                android:textColor="@color/primary_text"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/espacio_mediano"
-                android:background="@drawable/background_campo_transaccion"
                 android:fontFamily="@font/urwdin_md"/>
 
         </LinearLayout>
@@ -221,6 +228,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_campos_transaccion"
+                android:textColor="@color/primary_text"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/espacio_mediano"
                 android:fontFamily="@font/urwdin_md"/>

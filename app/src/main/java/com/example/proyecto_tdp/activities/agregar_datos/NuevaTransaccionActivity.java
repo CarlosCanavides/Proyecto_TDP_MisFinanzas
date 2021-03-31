@@ -18,46 +18,45 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
-import com.example.proyecto_tdp.activities.PlantillasActivity;
 import com.example.proyecto_tdp.activities.SeleccionarCategoriaActivity;
 import com.example.proyecto_tdp.activities.SeleccionarPlantillaActivity;
 import com.example.proyecto_tdp.views.AvisoDialog;
 import com.example.proyecto_tdp.views.CalculatorInputDialog;
 import com.example.proyecto_tdp.views.CalendarioDialog;
-import java.text.DateFormat;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 public class NuevaTransaccionActivity extends AppCompatActivity{
 
-    private TextView campoPrecio;
-    private TextView campoCategoria;
-    private TextView campoFecha;
-    private EditText campoTitulo;
-    private EditText campoEtiqueta;
-    private EditText campoInfo;
-    private RadioButton btnGasto;
-    private RadioButton btnIngreso;
-    private CheckBox btnPlantilla;
-    private CheckBox btnTransaccionFija;
-    private Spinner listaFrecuencias;
-    private ArrayAdapter<CharSequence> adapterFrecuencia;
-    private TextView campoFechaFinal;
-    private LinearLayout panelFechaFinal;
-    private Button btnAceptar;
-    private Button btnCancelar;
-
+    protected TextView campoFecha;
+    protected TextView campoPrecio;
+    protected TextView campoCategoria;
+    protected TextView campoFechaFinal;
+    protected EditText campoTitulo;
+    protected EditText campoEtiqueta;
+    protected EditText campoInfo;
+    protected Button btnAceptar;
+    protected Button btnCancelar;
+    protected RadioButton btnGasto;
+    protected RadioButton btnIngreso;
+    protected CheckBox btnPlantilla;
+    protected CheckBox btnTransaccionFija;
+    protected Spinner listaFrecuencias;
+    protected ArrayAdapter<CharSequence> adapterFrecuencia;
+    protected LinearLayout panelFechaFinal;
     protected AvisoDialog avisoDialog;
-    private CalendarioDialog calendarioDialog;
-    private CalendarioDialog calendarioFechaFinalDialog;
-    private CalculatorInputDialog calculatorInputDialog;
-    private DateFormat formatFecha = new SimpleDateFormat(Constantes.FORMATO_FECHA);
+    protected CalendarioDialog calendarioDialog;
+    protected CalendarioDialog calendarioFechaFinalDialog;
+    protected CalculatorInputDialog calculatorInputDialog;
+    protected DateTimeFormatter formatoFecha;
     protected NumberFormat formatoNumero;
+    protected String idCategoriaElegida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +80,8 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
         panelFechaFinal.setVisibility(View.GONE);
         listaFrecuencias.setVisibility(View.GONE);
         btnGasto.setChecked(true);
+        formatoFecha = DateTimeFormat.forPattern(Constantes.FORMATO_FECHA);
         formatoNumero = NumberFormat.getInstance(new Locale("es", "ES"));
-
         definirIngresarMonto();
         definirSeleccionarFecha();
         definirSeleccionarCategoria();
@@ -104,7 +103,7 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    private void definirIngresarMonto(){
+    protected void definirIngresarMonto(){
         calculatorInputDialog = new CalculatorInputDialog(this);
         calculatorInputDialog.setPositiveButton(new CalculatorInputDialog.OnInputDoubleListener() {
             @Override
@@ -121,12 +120,12 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
         });
     }
 
-    private void definirSeleccionarFecha(){
+    protected void definirSeleccionarFecha(){
         calendarioDialog = new CalendarioDialog();
         calendarioDialog.setListener(new CalendarioDialog.OnSelectDateListener() {
             @Override
             public void onSelectDate(Date date) throws Exception {
-                campoFecha.setText(formatFecha.format(date));
+                campoFecha.setText(formatoFecha.print(date.getTime()));
             }
         });
         campoFecha.setOnClickListener(new View.OnClickListener() {
@@ -135,11 +134,11 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
                 calendarioDialog.show(getSupportFragmentManager(), getClass().getSimpleName());
             }
         });
-        campoFecha.setText(formatFecha.format(Calendar.getInstance().getTime()));
+        campoFecha.setText(formatoFecha.print(LocalDate.now()));
     }
 
-    private void definirSeleccionarCategoria(){
-        campoCategoria.setText("Seleccionar categoria");
+    protected void definirSeleccionarCategoria(){
+        campoCategoria.setText(Constantes.SELECCIONAR_CATEGORIA);
         campoCategoria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,7 +148,7 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
         });
     }
 
-    private void definirOpcionesAvanzadas(){
+    protected void definirOpcionesAvanzadas(){
         ArrayList<String> opcionesFrecuencia = new ArrayList<>();
         opcionesFrecuencia.add(Constantes.SELECCIONAR_FRECUENCIA);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_SOLO_UNA_VEZ);
@@ -167,10 +166,10 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
                     listaFrecuencias.setVisibility(View.GONE);
                     campoFecha.setText("No necesita fecha");
                     campoFecha.setClickable(false);
-                    campoFechaFinal.setText("Seleccionar fecha final");
+                    campoFechaFinal.setText(Constantes.SELECCIONAR_FECHA_FINAL);
                 }
                 else {
-                    campoFecha.setText(formatFecha.format(Calendar.getInstance().getTime()));
+                    campoFecha.setText(formatoFecha.print(LocalDate.now()));
                     campoFecha.setClickable(true);
                 }
             }
@@ -183,13 +182,13 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
                     panelFechaFinal.setVisibility(View.VISIBLE);
                     listaFrecuencias.setVisibility(View.VISIBLE);
                     listaFrecuencias.setSelection(0);
-                    campoFecha.setText(formatFecha.format(Calendar.getInstance().getTime()));
+                    campoFecha.setText(formatoFecha.print(LocalDate.now()));
                     campoFecha.setClickable(true);
                 }
                 else {
                     panelFechaFinal.setVisibility(View.GONE);
                     listaFrecuencias.setVisibility(View.GONE);
-                    campoFechaFinal.setText("Seleccionar fecha final");
+                    campoFechaFinal.setText(Constantes.SELECCIONAR_FECHA_FINAL);
                 }
             }
         });
@@ -197,7 +196,7 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
         calendarioFechaFinalDialog.setListener(new CalendarioDialog.OnSelectDateListener() {
             @Override
             public void onSelectDate(Date date) throws Exception {
-                campoFechaFinal.setText(formatFecha.format(date));
+                campoFechaFinal.setText(formatoFecha.print(date.getTime()));
             }
         });
         campoFechaFinal.setOnClickListener(new View.OnClickListener() {
@@ -208,7 +207,7 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
         });
     }
 
-    private void listenerBotonesPrincipales(){
+    protected void listenerBotonesPrincipales(){
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -218,7 +217,6 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
                     String titulo = campoTitulo.getText().toString();
                     String precio = campoPrecio.getText().toString();
                     String etiqueta = campoEtiqueta.getText().toString();
-                    String categoria = campoCategoria.getText().toString();
                     String fechaFinal = campoFechaFinal.getText().toString();
                     String frecuencia = (String) adapterFrecuencia.getItem(listaFrecuencias.getSelectedItemPosition());
                     String tipo;
@@ -236,12 +234,14 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
                     intent.putExtra(Constantes.CAMPO_ETIQUETA, etiqueta);
                     intent.putExtra(Constantes.BOX_PLANTILLA_SELECCIONADO, btnPlantilla.isChecked());
                     intent.putExtra(Constantes.BOX_TRANSACCION_FIJA_SELECCIONADO, btnTransaccionFija.isChecked());
-                    intent.putExtra(Constantes.CAMPO_FECHA_FINAL, fechaFinal);
+                    if(!fechaFinal.equals(Constantes.SELECCIONAR_FECHA_FINAL)){
+                        intent.putExtra(Constantes.CAMPO_FECHA_FINAL, fechaFinal);
+                    }
                     if(frecuencia!=null && !frecuencia.equals(Constantes.SELECCIONAR_FRECUENCIA)){
                         intent.putExtra(Constantes.CAMPO_FRECUENCIA,frecuencia);
                     }
-                    if(!categoria.equals("Seleccionar categoria") && !categoria.equals("")){
-                        intent.putExtra(Constantes.CAMPO_CATEGORIA, categoria);
+                    if(idCategoriaElegida!=null){
+                        intent.putExtra(Constantes.CAMPO_ID_CATEGORIA,idCategoriaElegida);
                     }
                     try {
                         if(tipo.equals(Constantes.INGRESO)){
@@ -276,18 +276,49 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
     protected boolean verificarDatosPrincipales(){
         boolean verificado = false;
         String precio = campoPrecio.getText().toString();
+        String frecuenciaSeleccionada = listaFrecuencias.getSelectedItem().toString();
         float precioFinal = -1f;
         try {
             precioFinal = formatoNumero.parse(precio).floatValue();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        }catch(ParseException e){e.printStackTrace();}
         if(precioFinal<=0){
             avisoDialog.setMensaje("Falta dato principal: Para ingresar una nueva transaccion debe completar al menos el campo PRECIO");
             avisoDialog.show(getSupportFragmentManager(),"Aviso");
         }
         else {
-            verificado = true;
+            if(btnTransaccionFija.isChecked()){
+                String fechaI = campoFecha.getText().toString();
+                String fechaF = campoFechaFinal.getText().toString();
+                Date fechaInicio = null;
+                Date fechaFinal = null;
+                if(!fechaI.equals("")) {
+                    fechaInicio = formatoFecha.parseDateTime(fechaI).toDate();
+                }
+                if(!fechaF.equals(Constantes.SELECCIONAR_FECHA_FINAL)){
+                    fechaFinal = formatoFecha.parseDateTime(fechaF).toDate();
+                }
+                if(frecuenciaSeleccionada.equals(Constantes.SELECCIONAR_FRECUENCIA)){
+                    avisoDialog.setMensaje("Falta dato principal: Para ingresar una nueva transaccion fija debe seleccionar una FRECUENCIA");
+                    avisoDialog.show(getSupportFragmentManager(),"Aviso");
+                }
+                else if(frecuenciaSeleccionada.equals(Constantes.FRECUENCIA_SOLO_UNA_VEZ) && fechaInicio!=null){
+                    verificado=true;
+                }
+                else if(fechaFinal==null){
+                    avisoDialog.setMensaje("Error en los datos de fecha: Para ingresar una nueva transaccion fija debe seleccionar las fechas correspondientes");
+                    avisoDialog.show(getSupportFragmentManager(),"Aviso");
+                }
+                else if(fechaInicio.after(fechaFinal)){
+                    avisoDialog.setMensaje("Error en los datos de fecha: Para ingresar una nueva transaccion fija la FECHA-FINAL debe ser posterior a la FECHA-INICIO");
+                    avisoDialog.show(getSupportFragmentManager(),"Aviso");
+                }
+                else {
+                    verificado=true;
+                }
+            }
+            else {
+                verificado = true;
+            }
         }
         return verificado;
     }
@@ -297,8 +328,9 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constantes.PEDIDO_SELECCIONAR_CATEGORIA) {
             if (resultCode == RESULT_OK) {
-                String idCategoriaElegida = data.getStringExtra("id_categoria_elegida");
-                campoCategoria.setText(idCategoriaElegida);
+                idCategoriaElegida = data.getStringExtra(Constantes.ID_CATEGORIA_ELEGIDA);
+                String nombreCategoriaElegida = data.getStringExtra(Constantes.NOMBRE_CATEGORIA_ELEGIDA);
+                campoCategoria.setText(nombreCategoriaElegida);
             }
         }
         else if(requestCode==Constantes.PEDIDO_SELECCIONAR_PLANTILLA){
@@ -307,14 +339,14 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
                 String tipo = data.getStringExtra(Constantes.CAMPO_TIPO);
                 String titulo = data.getStringExtra(Constantes.CAMPO_TITULO);
                 String etiqueta = data.getStringExtra(Constantes.CAMPO_ETIQUETA);
-                String categoria = data.getStringExtra(Constantes.CAMPO_CATEGORIA);
+                String idCategoria = data.getStringExtra(Constantes.CAMPO_ID_CATEGORIA);
+                String nombreCategoria = data.getStringExtra(Constantes.CAMPO_NOMBRE_CATEGORIA);
                 String precio = data.getStringExtra(Constantes.CAMPO_PRECIO);
-                if(!categoria.equals(Constantes.SIN_CATEGORIA)){
-                    campoCategoria.setText(categoria);
+                if(idCategoria!=null){
+                    campoCategoria.setText(nombreCategoria);
+                    idCategoriaElegida = idCategoria;
                 }
-                if(!titulo.equals("Sin título")){
-                    campoTitulo.setText(titulo);
-                }
+                campoTitulo.setText(titulo);
                 campoInfo.setText(info);
                 campoEtiqueta.setText(etiqueta);
                 campoPrecio.setText(precio);

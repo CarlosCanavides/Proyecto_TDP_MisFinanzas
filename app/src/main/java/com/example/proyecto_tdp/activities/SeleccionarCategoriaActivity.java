@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
+import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 
 public class SeleccionarCategoriaActivity extends CategoriaActivity {
@@ -20,7 +21,8 @@ public class SeleccionarCategoriaActivity extends CategoriaActivity {
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Intent intent = new Intent();
                 Categoria categoria = mapSubcategorias.get(categorias.get(groupPosition)).get(childPosition);
-                intent.putExtra("id_categoria_elegida", categoria.getNombreCategoria());
+                intent.putExtra(Constantes.ID_CATEGORIA_ELEGIDA, categoria.getId());
+                intent.putExtra(Constantes.NOMBRE_CATEGORIA_ELEGIDA, categoria.getNombreCategoria());
                 setResult(RESULT_OK, intent);
                 finish();
                 return true;

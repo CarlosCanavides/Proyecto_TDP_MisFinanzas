@@ -8,19 +8,20 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 import com.example.proyecto_tdp.base_de_datos.DateConverter;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity(foreignKeys = {@ForeignKey(entity = Categoria.class,
-        parentColumns = "nombreCategoria",
+        parentColumns = "id",
         childColumns = "categoria",
-        onDelete = ForeignKey.NO_ACTION),
+        onDelete = ForeignKey.SET_NULL, onUpdate = ForeignKey.CASCADE),
         @ForeignKey(entity = TransaccionFija.class,
         parentColumns = "id",
-        childColumns = "transaccionFijaPadre")})
+        childColumns = "transaccionFijaPadre", onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE)})
 public class Transaccion {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @NonNull
-    private Integer id;
+    private String id;
 
     @ColumnInfo(name = "titulo")
     private String titulo;
@@ -35,7 +36,7 @@ public class Transaccion {
     private String categoria;
 
     @ColumnInfo(name = "transaccionFijaPadre")
-    private Integer transaccionFijaPadre;
+    private String transaccionFijaPadre;
 
     @ColumnInfo(name = "tipoTransaccion")
     private String tipoTransaccion;
@@ -47,7 +48,8 @@ public class Transaccion {
     @ColumnInfo(name = "info")
     private String info;
 
-    public Transaccion(String titulo, String etiqueta, float precio, String categoria, String tipoTransaccion, Date fecha, String info, Integer transaccionFijaPadre) {
+    public Transaccion(String titulo, String etiqueta, float precio, String categoria, String tipoTransaccion, Date fecha, String info, String transaccionFijaPadre) {
+        id = UUID.randomUUID().toString();
         this.titulo = titulo;
         this.etiqueta = etiqueta;
         this.precio = precio;
@@ -59,11 +61,11 @@ public class Transaccion {
     }
 
     @NonNull
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(@NonNull Integer id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 
@@ -123,21 +125,11 @@ public class Transaccion {
         this.info = info;
     }
 
-    public void copy(Transaccion nuevosDatos){
-        titulo = nuevosDatos.getTitulo();
-        tipoTransaccion = nuevosDatos.getTipoTransaccion();
-        precio = nuevosDatos.getPrecio();
-        info = nuevosDatos.getInfo();
-        fecha = nuevosDatos.getFecha();
-        categoria = nuevosDatos.getCategoria();
-        etiqueta = nuevosDatos.getEtiqueta();
-    }
-
-    public Integer getTransaccionFijaPadre(){
+    public String getTransaccionFijaPadre(){
         return transaccionFijaPadre;
     }
 
-    public void setTransaccionFijaPadre(Integer transaccionFijaPadre){
-        this.transaccionFijaPadre = transaccionFijaPadre;
+    public void setTransaccionFijaPadre(String transaccionFijaPadreID){
+        this.transaccionFijaPadre = transaccionFijaPadreID;
     }
 }

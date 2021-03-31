@@ -31,7 +31,7 @@ public interface TransaccionDao {
     LiveData<List<Transaccion>> getTransaccionesMes(String desde, String hasta);
 
     @Query("DELETE FROM transaccion WHERE id LIKE :id")
-    void eliminarTransaccion(int id);
+    void eliminarTransaccion(String id);
 
     @Update
     void upDateTransaccion(Transaccion... transaccions);
@@ -42,6 +42,6 @@ public interface TransaccionDao {
     @Delete
     void deleteTransaccion(Transaccion transacciones);
 
-    @Query("DELETE FROM transaccion WHERE transaccionFijaPadre LIKE :idPadre")
-    void eliminarTransaccionesHijas(int idPadre);
+    @Query("DELETE FROM transaccion WHERE transaccionFijaPadre=:idPadre")
+    void eliminarTransaccionesHijas(String idPadre);
 }

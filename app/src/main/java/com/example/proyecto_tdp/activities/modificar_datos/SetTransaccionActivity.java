@@ -13,8 +13,10 @@ import android.widget.TextView;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.activities.SeleccionarCategoriaActivity;
+import com.example.proyecto_tdp.views.AvisoDialog;
 import com.example.proyecto_tdp.views.CalculatorInputDialog;
 import com.example.proyecto_tdp.views.CalendarioDialog;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import java.text.NumberFormat;
@@ -24,26 +26,29 @@ import java.util.Locale;
 
 public class SetTransaccionActivity extends AppCompatActivity {
 
-    private TextView campoPrecio;
-    private TextView campoCategoria;
-    private TextView campoFecha;
-    private EditText campoTitulo;
-    private EditText campoEtiqueta;
-    private EditText campoInfo;
-    private RadioButton btnGasto;
-    private RadioButton btnIngreso;
-    private Button btnAceptar;
-    private Button btnEliminar;
-    private CalculatorInputDialog calculatorInputDialog;
-    private CalendarioDialog calendarioDialog;
-    private DateTimeFormatter formatoFecha;
+    protected TextView campoPrecio;
+    protected TextView campoCategoria;
+    protected TextView campoFecha;
+    protected EditText campoTitulo;
+    protected EditText campoEtiqueta;
+    protected EditText campoInfo;
+    protected RadioButton btnGasto;
+    protected RadioButton btnIngreso;
+    protected Button btnAceptar;
+    protected Button btnEliminar;
+    protected CalculatorInputDialog calculatorInputDialog;
+    protected CalendarioDialog calendarioDialog;
+    protected AvisoDialog avisoDialog;
+    protected DateTimeFormatter formatoFecha;
     protected NumberFormat formatoNumero;
+    protected String idTransaccion;
+    protected String idTransaccionFijaPadre;
+    protected String idCategoriaElegida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_transaccion);
-
         campoInfo = findViewById(R.id.set_transaccion_campo_info);
         campoFecha = findViewById(R.id.set_transaccion_campo_fecha);
         campoTitulo = findViewById(R.id.set_transaccion_campo_titulo);
@@ -56,12 +61,12 @@ public class SetTransaccionActivity extends AppCompatActivity {
         btnEliminar = findViewById(R.id.set_transaccion_btn_eliminar);
         formatoFecha = DateTimeFormat.forPattern(Constantes.FORMATO_FECHA);
         formatoNumero = NumberFormat.getInstance(new Locale("es", "ES"));
-
         inicializarValoresCampos();
         definirIngresarMonto();
         definirSeleccionarFecha();
         definirSeleccionarCategoria();
         listenerBotonesPrincipales();
+        definirMensajeDeAviso();
     }
 
     @Override
@@ -74,29 +79,30 @@ public class SetTransaccionActivity extends AppCompatActivity {
 
     private void inicializarValoresCampos(){
         Intent intent = getIntent();
-        String info = intent.getStringExtra(Constantes.CAMPO_INFO);
+        idTransaccion = intent.getStringExtra(Constantes.CAMPO_ID);
+        idTransaccionFijaPadre = intent.getStringExtra(Constantes.CAMPO_ID_TF_PADRE);
+        campoInfo.setText(intent.getStringExtra(Constantes.CAMPO_INFO));
+        campoTitulo.setText(intent.getStringExtra(Constantes.CAMPO_TITULO));
+        campoPrecio.setText(intent.getStringExtra(Constantes.CAMPO_PRECIO));
+        campoEtiqueta.setText(intent.getStringExtra(Constantes.CAMPO_ETIQUETA));
+        idCategoriaElegida = intent.getStringExtra(Constantes.CAMPO_ID_CATEGORIA);
+        String nombreCategoriaElegida = intent.getStringExtra(Constantes.CAMPO_NOMBRE_CATEGORIA);
+        if(idCategoriaElegida==null){
+            campoCategoria.setText(Constantes.SELECCIONAR_CATEGORIA);
+        }
+        else {
+            campoCategoria.setText(nombreCategoriaElegida);
+        }
         String fecha = intent.getStringExtra(Constantes.CAMPO_FECHA);
-        String titulo = intent.getStringExtra(Constantes.CAMPO_TITULO);
-        String precio = intent.getStringExtra(Constantes.CAMPO_PRECIO);
-        String etiqueta = intent.getStringExtra(Constantes.CAMPO_ETIQUETA);
-        String categoria = intent.getStringExtra(Constantes.CAMPO_CATEGORIA);
-        String tipo = intent.getStringExtra(Constantes.CAMPO_TIPO);
-        campoInfo.setText(info);
         campoFecha.setText(fecha);
-        campoTitulo.setText(titulo);
-        campoPrecio.setText(precio);
-        campoEtiqueta.setText(etiqueta);
-        if(categoria==null){
-            campoCategoria.setText("Seleccionar Categoria");
-        }
-        else {
-            campoCategoria.setText(categoria);
-        }
-        if(btnGasto.getText().toString().equals(tipo)){
-            btnGasto.setChecked(true);
-        }
-        else {
+        String tipo = intent.getStringExtra(Constantes.CAMPO_TIPO);
+        if(Constantes.INGRESO.equals(tipo)){
             btnIngreso.setChecked(true);
+            btnGasto.setChecked(false);
+        }
+        else {
+            btnGasto.setChecked(true);
+            btnIngreso.setChecked(false);
         }
     }
 
@@ -147,48 +153,45 @@ public class SetTransaccionActivity extends AppCompatActivity {
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String info = campoInfo.getText().toString();
-                String fecha = campoFecha.getText().toString();
-                String titulo = campoTitulo.getText().toString();
-                String precio = campoPrecio.getText().toString();
-                String etiqueta = campoEtiqueta.getText().toString();
-                String categoria = campoCategoria.getText().toString();
-                String tipo;
-                if(btnGasto.isChecked()){
-                    tipo = btnGasto.getText().toString();
-                }
-                else {
-                    tipo = btnIngreso.getText().toString();
-                }
-                Integer id = getIntent().getIntExtra(Constantes.CAMPO_ID,-1);
-                Integer idTFPadre = getIntent().getIntExtra(Constantes.CAMPO_ID_TF_PADRE,-1);
-                Intent intent = new Intent();
-                intent.putExtra(Constantes.CAMPO_INFO, info);
-                intent.putExtra(Constantes.CAMPO_TIPO, tipo);
-                intent.putExtra(Constantes.CAMPO_FECHA, fecha);
-                intent.putExtra(Constantes.CAMPO_TITULO, titulo);
-                intent.putExtra(Constantes.CAMPO_ETIQUETA, etiqueta);
-                try {
-                    if(tipo.equals(Constantes.INGRESO)){
-                        intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue());
+                if(verificarDatosPrincipales()) {
+                    String info = campoInfo.getText().toString();
+                    String fecha = campoFecha.getText().toString();
+                    String titulo = campoTitulo.getText().toString();
+                    String precio = campoPrecio.getText().toString();
+                    String etiqueta = campoEtiqueta.getText().toString();
+                    String tipo;
+                    if (btnGasto.isChecked()) {
+                        tipo = btnGasto.getText().toString();
+                    } else {
+                        tipo = btnIngreso.getText().toString();
                     }
-                    else {
-                        intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue()*(-1));
+                    Intent intent = new Intent();
+                    intent.putExtra(Constantes.CAMPO_INFO, info);
+                    intent.putExtra(Constantes.CAMPO_TIPO, tipo);
+                    intent.putExtra(Constantes.CAMPO_FECHA, fecha);
+                    intent.putExtra(Constantes.CAMPO_TITULO, titulo);
+                    intent.putExtra(Constantes.CAMPO_ETIQUETA, etiqueta);
+                    try {
+                        if (tipo.equals(Constantes.INGRESO)) {
+                            intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue());
+                        } else {
+                            intent.putExtra(Constantes.CAMPO_PRECIO, formatoNumero.parse(precio).floatValue() * (-1));
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                    if (idCategoriaElegida != null) {
+                        intent.putExtra(Constantes.CAMPO_ID_CATEGORIA, idCategoriaElegida);
+                    }
+                    if (idTransaccion != null) {
+                        intent.putExtra(Constantes.CAMPO_ID, idTransaccion);
+                    }
+                    if (idTransaccionFijaPadre != null) {
+                        intent.putExtra(Constantes.CAMPO_ID_TF_PADRE, idTransaccionFijaPadre);
+                    }
+                    setResult(RESULT_OK, intent);
+                    finish();
                 }
-                if(!categoria.equals("Seleccionar Categoria") && !categoria.equals("")){
-                    intent.putExtra(Constantes.CAMPO_CATEGORIA, categoria);
-                }
-                if(id!=-1){
-                    intent.putExtra(Constantes.CAMPO_ID,id);
-                }
-                if(idTFPadre!=-1){
-                    intent.putExtra(Constantes.CAMPO_ID_TF_PADRE,idTFPadre);
-                }
-                setResult(RESULT_OK, intent);
-                finish();
             }
         });
 
@@ -200,6 +203,29 @@ public class SetTransaccionActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    protected void definirMensajeDeAviso(){
+        avisoDialog = new AvisoDialog("Aviso","Faltan completar datos importantes");
+    }
+
+    protected boolean verificarDatosPrincipales(){
+        boolean verificado = false;
+        String precio = campoPrecio.getText().toString();
+        float precioFinal = -1f;
+        try {
+            precioFinal = formatoNumero.parse(precio).floatValue();
+        }catch(ParseException e){e.printStackTrace();}
+        String fecha = campoFecha.getText().toString();
+        Date fechaDate = formatoFecha.parseDateTime(fecha).toDate();
+        if(precioFinal<=0){
+            avisoDialog.setMensaje("Falta dato principal: Para ingresar una nueva transaccion debe completar al menos el campo PRECIO");
+            avisoDialog.show(getSupportFragmentManager(),"Aviso");
+        }
+        else if(fechaDate.before(LocalDate.now().toDate())){
+            verificado = true;
+        }
+        return verificado;
     }
 
     @Override
@@ -217,14 +243,14 @@ public class SetTransaccionActivity extends AppCompatActivity {
                 String tipo = data.getStringExtra(Constantes.CAMPO_TIPO);
                 String titulo = data.getStringExtra(Constantes.CAMPO_TITULO);
                 String etiqueta = data.getStringExtra(Constantes.CAMPO_ETIQUETA);
-                String categoria = data.getStringExtra(Constantes.CAMPO_CATEGORIA);
+                String idCategoria = data.getStringExtra(Constantes.CAMPO_ID_CATEGORIA);
+                String nombreCategoria = data.getStringExtra(Constantes.CAMPO_NOMBRE_CATEGORIA);
                 String precio = data.getStringExtra(Constantes.CAMPO_PRECIO);
-                if(!categoria.equals(Constantes.SIN_CATEGORIA)){
-                    campoCategoria.setText(categoria);
+                if(idCategoria!=null){
+                    campoCategoria.setText(nombreCategoria);
+                    idCategoriaElegida = idCategoria;
                 }
-                if(!titulo.equals("Sin título")){
-                    campoTitulo.setText(titulo);
-                }
+                campoTitulo.setText(titulo);
                 campoInfo.setText(info);
                 campoEtiqueta.setText(etiqueta);
                 campoPrecio.setText(precio);

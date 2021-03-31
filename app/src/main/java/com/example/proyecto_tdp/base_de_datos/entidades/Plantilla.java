@@ -5,16 +5,17 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
+import java.util.UUID;
 
 @Entity(foreignKeys = @ForeignKey(entity = Categoria.class,
-        parentColumns = "nombreCategoria",
+        parentColumns = "id",
         childColumns = "categoria",
-        onDelete = ForeignKey.NO_ACTION))
+        onDelete = ForeignKey.SET_NULL, onUpdate = ForeignKey.CASCADE))
 public class Plantilla {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @NonNull
-    private Integer id;
+    private String id;
 
     @ColumnInfo(name = "titulo")
     private String titulo;
@@ -35,6 +36,7 @@ public class Plantilla {
     private String info;
 
     public Plantilla(String titulo, float precio, String etiqueta, String categoria, String tipoTransaccion, String info) {
+        id = UUID.randomUUID().toString();
         this.titulo = titulo;
         this.etiqueta = etiqueta;
         this.precio = precio;
@@ -44,11 +46,11 @@ public class Plantilla {
     }
 
     @NonNull
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(@NonNull Integer id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 
@@ -98,14 +100,5 @@ public class Plantilla {
 
     public void setInfo(String info) {
         this.info = info;
-    }
-
-    public void copy(Transaccion nuevosDatos){
-        titulo = nuevosDatos.getTitulo();
-        tipoTransaccion = nuevosDatos.getTipoTransaccion();
-        precio = nuevosDatos.getPrecio();
-        info = nuevosDatos.getInfo();
-        categoria = nuevosDatos.getCategoria();
-        etiqueta = nuevosDatos.getEtiqueta();
     }
 }

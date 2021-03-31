@@ -1,8 +1,6 @@
 package com.example.proyecto_tdp.verificador_estrategia;
 
 import android.content.Intent;
-import android.util.Log;
-
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
@@ -15,7 +13,7 @@ public class EstrategiaSoloTransacciones extends EstrategiaGeneral{
 
     protected ViewModelTransaccion viewModelTransaccion;
     protected DateTimeFormatter formatoDeFecha;
-    protected Integer idTransaccionFijaPadre;
+    protected String idTransaccionFijaPadre;
     protected Date fecha;
 
     public EstrategiaSoloTransacciones(ViewModelTransaccion viewModelTransaccion){
@@ -45,8 +43,8 @@ public class EstrategiaSoloTransacciones extends EstrategiaGeneral{
     @Override
     protected void obtenerDatosPrincipales(Intent datos) {
         super.obtenerDatosPrincipales(datos);
-        id = datos.getIntExtra(Constantes.CAMPO_ID,-1);
-        idTransaccionFijaPadre = datos.getIntExtra(Constantes.CAMPO_ID_TF_PADRE,-1);
+        id = datos.getStringExtra(Constantes.CAMPO_ID);
+        idTransaccionFijaPadre = datos.getStringExtra(Constantes.CAMPO_ID_TF_PADRE);
         String fechaTexto = datos.getStringExtra(Constantes.CAMPO_FECHA);
         fecha = formatoDeFecha.parseDateTime(fechaTexto).toDate();
     }
@@ -60,7 +58,7 @@ public class EstrategiaSoloTransacciones extends EstrategiaGeneral{
     protected void setTransaccion(Intent datos){
         obtenerDatosPrincipales(datos);
         Transaccion transaccionModificada;
-        if(idTransaccionFijaPadre != -1){
+        if(idTransaccionFijaPadre!=null){
             transaccionModificada = new Transaccion(titulo,etiqueta,precio,categoria,tipo,fecha,info,idTransaccionFijaPadre);
         }
         else {
@@ -71,8 +69,8 @@ public class EstrategiaSoloTransacciones extends EstrategiaGeneral{
     }
 
     protected void eliminarTransaccion(Intent datos){
-        id = datos.getIntExtra(Constantes.CAMPO_ID,-1);
-        if(id!=-1){
+        id = datos.getStringExtra(Constantes.CAMPO_ID);
+        if(id!=null){
             viewModelTransaccion.eliminarTransaccion(id);
         }
     }

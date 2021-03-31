@@ -10,7 +10,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
+import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.views.GraficoResumen;
 import java.util.HashMap;
@@ -22,15 +25,15 @@ public class AdapterResumen extends RecyclerView.Adapter<AdapterResumen.ViewHold
 
     private List<String> meses;
     private Map<String,List<Transaccion>> listaResumen;
-    private Map<String, HashMap<String,Float>> categoriaGastoPredominante;
-    private Map<String,Integer> mapColorCategoria;
+    private Map<String,HashMap<String,Float>> categoriaGastoPredominante;
+    private Map<String,Categoria> mapCategoriasPredominantes;
     private Resources recursos;
 
-    public AdapterResumen(List<String> meses, Map<String,List<Transaccion>> listaResumen, Map<String,HashMap<String,Float>> categoriaGastoPredominante, Map<String,Integer> mapColorCategoria) {
+    public AdapterResumen(List<String> meses, Map<String,List<Transaccion>> listaResumen, Map<String,HashMap<String,Float>> categoriaGastoPredominante, Map<String,Categoria> mapCategoriasPredominantes) {
         this.meses = meses;
         this.listaResumen = listaResumen;
         this.categoriaGastoPredominante = categoriaGastoPredominante;
-        this.mapColorCategoria = mapColorCategoria;
+        this.mapCategoriasPredominantes = mapCategoriasPredominantes;
     }
 
     @NonNull
@@ -60,13 +63,13 @@ public class AdapterResumen extends RecyclerView.Adapter<AdapterResumen.ViewHold
             }
         }
         resultado = ingresos+gastos;
-        viewHolderResumen.tvIngreso.setText("↑$ " + ingresos);
-        viewHolderResumen.tvGasto.setText("↓$ " +Math.abs(gastos));
+        viewHolderResumen.tvIngreso.setText("↑$ "+String.format( "%.2f",ingresos));
+        viewHolderResumen.tvGasto.setText("↓$ "+String.format( "%.2f",Math.abs(gastos)));
         if(resultado>0) {
-            viewHolderResumen.tvBalance.setText("Σ -$ "+resultado);
+            viewHolderResumen.tvBalance.setText("Σ -$ "+String.format( "%.2f",resultado));
         }
         else {
-            viewHolderResumen.tvBalance.setText(" Σ -$ "+Math.abs(resultado));
+            viewHolderResumen.tvBalance.setText(" Σ -$ "+String.format( "%.2f",Math.abs(resultado)));
         }
         viewHolderResumen.grafico.inicializarGrafico(viewHolderResumen.grafico,ingresos,gastos,recursos);
 
@@ -80,20 +83,23 @@ public class AdapterResumen extends RecyclerView.Adapter<AdapterResumen.ViewHold
                 categoriaMayor = entry.getKey();
             }
         }
-        if(categoriaMayor.equals("")){
+        Categoria categoriaMayorObjeto = mapCategoriasPredominantes.get(categoriaMayor);
+        if(categoriaMayorObjeto==null && categoriaMayor.equals("")){
             viewHolderResumen.tvColorCategoria.setVisibility(View.GONE);
+            viewHolderResumen.tvCategoriaPredominante.setText("");
         }
         else {
             viewHolderResumen.tvColorCategoria.setVisibility(View.VISIBLE);
             Drawable bg = viewHolderResumen.tvColorCategoria.getBackground();
-            if(!categoriaMayor.equals("Sin categoria")){
-                bg.setColorFilter(mapColorCategoria.get(categoriaMayor), PorterDuff.Mode.SRC);
+            if(categoriaMayorObjeto!=null){
+                bg.setColorFilter(categoriaMayorObjeto.getColorCategoria(), PorterDuff.Mode.SRC);
+                viewHolderResumen.tvCategoriaPredominante.setText(categoriaMayorObjeto.getNombreCategoria());
             }
             else {
                 bg.setColorFilter(Color.parseColor("#FF5722"), PorterDuff.Mode.SRC);
+                viewHolderResumen.tvCategoriaPredominante.setText(Constantes.SIN_CATEGORIA);
             }
         }
-        viewHolderResumen.tvCategoriaPredominante.setText(categoriaMayor);
     }
 
     @Override
@@ -130,7 +136,7 @@ public class AdapterResumen extends RecyclerView.Adapter<AdapterResumen.ViewHold
         meses.clear();
         listaResumen.clear();
         categoriaGastoPredominante.clear();
-        mapColorCategoria.clear();
+        mapCategoriasPredominantes.clear();
         notifyDataSetChanged();
     }
 }

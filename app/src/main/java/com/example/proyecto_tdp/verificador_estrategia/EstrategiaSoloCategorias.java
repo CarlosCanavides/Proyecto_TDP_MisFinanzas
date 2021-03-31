@@ -23,7 +23,7 @@ public class EstrategiaSoloCategorias implements EstrategiaDeVerificacion {
         idCategoria = datos.getStringExtra(Constantes.CAMPO_ID);
         tipoCategoria = datos.getStringExtra(Constantes.CAMPO_TIPO_CATEGORIA);
         nombreCategoria = datos.getStringExtra(Constantes.CAMPO_NOMBRE_CATEGORIA);
-        categoriaSuperior = datos.getStringExtra(Constantes.CAMPO_CATEGORIA_SUPERIOR);
+        categoriaSuperior = datos.getStringExtra(Constantes.CAMPO_ID_CATEGORIA_SUPERIOR);
         colorCategoria = datos.getIntExtra(Constantes.CAMPO_COLOR_CATEGORIA, Constantes.COLOR_CATEGORIA_POR_DEFECTO);
     }
 
@@ -50,39 +50,20 @@ public class EstrategiaSoloCategorias implements EstrategiaDeVerificacion {
         obtenerDatosPrincipales(datos);
         if(nombreCategoria!=null) {
             Categoria nuevaCategoria;
-            if(categoriaSuperior==null || categoriaSuperior.equals("Seleccionar categoria") || categoriaSuperior.equals("")) {
-                nuevaCategoria = new Categoria(nombreCategoria, null, colorCategoria, tipoCategoria);
-            }
-            else {
-                nuevaCategoria = new Categoria(nombreCategoria, categoriaSuperior, colorCategoria, tipoCategoria);
-            }
+            nuevaCategoria = new Categoria(nombreCategoria, categoriaSuperior, colorCategoria, tipoCategoria);
             viewModelCategoria.insertarCategoria(nuevaCategoria);
         }
     }
 
     protected void setCategoria(Intent datos){
         obtenerDatosPrincipales(datos);
-        if(nombreCategoria!=null) {
-            Categoria categoriaModificada;
-            if(categoriaSuperior==null || categoriaSuperior.equals("Seleccionar categoria") || categoriaSuperior.equals("") || categoriaSuperior.equals("NULL")) {
-                categoriaModificada = new Categoria(idCategoria, null, colorCategoria, tipoCategoria);
-            }
-            else {
-                categoriaModificada = new Categoria(idCategoria, categoriaSuperior, colorCategoria, tipoCategoria);
-            }
-
-            if(idCategoria.equals(nombreCategoria)) {
-                viewModelCategoria.actualizarCategoria(categoriaModificada);
-            }
-            else {
-                viewModelCategoria.actualizarCategoria(categoriaModificada);
-                categoriaModificada.setNombreCategoria(nombreCategoria);
-                viewModelCategoria.actualizarCategoria(categoriaModificada);
-            }
-        }
+        Categoria categoriaModificada = new Categoria(nombreCategoria, categoriaSuperior, colorCategoria, tipoCategoria);
+        categoriaModificada.setId(idCategoria);
+        viewModelCategoria.actualizarCategoria(categoriaModificada);
     }
 
     protected void eliminarCategoria(Intent datos){
+        idCategoria = datos.getStringExtra(Constantes.CAMPO_ID);
         if(idCategoria!=null) {
             viewModelCategoria.eliminarCategoria(idCategoria);
         }

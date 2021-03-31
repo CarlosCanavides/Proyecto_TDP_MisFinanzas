@@ -58,7 +58,8 @@
             android:background="@color/colorPrimaryDark"
             android:textSize="@dimen/text_transacciones_mes"
             android:layout_marginBottom="@dimen/espacio_mediano"
-            android:fontFamily="@font/urwdin_md"/>
+            android:fontFamily="@font/franklin_md"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 

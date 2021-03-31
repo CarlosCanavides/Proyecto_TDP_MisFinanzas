@@ -1,6 +1,7 @@
 package com.example.proyecto_tdp.adapters;
 
-import android.util.Log;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
+import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.TransaccionFija;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -18,11 +20,13 @@ public class AdapterTransaccionesFijas extends BaseExpandableListAdapter {
 
     private List<String> frecuencias;
     private Map<String,List<TransaccionFija>> mapTransaccionesFijas;
+    private Map<String, Categoria> mapCategorias;
     private DateTimeFormatter formatoFecha;
 
-    public AdapterTransaccionesFijas(List<String> frecuencias, Map<String,List<TransaccionFija>> mapTransaccionesFijas) {
+    public AdapterTransaccionesFijas(List<String> frecuencias, Map<String,List<TransaccionFija>> mapTransaccionesFijas,  Map<String, Categoria> mapCategorias) {
         this.frecuencias = frecuencias;
         this.mapTransaccionesFijas = mapTransaccionesFijas;
+        this.mapCategorias = mapCategorias;
         formatoFecha = DateTimeFormat.forPattern(Constantes.FORMATO_FECHA);
     }
 
@@ -74,9 +78,14 @@ public class AdapterTransaccionesFijas extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         String frecuencia = frecuencias.get(groupPosition);
-        convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_encabezado_tf_frecuencia,null,false);
-        TextView tvFrecuencia = convertView.findViewById(R.id.encabezado_frecuencia);
-        tvFrecuencia.setText(frecuencia);
+        if(mapTransaccionesFijas.get(frecuencias.get(groupPosition))!=null) {
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_encabezado_tf_frecuencia, null, false);
+            TextView tvFrecuencia = convertView.findViewById(R.id.encabezado_frecuencia);
+            tvFrecuencia.setText(frecuencia);
+        }
+        else {
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_invisible, null, false);
+        }
         return convertView;
     }
 
@@ -88,8 +97,22 @@ public class AdapterTransaccionesFijas extends BaseExpandableListAdapter {
         TextView tvFechas = convertView.findViewById(R.id.transaccion_fija_fechas);
         TextView tvTitulo = convertView.findViewById(R.id.transaccion_fija_nombre);
         TextView tvPrecio = convertView.findViewById(R.id.transaccion_fija_precio);
-        tvLetra.setText(transaccionFija.getCategoria().charAt(0)+"");
-        tvTitulo.setText(transaccionFija.getTitulo());
+        if(transaccionFija.getCategoria()!=null){
+            Categoria categoria = mapCategorias.get(transaccionFija.getCategoria());
+            String nombreCategoria = categoria.getNombreCategoria();
+            tvLetra.setText(nombreCategoria.charAt(0)+"");
+            Drawable bg = tvLetra.getBackground();
+            bg.setColorFilter(categoria.getColorCategoria(), PorterDuff.Mode.SRC);
+        }
+        else {
+            tvLetra.setText("S");
+        }
+        if(transaccionFija.getTitulo()!=null && !transaccionFija.getTitulo().equals("")){
+            tvTitulo.setText(transaccionFija.getTitulo());
+        }
+        else {
+            tvTitulo.setText("Sin titulo");
+        }
         tvPrecio.setText(transaccionFija.getPrecio()+"");
         float precio = transaccionFija.getPrecio();
         if(precio>=0){
@@ -98,13 +121,13 @@ public class AdapterTransaccionesFijas extends BaseExpandableListAdapter {
         else {
             tvPrecio.setText("- $ "+Math.abs(precio));
         }
-        Log.e("AQUIIIIIIIIIIIIIIIII","inserte una nueva transaccion fija en el mapeo");
         tvFechas.setText(formatoFecha.print(transaccionFija.getFecha().getTime())+" | "+formatoFecha.print(transaccionFija.getFechaFinal().getTime()));
         return convertView;
     }
 
     public void refresh(){
         mapTransaccionesFijas.clear();
+        mapCategorias.clear();
         this.notifyDataSetChanged();
     }
 }

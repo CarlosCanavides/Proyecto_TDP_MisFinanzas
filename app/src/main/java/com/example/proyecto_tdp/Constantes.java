@@ -23,7 +23,12 @@ public class Constantes {
 
     public static final String GASTO = "Gasto";
     public static final String INGRESO = "Ingreso";
+    public static final String SIN_TITULO = "Sin titulo";
     public static final String SIN_CATEGORIA = "Sin categoria";
+    public static final String SELECCIONAR_CATEGORIA = "Seleccionar Categoria";
+    public static final String SELECCIONAR_FECHA_FINAL = "Seleccionar Fecha Final";
+    public static final String ID_CATEGORIA_ELEGIDA = "id_categoria_elegida";
+    public static final String NOMBRE_CATEGORIA_ELEGIDA = "nombre_categoria_elegida";
 
     public static final String SELECCIONAR_FRECUENCIA = "Seleccionar Frecuencia";
     public static final String FRECUENCIA_SOLO_UNA_VEZ = "Solo una vez";
@@ -38,7 +43,7 @@ public class Constantes {
     public static final String CAMPO_TITULO = "titulo";
     public static final String CAMPO_PRECIO = "precio";
     public static final String CAMPO_ETIQUETA = "etiqueta";
-    public static final String CAMPO_CATEGORIA = "categoria";
+    public static final String CAMPO_ID_CATEGORIA = "categoria";
     public static final String CAMPO_FRECUENCIA = "frecuencia";
     public static final String CAMPO_FECHA_FINAL = "fecha final";
     public static final String CAMPO_ID_TF_PADRE = "ID transaccion fija padre";
@@ -51,7 +56,7 @@ public class Constantes {
     public static final String CAMPO_TITULO_ANTERIOR = "titulo_anterior";
     public static final String CAMPO_PRECIO_ANTERIOR = "precio_anterior";
     public static final String CAMPO_ETIQUETA_ANTERIOR = "etiqueta_anterior";
-    public static final String CAMPO_CATEGORIA_ANTERIOR = "categoria_anterior";
+    public static final String CAMPO_ID_CATEGORIA_ANTERIOR = "categoria_anterior";
     public static final String CAMPO_FRECUENCIA_ANTERIOR = "frecuencia_anterior";
     public static final String CAMPO_FECHA_FINAL_ANTERIOR = "fecha_final_anterior";
     public static final String CAMPO_FECHA_INICIO_ANTERIOR = "fecha_inicio_anterior";
@@ -59,7 +64,8 @@ public class Constantes {
     public static final String CAMPO_TIPO_CATEGORIA = "tipo categoria";
     public static final String CAMPO_COLOR_CATEGORIA = "color categoria";
     public static final String CAMPO_NOMBRE_CATEGORIA = "nombre categoria";
-    public static final String CAMPO_CATEGORIA_SUPERIOR = "categoria superior";
+    public static final String CAMPO_ID_CATEGORIA_SUPERIOR = "campo_id_categoria_superior";
+    public static final String CAMPO_NOMBRE_CATEGORIA_SUPERIOR = "campo_nombre_categoria_superior";
     public static final int COLOR_CATEGORIA_POR_DEFECTO = Color.parseColor("#7373FF");
 
     public static final int PEDIDO_NUEVA_CATEGORIA = 1;

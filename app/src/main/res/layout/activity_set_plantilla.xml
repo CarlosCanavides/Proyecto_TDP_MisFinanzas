@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/espacio_mediano"
+                android:layout_marginTop="@dimen/espacio_big"
                 android:layout_marginBottom="@dimen/espacio_mediano">
 
                 <TextView
@@ -30,6 +30,7 @@
                     android:layout_height="wrap_content"
                     android:text="$"
                     android:textSize="39sp"
+                    android:textColor="@color/primary_text"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="@dimen/espacio_mediano"
                     android:fontFamily="@font/franklin_md"/>
@@ -41,6 +42,7 @@
                     android:text="10"
                     android:textSize="40sp"
                     android:textAlignment="center"
+                    android:textColor="@color/primary_text"
                     android:fontFamily="@font/franklin_md"/>
 
             </LinearLayout>
@@ -50,6 +52,7 @@
                 android:layout_height="2dp"
                 android:background="@color/divider"
                 android:layout_gravity="bottom"
+                android:layout_marginTop="@dimen/espacio_small"
                 android:layout_marginStart="@dimen/margen_iconos_transaccion"
                 android:layout_marginEnd="@dimen/margen_iconos_transaccion">
             </View>
@@ -77,6 +80,7 @@
                 android:textSize="@dimen/text_campos_transaccion"
                 android:text="Seleccionar Catergoria"
                 android:textAlignment="viewEnd"
+                android:textColor="@color/primary_text"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/espacio_mediano"
                 android:layout_marginEnd="@dimen/espacio_small"
@@ -115,6 +119,7 @@
                         android:layout_height="wrap_content"
                         android:text="Gasto"
                         android:textSize="@dimen/text_campos_transaccion"
+                        android:textColor="@color/primary_text"
                         android:checked="true"
                         android:buttonTint="@color/color_precios_negativos"
                         android:layout_marginEnd="@dimen/espacio_big"
@@ -125,6 +130,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ingreso"
+                        android:textColor="@color/primary_text"
                         android:textSize="@dimen/text_campos_transaccion"
                         android:buttonTint="@color/color_precios_positivos"
                         android:fontFamily="@font/urwdin_md"/>
@@ -153,6 +159,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_campos_transaccion"
+                android:textColor="@color/primary_text"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/espacio_mediano"
                 android:fontFamily="@font/urwdin_md"/>
@@ -177,6 +184,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_campos_transaccion"
+                android:textColor="@color/primary_text"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/espacio_mediano"
                 android:fontFamily="@font/urwdin_md"/>
@@ -201,6 +209,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_campos_transaccion"
+                android:textColor="@color/primary_text"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/espacio_mediano"
                 android:fontFamily="@font/urwdin_md"/>

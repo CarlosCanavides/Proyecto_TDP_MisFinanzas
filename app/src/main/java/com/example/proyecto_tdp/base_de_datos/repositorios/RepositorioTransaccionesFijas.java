@@ -28,33 +28,21 @@ public class RepositorioTransaccionesFijas {
     public List<TransaccionFija> getTransaccionesFijasDesdeHasta(String desde, String hasta){
         try {
             return new RepositorioTransaccionesFijas.ObtenerTransaccionesFijasDesdeHastaAsyncTask(transaccionFijaDao).execute(desde,hasta).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        }catch(ExecutionException|InterruptedException e){e.printStackTrace();}
         return null;
     }
 
     public LiveData<List<TransaccionFija>> getLiveTransaccionesDesdeHasta(String desde, String hasta){
         try {
             return new RepositorioTransaccionesFijas.ObtenerLiveTransaccionesFijasDesdeHastaAsyncTask(transaccionFijaDao).execute(desde,hasta).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        }catch(ExecutionException|InterruptedException e){e.printStackTrace();}
         return null;
     }
 
     public List<TransaccionFija> getAllTransaccionesFijasPendientes(){
         try {
             return new RepositorioTransaccionesFijas.ObtenerTransaccionesFijasPendientesAsyncTask(transaccionFijaDao).execute().get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        }catch(ExecutionException|InterruptedException e){e.printStackTrace();}
         return null;
     }
 
@@ -70,7 +58,7 @@ public class RepositorioTransaccionesFijas {
         new RepositorioTransaccionesFijas.EliminarTransaccionFijaAsyncTask(transaccionFijaDao).execute(transaccion);
     }
 
-    public void eliminarTransaccionFija(int id){
+    public void eliminarTransaccionFijaPorID(String id){
         new RepositorioTransaccionesFijas.EliminarTransaccionFijaIDAsyncTask(transaccionFijaDao).execute(id);
     }
 
@@ -116,7 +104,7 @@ public class RepositorioTransaccionesFijas {
         }
     }
 
-    public static class EliminarTransaccionFijaIDAsyncTask extends AsyncTask<Integer,Void,Void> {
+    public static class EliminarTransaccionFijaIDAsyncTask extends AsyncTask<String,Void,Void> {
         private TransaccionFijaDao transaccionFijaDao;
 
         private EliminarTransaccionFijaIDAsyncTask(TransaccionFijaDao transaccionFijaDao){
@@ -124,7 +112,7 @@ public class RepositorioTransaccionesFijas {
         }
 
         @Override
-        protected Void doInBackground(Integer... id) {
+        protected Void doInBackground(String... id) {
             transaccionFijaDao.eliminarTransaccionFija(id[0]);
             return null;
         }

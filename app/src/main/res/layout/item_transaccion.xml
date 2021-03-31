@@ -95,7 +95,8 @@
                     android:text="$100,00"
                     android:gravity="right"
                     android:layout_marginEnd="@dimen/espacio_mediano"
-                    android:fontFamily="@font/urwdin_md"/>
+                    android:fontFamily="@font/franklin_md"
+                    android:textStyle="bold"/>
 
             </LinearLayout>
 

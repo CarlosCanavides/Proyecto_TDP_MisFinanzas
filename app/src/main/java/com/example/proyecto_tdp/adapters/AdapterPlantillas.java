@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
+import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Plantilla;
 import java.util.List;
 import java.util.Map;
@@ -19,12 +19,12 @@ import java.util.Map;
 public class AdapterPlantillas extends RecyclerView.Adapter<AdapterPlantillas.ViewHolderPlantilla>{
 
     private List<Plantilla> plantillas;
-    private Map<Plantilla, Integer> mapColorCategoria;
+    private Map<Plantilla, Categoria> mapCategoriasDePlantillas;
     private OnPlantillaListener onPlantillaListener;
 
-    public AdapterPlantillas(List<Plantilla> plantillas, Map<Plantilla, Integer> mapColorCategoria, OnPlantillaListener onPlantillaListener) {
+    public AdapterPlantillas(List<Plantilla> plantillas, Map<Plantilla,Categoria> mapCategoriasDePlantillasa, OnPlantillaListener onPlantillaListener) {
         this.plantillas = plantillas;
-        this.mapColorCategoria = mapColorCategoria;
+        this.mapCategoriasDePlantillas = mapCategoriasDePlantillasa;
         this.onPlantillaListener = onPlantillaListener;
     }
 
@@ -39,16 +39,20 @@ public class AdapterPlantillas extends RecyclerView.Adapter<AdapterPlantillas.Vi
     public void onBindViewHolder(@NonNull AdapterPlantillas.ViewHolderPlantilla holder, int position) {
         Plantilla plantilla = plantillas.get(position);
         holder.tvIdentificacion.setText(plantilla.getEtiqueta());
-        if(plantilla.getCategoria()!=null) {
-            holder.tvCategoria.setText(plantilla.getCategoria());
-            holder.tvLetra.setText(plantilla.getCategoria().charAt(0) + "");
+        Categoria categoria = mapCategoriasDePlantillas.get(plantilla);
+        if(categoria!=null){
+            String nombreCategoria = categoria.getNombreCategoria();
+            holder.tvCategoria.setText(nombreCategoria);
+            if(nombreCategoria.length()>0){
+                holder.tvLetra.setText(nombreCategoria.charAt(0)+"");
+            }
         }
         else {
             holder.tvLetra.setText("S");
             holder.tvCategoria.setText(Constantes.SIN_CATEGORIA);
         }
         if(plantilla.getTitulo().equals("")){
-            holder.tvNombre.setText("Sin título");
+            holder.tvNombre.setText("Sin titulo");
         }
         else {
             holder.tvNombre.setText(plantilla.getTitulo());
@@ -63,13 +67,13 @@ public class AdapterPlantillas extends RecyclerView.Adapter<AdapterPlantillas.Vi
             holder.tvPrecio.setTextColor(Color.parseColor("#E12E48"));
         }
         Drawable bg = holder.tvLetra.getBackground();
-        int colorCategoria = mapColorCategoria.get(plantilla);
+        int colorCategoria = categoria.getColorCategoria();
         bg.setColorFilter(colorCategoria, PorterDuff.Mode.SRC);
     }
 
     public void refresh(){
         plantillas.clear();
-        mapColorCategoria.clear();
+        mapCategoriasDePlantillas.clear();
     }
 
     @Override

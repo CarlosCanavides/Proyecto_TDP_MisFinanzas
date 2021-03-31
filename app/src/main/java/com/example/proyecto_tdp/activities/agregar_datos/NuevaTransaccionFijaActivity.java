@@ -21,7 +21,6 @@ import com.example.proyecto_tdp.activities.SeleccionarPlantillaActivity;
 import com.example.proyecto_tdp.views.AvisoDialog;
 import com.example.proyecto_tdp.views.CalculatorInputDialog;
 import com.example.proyecto_tdp.views.CalendarioDialog;
-
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -51,12 +50,12 @@ public class NuevaTransaccionFijaActivity extends AppCompatActivity {
     protected CalendarioDialog calendarioDialog;
     protected CalendarioDialog calendarioDialogFinal;
     protected CalculatorInputDialog calculatorInputDialog;
+    protected String idCategoriaElegida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_transaccion_fija);
-
         campoInfo = findViewById(R.id.set_tf_campo_info);
         campoFecha = findViewById(R.id.set_tf_campo_fecha);
         campoPrecio = findViewById(R.id.set_tf_campo_precio);
@@ -71,7 +70,6 @@ public class NuevaTransaccionFijaActivity extends AppCompatActivity {
         frecuencia = findViewById(R.id.set_tf_frecuencia);
         formatoFecha = DateTimeFormat.forPattern(Constantes.FORMATO_FECHA);
         formatoNumero = NumberFormat.getInstance(new Locale("es", "ES"));
-
         inicializarValoresCampos();
         definirIngresarMonto();
         definirSeleccionarFecha();
@@ -99,8 +97,8 @@ public class NuevaTransaccionFijaActivity extends AppCompatActivity {
         campoTitulo.setText("");
         campoPrecio.setText("0,00");
         campoEtiqueta.setText("");
-        campoCategoria.setText("Seleccionar Categoria");
-        campoFechaFinal.setText("Seleccionar Fecha Final");
+        campoCategoria.setText(Constantes.SELECCIONAR_CATEGORIA);
+        campoFechaFinal.setText(Constantes.SELECCIONAR_FECHA_FINAL);
         btnGasto.setChecked(true);
         btnIngreso.setChecked(false);
         btnCancelar.setText("Cancelar");
@@ -179,7 +177,6 @@ public class NuevaTransaccionFijaActivity extends AppCompatActivity {
                     String titulo = campoTitulo.getText().toString();
                     String precio = campoPrecio.getText().toString();
                     String etiqueta = campoEtiqueta.getText().toString();
-                    String categoria = campoCategoria.getText().toString();
                     String fechaInicio = campoFecha.getText().toString();
                     String fechaFinal = campoFechaFinal.getText().toString();
                     String frecuenciaSeleccionada = frecuencia.getSelectedItem().toString();
@@ -199,8 +196,8 @@ public class NuevaTransaccionFijaActivity extends AppCompatActivity {
                     intent.putExtra(Constantes.CAMPO_FECHA, fechaInicio);
                     intent.putExtra(Constantes.CAMPO_FECHA_FINAL, fechaFinal);
                     intent.putExtra(Constantes.CAMPO_FRECUENCIA, frecuenciaSeleccionada);
-                    if(!categoria.equals("Seleccionar Categoria") && !categoria.equals("")){
-                        intent.putExtra(Constantes.CAMPO_CATEGORIA, categoria);
+                    if(idCategoriaElegida!=null){
+                        intent.putExtra(Constantes.CAMPO_ID_CATEGORIA,idCategoriaElegida);
                     }
                     try {
                         if(tipo.equals(Constantes.INGRESO)){
@@ -241,7 +238,7 @@ public class NuevaTransaccionFijaActivity extends AppCompatActivity {
         String fechaF = campoFechaFinal.getText().toString();
         Date fechaInicio = null;
         Date fechaFinal = null;
-        if(!fechaI.equals("") && !fechaF.equals("Seleccionar Fecha Final")) {
+        if(!fechaI.equals("") && !fechaF.equals(Constantes.SELECCIONAR_FECHA_FINAL)) {
             fechaInicio = formatoFecha.parseDateTime(fechaI).toDate();
             fechaFinal = formatoFecha.parseDateTime(fechaF).toDate();
         }
@@ -258,12 +255,15 @@ public class NuevaTransaccionFijaActivity extends AppCompatActivity {
             avisoDialog.setMensaje("Falta dato principal: Para ingresar una nueva transaccion fija debe seleccionar una FRECUENCIA");
             avisoDialog.show(getSupportFragmentManager(),"Aviso");
         }
+        else if(frecuenciaSeleccionada.equals(Constantes.FRECUENCIA_SOLO_UNA_VEZ) && fechaInicio!=null){
+            verificado=true;
+        }
         else if(fechaFinal==null){
-            avisoDialog.setMensaje("Error en los datos de fecha: Para ingresar una nueva transaccion fija debe seleccionar las fechas adecuadamente");
+            avisoDialog.setMensaje("Error en los datos de fecha: Para ingresar una nueva transaccion fija debe seleccionar las fechas correspondientes FECHA INICIAL - FECHA FINAL");
             avisoDialog.show(getSupportFragmentManager(),"Aviso");
         }
         else if(fechaInicio.after(fechaFinal)){
-            avisoDialog.setMensaje("Error en los datos de fecha: Para ingresar una nueva transaccion fija la FECHA-FINAL debe ser posterior a la FECHA-INICIO");
+            avisoDialog.setMensaje("Error en los datos de fecha: Para ingresar una nueva transaccion fija la FECHA-FINAL debe ser posterior a la FECHA-INICIAL");
             avisoDialog.show(getSupportFragmentManager(),"Aviso");
         }
         else {
@@ -277,8 +277,9 @@ public class NuevaTransaccionFijaActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constantes.PEDIDO_SELECCIONAR_CATEGORIA) {
             if (resultCode == RESULT_OK) {
-                String idCategoriaElegida = data.getStringExtra("id_categoria_elegida");
-                campoCategoria.setText(idCategoriaElegida);
+                idCategoriaElegida = data.getStringExtra(Constantes.ID_CATEGORIA_ELEGIDA);
+                String nombreCategoriaElegida = data.getStringExtra(Constantes.NOMBRE_CATEGORIA_ELEGIDA);
+                campoCategoria.setText(nombreCategoriaElegida);
             }
         }
         else if(requestCode==Constantes.PEDIDO_SELECCIONAR_PLANTILLA){
@@ -287,14 +288,14 @@ public class NuevaTransaccionFijaActivity extends AppCompatActivity {
                 String tipo = data.getStringExtra(Constantes.CAMPO_TIPO);
                 String titulo = data.getStringExtra(Constantes.CAMPO_TITULO);
                 String etiqueta = data.getStringExtra(Constantes.CAMPO_ETIQUETA);
-                String categoria = data.getStringExtra(Constantes.CAMPO_CATEGORIA);
+                String idCategoria = data.getStringExtra(Constantes.CAMPO_ID);
+                String categoria = data.getStringExtra(Constantes.CAMPO_ID_CATEGORIA);
                 String precio = data.getStringExtra(Constantes.CAMPO_PRECIO);
-                if(!categoria.equals(Constantes.SIN_CATEGORIA)){
+                if(idCategoria!=null){
+                    idCategoriaElegida = idCategoria;
                     campoCategoria.setText(categoria);
                 }
-                if(!titulo.equals("Sin título")){
-                    campoTitulo.setText(titulo);
-                }
+                campoTitulo.setText(titulo);
                 campoInfo.setText(info);
                 campoEtiqueta.setText(etiqueta);
                 campoPrecio.setText(precio);

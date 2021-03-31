@@ -5,7 +5,7 @@ import com.example.proyecto_tdp.Constantes;
 
 public abstract class EstrategiaGeneral implements EstrategiaDeVerificacion{
 
-    protected Integer id;
+    protected String id;
     protected float precio;
     protected String tipo;
     protected String info;
@@ -20,7 +20,7 @@ public abstract class EstrategiaGeneral implements EstrategiaDeVerificacion{
         info = datos.getStringExtra(Constantes.CAMPO_INFO);
         titulo = datos.getStringExtra(Constantes.CAMPO_TITULO);
         etiqueta = datos.getStringExtra(Constantes.CAMPO_ETIQUETA);
-        categoria = datos.getStringExtra(Constantes.CAMPO_CATEGORIA);
+        categoria = datos.getStringExtra(Constantes.CAMPO_ID_CATEGORIA);
         precio = datos.getFloatExtra(Constantes.CAMPO_PRECIO,0);
     }
 }

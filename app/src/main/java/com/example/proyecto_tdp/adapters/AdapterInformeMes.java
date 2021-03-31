@@ -52,13 +52,19 @@ public class AdapterInformeMes extends RecyclerView.Adapter<AdapterInformeMes.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolderInformeMes holder, int position) {
         if(position==0){
-            holder.graficoInforme.inicializarGraficoInforme(holder.graficoInforme, categorias,gastoPorSubcategoria);
+            if(categorias.size()>0) {
+                holder.graficoInforme.setVisibility(View.VISIBLE);
+                holder.graficoInforme.inicializarGraficoInforme(holder.graficoInforme, categorias, gastoPorSubcategoria);
+            }
+            else {
+                holder.graficoInforme.setVisibility(View.INVISIBLE);
+            }
         }
         else {
             Categoria categoria = categorias.get(position-1);
             if (categoria != null) {
                 holder.tvNombreCategoria.setText(categoria.getNombreCategoria());
-                holder.tvGastoCategoria.setText("- $ " + gastoPorSubcategoria.get(categoria.getNombreCategoria()));
+                holder.tvGastoCategoria.setText("- $ " + String.format( "%.2f",gastoPorSubcategoria.get(categoria.getNombreCategoria())));
                 holder.tvIconoCategoria.setText(categoria.getNombreCategoria().charAt(0)+"");
                 Drawable bg = holder.tvIconoCategoria.getBackground();
                 bg.setColorFilter(categoria.getColorCategoria(), PorterDuff.Mode.SRC);

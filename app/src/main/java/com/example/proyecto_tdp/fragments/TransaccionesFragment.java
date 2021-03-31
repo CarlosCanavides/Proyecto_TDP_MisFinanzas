@@ -42,7 +42,7 @@ public class TransaccionesFragment extends Fragment {
     private ExpandableListView expTransacciones;
     private List<String> fechas;
     private Map<String, List<Transaccion>> mapTransacciones;
-    private Map<Transaccion, Integer> mapColorCategoria;
+    private Map<Transaccion,Categoria> mapCategoriaDeTransacciones;
     private AdapterTransacciones adapter;
     private ViewModelCategoria viewModelCategoria;
     private ViewModelTransaccion viewModelTransaccion;
@@ -80,8 +80,8 @@ public class TransaccionesFragment extends Fragment {
     private void inicializarListViewTransacciones(){
         fechas = new ArrayList<>();
         mapTransacciones = new HashMap<>();
-        mapColorCategoria = new HashMap<>();
-        adapter = new AdapterTransacciones(fechas,mapTransacciones,mapColorCategoria);
+        mapCategoriaDeTransacciones = new HashMap<>();
+        adapter = new AdapterTransacciones(fechas,mapTransacciones, mapCategoriaDeTransacciones);
         expTransacciones.setAdapter(adapter);
         expTransacciones.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
@@ -97,7 +97,7 @@ public class TransaccionesFragment extends Fragment {
                 intent.putExtra(Constantes.CAMPO_ID, transaccion.getId());
                 intent.putExtra(Constantes.CAMPO_ID_TF_PADRE, transaccion.getTransaccionFijaPadre());
                 intent.putExtra(Constantes.CAMPO_PRECIO, String.format( "%.2f", Math.abs(transaccion.getPrecio())));
-                intent.putExtra(Constantes.CAMPO_CATEGORIA, transaccion.getCategoria());
+                intent.putExtra(Constantes.CAMPO_ID_CATEGORIA, transaccion.getCategoria());
                 intent.putExtra(Constantes.CAMPO_TIPO, transaccion.getTipoTransaccion());
                 intent.putExtra(Constantes.CAMPO_TITULO, transaccion.getTitulo());
                 intent.putExtra(Constantes.CAMPO_ETIQUETA, transaccion.getEtiqueta());
@@ -134,7 +134,7 @@ public class TransaccionesFragment extends Fragment {
                 gastoPorMes = 0;
                 fechas.clear();
                 mapTransacciones.clear();
-                mapColorCategoria.clear();
+                mapCategoriaDeTransacciones.clear();
                 adapter.refrescar();
                 for(Transaccion t : transaccions) {
                     if(formatFechaMes.print(t.getFecha().getTime()).equals(tvMesTransacciones.getText())) {
@@ -185,7 +185,7 @@ public class TransaccionesFragment extends Fragment {
         gastoPorMes = 0;
         fechas.clear();
         mapTransacciones.clear();
-        mapColorCategoria.clear();
+        mapCategoriaDeTransacciones.clear();
         adapter.refrescar();
         for(Transaccion t : transaccionesDelMes) {
             actualizarDatos(t);
@@ -209,10 +209,10 @@ public class TransaccionesFragment extends Fragment {
         else {
             transaccionesRealizadas.add(t);
         }
-        String nombreCategoria = t.getCategoria();
-        if(nombreCategoria!=null){
-            Categoria categoria = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
-            mapColorCategoria.put(t, categoria.getColorCategoria());
+        String idCategoria = t.getCategoria();
+        if(idCategoria!=null){
+            Categoria categoria = viewModelCategoria.getCategoriaPorID(t.getCategoria());
+            mapCategoriaDeTransacciones.put(t, categoria);
         }
         gastoPorMes += t.getPrecio();
     }

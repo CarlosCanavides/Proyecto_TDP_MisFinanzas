@@ -44,8 +44,8 @@ public class RepositorioPlantillas {
         }
 
         @Override
-        protected Void doInBackground(Plantilla... plantillas) {
-            plantillaDao.insertPlantilla(plantillas[0]);
+        protected Void doInBackground(Plantilla... plantilla) {
+            plantillaDao.insertPlantilla(plantilla[0]);
             return null;
         }
     }
@@ -58,8 +58,8 @@ public class RepositorioPlantillas {
         }
 
         @Override
-        protected Void doInBackground(Plantilla... plantillas) {
-            plantillaDao.upDatePlantilla(plantillas[0]);
+        protected Void doInBackground(Plantilla... plantilla) {
+            plantillaDao.upDatePlantilla(plantilla[0]);
             return null;
         }
     }
@@ -72,8 +72,8 @@ public class RepositorioPlantillas {
         }
 
         @Override
-        protected Void doInBackground(Plantilla... plantillas) {
-            plantillaDao.deletePlantilla(plantillas[0]);
+        protected Void doInBackground(Plantilla... plantilla) {
+            plantillaDao.deletePlantilla(plantilla[0]);
             return null;
         }
     }

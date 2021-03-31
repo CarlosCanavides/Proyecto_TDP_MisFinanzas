@@ -23,7 +23,7 @@ public class EstrategiaTFPendientes {
     protected String titulo;
     protected String etiqueta;
     protected String categoria;
-    protected Integer idTransaccionFijaPadre;
+    protected String idTransaccionFijaPadre;
     protected Date fecha;
     protected Date fechaFinal;
 
@@ -38,8 +38,10 @@ public class EstrategiaTFPendientes {
         LocalDate hoy = LocalDate.now();
         List<TransaccionFija> transaccionFijasPendientes = viewModelTransaccionFija.getAllTransaccionesFijasPendientes();
         for(TransaccionFija transaccionFija : transaccionFijasPendientes){
-            if(transaccionFija.getFechaProximaEjecucion().before(hoy.toDate())){
-                insertarPendientes(transaccionFija);
+            if(transaccionFija.getFechaProximaEjecucion()!=null) {
+                if (transaccionFija.getFechaProximaEjecucion().before(hoy.toDate())) {
+                    insertarPendientes(transaccionFija);
+                }
             }
         }
     }

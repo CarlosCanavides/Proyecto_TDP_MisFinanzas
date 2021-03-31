@@ -161,7 +161,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/urwdin_bold"
                     android:text="Transacciones De Gasto"
-                    android:textColor="@color/secondary_text_titulo"
+                    android:textColor="@color/secondary_text"
                     android:layout_alignParentStart="true"/>
 
                 <TextView
@@ -333,8 +333,8 @@
                         android:layout_marginStart="@dimen/espacio_mediano"
                         android:layout_marginEnd="@dimen/espacio_mediano"
                         android:background="@drawable/textview_circular"
-                        android:backgroundTint="@color/color_numeros_naranja"
-                        android:text="T"
+                        android:backgroundTint="@color/color_precios_positivos"
+                        android:text="I"
                         android:textAlignment="center"
                         android:textColor="@color/background_white"
                         android:textSize="@dimen/text_circularview"
@@ -353,17 +353,15 @@
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
 
-                            <LinearLayout
+                            <FrameLayout
                                 android:layout_width="@dimen/size_contenedor_info"
                                 android:layout_height="match_parent"
-                                android:layout_gravity="center_vertical"
                                 android:orientation="vertical">
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/espacio_mediano"
-                                    android:layout_marginTop="@dimen/espacio_mediano"
                                     android:layout_marginEnd="@dimen/espacio_mediano"
                                     android:lines="1"
                                     android:singleLine="true"
@@ -371,21 +369,10 @@
                                     android:textColor="@color/primary_text"
                                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
                                     android:textSize="@dimen/size_titulo_item_transaccion"
-                                    android:fontFamily="@font/urwdin_bold"/>
+                                    android:fontFamily="@font/urwdin_bold"
+                                    android:layout_gravity="center_vertical"/>
 
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/espacio_mediano"
-                                    android:layout_marginTop="@dimen/espacio_small"
-                                    android:layout_marginEnd="@dimen/espacio_mediano"
-                                    android:textColor="@color/secondary_text"
-                                    android:text="18 Monday June"
-                                    android:lines="1"
-                                    android:singleLine="true"
-                                    android:fontFamily="@font/urwdin_md"/>
-
-                            </LinearLayout>
+                            </FrameLayout>
 
                             <TextView
                                 android:id="@+id/tv_cantidad_ingresos_fijos"
@@ -393,7 +380,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:text="100"
-                                android:textColor="@color/color_numeros_naranja"
+                                android:textColor="@color/color_precios_positivos"
                                 android:gravity="right"
                                 android:layout_marginEnd="@dimen/espacio_mediano"
                                 android:fontFamily="@font/urwdin_bold"/>
@@ -431,8 +418,8 @@
                         android:layout_marginStart="@dimen/espacio_mediano"
                         android:layout_marginEnd="@dimen/espacio_mediano"
                         android:background="@drawable/textview_circular"
-                        android:backgroundTint="@color/color_numeros_naranja"
-                        android:text="T"
+                        android:backgroundTint="@color/color_precios_negativos"
+                        android:text="G"
                         android:textAlignment="center"
                         android:textColor="@color/background_white"
                         android:textSize="@dimen/text_circularview"
@@ -451,7 +438,7 @@
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
 
-                            <LinearLayout
+                            <FrameLayout
                                 android:layout_width="@dimen/size_contenedor_info"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center_vertical"
@@ -461,7 +448,6 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/espacio_mediano"
-                                    android:layout_marginTop="@dimen/espacio_mediano"
                                     android:layout_marginEnd="@dimen/espacio_mediano"
                                     android:lines="1"
                                     android:singleLine="true"
@@ -469,21 +455,10 @@
                                     android:textColor="@color/primary_text"
                                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
                                     android:textSize="@dimen/size_titulo_item_transaccion"
-                                    android:fontFamily="@font/urwdin_bold"/>
+                                    android:fontFamily="@font/urwdin_bold"
+                                    android:layout_gravity="center_vertical"/>
 
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/espacio_mediano"
-                                    android:layout_marginTop="@dimen/espacio_small"
-                                    android:layout_marginEnd="@dimen/espacio_mediano"
-                                    android:textColor="@color/secondary_text"
-                                    android:text="18 Monday June"
-                                    android:lines="1"
-                                    android:singleLine="true"
-                                    android:fontFamily="@font/urwdin_md"/>
-
-                            </LinearLayout>
+                            </FrameLayout>
 
                             <TextView
                                 android:id="@+id/tv_cantidad_gastos_fijos"
@@ -491,7 +466,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:text="100"
-                                android:textColor="@color/color_numeros_naranja"
+                                android:textColor="@color/color_precios_negativos"
                                 android:gravity="right"
                                 android:layout_marginEnd="@dimen/espacio_mediano"
                                 android:fontFamily="@font/urwdin_bold"/>
@@ -530,8 +505,8 @@
                         android:layout_marginStart="@dimen/espacio_mediano"
                         android:layout_marginEnd="@dimen/espacio_mediano"
                         android:background="@drawable/textview_circular"
-                        android:backgroundTint="@color/color_numeros_naranja"
-                        android:text="T"
+                        android:backgroundTint="@color/color_precio_balance"
+                        android:text="P"
                         android:textAlignment="center"
                         android:textColor="@color/background_white"
                         android:textSize="@dimen/text_circularview"
@@ -550,7 +525,7 @@
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
 
-                            <LinearLayout
+                            <FrameLayout
                                 android:layout_width="@dimen/size_contenedor_info"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center_vertical"
@@ -561,7 +536,6 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/espacio_mediano"
-                                    android:layout_marginTop="@dimen/espacio_mediano"
                                     android:layout_marginEnd="@dimen/espacio_mediano"
                                     android:lines="1"
                                     android:singleLine="true"
@@ -569,22 +543,10 @@
                                     android:textColor="@color/primary_text"
                                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
                                     android:textSize="@dimen/size_titulo_item_transaccion"
-                                    android:fontFamily="@font/urwdin_bold"/>
+                                    android:fontFamily="@font/urwdin_bold"
+                                    android:layout_gravity="center_vertical"/>
 
-                                <TextView
-                                    android:id="@+id/transaccion_fija_info"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/espacio_mediano"
-                                    android:layout_marginTop="@dimen/espacio_small"
-                                    android:layout_marginEnd="@dimen/espacio_mediano"
-                                    android:textColor="@color/secondary_text"
-                                    android:text="18 Monday June"
-                                    android:lines="1"
-                                    android:singleLine="true"
-                                    android:fontFamily="@font/urwdin_md"/>
-
-                            </LinearLayout>
+                            </FrameLayout>
 
                             <TextView
                                 android:id="@+id/tv_cantidad_plantillas"
@@ -592,7 +554,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:text="100"
-                                android:textColor="@color/color_numeros_naranja"
+                                android:textColor="@color/color_precio_balance"
                                 android:gravity="right"
                                 android:layout_marginEnd="@dimen/espacio_mediano"
                                 android:fontFamily="@font/urwdin_bold"/>

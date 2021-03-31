@@ -4,10 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,8 +25,8 @@ public class TransaccionesFijasActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private Toolbar toolbar;
     private FloatingActionButton btnAgregarNuevaTransaccionFija;
-    private EstrategiaDeVerificacion estrategiaDeVerificacion;
     private AdapterViewPagerTransaccionesFijas adapterViewPagerTransaccionesFijas;
+    private EstrategiaDeVerificacion estrategiaDeVerificacion;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,21 +38,21 @@ public class TransaccionesFijasActivity extends AppCompatActivity {
         toolbar   = findViewById(R.id.transaccion_fijas_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        inicializarViewModels();
         inicializarViewPager();
+        inicializarViewModel();
         inicializarBtnAgregarTransaccionFija();
-    }
-
-    private void inicializarViewModels(){
-        ViewModelTransaccion viewModelTransaccion = new ViewModelProvider(this).get(ViewModelTransaccion.class);
-        ViewModelTransaccionFija viewModelTransaccionFija = ViewModelProviders.of(this).get(ViewModelTransaccionFija.class);
-        estrategiaDeVerificacion = new EstrategiaSoloTransaccionesFijas(viewModelTransaccion,viewModelTransaccionFija);
     }
 
     private void inicializarViewPager(){
         adapterViewPagerTransaccionesFijas = new AdapterViewPagerTransaccionesFijas(getSupportFragmentManager(),2);
         viewPager.setAdapter(adapterViewPagerTransaccionesFijas);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void inicializarViewModel(){
+        ViewModelTransaccion viewModelTransaccion = new ViewModelProvider(this).get(ViewModelTransaccion.class);
+        ViewModelTransaccionFija viewModelTransaccionFija = new ViewModelProvider(this).get(ViewModelTransaccionFija.class);
+        estrategiaDeVerificacion = new EstrategiaSoloTransaccionesFijas(viewModelTransaccion,viewModelTransaccionFija);
     }
 
     private void inicializarBtnAgregarTransaccionFija(){

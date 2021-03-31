@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+    tools:showIn="navigation_view"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group android:checkableBehavior="single">
-
+    <group
+        android:id="@+id/gp_uno"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/drawer_categorias"
             android:icon="@drawable/icon_categoria"
             android:title="Categorias">
         </item>
+    </group>
+
+    <group
+        android:id="@+id/gp_dos"
+        android:checkableBehavior="single">
 
         <item
             android:id="@+id/drawer_principal"
@@ -33,6 +40,40 @@
             android:id="@+id/drawer_informes"
             android:icon="@drawable/icon_informes"
             android:title="Informes">
+        </item>
+    </group>
+
+    <group
+        android:id="@+id/gp_tres"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_plantillas"
+            android:icon="@drawable/icon_plantilla"
+            android:title="Plantillas">
+        </item>
+
+        <item
+            android:id="@+id/drawer_gastos_fijos"
+            android:icon="@drawable/icon_gastos_fijos"
+            android:title="Gastos Fijos">
+        </item>
+
+        <item
+            android:id="@+id/drawer_ingresos_fijos"
+            android:icon="@drawable/icon_ingresos_fijos"
+            android:title="Ingresos Fijos">
+        </item>
+    </group>
+
+    <group
+        android:id="@+id/gp_cuatro"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_modo"
+            app:actionLayout="@layout/switch_night_mode"
+            android:icon="@drawable/icon_night_mode"
+            android:title="Modo Nocturno"
+            android:checkable="false">
         </item>
 
     </group>

@@ -8,16 +8,17 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 import com.example.proyecto_tdp.base_de_datos.DateConverter;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity(foreignKeys = @ForeignKey(entity = Categoria.class,
-        parentColumns = "nombreCategoria",
+        parentColumns = "id",
         childColumns = "categoria",
-        onDelete = ForeignKey.NO_ACTION))
+        onDelete = ForeignKey.SET_NULL, onUpdate = ForeignKey.CASCADE))
 public class TransaccionFija {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @NonNull
-    private Integer id;
+    private String id;
 
     @ColumnInfo(name = "titulo")
     private String titulo;
@@ -55,6 +56,7 @@ public class TransaccionFija {
     private Date fechaProximaEjecucion;
 
     public TransaccionFija(String titulo, String etiqueta, float precio, String categoria, String tipoTransaccion, Date fecha, String info, String frecuencia, Date fechaFinal, int cantidadEjecucionesRestantes, Date fechaProximaEjecucion) {
+        id = UUID.randomUUID().toString();
         this.titulo = titulo;
         this.etiqueta = etiqueta;
         this.precio = precio;
@@ -69,11 +71,11 @@ public class TransaccionFija {
     }
 
     @NonNull
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(@NonNull Integer id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 

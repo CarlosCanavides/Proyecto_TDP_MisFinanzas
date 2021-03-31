@@ -30,14 +30,14 @@ import java.util.Map;
 
 public class GastoMesFregment extends Fragment {
 
-    private String mes;
+    protected String mes;
     protected int anio;
     protected int mesNumero;
-    private View vista;
+    protected View vista;
     protected List<Categoria> categoriasMes;
     protected Map<String,Float> mapCategoriasGasto;
     protected AdapterInformeMes adapterInforme;
-    private RecyclerView recyclerCategorias;
+    protected RecyclerView recyclerCategorias;
     protected ViewModelTransaccion viewModelTransaccion;
     protected ViewModelCategoria viewModelCategoria;
     protected DateTimeFormatter formatFecha;
@@ -105,7 +105,7 @@ public class GastoMesFregment extends Fragment {
                         Categoria categoria;
                         String nombreCategoria;
                         if(t.getCategoria()!=null){
-                            categoria = viewModelCategoria.getCategoriaPorNombre(t.getCategoria());
+                            categoria = viewModelCategoria.getCategoriaPorID(t.getCategoria());
                             nombreCategoria = t.getCategoria();
                         }
                         else {

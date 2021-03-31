@@ -46,7 +46,8 @@
                 app:fabCradleMargin="1dp"
                 app:fabCradleVerticalOffset="0dp"
                 app:fabCradleRoundedCornerRadius="15dp"
-                android:layout_gravity="bottom">
+                android:layout_gravity="bottom"
+                android:backgroundTint="@color/color_barra_de_navegacion">
 
                 <com.google.android.material.bottomnavigation.BottomNavigationView
                     android:id="@+id/curvedBottomBar"
@@ -71,13 +72,6 @@
 
     </LinearLayout>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigation_drawer"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_drawer"
-        app:menu="@menu/drawer_menu">
-    </com.google.android.material.navigation.NavigationView>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

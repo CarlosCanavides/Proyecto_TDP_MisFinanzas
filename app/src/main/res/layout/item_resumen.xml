@@ -18,7 +18,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@color/color_resumen_transacciones">
 
             <LinearLayout
                 android:layout_width="200dp"
@@ -46,7 +47,8 @@
                     android:textColor="@color/color_precios_positivos"
                     android:lines="1"
                     android:singleLine="true"
-                    android:fontFamily="@font/urwdin_bold"/>
+                    android:fontFamily="@font/franklin_md"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/resumen_gasto"
@@ -57,7 +59,8 @@
                     android:textColor="@color/color_precios_negativos"
                     android:lines="1"
                     android:singleLine="true"
-                    android:fontFamily="@font/urwdin_bold"/>
+                    android:fontFamily="@font/franklin_md"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/resumen_balance"
@@ -67,9 +70,10 @@
                     android:lines="1"
                     android:singleLine="true"
                     android:text="$90  $2113"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/color_precio_balance"
                     android:textSize="14sp"
-                    android:fontFamily="@font/urwdin_bold"/>
+                    android:fontFamily="@font/franklin_md"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/resumen_cantidad_transacciones"
@@ -126,7 +130,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/espacio_big">
+                android:layout_marginRight="@dimen/espacio_big"
+                android:background="@color/color_anti_flash">
 
             </com.example.proyecto_tdp.views.GraficoResumen>
 

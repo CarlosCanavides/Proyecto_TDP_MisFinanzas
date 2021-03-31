@@ -25,25 +25,17 @@ public class RepositorioCategorias {
         return categorias;
     }
 
-    public List<Categoria> getSubcategorias(String categoriaSuperior){
+    public List<Categoria> getSubcategorias(String idCategoriaSuperior){
         try {
-            return new RepositorioCategorias.ObtenerSubcategoriasAsyncTask(categoriaDao).execute(categoriaSuperior).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            return new RepositorioCategorias.ObtenerSubcategoriasAsyncTask(categoriaDao).execute(idCategoriaSuperior).get();
+        }catch(ExecutionException|InterruptedException e){e.printStackTrace();}
         return null;
     }
 
-    public Categoria getCategoria(String categoria){
+    public Categoria getCategoriaPorID(String id){
         try {
-            return new RepositorioCategorias.ObtenerCategoriaAsyncTask(categoriaDao).execute(categoria).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            return new RepositorioCategorias.ObtenerCategoriaPorIDAsyncTask(categoriaDao).execute(id).get();
+        }catch (ExecutionException|InterruptedException e){e.printStackTrace();}
         return null;
     }
 
@@ -59,7 +51,7 @@ public class RepositorioCategorias {
         new EliminarCategoriaAsyncTask(categoriaDao).execute(categoria);
     }
 
-    public void eliminarCategoria(String idCategoria){
+    public void eliminarCategoriaPorID(String idCategoria){
         new EliminarCategoriaIDAsyncTask(categoriaDao).execute(idCategoria);
     }
 
@@ -127,22 +119,21 @@ public class RepositorioCategorias {
         }
 
         @Override
-        protected List<Categoria> doInBackground(String... categoriaSuperior) {
-            return categoriaDao.getSubcategorias(categoriaSuperior[0]);
+        protected List<Categoria> doInBackground(String... idCategoriaSuperior) {
+            return categoriaDao.getSubcategorias(idCategoriaSuperior[0]);
         }
     }
 
-    public static class ObtenerCategoriaAsyncTask extends AsyncTask<String,Void,Categoria> {
+    public static class ObtenerCategoriaPorIDAsyncTask extends AsyncTask<String,Void,Categoria> {
         private CategoriaDao categoriaDao;
 
-        private ObtenerCategoriaAsyncTask(CategoriaDao categoriaDao){
+        private ObtenerCategoriaPorIDAsyncTask(CategoriaDao categoriaDao){
             this.categoriaDao = categoriaDao;
         }
 
         @Override
-        protected Categoria doInBackground(String... categoria) {
-            return categoriaDao.getCategoria(categoria[0]);
+        protected Categoria doInBackground(String... id) {
+            return categoriaDao.getCategoria(id[0]);
         }
     }
-
 }

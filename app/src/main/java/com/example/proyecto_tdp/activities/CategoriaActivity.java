@@ -7,7 +7,7 @@ import android.widget.ExpandableListView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.activities.agregar_datos.NuevaCategoriaActivity;
@@ -32,7 +32,6 @@ public class CategoriaActivity extends AppCompatActivity {
     protected ExpandableListView expandableLV;
     protected FloatingActionButton btnAgregarCategoria;
     protected ExpandableListView.OnChildClickListener childClickListener;
-
     protected EstrategiaDeVerificacion estrategiaDeVerificacion;
 
     @Override
@@ -42,7 +41,6 @@ public class CategoriaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_categoria);
         expandableLV = findViewById(R.id.expLV);
         btnAgregarCategoria = findViewById(R.id.btnAgregarCategoria);
-
         inicializarListViewCategorias();
         inicializarViewModels();
         inicializarBotonPrincipal();
@@ -51,7 +49,7 @@ public class CategoriaActivity extends AppCompatActivity {
     }
 
     protected void inicializarViewModels(){
-        viewModelCategoria =  ViewModelProviders.of(this).get(ViewModelCategoria.class);
+        viewModelCategoria =  new ViewModelProvider(this).get(ViewModelCategoria.class);
         viewModelCategoria.getAllCategorias().observe(this, new Observer<List<Categoria>>() {
             @Override
             public void onChanged(List<Categoria> c) {
@@ -62,7 +60,7 @@ public class CategoriaActivity extends AppCompatActivity {
                         categorias.add(categoria);
                         List<Categoria> sc = new ArrayList<>();
                         sc.add(categoria);
-                        sc.addAll(viewModelCategoria.getSubcategorias(categoria.getNombreCategoria()));
+                        sc.addAll(viewModelCategoria.getSubcategorias(categoria.getId()));
                         mapSubcategorias.put(categoria, sc);
                     }
                 }
@@ -95,10 +93,11 @@ public class CategoriaActivity extends AppCompatActivity {
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Categoria categoriaSeleccionada = mapSubcategorias.get(categorias.get(groupPosition)).get(childPosition);
                 Intent intent = new Intent(CategoriaActivity.this, SetCategoriaActivity.class);
-                intent.putExtra(Constantes.CAMPO_ID, categoriaSeleccionada.getNombreCategoria());
+                intent.putExtra(Constantes.CAMPO_ID, categoriaSeleccionada.getId());
                 intent.putExtra(Constantes.CAMPO_TIPO_CATEGORIA, categoriaSeleccionada.getTipoCategoria());
                 intent.putExtra(Constantes.CAMPO_NOMBRE_CATEGORIA, categoriaSeleccionada.getNombreCategoria());
-                intent.putExtra(Constantes.CAMPO_CATEGORIA_SUPERIOR, categoriaSeleccionada.getCategoriaSuperior());
+                intent.putExtra(Constantes.CAMPO_ID_CATEGORIA_SUPERIOR, categoriaSeleccionada.getCategoriaSuperior());
+                intent.putExtra(Constantes.CAMPO_NOMBRE_CATEGORIA_SUPERIOR, categorias.get(groupPosition).getNombreCategoria());
                 intent.putExtra(Constantes.CAMPO_COLOR_CATEGORIA, categoriaSeleccionada.getColorCategoria());
                 startActivityForResult(intent, Constantes.PEDIDO_SET_CATEGORIA);
                 return true;

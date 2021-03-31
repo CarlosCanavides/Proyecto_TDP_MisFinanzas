@@ -3,13 +3,22 @@ package com.example.proyecto_tdp.base_de_datos.entidades;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
+import java.util.UUID;
 
-@Entity
+@Entity(foreignKeys = @ForeignKey(entity = Categoria.class,
+        parentColumns = "id",
+        childColumns = "categoriaSuperior",
+        onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE))
 public class Categoria {
 
     @PrimaryKey
     @NonNull
+    private String id;
+
+    @NonNull
+    @ColumnInfo(name = "nombreCategoria")
     private String nombreCategoria;
 
     @ColumnInfo(name = "categoriaSuperior")
@@ -23,6 +32,7 @@ public class Categoria {
 
 
     public Categoria(@NonNull String nombreCategoria, String categoriaSuperior, int colorCategoria, String tipoCategoria) {
+        id = UUID.randomUUID().toString();
         this.nombreCategoria = nombreCategoria;
         this.categoriaSuperior = categoriaSuperior;
         this.colorCategoria = colorCategoria;
@@ -30,19 +40,28 @@ public class Categoria {
     }
 
     @NonNull
-    public String getNombreCategoria() {
-        return nombreCategoria;
+    public String getId() {
+        return id;
     }
 
-    public String getCategoriaSuperior() {
-        return categoriaSuperior;
+    public void setId(@NonNull String id) {
+        this.id = id;
+    }
+
+    @NonNull
+    public String getNombreCategoria() {
+        return nombreCategoria;
     }
 
     public void setNombreCategoria(@NonNull String nombreCategoria) {
         this.nombreCategoria = nombreCategoria;
     }
 
-    public void setCategoriaSuperior(@NonNull String categoriaSuperior) {
+    public String getCategoriaSuperior() {
+        return categoriaSuperior;
+    }
+
+    public void setCategoriaSuperior(String categoriaSuperior) {
         this.categoriaSuperior = categoriaSuperior;
     }
 
@@ -60,12 +79,5 @@ public class Categoria {
 
     public void setTipoCategoria(String tipoCategoria) {
         this.tipoCategoria = tipoCategoria;
-    }
-
-    public void copy(Categoria nuevosDatos){
-        nombreCategoria = nuevosDatos.getNombreCategoria();
-        colorCategoria = nuevosDatos.getColorCategoria();
-        tipoCategoria = nuevosDatos.getTipoCategoria();
-        categoriaSuperior = nuevosDatos.getCategoriaSuperior();
     }
 }
