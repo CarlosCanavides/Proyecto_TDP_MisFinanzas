@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.proyecto_tdp">
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,39 +8,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.SeleccionarPlantillaActivity"></activity>
-        <activity android:name=".activities.SeleccionarCategoriaActivity" />
-        <activity android:name=".activities.modificar_datos.SetCategoriaActivity" />
-        <activity android:name=".activities.modificar_datos.SetTransaccionFijaActivity" />
-        <activity android:name=".activities.modificar_datos.SetPlantillaActivity" />
-        <activity android:name=".activities.agregar_datos.NuevaTransaccionFijaActivity" />
-        <activity android:name=".activities.agregar_datos.NuevaPlantillaActivity" />
+        <activity android:name=".activities.agregar_datos.NuevaCategoriaActivity"/>
+        <activity android:name=".activities.agregar_datos.NuevaPlantillaActivity"/>
+        <activity android:name=".activities.agregar_datos.NuevaTransaccionActivity"/>
+        <activity android:name=".activities.agregar_datos.NuevaTransaccionFijaActivity"/>
+        <activity android:name=".activities.modificar_datos.SetCategoriaActivity"/>
+        <activity android:name=".activities.modificar_datos.SetPlantillaActivity"/>
+        <activity android:name=".activities.modificar_datos.SetTransaccionActivity"/>
+        <activity android:name=".activities.modificar_datos.SetTransaccionFijaActivity"/>
+        <activity android:name=".activities.SeleccionarPlantillaActivity"/>
+        <activity android:name=".activities.SeleccionarCategoriaActivity"/>
+
         <activity android:name=".activities.PlantillasActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".activities.CategoriaActivity"
+            android:label="@string/title_activity_categorias"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".activities.InformesActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".activities.TransaccionesFijasActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".MainActivity"/>
         <activity
-            android:name=".activities.InformesActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".activities.agregar_datos.NuevaCategoriaActivity" />
-        <activity
-            android:name=".activities.CategoriaActivity"
-            android:label="@string/title_activity_categorias"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".activities.modificar_datos.SetTransaccionActivity" />
-        <activity android:name=".activities.agregar_datos.NuevaTransaccionActivity" />
-        <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

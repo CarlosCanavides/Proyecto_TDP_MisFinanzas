@@ -76,6 +76,8 @@
     <color name="color_precio_balance">#1754CD</color>
     <color name="color_background_spinner">#D5DEEF</color>
     <color name="color_background_tablayout_tf">#D5DEEF</color>
+    <color name="color_text_tablayout_tf">#657188</color>
+    <color name="color_selected_tablayout_tf">#1754CD</color>
     <color name="color_encabezado_fecha_transacciones_start">#D5DEEF</color>
     <color name="color_encabezado_fecha_transacciones_end">#F2F3F3</color>
     <color name="color_transacciones_programadas_no_seleccionada">#F9FAF9</color>

@@ -13,6 +13,8 @@ import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.TransaccionFija;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +29,7 @@ public class AdapterTransaccionesFijas extends BaseExpandableListAdapter {
         this.frecuencias = frecuencias;
         this.mapTransaccionesFijas = mapTransaccionesFijas;
         this.mapCategorias = mapCategorias;
-        formatoFecha = DateTimeFormat.forPattern(Constantes.FORMATO_FECHA);
+        formatoFecha = DateTimeFormat.forPattern(Constantes.FORMATO_FECHA_PARA_VISUALIZAR);
     }
 
     @Override
@@ -97,6 +99,7 @@ public class AdapterTransaccionesFijas extends BaseExpandableListAdapter {
         TextView tvFechas = convertView.findViewById(R.id.transaccion_fija_fechas);
         TextView tvTitulo = convertView.findViewById(R.id.transaccion_fija_nombre);
         TextView tvPrecio = convertView.findViewById(R.id.transaccion_fija_precio);
+        TextView tvProximaEjecucion = convertView.findViewById(R.id.transaccion_fija_proxima_ejecucion);
         if(transaccionFija.getCategoria()!=null){
             Categoria categoria = mapCategorias.get(transaccionFija.getCategoria());
             String nombreCategoria = categoria.getNombreCategoria();
@@ -111,17 +114,26 @@ public class AdapterTransaccionesFijas extends BaseExpandableListAdapter {
             tvTitulo.setText(transaccionFija.getTitulo());
         }
         else {
-            tvTitulo.setText("Sin titulo");
+            tvTitulo.setText(Constantes.SIN_TITULO);
         }
         tvPrecio.setText(transaccionFija.getPrecio()+"");
         float precio = transaccionFija.getPrecio();
         if(precio>=0){
-            tvPrecio.setText("+ $ "+precio);
+            tvPrecio.setText("+ $ "+String.format( "%.2f",precio));
+            tvPrecio.setTextColor(convertView.getResources().getColor(R.color.color_precios_positivos));
         }
         else {
-            tvPrecio.setText("- $ "+Math.abs(precio));
+            tvPrecio.setText("- $ "+String.format( "%.2f",Math.abs(precio)));
+            tvPrecio.setTextColor(convertView.getResources().getColor(R.color.color_precios_negativos));
         }
-        tvFechas.setText(formatoFecha.print(transaccionFija.getFecha().getTime())+" | "+formatoFecha.print(transaccionFija.getFechaFinal().getTime()));
+        tvFechas.setText(formatoFecha.print(transaccionFija.getFecha().getTime())+" - "+formatoFecha.print(transaccionFija.getFechaFinal().getTime()));
+        Date fechaProximaEjecucion = transaccionFija.getFechaProximaEjecucion();
+        if(fechaProximaEjecucion!=null){
+            tvProximaEjecucion.setText("Proxima Ejecucion: "+formatoFecha.print(fechaProximaEjecucion.getTime()));
+        }
+        else {
+            tvProximaEjecucion.setText("Transaccion Fija Finalizada");
+        }
         return convertView;
     }
 

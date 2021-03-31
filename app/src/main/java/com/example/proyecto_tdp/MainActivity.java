@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.proyecto_tdp.activities.CategoriaActivity;
 import com.example.proyecto_tdp.activities.InformesActivity;
@@ -65,11 +66,10 @@ public class MainActivity extends AppCompatActivity {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
         fragmentHome = new HomeFragment();
         fragmentResumen = new ResumenFragment();
         fragmentTransacciones = new TransaccionesFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragmentHome).commit();
+        replaceFragment(fragmentHome);
         inicializarModo();
         inicializarViewModels();
         inicializarBotonPrincipal();
@@ -163,9 +163,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
                 setTitle(titulo);
-                if (selectedFragment != null) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-                }
+                replaceFragment(selectedFragment);
                 return  true;
             }
         });
@@ -216,9 +214,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
                 setTitle(titulo);
-                if (selectedFragment != null) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-                }
+                replaceFragment(selectedFragment);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return  true;
             }
@@ -241,6 +237,13 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             super.onBackPressed();
+        }
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        if (fragment != null) {
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
         }
     }
 }

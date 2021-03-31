@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;

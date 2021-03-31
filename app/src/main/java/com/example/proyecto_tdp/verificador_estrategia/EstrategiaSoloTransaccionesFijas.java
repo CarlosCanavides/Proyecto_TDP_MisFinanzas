@@ -144,7 +144,8 @@ public class EstrategiaSoloTransaccionesFijas extends EstrategiaGeneral{
         Date hoy = LocalDate.now().toDate();
         if(fechaInicio.before(hoy)){
             calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
-            nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,0,fechaInicio);
+            nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,0,null);
+            viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
             while ((fechaFinal.after(calendario.toDate())||fechaFinal.compareTo(calendario.toDate())==0) && hoy.after(calendario.toDate())){
                 cantidadDeEjecucionesTotales++;
                 cantidadDeEjecucionesRealizadas++;
@@ -162,7 +163,7 @@ public class EstrategiaSoloTransaccionesFijas extends EstrategiaGeneral{
             }
             nuevaTransaccionFija.setCantidadEjecucionesRestantes(cantidadDeEjecucionesTotales-cantidadDeEjecucionesRealizadas);
             nuevaTransaccionFija.setFechaProximaEjecucion(proximaEjecucion);
-            viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
+            viewModelTransaccionFija.actualizarTransaccionFija(nuevaTransaccionFija);
         }
         else {
             calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
@@ -183,8 +184,8 @@ public class EstrategiaSoloTransaccionesFijas extends EstrategiaGeneral{
         Date hoy = LocalDate.now().toDate();
         if(fechaInicio.before(hoy)){
             calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
-            nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,0,fechaInicio);
-            Log.e("AQUII en insertar TFUM","IDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"+nuevaTransaccionFija.getId()+"");
+            nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,0,null);
+            viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
             while ((fechaFinal.after(calendario.toDate())||fechaFinal.compareTo(calendario.toDate())==0) && hoy.after(calendario.toDate())){
                 cantidadDeEjecucionesTotales++;
                 cantidadDeEjecucionesRealizadas++;
@@ -202,7 +203,7 @@ public class EstrategiaSoloTransaccionesFijas extends EstrategiaGeneral{
             }
             nuevaTransaccionFija.setCantidadEjecucionesRestantes(cantidadDeEjecucionesTotales-cantidadDeEjecucionesRealizadas);
             nuevaTransaccionFija.setFechaProximaEjecucion(proximaEjecucion);
-            viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
+            viewModelTransaccionFija.actualizarTransaccionFija(nuevaTransaccionFija);
         }
         else {
             calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
@@ -223,7 +224,8 @@ public class EstrategiaSoloTransaccionesFijas extends EstrategiaGeneral{
         Date hoy = LocalDate.now().toDate();
         if(fechaInicio.before(hoy)){
             calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
-            nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,0,fechaInicio);
+            nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,0,null);
+            viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
             while ((fechaFinal.after(calendario.toDate())||fechaFinal.compareTo(calendario.toDate())==0) && hoy.after(calendario.toDate())){
                 cantidadDeEjecucionesTotales++;
                 cantidadDeEjecucionesRealizadas++;
@@ -241,7 +243,7 @@ public class EstrategiaSoloTransaccionesFijas extends EstrategiaGeneral{
             }
             nuevaTransaccionFija.setCantidadEjecucionesRestantes(cantidadDeEjecucionesTotales-cantidadDeEjecucionesRealizadas);
             nuevaTransaccionFija.setFechaProximaEjecucion(proximaEjecucion);
-            viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
+            viewModelTransaccionFija.actualizarTransaccionFija(nuevaTransaccionFija);
         }
         else {
             calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));

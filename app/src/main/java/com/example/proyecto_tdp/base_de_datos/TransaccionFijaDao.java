@@ -15,16 +15,16 @@ public interface TransaccionFijaDao {
     @Query("SELECT * FROM transaccionFija")
     List<TransaccionFija> getAllTransaccionesFijas();
 
-    @Query("SELECT * FROM transaccionFija")
+    @Query("SELECT * FROM transaccionFija ORDER BY fecha DESC")
     LiveData<List<TransaccionFija>> getAllLiveTransaccionesFijas();
 
-    @Query("SELECT * FROM transaccionFija WHERE fechaProximaEjecucion NOT LIKE null")
+    @Query("SELECT * FROM transaccionFija WHERE fechaProximaEjecucion NOT LIKE null ORDER BY fecha ASC")
     List<TransaccionFija> getAllTransaccionesFijasPendientes();
 
-    @Query("SELECT * FROM transaccionFija WHERE fecha BETWEEN date(:desde) AND date(:hasta)")
+    @Query("SELECT * FROM transaccionFija WHERE fecha BETWEEN date(:desde) AND date(:hasta) ORDER BY fecha DESC")
     LiveData<List<TransaccionFija>> getLiveTransaccionesFijasDesdeHasta(String desde, String hasta);
 
-    @Query("SELECT * FROM transaccionFija WHERE fecha BETWEEN date(:desde) AND date(:hasta)")
+    @Query("SELECT * FROM transaccionFija WHERE fecha BETWEEN date(:desde) AND date(:hasta) ORDER BY fecha DESC")
     List<TransaccionFija> getTransaccionesFijasDesdeHasta(String desde, String hasta);
 
     @Query("SELECT * FROM transaccionFija WHERE titulo LIKE :titulo LIMIT 1")

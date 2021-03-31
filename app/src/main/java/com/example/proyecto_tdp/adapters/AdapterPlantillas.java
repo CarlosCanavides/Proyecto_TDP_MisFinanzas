@@ -59,11 +59,11 @@ public class AdapterPlantillas extends RecyclerView.Adapter<AdapterPlantillas.Vi
         }
         float precio = plantilla.getPrecio();
         if(precio>=0){
-            holder.tvPrecio.setText("+ $ "+precio);
+            holder.tvPrecio.setText("+ $ "+String.format( "%.2f",precio));
             holder.tvPrecio.setTextColor(Color.parseColor("#0EB87A"));
         }
         else {
-            holder.tvPrecio.setText("- $ "+Math.abs(precio));
+            holder.tvPrecio.setText("- $ "+String.format( "%.2f",Math.abs(precio)));
             holder.tvPrecio.setTextColor(Color.parseColor("#E12E48"));
         }
         Drawable bg = holder.tvLetra.getBackground();

@@ -28,6 +28,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -40,8 +41,8 @@ public class TransaccionesFragment extends Fragment {
     private ImageButton btnMesAnterior;
     private ImageButton btnMesSiguiente;
     private ExpandableListView expTransacciones;
-    private List<String> fechas;
-    private Map<String, List<Transaccion>> mapTransacciones;
+    private List<Date> fechas;
+    private Map<Date,List<Transaccion>> mapTransacciones;
     private Map<Transaccion,Categoria> mapCategoriaDeTransacciones;
     private AdapterTransacciones adapter;
     private ViewModelCategoria viewModelCategoria;
@@ -54,7 +55,6 @@ public class TransaccionesFragment extends Fragment {
     private EstrategiaDeVerificacion estrategiaDeVerificacion;
     private DateTimeFormatter formatFechaMes =  DateTimeFormat.forPattern("MM/yyyy");
     private DateTimeFormatter formatFecha = DateTimeFormat.forPattern(Constantes.FORMATO_FECHA);
-    private NumberFormat formatoNumero = NumberFormat.getInstance(new Locale("es", "ES"));
 
     @Nullable
     @Override
@@ -97,12 +97,15 @@ public class TransaccionesFragment extends Fragment {
                 intent.putExtra(Constantes.CAMPO_ID, transaccion.getId());
                 intent.putExtra(Constantes.CAMPO_ID_TF_PADRE, transaccion.getTransaccionFijaPadre());
                 intent.putExtra(Constantes.CAMPO_PRECIO, String.format( "%.2f", Math.abs(transaccion.getPrecio())));
-                intent.putExtra(Constantes.CAMPO_ID_CATEGORIA, transaccion.getCategoria());
                 intent.putExtra(Constantes.CAMPO_TIPO, transaccion.getTipoTransaccion());
                 intent.putExtra(Constantes.CAMPO_TITULO, transaccion.getTitulo());
                 intent.putExtra(Constantes.CAMPO_ETIQUETA, transaccion.getEtiqueta());
                 intent.putExtra(Constantes.CAMPO_FECHA, formatFecha.print(transaccion.getFecha().getTime()));
                 intent.putExtra(Constantes.CAMPO_INFO, transaccion.getInfo());
+                intent.putExtra(Constantes.CAMPO_ID_CATEGORIA, transaccion.getCategoria());
+                if(transaccion.getCategoria()!=null){
+                    intent.putExtra(Constantes.CAMPO_NOMBRE_CATEGORIA, mapCategoriaDeTransacciones.get(transaccion).getNombreCategoria());
+                }
                 startActivityForResult(intent, Constantes.PEDIDO_SET_TRANSACCION);
                 return true;
             }
@@ -198,7 +201,7 @@ public class TransaccionesFragment extends Fragment {
     }
 
     private void actualizarDatos(Transaccion t){
-        String fechaTransaccion = formatFecha.print(t.getFecha().getTime());
+        Date fechaTransaccion = t.getFecha();
         List<Transaccion> transaccionesRealizadas = mapTransacciones.get(fechaTransaccion);
         if(transaccionesRealizadas==null){
             transaccionesRealizadas = new ArrayList<>();

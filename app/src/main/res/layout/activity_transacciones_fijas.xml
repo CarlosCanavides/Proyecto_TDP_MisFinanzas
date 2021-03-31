@@ -36,8 +36,9 @@
                 android:id="@+id/tabLayout_transacciones_fijas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tabIndicatorColor="@color/colorPrimary"
-                app:tabSelectedTextColor="@color/colorPrimary"
+                app:tabIndicatorColor="@color/color_selected_tablayout_tf"
+                app:tabSelectedTextColor="@color/color_selected_tablayout_tf"
+                app:tabTextColor="@color/color_text_tablayout_tf"
                 app:tabTextAppearance="@style/tab_text"
                 android:background="@color/color_background_tablayout_tf">
 

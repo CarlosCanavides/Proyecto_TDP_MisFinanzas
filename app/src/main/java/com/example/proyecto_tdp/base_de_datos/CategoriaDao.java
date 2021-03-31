@@ -15,7 +15,7 @@ public interface CategoriaDao {
     @Query("SELECT * FROM categoria")
     List<Categoria> getAllCategorias();
 
-    @Query("SELECT * FROM categoria")
+    @Query("SELECT * FROM categoria ORDER BY nombreCategoria ASC")
     LiveData<List<Categoria>> getAllLiveCategorias();
 
     @Query("SELECT * FROM categoria WHERE nombreCategoria IN (:categorias)")
@@ -24,10 +24,10 @@ public interface CategoriaDao {
     @Query("SELECT * FROM categoria WHERE nombreCategoria LIKE :nombreCategoria LIMIT 1")
     Categoria findByName(String nombreCategoria);
 
-    @Query("SELECT * FROM categoria WHERE categoriaSuperior is NULL")
+    @Query("SELECT * FROM categoria WHERE categoriaSuperior is NULL ORDER BY nombreCategoria ASC")
     List<Categoria> getCategoriasSuperiores();
 
-    @Query("SELECT * FROM categoria WHERE categoriaSuperior LIKE :idCategoriaSuperior")
+    @Query("SELECT * FROM categoria WHERE categoriaSuperior LIKE :idCategoriaSuperior ORDER BY nombreCategoria ASC")
     List<Categoria> getSubcategorias(String idCategoriaSuperior);
 
     @Query("SELECT * FROM categoria WHERE id LIKE :id LIMIT 1")

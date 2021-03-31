@@ -18,7 +18,7 @@
             android:text="12/2019"
             android:textSize="@dimen/text_transacciones_mes"
             android:layout_marginStart="@dimen/espacio_mediano"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/color_precio_balance"
             android:fontFamily="@font/urwdin_bold"/>
 
         <TextView

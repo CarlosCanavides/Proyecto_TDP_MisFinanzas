@@ -76,6 +76,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_campos_transaccion"
                 android:textColor="@color/primary_text"
+                android:textAlignment="textEnd"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/espacio_mediano"
                 android:fontFamily="@font/urwdin_md"/>

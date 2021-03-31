@@ -72,6 +72,16 @@
 
     </LinearLayout>
 
-
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_drawer"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_drawer"
+        app:menu="@menu/drawer_menu"
+        app:itemTextColor="@color/color_componentes_navdrawer"
+        android:background="@color/color_anti_flash"
+        app:itemIconTint="@color/color_componentes_navdrawer">
+    </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

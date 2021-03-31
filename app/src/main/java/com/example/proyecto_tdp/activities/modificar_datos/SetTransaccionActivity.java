@@ -233,8 +233,9 @@ public class SetTransaccionActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constantes.PEDIDO_SELECCIONAR_CATEGORIA) {
             if (resultCode == RESULT_OK) {
-                String idCategoriaElegida = data.getStringExtra("id_categoria_elegida");
-                campoCategoria.setText(idCategoriaElegida);
+                idCategoriaElegida = data.getStringExtra(Constantes.ID_CATEGORIA_ELEGIDA);
+                String nombreCategoriaElegida = data.getStringExtra(Constantes.NOMBRE_CATEGORIA_ELEGIDA);
+                campoCategoria.setText(nombreCategoriaElegida);
             }
         }
         else if(requestCode==Constantes.PEDIDO_SELECCIONAR_PLANTILLA){

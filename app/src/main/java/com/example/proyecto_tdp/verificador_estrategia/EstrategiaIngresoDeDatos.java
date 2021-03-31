@@ -122,7 +122,8 @@ public class EstrategiaIngresoDeDatos implements EstrategiaDeVerificacion{
             if(frecuencia.equals(Constantes.FRECUENCIA_UNA_VEZ_A_LA_SEMANA)){
                 if(fechaInicio.before(hoy)){
                     calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
-                    nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,0,fechaInicio);
+                    nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,0,null);
+                    viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
                     while ((fechaFinal.after(calendario.toDate())||fechaFinal.compareTo(calendario.toDate())==0) && hoy.after(calendario.toDate())){
                         cantidadDeEjecucionesTotales++;
                         cantidadDeEjecucionesRealizadas++;
@@ -140,7 +141,7 @@ public class EstrategiaIngresoDeDatos implements EstrategiaDeVerificacion{
                     }
                     nuevaTransaccionFija.setCantidadEjecucionesRestantes(cantidadDeEjecucionesTotales-cantidadDeEjecucionesRealizadas);
                     nuevaTransaccionFija.setFechaProximaEjecucion(proximaEjecucion);
-                    viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
+                    viewModelTransaccionFija.actualizarTransaccionFija(nuevaTransaccionFija);
                 }
                 else {
                     calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
@@ -155,7 +156,8 @@ public class EstrategiaIngresoDeDatos implements EstrategiaDeVerificacion{
             else if(frecuencia.equals(Constantes.FRECUENCIA_UNA_VEZ_AL_MES)){
                 if(fechaInicio.before(hoy)){
                     calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
-                    nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,0,fechaInicio);
+                    nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,0,null);
+                    viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
                     while ((fechaFinal.after(calendario.toDate())||fechaFinal.compareTo(calendario.toDate())==0) && hoy.after(calendario.toDate())){
                         cantidadDeEjecucionesTotales++;
                         cantidadDeEjecucionesRealizadas++;
@@ -173,7 +175,7 @@ public class EstrategiaIngresoDeDatos implements EstrategiaDeVerificacion{
                     }
                     nuevaTransaccionFija.setCantidadEjecucionesRestantes(cantidadDeEjecucionesTotales-cantidadDeEjecucionesRealizadas);
                     nuevaTransaccionFija.setFechaProximaEjecucion(proximaEjecucion);
-                    viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
+                    viewModelTransaccionFija.actualizarTransaccionFija(nuevaTransaccionFija);
                 }
                 else {
                     calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
@@ -188,7 +190,8 @@ public class EstrategiaIngresoDeDatos implements EstrategiaDeVerificacion{
             else {
                 if(fechaInicio.before(hoy)){
                     calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
-                    nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,0,fechaInicio);
+                    nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,0,null);
+                    viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
                     while ((fechaFinal.after(calendario.toDate())||fechaFinal.compareTo(calendario.toDate())==0) && hoy.after(calendario.toDate())){
                         cantidadDeEjecucionesTotales++;
                         cantidadDeEjecucionesRealizadas++;
@@ -206,7 +209,7 @@ public class EstrategiaIngresoDeDatos implements EstrategiaDeVerificacion{
                     }
                     nuevaTransaccionFija.setCantidadEjecucionesRestantes(cantidadDeEjecucionesTotales-cantidadDeEjecucionesRealizadas);
                     nuevaTransaccionFija.setFechaProximaEjecucion(proximaEjecucion);
-                    viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
+                    viewModelTransaccionFija.actualizarTransaccionFija(nuevaTransaccionFija);
                 }
                 else {
                     calendario = new LocalDate(fechaInicio);

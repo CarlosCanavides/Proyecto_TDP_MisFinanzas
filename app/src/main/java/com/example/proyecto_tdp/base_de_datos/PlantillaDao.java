@@ -15,7 +15,7 @@ public interface PlantillaDao {
     @Query("SELECT * FROM plantilla")
     List<Plantilla> getAllPlantillas();
 
-    @Query("SELECT * FROM plantilla")
+    @Query("SELECT * FROM plantilla ORDER BY titulo ASC")
     LiveData<List<Plantilla>> getAllLivePlantillas();
 
     @Query("SELECT * FROM plantilla WHERE titulo LIKE :titulo LIMIT 1")
