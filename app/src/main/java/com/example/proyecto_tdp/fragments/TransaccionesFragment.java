@@ -1,22 +1,26 @@
 package com.example.proyecto_tdp.fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.activities.modificar_datos.SetTransaccionActivity;
 import com.example.proyecto_tdp.adapters.AdapterTransacciones;
 import com.example.proyecto_tdp.R;
+import com.example.proyecto_tdp.adapters.view_types.HeaderOrRow;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.verificador_estrategia.EstrategiaDeVerificacion;
@@ -26,24 +30,21 @@ import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
-public class TransaccionesFragment extends Fragment {
+public class TransaccionesFragment extends Fragment implements AdapterTransacciones.OnTransaccionListener {
 
     private TextView tvGastoPorMes;
     private TextView tvMesTransacciones;
     private ImageButton btnMesAnterior;
     private ImageButton btnMesSiguiente;
-    private ExpandableListView expTransacciones;
-    private List<Date> fechas;
-    private Map<Date,List<Transaccion>> mapTransacciones;
-    private Map<Transaccion,Categoria> mapCategoriaDeTransacciones;
+    private RecyclerView recyclerTransaccionesDelMes;
+    private Map<String,Categoria> mapCategoriaDeTransacciones;
+    private List<HeaderOrRow> transaccionesPorFecha;
     private AdapterTransacciones adapter;
     private ViewModelCategoria viewModelCategoria;
     private ViewModelTransaccion viewModelTransaccion;
@@ -59,14 +60,8 @@ public class TransaccionesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View vista = inflater.inflate(R.layout.fragment_transacciones, container, false);
-        return vista;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        expTransacciones = view.findViewById(R.id.expTransacciones);
+        View view = inflater.inflate(R.layout.fragment_transacciones, container, false);
+        recyclerTransaccionesDelMes = view.findViewById(R.id.recycler_transacciones_por_fecha);
         btnMesAnterior = view.findViewById(R.id.btn_mes_anterior);
         btnMesSiguiente = view.findViewById(R.id.btn_mes_siguiente);
         tvMesTransacciones = view.findViewById(R.id.transaccion_mes);
@@ -75,41 +70,15 @@ public class TransaccionesFragment extends Fragment {
         inicializarPeriodoDeTiempo();
         inicializarViewModel();
         listenerBotonesPrincipales();
+        return view;
     }
 
     private void inicializarListViewTransacciones(){
-        fechas = new ArrayList<>();
-        mapTransacciones = new HashMap<>();
+        recyclerTransaccionesDelMes.setLayoutManager(new GridLayoutManager(getActivity(),1));
+        transaccionesPorFecha = new ArrayList<>();
         mapCategoriaDeTransacciones = new HashMap<>();
-        adapter = new AdapterTransacciones(fechas,mapTransacciones, mapCategoriaDeTransacciones);
-        expTransacciones.setAdapter(adapter);
-        expTransacciones.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                return true;
-            }
-        });
-        expTransacciones.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Transaccion transaccion = mapTransacciones.get(fechas.get(groupPosition)).get(childPosition);
-                Intent intent = new Intent(getActivity(), SetTransaccionActivity.class);
-                intent.putExtra(Constantes.CAMPO_ID, transaccion.getId());
-                intent.putExtra(Constantes.CAMPO_ID_TF_PADRE, transaccion.getTransaccionFijaPadre());
-                intent.putExtra(Constantes.CAMPO_PRECIO, String.format( "%.2f", Math.abs(transaccion.getPrecio())));
-                intent.putExtra(Constantes.CAMPO_TIPO, transaccion.getTipoTransaccion());
-                intent.putExtra(Constantes.CAMPO_TITULO, transaccion.getTitulo());
-                intent.putExtra(Constantes.CAMPO_ETIQUETA, transaccion.getEtiqueta());
-                intent.putExtra(Constantes.CAMPO_FECHA, formatFecha.print(transaccion.getFecha().getTime()));
-                intent.putExtra(Constantes.CAMPO_INFO, transaccion.getInfo());
-                intent.putExtra(Constantes.CAMPO_ID_CATEGORIA, transaccion.getCategoria());
-                if(transaccion.getCategoria()!=null){
-                    intent.putExtra(Constantes.CAMPO_NOMBRE_CATEGORIA, mapCategoriaDeTransacciones.get(transaccion).getNombreCategoria());
-                }
-                startActivityForResult(intent, Constantes.PEDIDO_SET_TRANSACCION);
-                return true;
-            }
-        });
+        adapter = new AdapterTransacciones(transaccionesPorFecha,mapCategoriaDeTransacciones,this);
+        recyclerTransaccionesDelMes.setAdapter(adapter);
     }
 
     private void inicializarPeriodoDeTiempo(){
@@ -128,30 +97,60 @@ public class TransaccionesFragment extends Fragment {
     }
 
     private void inicializarViewModel(){
-        viewModelCategoria = ViewModelProviders.of(getActivity()).get(ViewModelCategoria.class);
-        viewModelTransaccion = ViewModelProviders.of(getActivity()).get(ViewModelTransaccion.class);
+        viewModelCategoria = new ViewModelProvider(this).get(ViewModelCategoria.class);
+        viewModelTransaccion = new ViewModelProvider(this).get(ViewModelTransaccion.class);
         estrategiaDeVerificacion = new EstrategiaSoloTransacciones(viewModelTransaccion);
         viewModelTransaccion.getAllTransacciones().observe(getActivity(), new Observer<List<Transaccion>>() {
             @Override
-            public void onChanged(List<Transaccion> transaccions) {
+            public void onChanged(List<Transaccion> transacciones) {
                 gastoPorMes = 0;
-                fechas.clear();
-                mapTransacciones.clear();
+                transaccionesPorFecha.clear();
                 mapCategoriaDeTransacciones.clear();
                 adapter.refrescar();
-                for(Transaccion t : transaccions) {
-                    if(formatFechaMes.print(t.getFecha().getTime()).equals(tvMesTransacciones.getText())) {
-                        actualizarDatos(t);
+                for(int i=0; i<transacciones.size(); i++) {
+                    Transaccion transaccion = transacciones.get(i);
+                    Date fecha = transaccion.getFecha();
+                    if(formatFechaMes.print(fecha.getTime()).equals(tvMesTransacciones.getText().toString())) {
+                        transaccionesPorFecha.add(HeaderOrRow.createHeader(fecha));
+                        transaccionesPorFecha.add(HeaderOrRow.createRow(transaccion));
+                        gastoPorMes += transaccion.getPrecio();
+                        agregarCategoria(transaccion);
+                        boolean continuar = true;
+                        for(int j=i; (j<transacciones.size()-1)&&continuar; j++){
+                            Transaccion transaccionSiguiente = transacciones.get(j);
+                            Date fechaTransaccionSiguiente = transaccionSiguiente.getFecha();
+                            if(fecha.compareTo(fechaTransaccionSiguiente)==0) {
+                                transaccionesPorFecha.add(HeaderOrRow.createRow(transaccionSiguiente));
+                                agregarCategoria(transaccionSiguiente);
+                                i++;
+                            }
+                            else {
+                                continuar = false;
+                            }
+                        }
                     }
                 }
                 actualizarTVGastoPorMes();
                 adapter.notifyDataSetChanged();
-                for (int i=0; i<fechas.size(); i++){
-                    expTransacciones.expandGroup(i);
-                }
             }
         });
-        recopilarDatos();
+    }
+
+    private void agregarCategoria(Transaccion transaccion){
+        String idCategoria = transaccion.getCategoria();
+        Categoria categoria;
+        if(idCategoria==null){
+            if(mapCategoriaDeTransacciones.get(Constantes.SIN_CATEGORIA)==null) {
+                categoria = new Categoria(Constantes.SIN_CATEGORIA, null, Color.parseColor("#FF5722"), Constantes.GASTO);
+                mapCategoriaDeTransacciones.put(Constantes.SIN_CATEGORIA,categoria);
+            }
+        }
+        else {
+            if(mapCategoriaDeTransacciones.get(idCategoria)==null) {
+                categoria = viewModelCategoria.getCategoriaPorID(transaccion.getCategoria());
+                mapCategoriaDeTransacciones.put(idCategoria,categoria);
+            }
+        }
     }
 
     private void listenerBotonesPrincipales(){
@@ -186,38 +185,34 @@ public class TransaccionesFragment extends Fragment {
     private void recopilarDatos(){
         List<Transaccion> transaccionesDelMes = viewModelTransaccion.getTransaccionesDesdeHasta(fechaInicio,fechaFin);
         gastoPorMes = 0;
-        fechas.clear();
-        mapTransacciones.clear();
+        transaccionesPorFecha.clear();
         mapCategoriaDeTransacciones.clear();
         adapter.refrescar();
-        for(Transaccion t : transaccionesDelMes) {
-            actualizarDatos(t);
+        for(int i=0; i<transaccionesDelMes.size(); i++) {
+            Transaccion transaccion = transaccionesDelMes.get(i);
+            Date fecha = transaccion.getFecha();
+            if(formatFechaMes.print(fecha.getTime()).equals(tvMesTransacciones.getText().toString())) {
+                transaccionesPorFecha.add(HeaderOrRow.createHeader(fecha));
+                transaccionesPorFecha.add(HeaderOrRow.createRow(transaccion));
+                gastoPorMes += transaccion.getPrecio();
+                agregarCategoria(transaccion);
+                boolean continuar = true;
+                for(int j=i; (j<transaccionesDelMes.size()-1)&&continuar; j++){
+                    Transaccion transaccionSiguiente = transaccionesDelMes.get(j);
+                    Date fechaTransaccionSiguiente = transaccionSiguiente.getFecha();
+                    if(fecha.compareTo(fechaTransaccionSiguiente)==0) {
+                        transaccionesPorFecha.add(HeaderOrRow.createRow(transaccionSiguiente));
+                        agregarCategoria(transaccionSiguiente);
+                        i++;
+                    }
+                    else {
+                        continuar = false;
+                    }
+                }
+            }
         }
         actualizarTVGastoPorMes();
         adapter.notifyDataSetChanged();
-        for (int i=0; i<fechas.size(); i++){
-            expTransacciones.expandGroup(i);
-        }
-    }
-
-    private void actualizarDatos(Transaccion t){
-        Date fechaTransaccion = t.getFecha();
-        List<Transaccion> transaccionesRealizadas = mapTransacciones.get(fechaTransaccion);
-        if(transaccionesRealizadas==null){
-            transaccionesRealizadas = new ArrayList<>();
-            transaccionesRealizadas.add(t);
-            fechas.add(fechaTransaccion);
-            mapTransacciones.put(fechaTransaccion,transaccionesRealizadas);
-        }
-        else {
-            transaccionesRealizadas.add(t);
-        }
-        String idCategoria = t.getCategoria();
-        if(idCategoria!=null){
-            Categoria categoria = viewModelCategoria.getCategoriaPorID(t.getCategoria());
-            mapCategoriaDeTransacciones.put(t, categoria);
-        }
-        gastoPorMes += t.getPrecio();
     }
 
     private void actualizarTVGastoPorMes(){
@@ -226,6 +221,25 @@ public class TransaccionesFragment extends Fragment {
         } else {
             tvGastoPorMes.setText("- $ "+String.format( "%.2f", Math.abs(gastoPorMes)));
         }
+    }
+
+    @Override
+    public void onTransaccionClick(int position) {
+        Transaccion transaccion = transaccionesPorFecha.get(position).getRow();
+        Intent intent = new Intent(getActivity(), SetTransaccionActivity.class);
+        intent.putExtra(Constantes.CAMPO_ID, transaccion.getId());
+        intent.putExtra(Constantes.CAMPO_ID_TF_PADRE, transaccion.getTransaccionFijaPadre());
+        intent.putExtra(Constantes.CAMPO_PRECIO, String.format( "%.2f", Math.abs(transaccion.getPrecio())));
+        intent.putExtra(Constantes.CAMPO_TIPO, transaccion.getTipoTransaccion());
+        intent.putExtra(Constantes.CAMPO_TITULO, transaccion.getTitulo());
+        intent.putExtra(Constantes.CAMPO_ETIQUETA, transaccion.getEtiqueta());
+        intent.putExtra(Constantes.CAMPO_FECHA, formatFecha.print(transaccion.getFecha().getTime()));
+        intent.putExtra(Constantes.CAMPO_INFO, transaccion.getInfo());
+        intent.putExtra(Constantes.CAMPO_ID_CATEGORIA, transaccion.getCategoria());
+        if(transaccion.getCategoria()!=null){
+            intent.putExtra(Constantes.CAMPO_NOMBRE_CATEGORIA, mapCategoriaDeTransacciones.get(transaccion.getCategoria()).getNombreCategoria());
+        }
+        startActivityForResult(intent, Constantes.PEDIDO_SET_TRANSACCION);
     }
 
     @Override

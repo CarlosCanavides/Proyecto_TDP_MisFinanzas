@@ -41,10 +41,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="$"
-                            android:textSize="35sp"
+                            android:textSize="37sp"
                             android:layout_gravity="center_vertical"
+                            android:fontFamily="@font/poppins_semibold"
                             android:layout_marginEnd="@dimen/espacio_mediano"
-                            android:fontFamily="@font/urwdin_demi"
                             android:textColor="@color/primary_text"/>
 
                         <TextView
@@ -54,7 +54,7 @@
                             android:text="0,00"
                             android:textSize="40sp"
                             android:textAlignment="center"
-                            android:fontFamily="@font/urwdin_demi"
+                            android:fontFamily="@font/poppins_semibold"
                             android:textColor="@color/primary_text"/>
 
                     </LinearLayout>
@@ -93,8 +93,7 @@
                         android:layout_marginStart="@dimen/espacio_mediano"
                         android:textAlignment="textEnd"
                         android:textColor="@color/primary_text"
-                        tools:ignore="RtlCompat"
-                        android:fontFamily="@font/urwdin_md"/>
+                        tools:ignore="RtlCompat"/>
 
                 </LinearLayout>
 
@@ -131,7 +130,7 @@
                                 android:checked="true"
                                 android:textSize="@dimen/text_campos_transaccion"
                                 android:layout_marginEnd="@dimen/espacio_big"
-                                android:fontFamily="@font/urwdin_md"
+                                android:fontFamily="@font/poppins_semibold"
                                 android:buttonTint="@color/color_precios_negativos"
                                 android:textColor="@color/primary_text"/>
 
@@ -141,7 +140,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Ingreso"
                                 android:textSize="@dimen/text_campos_transaccion"
-                                android:fontFamily="@font/urwdin_md"
+                                android:fontFamily="@font/poppins_semibold"
                                 android:buttonTint="@color/color_precios_positivos"
                                 android:textColor="@color/primary_text"/>
 
@@ -173,8 +172,7 @@
                         android:layout_marginStart="@dimen/espacio_mediano"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:textColor="@color/primary_text"
-                        android:fontFamily="@font/urwdin_md"/>
+                        android:textColor="@color/primary_text"/>
 
                 </LinearLayout>
 
@@ -200,8 +198,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/espacio_mediano"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:fontFamily="@font/urwdin_md"/>
+                        android:singleLine="true"/>
 
                 </LinearLayout>
 
@@ -225,8 +222,7 @@
                         android:textSize="@dimen/text_campos_transaccion"
                         android:textColor="@color/primary_text"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/espacio_mediano"
-                        android:fontFamily="@font/urwdin_md"/>
+                        android:layout_marginStart="@dimen/espacio_mediano"/>
 
                 </LinearLayout>
 
@@ -253,8 +249,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/espacio_mediano"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:fontFamily="@font/urwdin_md"/>
+                        android:singleLine="true"/>
 
                 </LinearLayout>
 
@@ -266,7 +261,6 @@
                     android:text="Plantilla"
                     android:textColor="@color/primary_text"
                     android:layout_marginStart="@dimen/espacio_mediano"
-                    android:fontFamily="@font/urwdin_md"
                     android:textSize="@dimen/text_campos_transaccion"
                     android:buttonTint="@color/colorPrimary"/>
 
@@ -278,7 +272,6 @@
                     android:text="Transacción Fija"
                     android:textColor="@color/primary_text"
                     android:layout_marginStart="@dimen/espacio_mediano"
-                    android:fontFamily="@font/urwdin_md"
                     android:textSize="@dimen/text_campos_transaccion"
                     android:layout_marginBottom="@dimen/espacio_mediano"
                     android:buttonTint="@color/colorPrimary"/>
@@ -315,8 +308,7 @@
                         android:textColor="@color/primary_text"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/espacio_mediano"
-                        android:text="Seleccionar Fecha Final"
-                        android:fontFamily="@font/urwdin_md"/>
+                        android:text="Seleccionar Fecha Final"/>
 
                 </LinearLayout>
 
@@ -343,14 +335,14 @@
                     android:text="Cancelar"
                     android:textColor="@color/color_precios_negativos"
                     android:background="@color/color_botones_de_decision"
-                    android:fontFamily="@font/urwdin_bold"/>
+                    android:fontFamily="@font/poppins_bold"/>
                 <Button
                     android:id="@+id/btn_transaccion_aceptar"
                     android:layout_height="wrap_content"
                     android:background="@color/color_botones_de_decision"
                     android:text="Aceptar"
                     android:textColor="@color/color_precios_positivos"
-                    android:fontFamily="@font/urwdin_bold"/>
+                    android:fontFamily="@font/poppins_bold"/>
             </TableRow>
         </TableLayout>
     </LinearLayout>

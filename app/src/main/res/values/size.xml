@@ -8,21 +8,20 @@
 
     <dimen name="text_circularview">30sp</dimen>
     <dimen name="size_circularview">45sp</dimen>
-    <dimen name="size_contenedor_info">200dp</dimen>
+    <dimen name="size_contenedor_info">185dp</dimen>
 
     <dimen name="text_circularviewSubcategoria">20sp</dimen>
     <dimen name="size_circularviewSubcategoria">30sp</dimen>
 
-    <dimen name="text_transacciones_mes">17sp</dimen>
+    <dimen name="text_transacciones_mes">15sp</dimen>
     <dimen name="btn_transacciones_mes_back">50sp</dimen>
     <dimen name="btn_transacciones_mes_advance">30sp</dimen>
 
-    <dimen name="text_campos_transaccion">16sp</dimen>
-    <dimen name="size_titulo_item_transaccion">16sp</dimen>
+    <dimen name="text_campos_transaccion">13sp</dimen>
+    <dimen name="size_titulo_item_transaccion">13sp</dimen>
 
     <dimen name="margen_iconos_transaccion">15dp</dimen>
     <dimen name="text_campos_resumen">13sp</dimen>
-
 
 
     <dimen name="calculator_button_padding">10dp</dimen>

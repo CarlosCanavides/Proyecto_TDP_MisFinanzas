@@ -33,7 +33,7 @@
                     android:textColor="@color/primary_text"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="@dimen/espacio_mediano"
-                    android:fontFamily="@font/franklin_md"/>
+                    android:fontFamily="@font/poppins_semibold"/>
 
                 <TextView
                     android:id="@+id/set_plantilla_campo_precio"
@@ -43,7 +43,7 @@
                     android:textSize="40sp"
                     android:textAlignment="center"
                     android:textColor="@color/primary_text"
-                    android:fontFamily="@font/franklin_md"/>
+                    android:fontFamily="@font/poppins_semibold"/>
 
             </LinearLayout>
 
@@ -83,8 +83,7 @@
                 android:textColor="@color/primary_text"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/espacio_mediano"
-                android:layout_marginEnd="@dimen/espacio_small"
-                android:fontFamily="@font/urwdin_md"/>
+                android:layout_marginEnd="@dimen/espacio_small"/>
 
         </LinearLayout>
 
@@ -123,7 +122,7 @@
                         android:checked="true"
                         android:buttonTint="@color/color_precios_negativos"
                         android:layout_marginEnd="@dimen/espacio_big"
-                        android:fontFamily="@font/urwdin_md"/>
+                        android:fontFamily="@font/poppins_semibold"/>
 
                     <RadioButton
                         android:id="@+id/set_plantilla_radiobtn_ingreso"
@@ -133,7 +132,7 @@
                         android:textColor="@color/primary_text"
                         android:textSize="@dimen/text_campos_transaccion"
                         android:buttonTint="@color/color_precios_positivos"
-                        android:fontFamily="@font/urwdin_md"/>
+                        android:fontFamily="@font/poppins_semibold"/>
 
                 </RadioGroup>
 
@@ -161,8 +160,7 @@
                 android:textSize="@dimen/text_campos_transaccion"
                 android:textColor="@color/primary_text"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/espacio_mediano"
-                android:fontFamily="@font/urwdin_md"/>
+                android:layout_marginStart="@dimen/espacio_mediano"/>
 
         </LinearLayout>
 
@@ -186,8 +184,7 @@
                 android:textSize="@dimen/text_campos_transaccion"
                 android:textColor="@color/primary_text"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/espacio_mediano"
-                android:fontFamily="@font/urwdin_md"/>
+                android:layout_marginStart="@dimen/espacio_mediano"/>
 
         </LinearLayout>
 
@@ -211,8 +208,7 @@
                 android:textSize="@dimen/text_campos_transaccion"
                 android:textColor="@color/primary_text"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/espacio_mediano"
-                android:fontFamily="@font/urwdin_md"/>
+                android:layout_marginStart="@dimen/espacio_mediano"/>
 
         </LinearLayout>
 
@@ -235,14 +231,14 @@
                     android:text="Eliminar"
                     android:textColor="@color/colorAccent"
                     android:background="@color/color_botones_de_decision"
-                    android:fontFamily="@font/urwdin_bold"/>
+                    android:fontFamily="@font/poppins_bold"/>
                 <Button
                     android:id="@+id/set_plantilla_btn_aceptar"
                     android:layout_height="wrap_content"
                     android:background="@color/color_botones_de_decision"
                     android:text="Aceptar"
                     android:textColor="@color/colorAccent"
-                    android:fontFamily="@font/urwdin_bold"/>
+                    android:fontFamily="@font/poppins_bold"/>
             </TableRow>
         </TableLayout>
     </LinearLayout>

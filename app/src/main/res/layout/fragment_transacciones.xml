@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -31,7 +30,7 @@
             android:textColor="@color/background_white"
             android:background="@color/colorPrimaryDark"
             android:textSize="@dimen/text_transacciones_mes"
-            android:fontFamily="@font/urwdin_bold"/>
+            android:fontFamily="@font/poppins_bold"/>
 
         <ImageButton
             android:id="@+id/btn_mes_siguiente"
@@ -52,24 +51,28 @@
             android:id="@+id/transaccion_gasto_por_mes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="-$ 1320,00"
+            android:text="- $ 1320,00"
             android:textAlignment="center"
             android:textColor="@color/background_white"
             android:background="@color/colorPrimaryDark"
             android:textSize="@dimen/text_transacciones_mes"
             android:layout_marginBottom="@dimen/espacio_mediano"
-            android:fontFamily="@font/franklin_md"
+            android:fontFamily="@font/poppins_semibold"
             android:textStyle="bold"/>
 
     </LinearLayout>
 
 
-    <ExpandableListView
-        android:id="@+id/expTransacciones"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_transacciones_por_fecha"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:childDivider="@android:drawable/screen_background_light_transparent"
-        android:divider="@android:drawable/screen_background_light_transparent"
-        android:groupIndicator="@android:drawable/screen_background_light_transparent" />
+        android:cacheColorHint="@color/colorAccent"
+        android:childDivider="@color/background_white"
+        android:divider="@color/background_white"
+        android:groupIndicator="@android:drawable/screen_background_light_transparent"
+        android:indicatorLeft="3dip"
+        android:indicatorRight="0dip"/>
 
 </LinearLayout>

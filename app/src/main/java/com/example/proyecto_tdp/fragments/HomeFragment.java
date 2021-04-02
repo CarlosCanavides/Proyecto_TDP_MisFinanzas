@@ -103,14 +103,14 @@ public class HomeFragment extends Fragment{
         tvCantidadPlantillas.setText("0");
         tvCantidadGastosFijos.setText("0");
         tvCantidadIngresosFijos.setText("0");
-        tvIngresoPromedio.setText("$0");
-        tvGastoPromedio.setText("$0");
+        tvIngresoPromedio.setText("$ 0");
+        tvGastoPromedio.setText("$ 0");
         tvPorcentajeTransaccionesGasto.setText("0 %");
     }
 
     private void inicializarBarraProgreso(){
         barraProgreso.configureAngles(230,0);
-        SeriesItem serieDeFondo = new SeriesItem.Builder(Color.parseColor("#DBE4F0"))
+        SeriesItem serieDeFondo = new SeriesItem.Builder(Color.parseColor("#2C2D39"))
                 .setRange(0, 100, 100)
                 .setInitialVisibility(true)
                 .build();
@@ -164,7 +164,7 @@ public class HomeFragment extends Fragment{
                         cantidadTransaccionesGasto++;
                     }
                 }
-                tvIngresoTotal.setText("$"+String.format( "%.2f",ingresoTotal));
+                tvIngresoTotal.setText("$"+String.format( "%.2f",ingresoTotal)+" ");
                 float balance = ingresoTotal+gastoTotal;
                 if(balance<0){
                     tvBalance.setText("- $ "+String.format( "%.2f",Math.abs(balance)));

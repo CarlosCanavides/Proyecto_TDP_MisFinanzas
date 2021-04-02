@@ -17,7 +17,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="190dp"
             android:orientation="horizontal"
             android:background="@color/color_resumen_transacciones">
 
@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_marginStart="17dp"
-                android:layout_marginTop="@dimen/espacio_big">
+                android:layout_marginTop="@dimen/espacio_mediano">
 
                 <TextView
                     android:id="@+id/resumen_mes"
@@ -36,31 +36,29 @@
                     android:text="12/2019"
                     android:textColor="@color/primary_text"
                     android:layout_marginBottom="@dimen/espacio_small"
-                    android:fontFamily="@font/urwdin_bold"/>
+                    android:fontFamily="@font/poppins_bold"/>
 
                 <TextView
                     android:id="@+id/resumen_ingreso"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/text_campos_resumen"
                     android:text="$90"
                     android:textColor="@color/color_precios_positivos"
                     android:lines="1"
                     android:singleLine="true"
-                    android:fontFamily="@font/franklin_md"
-                    android:textStyle="bold"/>
+                    android:fontFamily="@font/poppins_semibold"/>
 
                 <TextView
                     android:id="@+id/resumen_gasto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/text_campos_resumen"
                     android:text="$90"
                     android:textColor="@color/color_precios_negativos"
                     android:lines="1"
                     android:singleLine="true"
-                    android:fontFamily="@font/franklin_md"
-                    android:textStyle="bold"/>
+                    android:fontFamily="@font/poppins_semibold"/>
 
                 <TextView
                     android:id="@+id/resumen_balance"
@@ -71,19 +69,18 @@
                     android:singleLine="true"
                     android:text="$90  $2113"
                     android:textColor="@color/color_precio_balance"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/franklin_md"
+                    android:textSize="@dimen/text_campos_resumen"
+                    android:fontFamily="@font/poppins_semibold"
                     android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/resumen_cantidad_transacciones"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/text_campos_resumen"
                     android:text="13 transacciones"
-                    android:layout_marginBottom="8dp"
-                    android:textColor="@color/secondary_text"
-                    android:fontFamily="@font/urwdin_md"/>
+                    android:layout_marginBottom="7dp"
+                    android:textColor="@color/secondary_text"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -91,8 +88,7 @@
                     android:textSize="@dimen/text_campos_resumen"
                     android:text="Muchos gastos en"
                     android:layout_marginBottom="4dp"
-                    android:textColor="@color/secondary_text"
-                    android:fontFamily="@font/urwdin_md"/>
+                    android:textColor="@color/secondary_text"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

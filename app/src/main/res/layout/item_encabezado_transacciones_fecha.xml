@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:textSize="@dimen/text_transacciones_mes"
             android:layout_marginStart="@dimen/espacio_mediano"
             android:textColor="@color/color_precio_balance"
-            android:fontFamily="@font/urwdin_bold"/>
+            android:fontFamily="@font/poppins_bold"/>
 
         <TextView
             android:id="@+id/encabezado_section_gp"
@@ -30,8 +30,7 @@
             android:textSize="@dimen/text_transacciones_mes"
             android:textColor="@color/colorAccent"
             android:layout_marginEnd="@dimen/espacio_mediano"
-            android:fontFamily="@font/franklin_md"
-            android:textStyle="bold"/>
+            android:fontFamily="@font/poppins_bold"/>
 
     </FrameLayout>
 

@@ -46,7 +46,7 @@
                             android:textColor="@color/primary_text"
                             android:layout_gravity="center_vertical"
                             android:layout_marginEnd="@dimen/espacio_mediano"
-                            android:fontFamily="@font/franklin_md"/>
+                            android:fontFamily="@font/poppins_semibold"/>
 
                         <TextView
                             android:id="@+id/set_tf_campo_precio"
@@ -56,7 +56,7 @@
                             android:textSize="40sp"
                             android:textAlignment="center"
                             android:textColor="@color/primary_text"
-                            android:fontFamily="@font/franklin_md"/>
+                            android:fontFamily="@font/poppins_semibold"/>
 
                     </LinearLayout>
 
@@ -94,8 +94,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/espacio_mediano"
                         android:textAlignment="textEnd"
-                        tools:ignore="RtlCompat"
-                        android:fontFamily="@font/urwdin_md"/>
+                        tools:ignore="RtlCompat"/>
 
                 </LinearLayout>
 
@@ -133,7 +132,7 @@
                                 android:checked="true"
                                 android:textSize="@dimen/text_campos_transaccion"
                                 android:layout_marginEnd="@dimen/espacio_big"
-                                android:fontFamily="@font/urwdin_md"
+                                android:fontFamily="@font/poppins_semibold"
                                 android:buttonTint="@color/color_precios_negativos"/>
 
                             <RadioButton
@@ -143,7 +142,7 @@
                                 android:text="Ingreso"
                                 android:textColor="@color/primary_text"
                                 android:textSize="@dimen/text_campos_transaccion"
-                                android:fontFamily="@font/urwdin_md"
+                                android:fontFamily="@font/poppins_semibold"
                                 android:buttonTint="@color/color_precios_positivos"/>
 
                         </RadioGroup>
@@ -174,8 +173,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/espacio_mediano"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:fontFamily="@font/urwdin_md"/>
+                        android:singleLine="true"/>
 
                 </LinearLayout>
 
@@ -201,8 +199,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/espacio_mediano"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:fontFamily="@font/urwdin_md"/>
+                        android:singleLine="true"/>
 
                 </LinearLayout>
 
@@ -226,7 +223,6 @@
                         android:textSize="@dimen/text_campos_transaccion"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/espacio_mediano"
-                        android:fontFamily="@font/urwdin_md"
                         android:textColor="@color/primary_text"/>
 
                 </LinearLayout>
@@ -253,8 +249,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/espacio_mediano"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:fontFamily="@font/urwdin_md"/>
+                        android:singleLine="true"/>
 
                 </LinearLayout>
 
@@ -264,7 +259,6 @@
                     android:padding="10dp"
                     android:text="Transacción Fija"
                     android:layout_marginStart="@dimen/espacio_mediano"
-                    android:fontFamily="@font/urwdin_md"
                     android:textSize="@dimen/text_campos_transaccion"
                     android:layout_marginBottom="@dimen/espacio_mediano"
                     android:buttonTint="@color/colorPrimary"
@@ -303,8 +297,7 @@
                         android:textColor="@color/primary_text"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/espacio_mediano"
-                        android:text="Seleccionar fecha final"
-                        android:fontFamily="@font/urwdin_md"/>
+                        android:text="Seleccionar fecha final"/>
 
                 </LinearLayout>
 
@@ -331,14 +324,14 @@
                     android:text="Eliminar"
                     android:textColor="@color/colorAccent"
                     android:background="@color/color_botones_de_decision"
-                    android:fontFamily="@font/urwdin_bold"/>
+                    android:fontFamily="@font/poppins_bold"/>
                 <Button
                     android:id="@+id/set_tf_btn_aceptar"
                     android:layout_height="wrap_content"
                     android:background="@color/color_botones_de_decision"
                     android:text="Aceptar"
                     android:textColor="@color/colorPrimary"
-                    android:fontFamily="@font/urwdin_bold"/>
+                    android:fontFamily="@font/poppins_bold"/>
             </TableRow>
         </TableLayout>
     </LinearLayout>

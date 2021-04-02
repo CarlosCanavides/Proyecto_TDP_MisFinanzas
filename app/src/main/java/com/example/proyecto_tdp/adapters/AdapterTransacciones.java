@@ -1,14 +1,16 @@
 package com.example.proyecto_tdp.adapters;
 
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
+import com.example.proyecto_tdp.adapters.view_types.HeaderOrRow;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import org.joda.time.format.DateTimeFormat;
@@ -17,141 +19,159 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public class AdapterTransacciones extends BaseExpandableListAdapter {
+public class AdapterTransacciones extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Date> fechas;
-    private Map<Date,List<Transaccion>> mapTransaccionesPorFecha;
-    private Map<Transaccion,Categoria> mapCategoriaDeTransaccion;
+    private List<HeaderOrRow> transaccionesPorFecha;
+    private Map<String,Categoria> mapCategoriaDeTransaccion;
+    private OnTransaccionListener onTransaccionListener;
     private DateTimeFormatter formatoFecha;
 
-    public AdapterTransacciones(List<Date> fechas, Map<Date,List<Transaccion>> mapTransaccionesPorFecha, Map<Transaccion,Categoria> mapCategoriaDeTransaccion) {
-        this.fechas = fechas;
-        this.mapTransaccionesPorFecha = mapTransaccionesPorFecha;
+    public AdapterTransacciones(List<HeaderOrRow> transaccionesPorFecha, Map<String,Categoria> mapCategoriaDeTransaccion, OnTransaccionListener onTransaccionListener) {
+        this.transaccionesPorFecha = transaccionesPorFecha;
         this.mapCategoriaDeTransaccion = mapCategoriaDeTransaccion;
+        this.onTransaccionListener = onTransaccionListener;
         formatoFecha = DateTimeFormat.forPattern(Constantes.FORMATO_FECHA_PARA_VISUALIZAR);
     }
 
     @Override
-    public int getGroupCount() {
-        return fechas.size();
+    public int getItemCount() {
+        return transaccionesPorFecha.size();
     }
 
     @Override
-    public int getChildrenCount(int groupPosition) {
-        int size = 0;
-        List<Transaccion> transacciones = mapTransaccionesPorFecha.get(fechas.get(groupPosition));
-        if(transacciones!=null) {
-            size = transacciones.size();
+    public int getItemViewType(int position) {
+        int viewType;
+        if(transaccionesPorFecha.get(position).isRow()){
+            viewType = 1;
         }
-        return size;
+        else {
+            viewType = 0;
+        }
+        return  viewType;
+    }
+
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if(viewType==0) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_encabezado_transacciones_fecha, parent, false);
+            return new ViewHolderHeader(v);
+        } else {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transaccion, parent, false);
+            return new ViewHolderRow(v);
+        }
     }
 
     @Override
-    public Object getGroup(int groupPosition) {
-        return fechas.get(groupPosition);
-    }
-
-    @Override
-    public Object getChild(int groupPosition, int childPosition) {
-        return mapTransaccionesPorFecha.get(fechas.get(groupPosition)).get(childPosition);
-    }
-
-    @Override
-    public long getGroupId(int groupPosition) {
-        return 0;
-    }
-
-    @Override
-    public long getChildId(int groupPosition, int childPosition) {
-        return 0;
-    }
-
-    @Override
-    public boolean hasStableIds() {
-        return false;
-    }
-
-    @Override
-    public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return true;
-    }
-
-    @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        String fecha = formatoFecha.print(fechas.get(groupPosition).getTime());
-        convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_encabezado_transacciones_fecha,null,false);
-        TextView tvFecha = convertView.findViewById(R.id.encabezado_section_fecha);
-        TextView tvGP = convertView.findViewById(R.id.encabezado_section_gp);
-        tvFecha.setText(fecha);
-        float resultado = 0;
-        List<Transaccion> transacciones =  mapTransaccionesPorFecha.get(fechas.get(groupPosition));
-        if(transacciones!=null) {
-            for (Transaccion t : transacciones) {
-                resultado += t.getPrecio();
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        HeaderOrRow item = transaccionesPorFecha.get(position);
+        if(item.isRow()) {
+            ViewHolderRow holderRow = (ViewHolderRow) holder;
+            Transaccion transaccion = item.getRow();
+            holderRow.tvEtiqueta.setText(transaccion.getEtiqueta());
+            String titulo = transaccion.getTitulo();
+            String idCategoria = transaccion.getCategoria();
+            float precio = transaccion.getPrecio();
+            if(titulo==null || titulo.equals("")){
+                titulo = Constantes.SIN_TITULO;
+            }
+            holderRow.tvTitulo.setText(titulo);
+            if(precio>0){
+                holderRow.tvPrecio.setText("+$"+String.format( "%.2f",precio));
+                holderRow.tvPrecio.setTextColor(Color.parseColor("#0EB87A"));
+            }
+            else if(precio<0){
+                holderRow.tvPrecio.setText("-$"+String.format( "%.2f",Math.abs(precio)));
+                holderRow.tvPrecio.setTextColor(Color.parseColor("#E12E48"));
+            }
+            else {
+                holderRow.tvPrecio.setText("+$0,00");
+                holderRow.tvPrecio.setTextColor(Color.parseColor("#FFC22B"));
+            }
+            if(idCategoria==null){
+                idCategoria = Constantes.SIN_CATEGORIA;
+            }
+            Categoria categoria = mapCategoriaDeTransaccion.get(idCategoria);
+            if(categoria!=null){
+                String nombreCategoria = categoria.getNombreCategoria();
+                holderRow.tvCategoria.setText(nombreCategoria);
+                if(nombreCategoria.length()>0){
+                    holderRow.tvLetarCategoria.setText(nombreCategoria.charAt(0)+"");
+                }
+            }
+        } else {
+            ViewHolderHeader holderHeader = (ViewHolderHeader) holder;
+            Date fecha = item.getHeader();
+            float balance = 0;
+            boolean continuar = true;
+            HeaderOrRow headerOrRow;
+            for(int i=position+1; i<transaccionesPorFecha.size()&&continuar; i++){
+                headerOrRow = transaccionesPorFecha.get(i);
+                if(headerOrRow.isRow()){
+                    balance = balance+headerOrRow.getRow().getPrecio();
+                }
+                else {
+                    continuar = false;
+                }
+            }
+            holderHeader.tvFecha.setText(formatoFecha.print(fecha.getTime()));
+            if(balance>0) {
+                holderHeader.tvBalance.setText("+$"+String.format( "%.2f",balance));
+                holderHeader.tvBalance.setTextColor(Color.parseColor("#0EB87A"));
+            }
+            else if(balance<0){
+                holderHeader.tvBalance.setText("-$"+String.format( "%.2f",Math.abs(balance)));
+                holderHeader.tvBalance.setTextColor(Color.parseColor("#E12E48"));
+            }
+            else {
+                holderHeader.tvBalance.setText("$0,00");
+                holderHeader.tvBalance.setTextColor(Color.parseColor("#FFC22B"));
             }
         }
-        String resultadoFinal = String.format( "%.2f", Math.abs(resultado));
-        if(resultado<0){
-            tvGP.setText("- $ "+resultadoFinal);
-            tvGP.setTextColor(convertView.getResources().getColor(R.color.color_precios_negativos));
-        }
-        else {
-            tvGP.setText("+ $ "+resultadoFinal);
-            tvGP.setTextColor(convertView.getResources().getColor(R.color.color_precios_positivos));
-        }
-        return convertView;
-    }
-
-    @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        Transaccion transaccion = mapTransaccionesPorFecha.get(fechas.get(groupPosition)).get(childPosition);
-        convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transaccion,null,false);
-        TextView tvTitulo = convertView.findViewById(R.id.itemTransaccion_nombre);
-        TextView tvCategoria = convertView.findViewById(R.id.itemTransaccion_categoria);
-        TextView tvIdentificacion = convertView.findViewById(R.id.itemTransaccion_etiqueta);
-        TextView tvLetra = convertView.findViewById(R.id.idImagen);
-        TextView tvPrecio = convertView.findViewById(R.id.itemTransaccion_precio);
-
-        Categoria categoria = mapCategoriaDeTransaccion.get(transaccion);
-        String titulo = transaccion.getTitulo();
-        if(categoria==null){
-            tvLetra.setText("S");
-            tvCategoria.setText(Constantes.SIN_CATEGORIA);
-        }
-        else {
-            tvCategoria.setText(categoria.getNombreCategoria());
-            Drawable bg = tvLetra.getBackground();
-            bg.setColorFilter(categoria.getColorCategoria(), PorterDuff.Mode.SRC);
-            if(categoria.getNombreCategoria().length() > 0) {
-                tvLetra.setText(categoria.getNombreCategoria().charAt(0)+"");
-            }
-        }
-        if(titulo.equals("")){
-            tvTitulo.setText("Sin titulo");
-        }
-        else {
-            tvTitulo.setText(titulo);
-        }
-        if(!transaccion.getEtiqueta().equals("")) {
-            tvIdentificacion.setText(" " + transaccion.getEtiqueta() + " ");
-        }
-
-        String monto = String.format( "%.2f", Math.abs(transaccion.getPrecio()));
-        if(transaccion.getTipoTransaccion().equals("Gasto")){
-            tvPrecio.setText("- $ "+monto);
-            tvPrecio.setTextColor(convertView.getResources().getColor(R.color.color_precios_negativos));
-        }
-        else{
-            tvPrecio.setText("+ $ "+monto);
-            tvPrecio.setTextColor(convertView.getResources().getColor(R.color.color_precios_positivos));
-        }
-        return convertView;
     }
 
     public void refrescar(){
-        fechas.clear();
-        mapTransaccionesPorFecha.clear();
+        transaccionesPorFecha.clear();
         mapCategoriaDeTransaccion.clear();
         this.notifyDataSetChanged();
+    }
+
+    public class ViewHolderRow extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+        private TextView tvTitulo;
+        private TextView tvCategoria;
+        private TextView tvEtiqueta;
+        private TextView tvPrecio;
+        private TextView tvLetarCategoria;
+
+        public ViewHolderRow(@NonNull View itemView) {
+            super(itemView);
+            tvTitulo = itemView.findViewById(R.id.itemTransaccion_nombre);
+            tvCategoria = itemView.findViewById(R.id.itemTransaccion_categoria);
+            tvEtiqueta = itemView.findViewById(R.id.itemTransaccion_etiqueta);
+            tvPrecio = itemView.findViewById(R.id.itemTransaccion_precio);
+            tvLetarCategoria = itemView.findViewById(R.id.idImagen);
+        }
+
+        @Override
+        public void onClick(View v) {
+            onTransaccionListener.onTransaccionClick(getAdapterPosition());
+        }
+    }
+
+    public class ViewHolderHeader extends RecyclerView.ViewHolder{
+
+        private TextView tvFecha;
+        private TextView tvBalance;
+
+        public ViewHolderHeader(@NonNull View itemView) {
+            super(itemView);
+            tvFecha = itemView.findViewById(R.id.encabezado_section_fecha);
+            tvBalance = itemView.findViewById(R.id.encabezado_section_gp);
+        }
+    }
+
+    public interface OnTransaccionListener{
+        void onTransaccionClick(int position);
     }
 }

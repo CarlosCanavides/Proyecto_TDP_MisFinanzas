@@ -17,10 +17,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
             android:text="Solo una vez"
-            android:textSize="@dimen/text_transacciones_mes"
+            android:textSize="15sp"
             android:layout_marginStart="@dimen/espacio_mediano"
             android:textColor="@color/colorPrimary"
-            android:fontFamily="@font/urwdin_bold"/>
+            android:fontFamily="@font/poppins_semibold"/>
 
         <FrameLayout
             android:layout_width="match_parent"

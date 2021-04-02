@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.activities.CategoriaActivity;
+import com.example.proyecto_tdp.activities.SeleccionarCategoriaActivity;
 import com.example.proyecto_tdp.activities.agregar_datos.NuevaPlantillaActivity;
 import java.text.ParseException;
 
@@ -47,7 +48,7 @@ public class SetPlantillaActivity extends NuevaPlantillaActivity {
         campoCategoria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SetPlantillaActivity.this, CategoriaActivity.class);
+                Intent intent = new Intent(SetPlantillaActivity.this, SeleccionarCategoriaActivity.class);
                 startActivityForResult(intent,Constantes.PEDIDO_SELECCIONAR_CATEGORIA);
             }
         });

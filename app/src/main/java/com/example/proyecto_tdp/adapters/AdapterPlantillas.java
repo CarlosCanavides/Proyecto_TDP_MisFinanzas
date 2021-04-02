@@ -28,6 +28,11 @@ public class AdapterPlantillas extends RecyclerView.Adapter<AdapterPlantillas.Vi
         this.onPlantillaListener = onPlantillaListener;
     }
 
+    @Override
+    public int getItemCount() {
+        return plantillas.size();
+    }
+
     @NonNull
     @Override
     public AdapterPlantillas.ViewHolderPlantilla onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -59,11 +64,11 @@ public class AdapterPlantillas extends RecyclerView.Adapter<AdapterPlantillas.Vi
         }
         float precio = plantilla.getPrecio();
         if(precio>=0){
-            holder.tvPrecio.setText("+ $ "+String.format( "%.2f",precio));
+            holder.tvPrecio.setText("+$"+String.format( "%.2f",precio));
             holder.tvPrecio.setTextColor(Color.parseColor("#0EB87A"));
         }
         else {
-            holder.tvPrecio.setText("- $ "+String.format( "%.2f",Math.abs(precio)));
+            holder.tvPrecio.setText("-$"+String.format( "%.2f",Math.abs(precio)));
             holder.tvPrecio.setTextColor(Color.parseColor("#E12E48"));
         }
         Drawable bg = holder.tvLetra.getBackground();
@@ -74,11 +79,6 @@ public class AdapterPlantillas extends RecyclerView.Adapter<AdapterPlantillas.Vi
     public void refresh(){
         plantillas.clear();
         mapCategoriasDePlantillas.clear();
-    }
-
-    @Override
-    public int getItemCount() {
-        return plantillas.size();
     }
 
     public class ViewHolderPlantilla extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -103,7 +103,7 @@ public class AdapterPlantillas extends RecyclerView.Adapter<AdapterPlantillas.Vi
 
         @Override
         public void onClick(View v) {
-            onPlantillaListener.onPlantillaClick(getAdapterPosition() );
+            onPlantillaListener.onPlantillaClick(getAdapterPosition());
         }
     }
 

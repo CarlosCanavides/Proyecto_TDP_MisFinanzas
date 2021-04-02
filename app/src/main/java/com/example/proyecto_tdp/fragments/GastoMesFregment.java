@@ -103,22 +103,22 @@ public class GastoMesFregment extends Fragment {
                     adapterInforme.notifyDataSetChanged();
                     for (Transaccion t : transaccionesDelMes) {
                         Categoria categoria;
-                        String nombreCategoria;
+                        String idCategoria;
                         if(t.getCategoria()!=null){
                             categoria = viewModelCategoria.getCategoriaPorID(t.getCategoria());
-                            nombreCategoria = t.getCategoria();
+                            idCategoria = t.getCategoria();
                         }
                         else {
                             categoria = new Categoria(Constantes.SIN_CATEGORIA,null, Color.parseColor("#FF5722"),Constantes.GASTO);
-                            nombreCategoria = "Sin categoria";
+                            idCategoria = Constantes.SIN_CATEGORIA;
                         }
-                        Float gastoCategoria = mapCategoriasGasto.get(nombreCategoria);
+                        Float gastoCategoria = mapCategoriasGasto.get(idCategoria);
                         if (gastoCategoria == null) {
                             categoriasMes.add(categoria);
-                            mapCategoriasGasto.put(categoria.getNombreCategoria(), Math.abs(t.getPrecio()));
+                            mapCategoriasGasto.put(idCategoria, Math.abs(t.getPrecio()));
                         } else {
-                            mapCategoriasGasto.remove(nombreCategoria);
-                            mapCategoriasGasto.put(nombreCategoria, gastoCategoria + Math.abs(t.getPrecio()));
+                            mapCategoriasGasto.remove(idCategoria);
+                            mapCategoriasGasto.put(idCategoria, gastoCategoria + Math.abs(t.getPrecio()));
                         }
                     }
                     adapterInforme.notifyDataSetChanged();
