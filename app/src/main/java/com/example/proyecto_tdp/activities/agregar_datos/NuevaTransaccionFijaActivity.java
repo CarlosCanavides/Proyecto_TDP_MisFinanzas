@@ -9,10 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
@@ -21,6 +20,7 @@ import com.example.proyecto_tdp.activities.SeleccionarPlantillaActivity;
 import com.example.proyecto_tdp.views.AvisoDialog;
 import com.example.proyecto_tdp.views.CalculatorInputDialog;
 import com.example.proyecto_tdp.views.CalendarioDialog;
+import com.google.android.material.textfield.TextInputEditText;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -33,17 +33,17 @@ import java.util.Locale;
 public class NuevaTransaccionFijaActivity extends AppCompatActivity {
 
     protected TextView campoPrecio;
-    protected TextView campoCategoria;
-    protected TextView campoFecha;
-    protected TextView campoFechaFinal;
-    protected EditText campoTitulo;
-    protected EditText campoEtiqueta;
-    protected EditText campoInfo;
+    protected AutoCompleteTextView campoCategoria;
+    protected AutoCompleteTextView campoFecha;
+    protected AutoCompleteTextView campoFechaFinal;
+    protected TextInputEditText campoTitulo;
+    protected TextInputEditText campoEtiqueta;
+    protected TextInputEditText campoInfo;
     protected RadioButton btnGasto;
     protected RadioButton btnIngreso;
     protected Button btnAceptar;
     protected Button btnCancelar;
-    protected Spinner frecuencia;
+    protected AutoCompleteTextView frecuencia;
     protected DateTimeFormatter formatoFecha;
     protected NumberFormat formatoNumero;
     protected AvisoDialog avisoDialog;
@@ -105,10 +105,11 @@ public class NuevaTransaccionFijaActivity extends AppCompatActivity {
         ArrayList<String> opcionesFrecuencia = new ArrayList<>();
         opcionesFrecuencia.add(Constantes.SELECCIONAR_FRECUENCIA);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_SOLO_UNA_VEZ);
+        opcionesFrecuencia.add(Constantes.FRECUENCIA_CADA_DIA);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_UNA_VEZ_A_LA_SEMANA);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_UNA_VEZ_AL_MES);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_UNA_VEZ_AL_ANIO);
-        ArrayAdapter<String> adapterFrecuencia = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, opcionesFrecuencia);
+        ArrayAdapter<String> adapterFrecuencia = new ArrayAdapter<String>(this, R.layout.list_item, opcionesFrecuencia);
         frecuencia.setAdapter(adapterFrecuencia);
     }
 
@@ -179,7 +180,7 @@ public class NuevaTransaccionFijaActivity extends AppCompatActivity {
                     String etiqueta = campoEtiqueta.getText().toString();
                     String fechaInicio = campoFecha.getText().toString();
                     String fechaFinal = campoFechaFinal.getText().toString();
-                    String frecuenciaSeleccionada = frecuencia.getSelectedItem().toString();
+                    String frecuenciaSeleccionada = frecuencia.getText().toString();
                     String tipo;
                     if(btnGasto.isChecked()){
                         tipo = btnGasto.getText().toString();
@@ -233,7 +234,7 @@ public class NuevaTransaccionFijaActivity extends AppCompatActivity {
         boolean verificado = false;
         String precio = campoPrecio.getText().toString();
         float precioFinal = -1f;
-        String frecuenciaSeleccionada = frecuencia.getSelectedItem().toString();
+        String frecuenciaSeleccionada = frecuencia.getText().toString();
         String fechaI = campoFecha.getText().toString();
         String fechaF = campoFechaFinal.getText().toString();
         Date fechaInicio = null;

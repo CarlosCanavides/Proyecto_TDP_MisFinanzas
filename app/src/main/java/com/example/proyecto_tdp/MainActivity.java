@@ -34,6 +34,7 @@ import com.example.proyecto_tdp.view_models.ViewModelTransaccionFija;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton btnAgregar;
     private BottomNavigationView barraNavegacion;
     private DrawerLayout drawerLayout;
-    private SwitchCompat switchNightMode;
+    private SwitchMaterial switchNightMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

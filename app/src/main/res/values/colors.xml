@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <color name="colorPrimary">#1754CD</color>
     <color name="colorPrimaryDark">#003c8f</color>
@@ -83,6 +83,7 @@
     <color name="color_transacciones_programadas_no_seleccionada">#F9FAF9</color>
     <color name="color_transacciones_programadas_seleccionada">#1754CD</color>
     <color name="color_fondo_transacciones">#F2F3F3</color>
+    <color name="color_fondo_transacciones_fijas">#FFFFFF</color>
     <color name="color_resumen_transacciones">#FFFFFF</color>
 
     <color name="color_barra_de_navegacion">#FFFFFF</color>
@@ -107,4 +108,6 @@
 
     <color name="color_degrade_inicio_componentes_seleccionables">#1754CD</color>
     <color name="color_degrade_final_componentes_seleccionables">#1754CD</color>
+
+    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true" >#A0A6B8</color>
 </resources>

@@ -18,7 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            android:background="@color/color_anti_flash">
+            android:background="@color/color_anti_flash"
+            android:paddingBottom="@dimen/espacio_big"
+            android:clipToPadding="false">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -60,43 +62,7 @@
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:background="@color/divider"
-                        android:layout_gravity="bottom"
-                        android:layout_marginStart="@dimen/margen_iconos_transaccion"
-                        android:layout_marginEnd="@dimen/margen_iconos_transaccion">
-                    </View>
-
                 </FrameLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="@dimen/margen_iconos_transaccion"
-                    android:layout_marginEnd="@dimen/margen_iconos_transaccion"
-                    android:layout_marginTop="@dimen/margen_iconos_transaccion">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/icon_categoria"
-                        android:layout_gravity="center_vertical"/>
-
-                    <TextView
-                        android:id="@+id/set_tf_campo_categoria"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_campos_transaccion"
-                        android:textColor="@color/primary_text"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/espacio_mediano"
-                        android:textAlignment="textEnd"
-                        tools:ignore="RtlCompat"/>
-
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -151,107 +117,118 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    android:hint="Categoria"
+                    android:textColorHint="@color/primary_text"
+                    app:boxStrokeColor="@color/colorPrimary"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_marginTop="@dimen/espacio_mediano"
+                    android:layout_marginBottom="@dimen/margen_iconos_transaccion"
                     android:layout_marginStart="@dimen/margen_iconos_transaccion"
-                    android:layout_marginEnd="@dimen/margen_iconos_transaccion">
+                    android:layout_marginEnd="@dimen/margen_iconos_transaccion"
+                    app:startIconDrawable="@drawable/icon_categoria"
+                    app:startIconTint="@color/color_campo_transaccion">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
+                    <AutoCompleteTextView
+                        android:id="@+id/set_tf_campo_categoria"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/icon_titulo"
-                        android:layout_gravity="center_vertical"/>
+                        android:textSize="@dimen/text_campos_transaccion"
+                        android:textColor="@color/primary_text"
+                        android:inputType="none"/>
 
-                    <EditText
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Titulo"
+                    android:textColorHint="@color/primary_text"
+                    app:boxStrokeColor="@color/colorPrimary"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_marginStart="@dimen/margen_iconos_transaccion"
+                    android:layout_marginEnd="@dimen/margen_iconos_transaccion"
+                    android:layout_marginBottom="@dimen/margen_iconos_transaccion"
+                    app:startIconDrawable="@drawable/icon_titulo"
+                    app:startIconTint="@color/color_campo_transaccion">
+
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/set_tf_campo_titulo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_campos_transaccion"
-                        android:textColor="@color/primary_text"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/espacio_mediano"
-                        android:maxLines="1"
-                        android:singleLine="true"/>
+                        android:textColor="@color/primary_text"/>
 
-                </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    android:hint="Etiqueta"
+                    android:textColorHint="@color/primary_text"
+                    app:boxStrokeColor="@color/colorPrimary"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_marginStart="@dimen/margen_iconos_transaccion"
-                    android:layout_marginEnd="@dimen/margen_iconos_transaccion">
+                    android:layout_marginEnd="@dimen/margen_iconos_transaccion"
+                    android:layout_marginBottom="@dimen/margen_iconos_transaccion"
+                    app:startIconDrawable="@drawable/icon_etiqueta"
+                    app:startIconTint="@color/color_campo_transaccion">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/icon_etiqueta"
-                        android:layout_gravity="center_vertical"/>
-
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/set_tf_campo_etiqueta"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_campos_transaccion"
-                        android:textColor="@color/primary_text"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/espacio_mediano"
-                        android:maxLines="1"
-                        android:singleLine="true"/>
+                        android:textColor="@color/primary_text"/>
 
-                </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    android:hint="Fecha"
+                    android:textColorHint="@color/primary_text"
+                    app:boxStrokeColor="@color/colorPrimary"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_marginStart="@dimen/margen_iconos_transaccion"
-                    android:layout_marginEnd="@dimen/margen_iconos_transaccion">
+                    android:layout_marginEnd="@dimen/margen_iconos_transaccion"
+                    android:layout_marginBottom="@dimen/margen_iconos_transaccion"
+                    app:startIconDrawable="@drawable/icon_fecha"
+                    app:startIconTint="@color/color_campo_transaccion">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/icon_fecha"
-                        android:layout_gravity="center_vertical"/>
-
-                    <TextView
+                    <AutoCompleteTextView
                         android:id="@+id/set_tf_campo_fecha"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_campos_transaccion"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/espacio_mediano"
-                        android:textColor="@color/primary_text"/>
+                        android:textColor="@color/primary_text"
+                        android:inputType="none"/>
 
-                </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    android:hint="Información"
+                    android:textColorHint="@color/primary_text"
+                    app:boxStrokeColor="@color/colorPrimary"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_marginStart="@dimen/margen_iconos_transaccion"
                     android:layout_marginEnd="@dimen/margen_iconos_transaccion"
-                    android:layout_marginBottom="@dimen/espacio_mediano">
+                    android:layout_marginBottom="@dimen/espacio_mediano"
+                    app:startIconDrawable="@drawable/icon_apunte"
+                    app:startIconTint="@color/color_campo_transaccion">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/icon_apunte"
-                        android:layout_gravity="center_vertical"/>
-
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/set_tf_campo_info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_campos_transaccion"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/espacio_mediano"
-                        android:maxLines="1"
-                        android:singleLine="true"/>
+                        android:textColor="@color/primary_text"/>
 
-                </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <CheckBox
                     android:layout_width="wrap_content"
@@ -266,40 +243,48 @@
                     android:checked="true"
                     android:textColor="@color/primary_text"/>
 
-                <Spinner
-                    android:id="@+id/set_tf_frecuencia"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="@dimen/text_campos_transaccion"
-                    android:layout_marginEnd="@dimen/text_campos_transaccion"
-                    android:background="@color/color_background_spinner">
-                </Spinner>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    android:hint="Frecuencia"
+                    android:textColorHint="@color/primary_text"
+                    app:boxStrokeColor="@color/colorPrimary"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_marginStart="@dimen/margen_iconos_transaccion"
                     android:layout_marginEnd="@dimen/margen_iconos_transaccion"
-                    android:layout_marginBottom="@dimen/espacio_mediano">
+                    android:layout_marginBottom="@dimen/margen_iconos_transaccion">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
+                    <AutoCompleteTextView
+                        android:id="@+id/set_tf_frecuencia"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/icon_fecha"
-                        android:layout_gravity="center_vertical"/>
+                        android:textSize="@dimen/text_campos_transaccion"
+                        android:textColor="@color/primary_text"
+                        android:inputType="none"/>
 
-                    <TextView
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Fecha Final"
+                    android:textColorHint="@color/primary_text"
+                    app:boxStrokeColor="@color/colorPrimary"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_marginStart="@dimen/margen_iconos_transaccion"
+                    android:layout_marginEnd="@dimen/margen_iconos_transaccion"
+                    app:startIconDrawable="@drawable/icon_fecha"
+                    app:startIconTint="@color/color_campo_transaccion">
+
+                    <AutoCompleteTextView
                         android:id="@+id/set_tf_campo_fecha_final"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_campos_transaccion"
                         android:textColor="@color/primary_text"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/espacio_mediano"
-                        android:text="Seleccionar fecha final"/>
+                        android:inputType="none"/>
 
-                </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 

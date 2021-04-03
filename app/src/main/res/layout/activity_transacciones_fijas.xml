@@ -54,7 +54,10 @@
             android:layout_gravity="bottom|right"
             android:layout_marginEnd="@dimen/espacio_mediano"
             android:layout_marginBottom="@dimen/espacio_mediano"
-            android:backgroundTint="@color/color_botones_flotantes"/>
+            android:backgroundTint="@color/color_botones_flotantes"
+            app:tint="@color/white"
+            app:pressedTranslationZ="7dp"
+            app:borderWidth="0dp"/>
 
     </FrameLayout>
 

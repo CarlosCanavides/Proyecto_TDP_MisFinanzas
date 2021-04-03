@@ -1,9 +1,13 @@
 package com.example.proyecto_tdp.verificador_estrategia;
 
 import android.content.Intent;
+import android.util.Log;
+
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.base_de_datos.entidades.Transaccion;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
+
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import java.util.Date;

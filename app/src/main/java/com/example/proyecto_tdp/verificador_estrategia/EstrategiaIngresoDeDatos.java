@@ -119,7 +119,41 @@ public class EstrategiaIngresoDeDatos implements EstrategiaDeVerificacion{
             int cantidadDeEjecucionesTotales = 0;
             int cantidadDeEjecucionesRealizadas = 0;
             Date hoy = LocalDate.now().toDate();
-            if(frecuencia.equals(Constantes.FRECUENCIA_UNA_VEZ_A_LA_SEMANA)){
+            if(frecuencia.equals(Constantes.FRECUENCIA_CADA_DIA)){
+                if(fechaInicio.before(hoy)){
+                    calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
+                    nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,0,null);
+                    viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
+                    while ((fechaFinal.after(calendario.toDate())||fechaFinal.compareTo(calendario.toDate())==0) && hoy.after(calendario.toDate())){
+                        cantidadDeEjecucionesTotales++;
+                        cantidadDeEjecucionesRealizadas++;
+                        nuevaTransaccion = new Transaccion(titulo,etiqueta,precio,categoria,tipo,calendario.toDate(),info,nuevaTransaccionFija.getId());
+                        viewModelTransaccion.insertarTransaccion(nuevaTransaccion);
+                        calendario = calendario.plusDays(1);
+                    }
+                    Date proximaEjecucion = null;
+                    if(fechaFinal.after(calendario.toDate())){
+                        proximaEjecucion = calendario.toDate();
+                    }
+                    while (fechaFinal.after(calendario.toDate()) || fechaFinal.compareTo(calendario.toDate())==0){
+                        cantidadDeEjecucionesTotales++;
+                        calendario = calendario.plusDays(1);
+                    }
+                    nuevaTransaccionFija.setCantidadEjecucionesRestantes(cantidadDeEjecucionesTotales-cantidadDeEjecucionesRealizadas);
+                    nuevaTransaccionFija.setFechaProximaEjecucion(proximaEjecucion);
+                    viewModelTransaccionFija.actualizarTransaccionFija(nuevaTransaccionFija);
+                }
+                else {
+                    calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
+                    while (fechaFinal.after(calendario.toDate()) || fechaFinal.compareTo(calendario.toDate())==0){
+                        cantidadDeEjecucionesTotales++;
+                        calendario = calendario.plusDays(1);
+                    }
+                    nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,cantidadDeEjecucionesTotales,fechaInicio);
+                    viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
+                }
+            }
+            else if(frecuencia.equals(Constantes.FRECUENCIA_UNA_VEZ_A_LA_SEMANA)){
                 if(fechaInicio.before(hoy)){
                     calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
                     nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,0,null);

@@ -109,7 +109,7 @@ public class SetTransaccionFijaActivity extends NuevaTransaccionFijaActivity {
                     String etiqueta = campoEtiqueta.getText().toString();
                     String fechaInicio = campoFecha.getText().toString();
                     String fechaFinal = campoFechaFinal.getText().toString();
-                    String frecuenciaSeleccionada = frecuencia.getSelectedItem().toString();
+                    String frecuenciaSeleccionada = frecuencia.getText().toString();
                     String tipo;
                     if(btnGasto.isChecked()){
                         tipo = btnGasto.getText().toString();

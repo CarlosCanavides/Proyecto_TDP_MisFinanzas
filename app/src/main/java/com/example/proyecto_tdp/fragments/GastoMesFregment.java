@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_tdp.Constantes;
@@ -77,6 +77,12 @@ public class GastoMesFregment extends Fragment {
         return vista;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        inicializarViewModels();
+    }
+
     private void inicializarLisViewCategorias(){
         categoriasMes = new ArrayList<>();
         mapCategoriasGasto = new HashMap<>();
@@ -86,30 +92,30 @@ public class GastoMesFregment extends Fragment {
     }
 
     private void inicializarViewModels(){
-        viewModelTransaccion = ViewModelProviders.of(getActivity()).get(ViewModelTransaccion.class);
-        viewModelCategoria = ViewModelProviders.of(getActivity()).get(ViewModelCategoria.class);
+        viewModelCategoria = new ViewModelProvider(getActivity()).get(ViewModelCategoria.class);
+        viewModelTransaccion = new ViewModelProvider(getActivity()).get(ViewModelTransaccion.class);
         recopilarDatos();
     }
 
     protected void recopilarDatos(){
         LiveData<List<Transaccion>> liveData = viewModelTransaccion.getLiveTransaccionesDesdeHasta(primerDia,ultimoDia);
         if(liveData!=null) {
-            liveData.observe(getActivity(), new Observer<List<Transaccion>>() {
+            liveData.observe(getViewLifecycleOwner(), new Observer<List<Transaccion>>() {
                 @Override
                 public void onChanged(List<Transaccion> transaccionesDelMes) {
                     categoriasMes.clear();
                     mapCategoriasGasto.clear();
-                    adapterInforme.refesh();
+                    adapterInforme.refresh();
                     adapterInforme.notifyDataSetChanged();
                     for (Transaccion t : transaccionesDelMes) {
                         Categoria categoria;
-                        String idCategoria;
-                        if(t.getCategoria()!=null){
+                        String idCategoria = t.getCategoria();
+                        if(idCategoria!=null){
                             categoria = viewModelCategoria.getCategoriaPorID(t.getCategoria());
-                            idCategoria = t.getCategoria();
                         }
                         else {
                             categoria = new Categoria(Constantes.SIN_CATEGORIA,null, Color.parseColor("#FF5722"),Constantes.GASTO);
+                            categoria.setId(Constantes.SIN_CATEGORIA);
                             idCategoria = Constantes.SIN_CATEGORIA;
                         }
                         Float gastoCategoria = mapCategoriasGasto.get(idCategoria);

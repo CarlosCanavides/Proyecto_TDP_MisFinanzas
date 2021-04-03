@@ -42,7 +42,6 @@ public class GastosFijosFragment extends Fragment {
     private ViewModelCategoria viewModelCategoria;
     private ViewModelTransaccionFija viewModelTransaccionFija;
     private Observer<List<TransaccionFija>> observer;
-    private EstrategiaDeVerificacion estrategiaDeVerificacion;
 
     @Nullable
     @Override
@@ -55,9 +54,16 @@ public class GastosFijosFragment extends Fragment {
         return vista;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        inicializarViewModels();
+    }
+
     private void inicializarListView(){
         frecuencias = new ArrayList<>();
         frecuencias.add(Constantes.FRECUENCIA_SOLO_UNA_VEZ);
+        frecuencias.add(Constantes.FRECUENCIA_CADA_DIA);
         frecuencias.add(Constantes.FRECUENCIA_UNA_VEZ_A_LA_SEMANA);
         frecuencias.add(Constantes.FRECUENCIA_UNA_VEZ_AL_MES);
         frecuencias.add(Constantes.FRECUENCIA_UNA_VEZ_AL_ANIO);
@@ -94,10 +100,8 @@ public class GastosFijosFragment extends Fragment {
     }
 
     private void inicializarViewModels(){
-        ViewModelTransaccion viewModelTransaccion = new ViewModelProvider(this).get(ViewModelTransaccion.class);
-        viewModelTransaccionFija = ViewModelProviders.of(getActivity()).get(ViewModelTransaccionFija.class);
-        viewModelCategoria = ViewModelProviders.of(getActivity()).get(ViewModelCategoria.class);
-        estrategiaDeVerificacion = new EstrategiaSoloTransaccionesFijas(viewModelTransaccion,viewModelTransaccionFija);
+        viewModelTransaccionFija = new ViewModelProvider(getActivity()).get(ViewModelTransaccionFija.class);
+        viewModelCategoria = new ViewModelProvider(getActivity()).get(ViewModelCategoria.class);
         recopilarDatos();
     }
 
@@ -138,7 +142,7 @@ public class GastosFijosFragment extends Fragment {
             }
         };
         if (t != null) {
-            t.observe(getActivity(), observer);
+            t.observe(getViewLifecycleOwner(), observer);
         }
     }
 

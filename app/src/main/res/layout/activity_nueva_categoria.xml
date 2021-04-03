@@ -1,80 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activities.agregar_datos.NuevaCategoriaActivity"
     android:orientation="vertical"
     android:background="@color/color_anti_flash">
 
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:layout_marginStart="@dimen/espacio_mediano"
-        android:layout_marginEnd="@dimen/espacio_mediano"
-        android:layout_marginTop="@dimen/espacio_mediano">
+        android:layout_height="wrap_content"
+        android:hint="Titulo"
+        android:textColorHint="@color/primary_text"
+        app:boxStrokeColor="@color/colorPrimary"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_marginTop="@dimen/espacio_mediano"
+        android:layout_marginBottom="@dimen/margen_iconos_transaccion"
+        android:layout_marginStart="@dimen/margen_iconos_transaccion"
+        android:layout_marginEnd="@dimen/margen_iconos_transaccion"
+        app:startIconDrawable="@drawable/icon_categoria"
+        app:startIconTint="@color/color_campo_transaccion">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_titulo"
-            android:layout_gravity="center_vertical"/>
-
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/campo_nombre_categoria"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="@color/primary_text"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/espacio_mediano"/>
+            android:textSize="@dimen/text_campos_transaccion"
+            android:textColor="@color/primary_text"/>
 
-    </LinearLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:layout_marginStart="@dimen/espacio_mediano"
-        android:layout_marginEnd="@dimen/espacio_mediano">
+        android:layout_height="wrap_content"
+        android:hint="Categoria Superior"
+        android:textColorHint="@color/primary_text"
+        app:boxStrokeColor="@color/colorPrimary"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_marginBottom="@dimen/margen_iconos_transaccion"
+        android:layout_marginStart="@dimen/margen_iconos_transaccion"
+        android:layout_marginEnd="@dimen/margen_iconos_transaccion"
+        app:startIconDrawable="@drawable/icon_categoria_superior"
+        app:startIconTint="@color/color_campo_transaccion">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_categoria_superior"
-            android:layout_gravity="center_vertical"/>
-
-        <Button
+        <AutoCompleteTextView
             android:id="@+id/campo_categoria_superior"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="@color/colorAccent"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/espacio_mediano"/>
+            android:inputType="none"
+            android:textSize="@dimen/text_campos_transaccion"/>
 
-    </LinearLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
-        android:layout_marginStart="@dimen/espacio_mediano"
-        android:layout_marginEnd="@dimen/espacio_mediano">
+        android:layout_marginStart="@dimen/margen_iconos_transaccion"
+        android:layout_marginEnd="@dimen/margen_iconos_transaccion">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/icon_color"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical"
+            android:tint="@color/color_campo_transaccion"/>
 
         <TextView
             android:id="@+id/campo_categoria_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_campos_transaccion"
             android:textColor="@color/primary_text"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/espacio_mediano"
@@ -87,14 +84,15 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
-        android:layout_marginStart="@dimen/espacio_mediano"
-        android:layout_marginEnd="@dimen/espacio_mediano">
+        android:layout_marginStart="@dimen/margen_iconos_transaccion"
+        android:layout_marginEnd="@dimen/margen_iconos_transaccion">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/icon_tipo_transaccion"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical"
+            android:tint="@color/color_campo_transaccion"/>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -112,7 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Gasto"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/size_secondary_text"
                     android:textColor="@color/primary_text"
                     android:layout_marginEnd="@dimen/espacio_big"
                     android:checked="true"
@@ -124,7 +122,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ingreso"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/size_secondary_text"
                     android:textColor="@color/primary_text"
                     android:buttonTint="@color/color_precios_positivos"
                     android:fontFamily="@font/poppins_semibold"/>
@@ -139,10 +137,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Vista previa:"
-        android:textSize="14sp"
+        android:textSize="@dimen/size_secondary_text"
         android:textColor="@color/secondary_text"
         android:layout_marginTop="@dimen/espacio_big"
-        android:layout_marginStart="@dimen/espacio_mediano"/>
+        android:layout_marginStart="@dimen/margen_iconos_transaccion"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -156,7 +154,7 @@
             android:layout_width="@dimen/size_circularview"
             android:layout_height="@dimen/size_circularview"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/espacio_mediano"
+            android:layout_marginStart="@dimen/margen_iconos_transaccion"
             android:layout_marginEnd="@dimen/espacio_mediano"
             android:background="@drawable/textview_circular"
             android:backgroundTint="@color/colorAccent"
@@ -179,14 +177,17 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/espacio_mediano"
+                android:layout_marginEnd="@dimen/margen_iconos_transaccion"
                 android:text="Nombre"
+                android:textSize="@dimen/size_secondary_text"
                 android:textColor="@color/primary_text" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/primary_light"
-                android:layout_gravity="bottom">
+                android:layout_gravity="bottom"
+                android:layout_marginEnd="@dimen/margen_iconos_transaccion">
 
             </View>
 

@@ -15,7 +15,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.activities.PlantillasActivity;
@@ -57,21 +56,10 @@ public class HomeFragment extends Fragment{
     private Observer<List<Transaccion>> observerTransacciones;
     private Observer<List<TransaccionFija>> observerTransaccionesFijas;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        View vista = inflater.inflate(R.layout.fragment_home, container, false);
-        return vista;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
         barraProgreso = view.findViewById(R.id.progress_bar_circular);
         barraProgresoHorizontal = view.findViewById(R.id.barra_progreso_horizontal);
         tvBalance = view.findViewById(R.id.tv_balance);
@@ -87,17 +75,15 @@ public class HomeFragment extends Fragment{
         panelIngresosFijos = view.findViewById(R.id.panel_ingresos_fijos);
         inicializarCampos();
         inicializarBarraProgreso();
-        inicializarViewModel();
         inicializarPanelesTransaccionesProgramadas();
+        return view;
     }
 
-    /*@Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        viewModelPlantilla.removeOberver(observerPlantillas);
-        viewModelTransaccion.removeObserver(observerTransacciones);
-        viewModelTransaccionFija.removeObserver(observerTransaccionesFijas);
-    }*/
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        inicializarViewModel();
+    }
 
     private void inicializarCampos(){
         tvCantidadPlantillas.setText("0");
@@ -106,11 +92,13 @@ public class HomeFragment extends Fragment{
         tvIngresoPromedio.setText("$ 0");
         tvGastoPromedio.setText("$ 0");
         tvPorcentajeTransaccionesGasto.setText("0 %");
+        gastoTotal=0;
+        ingresoTotal=0;
     }
 
     private void inicializarBarraProgreso(){
         barraProgreso.configureAngles(230,0);
-        SeriesItem serieDeFondo = new SeriesItem.Builder(Color.parseColor("#2C2D39"))
+        SeriesItem serieDeFondo = new SeriesItem.Builder(Color.parseColor("#BDBDBD"))
                 .setRange(0, 100, 100)
                 .setInitialVisibility(true)
                 .build();
@@ -133,16 +121,13 @@ public class HomeFragment extends Fragment{
     }
 
     private void inicializarViewModel() {
-        gastoTotal=0;
-        ingresoTotal=0;
         inicializarObservers();
-        viewModelPlantilla = ViewModelProviders.of(getActivity()).get(ViewModelPlantilla.class);
+        viewModelPlantilla = new ViewModelProvider(getActivity()).get(ViewModelPlantilla.class);
         viewModelTransaccion = new ViewModelProvider(getActivity()).get(ViewModelTransaccion.class);
-        viewModelTransaccionFija = ViewModelProviders.of(getActivity()).get(ViewModelTransaccionFija.class);
-        viewModelPlantilla.getAllPlantillas().observe(getActivity(),observerPlantillas);
-        viewModelTransaccion.getAllTransacciones().observe(getActivity(), observerTransacciones);
-        viewModelTransaccionFija.getAllTransaccionesFijas().observe(getActivity(),observerTransaccionesFijas);
-        //refrescar();
+        viewModelTransaccionFija = new ViewModelProvider(getActivity()).get(ViewModelTransaccionFija.class);
+        viewModelPlantilla.getAllPlantillas().observe(getViewLifecycleOwner(),observerPlantillas);
+        viewModelTransaccion.getAllTransacciones().observe(getViewLifecycleOwner(), observerTransacciones);
+        viewModelTransaccionFija.getAllTransaccionesFijas().observe(getViewLifecycleOwner(),observerTransaccionesFijas);
     }
 
     private void inicializarObservers() {
@@ -266,58 +251,9 @@ public class HomeFragment extends Fragment{
                }
         barraProgreso.addEvent(new DecoEvent.Builder((int) porcentajeRestante)
                 .setIndex(seriePrincipalIndex)
-                .setDelay(300)
+                .setDelay(400)
                 .setColor(colorBarraProgreso)
                 .build());
         barraProgreso.refreshDrawableState();
-    }
-
-    private void refrescar(){
-        List<Transaccion> transaccions = viewModelTransaccion.getAllTransacciones().getValue();
-        gastoTotal=0;
-        ingresoTotal=0;
-        int cantidadTransaccionesGasto = 0;
-        int cantidadTransaccionesIngreso = 0;
-        for (Transaccion t : transaccions){
-            String tipoTransaccion = t.getTipoTransaccion();
-            if(tipoTransaccion.equals(Constantes.INGRESO)){
-                ingresoTotal = ingresoTotal+t.getPrecio();
-                cantidadTransaccionesIngreso++;
-            }
-            else if(tipoTransaccion.equals(Constantes.GASTO)){
-                gastoTotal = gastoTotal+t.getPrecio();
-                cantidadTransaccionesGasto++;
-            }
-        }
-        tvIngresoTotal.setText("$"+ingresoTotal);
-        float balance = ingresoTotal+gastoTotal;
-        if(balance<0){
-            tvBalance.setText("-$ "+Math.abs(balance));
-        }
-        else {
-            tvBalance.setText("$ "+balance);
-        }
-        actualizarBarraDeProgreso();
-        if(cantidadTransaccionesGasto!=0 && cantidadTransaccionesIngreso!=0) {
-            tvIngresoPromedio.setText("$ " + ingresoTotal / cantidadTransaccionesIngreso);
-            tvGastoPromedio.setText("$ " + Math.abs(gastoTotal) / cantidadTransaccionesGasto);
-        }
-
-        List<TransaccionFija> transaccionFijas = viewModelTransaccionFija.getAllTransaccionesFijas().getValue();
-        int cantidadGF = 0;
-        int cantidadIF = 0;
-        for (TransaccionFija t : transaccionFijas){
-            if(t.getTipoTransaccion().equals(Constantes.GASTO)){
-                cantidadGF++;
-            }
-            else {
-                cantidadIF++;
-            }
-        }
-        tvCantidadGastosFijos.setText(""+cantidadGF);
-        tvCantidadIngresosFijos.setText(""+cantidadIF);
-
-        List<Plantilla> plantillas = viewModelPlantilla.getAllPlantillas().getValue();
-        tvCantidadPlantillas.setText(""+plantillas.size());
     }
 }

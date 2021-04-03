@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyecto_tdp.Constantes;
@@ -35,6 +35,8 @@ public class ResumenFragment extends Fragment {
     private AdapterResumen adapter;
     private DateTimeFormatter formatoFecha = DateTimeFormat.forPattern("MM/yyyy");
     private ViewModelCategoria viewModelCategoria;
+    private ViewModelTransaccion viewModelTransaccion;
+    private Observer<List<Transaccion>> observerTransacciones;
 
     @Nullable
     @Override
@@ -44,6 +46,12 @@ public class ResumenFragment extends Fragment {
         inicializarListResumen();
         inicializarViewModel();
         return vista;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        inicializarViewModel();
     }
 
     private void inicializarListResumen(){
@@ -57,9 +65,9 @@ public class ResumenFragment extends Fragment {
     }
 
     private void inicializarViewModel(){
-        ViewModelTransaccion model = ViewModelProviders.of(getActivity()).get(ViewModelTransaccion.class);
-        viewModelCategoria = ViewModelProviders.of(getActivity()).get(ViewModelCategoria.class);
-        model.getAllTransacciones().observe(getActivity(), new Observer<List<Transaccion>>() {
+        viewModelCategoria = new ViewModelProvider(getActivity()).get(ViewModelCategoria.class);
+        viewModelTransaccion = new ViewModelProvider(getActivity()).get(ViewModelTransaccion.class);
+        observerTransacciones = new Observer<List<Transaccion>>() {
             @Override
             public void onChanged(List<Transaccion> transaccions) {
                 meses.clear();
@@ -72,7 +80,8 @@ public class ResumenFragment extends Fragment {
                 }
                 adapter.notifyDataSetChanged();
             }
-        });
+        };
+        viewModelTransaccion.getAllTransacciones().observe(getViewLifecycleOwner(),observerTransacciones);
     }
 
     private void actualizarListaTransaccionesMes(Transaccion t){

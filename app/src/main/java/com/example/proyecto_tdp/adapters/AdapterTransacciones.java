@@ -1,6 +1,7 @@
 package com.example.proyecto_tdp.adapters;
 
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +59,7 @@ public class AdapterTransacciones extends RecyclerView.Adapter<RecyclerView.View
             return new ViewHolderHeader(v);
         } else {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transaccion, parent, false);
-            return new ViewHolderRow(v);
+            return new ViewHolderRow(v,onTransaccionListener);
         }
     }
 
@@ -98,6 +99,7 @@ public class AdapterTransacciones extends RecyclerView.Adapter<RecyclerView.View
                 if(nombreCategoria.length()>0){
                     holderRow.tvLetarCategoria.setText(nombreCategoria.charAt(0)+"");
                 }
+                holderRow.tvLetarCategoria.getBackground().setColorFilter(categoria.getColorCategoria(), PorterDuff.Mode.SRC);
             }
         } else {
             ViewHolderHeader holderHeader = (ViewHolderHeader) holder;
@@ -143,14 +145,17 @@ public class AdapterTransacciones extends RecyclerView.Adapter<RecyclerView.View
         private TextView tvEtiqueta;
         private TextView tvPrecio;
         private TextView tvLetarCategoria;
+        private OnTransaccionListener onTransaccionListener;
 
-        public ViewHolderRow(@NonNull View itemView) {
+        public ViewHolderRow(@NonNull View itemView, OnTransaccionListener onTransaccionListener) {
             super(itemView);
             tvTitulo = itemView.findViewById(R.id.itemTransaccion_nombre);
             tvCategoria = itemView.findViewById(R.id.itemTransaccion_categoria);
             tvEtiqueta = itemView.findViewById(R.id.itemTransaccion_etiqueta);
             tvPrecio = itemView.findViewById(R.id.itemTransaccion_precio);
             tvLetarCategoria = itemView.findViewById(R.id.idImagen);
+            itemView.setOnClickListener(this);
+            this.onTransaccionListener = onTransaccionListener;
         }
 
         @Override

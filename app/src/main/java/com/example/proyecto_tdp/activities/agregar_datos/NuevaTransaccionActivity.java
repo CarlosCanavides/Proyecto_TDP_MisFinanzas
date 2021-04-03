@@ -7,12 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +21,7 @@ import com.example.proyecto_tdp.activities.SeleccionarPlantillaActivity;
 import com.example.proyecto_tdp.views.AvisoDialog;
 import com.example.proyecto_tdp.views.CalculatorInputDialog;
 import com.example.proyecto_tdp.views.CalendarioDialog;
+import com.google.android.material.textfield.TextInputEditText;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -34,22 +33,21 @@ import java.util.Locale;
 
 public class NuevaTransaccionActivity extends AppCompatActivity{
 
-    protected TextView campoFecha;
+    protected AutoCompleteTextView campoFecha;
     protected TextView campoPrecio;
-    protected TextView campoCategoria;
-    protected TextView campoFechaFinal;
-    protected EditText campoTitulo;
-    protected EditText campoEtiqueta;
-    protected EditText campoInfo;
+    protected AutoCompleteTextView campoCategoria;
+    protected AutoCompleteTextView campoFechaFinal;
+    protected TextInputEditText campoTitulo;
+    protected TextInputEditText campoEtiqueta;
+    protected TextInputEditText campoInfo;
     protected Button btnAceptar;
     protected Button btnCancelar;
     protected RadioButton btnGasto;
     protected RadioButton btnIngreso;
     protected CheckBox btnPlantilla;
     protected CheckBox btnTransaccionFija;
-    protected Spinner listaFrecuencias;
+    protected AutoCompleteTextView listaFrecuencias;
     protected ArrayAdapter<CharSequence> adapterFrecuencia;
-    protected LinearLayout panelFechaFinal;
     protected AvisoDialog avisoDialog;
     protected CalendarioDialog calendarioDialog;
     protected CalendarioDialog calendarioFechaFinalDialog;
@@ -74,10 +72,8 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
         btnPlantilla = findViewById(R.id.chk_agregar_plantilla);
         btnTransaccionFija = findViewById(R.id.chk_agregar_transaccion_fija);
         listaFrecuencias = findViewById(R.id.lista_desplegable_frecuencia);
-        panelFechaFinal = findViewById(R.id.panel_transaccion_fecha_final);
         btnAceptar = findViewById(R.id.btn_transaccion_aceptar);
         btnCancelar = findViewById(R.id.btn_transaccion_cancelar);
-        panelFechaFinal.setVisibility(View.GONE);
         listaFrecuencias.setVisibility(View.GONE);
         btnGasto.setChecked(true);
         formatoFecha = DateTimeFormat.forPattern(Constantes.FORMATO_FECHA);
@@ -149,20 +145,21 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
     }
 
     protected void definirOpcionesAvanzadas(){
-        ArrayList<String> opcionesFrecuencia = new ArrayList<>();
+        ArrayList<CharSequence> opcionesFrecuencia = new ArrayList<>();
         opcionesFrecuencia.add(Constantes.SELECCIONAR_FRECUENCIA);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_SOLO_UNA_VEZ);
+        opcionesFrecuencia.add(Constantes.FRECUENCIA_CADA_DIA);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_UNA_VEZ_A_LA_SEMANA);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_UNA_VEZ_AL_MES);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_UNA_VEZ_AL_ANIO);
-        adapterFrecuencia = new ArrayAdapter(this, android.R.layout.simple_list_item_1, opcionesFrecuencia);
+        adapterFrecuencia = new ArrayAdapter<>(this,R.layout.list_item,opcionesFrecuencia);
         listaFrecuencias.setAdapter(adapterFrecuencia);
         btnPlantilla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 btnTransaccionFija.setChecked(false);
                 if(btnPlantilla.isChecked()) {
-                    panelFechaFinal.setVisibility(View.GONE);
+                    campoFechaFinal.setVisibility(View.GONE);
                     listaFrecuencias.setVisibility(View.GONE);
                     campoFecha.setText("No necesita fecha");
                     campoFecha.setClickable(false);
@@ -179,14 +176,14 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
             public void onClick(View v) {
                 btnPlantilla.setChecked(false);
                 if(btnTransaccionFija.isChecked()){
-                    panelFechaFinal.setVisibility(View.VISIBLE);
+                    campoFechaFinal.setVisibility(View.VISIBLE);
                     listaFrecuencias.setVisibility(View.VISIBLE);
                     listaFrecuencias.setSelection(0);
                     campoFecha.setText(formatoFecha.print(LocalDate.now()));
                     campoFecha.setClickable(true);
                 }
                 else {
-                    panelFechaFinal.setVisibility(View.GONE);
+                    campoFechaFinal.setVisibility(View.GONE);
                     listaFrecuencias.setVisibility(View.GONE);
                     campoFechaFinal.setText(Constantes.SELECCIONAR_FECHA_FINAL);
                 }
@@ -218,7 +215,7 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
                     String precio = campoPrecio.getText().toString();
                     String etiqueta = campoEtiqueta.getText().toString();
                     String fechaFinal = campoFechaFinal.getText().toString();
-                    String frecuencia = (String) adapterFrecuencia.getItem(listaFrecuencias.getSelectedItemPosition());
+                    String frecuencia = listaFrecuencias.getText().toString();
                     String tipo;
                     if(btnGasto.isChecked()){
                         tipo = btnGasto.getText().toString();
@@ -276,7 +273,7 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
     protected boolean verificarDatosPrincipales(){
         boolean verificado = false;
         String precio = campoPrecio.getText().toString();
-        String frecuenciaSeleccionada = listaFrecuencias.getSelectedItem().toString();
+        String frecuenciaSeleccionada = listaFrecuencias.getText().toString();
         float precioFinal = -1f;
         try {
             precioFinal = formatoNumero.parse(precio).floatValue();

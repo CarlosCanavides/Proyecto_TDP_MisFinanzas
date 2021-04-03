@@ -3,7 +3,6 @@ package com.example.proyecto_tdp.fragments;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,10 +51,12 @@ public class TransaccionesFragment extends Fragment implements AdapterTransaccio
     private String fechaInicio;
     private String fechaFin;
     private String mesActual;
+    private String primerMesConTransacciones;
     private float gastoPorMes;
     private EstrategiaDeVerificacion estrategiaDeVerificacion;
     private DateTimeFormatter formatFechaMes =  DateTimeFormat.forPattern("MM/yyyy");
     private DateTimeFormatter formatFecha = DateTimeFormat.forPattern(Constantes.FORMATO_FECHA);
+    private Observer<List<Transaccion>> observer;
 
     @Nullable
     @Override
@@ -68,9 +69,14 @@ public class TransaccionesFragment extends Fragment implements AdapterTransaccio
         tvGastoPorMes = view.findViewById(R.id.transaccion_gasto_por_mes);
         inicializarListViewTransacciones();
         inicializarPeriodoDeTiempo();
-        inicializarViewModel();
         listenerBotonesPrincipales();
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        inicializarViewModel();
     }
 
     private void inicializarListViewTransacciones(){
@@ -97,43 +103,23 @@ public class TransaccionesFragment extends Fragment implements AdapterTransaccio
     }
 
     private void inicializarViewModel(){
-        viewModelCategoria = new ViewModelProvider(this).get(ViewModelCategoria.class);
-        viewModelTransaccion = new ViewModelProvider(this).get(ViewModelTransaccion.class);
+        viewModelCategoria = new ViewModelProvider(getActivity()).get(ViewModelCategoria.class);
+        viewModelTransaccion = new ViewModelProvider(getActivity()).get(ViewModelTransaccion.class);
         estrategiaDeVerificacion = new EstrategiaSoloTransacciones(viewModelTransaccion);
-        viewModelTransaccion.getAllTransacciones().observe(getActivity(), new Observer<List<Transaccion>>() {
+        observer = new Observer<List<Transaccion>>() {
             @Override
             public void onChanged(List<Transaccion> transacciones) {
-                gastoPorMes = 0;
-                transaccionesPorFecha.clear();
-                mapCategoriaDeTransacciones.clear();
-                adapter.refrescar();
-                for(int i=0; i<transacciones.size(); i++) {
-                    Transaccion transaccion = transacciones.get(i);
-                    Date fecha = transaccion.getFecha();
-                    if(formatFechaMes.print(fecha.getTime()).equals(tvMesTransacciones.getText().toString())) {
-                        transaccionesPorFecha.add(HeaderOrRow.createHeader(fecha));
-                        transaccionesPorFecha.add(HeaderOrRow.createRow(transaccion));
-                        gastoPorMes += transaccion.getPrecio();
-                        agregarCategoria(transaccion);
-                        boolean continuar = true;
-                        for(int j=i; (j<transacciones.size()-1)&&continuar; j++){
-                            Transaccion transaccionSiguiente = transacciones.get(j);
-                            Date fechaTransaccionSiguiente = transaccionSiguiente.getFecha();
-                            if(fecha.compareTo(fechaTransaccionSiguiente)==0) {
-                                transaccionesPorFecha.add(HeaderOrRow.createRow(transaccionSiguiente));
-                                agregarCategoria(transaccionSiguiente);
-                                i++;
-                            }
-                            else {
-                                continuar = false;
-                            }
-                        }
+                if(transacciones!=null && transacciones.size()>0){
+                    primerMesConTransacciones = formatFechaMes.print(transacciones.get(transacciones.size()-1).getFecha().getTime());
+                    recopilarDatos(transacciones);
+                    if(mesActual.equals(primerMesConTransacciones)){
+                        btnMesAnterior.setEnabled(false);
+                        btnMesAnterior.setVisibility(View.GONE);
                     }
                 }
-                actualizarTVGastoPorMes();
-                adapter.notifyDataSetChanged();
             }
-        });
+        };
+        viewModelTransaccion.getAllTransacciones().observe(getViewLifecycleOwner(),observer);
     }
 
     private void agregarCategoria(Transaccion transaccion){
@@ -160,7 +146,12 @@ public class TransaccionesFragment extends Fragment implements AdapterTransaccio
                 localDate = localDate.withDayOfMonth(1);
                 localDate = localDate.minusMonths(1);
                 setIntervaloTiempo();
-                recopilarDatos();
+                List<Transaccion> transaccionesDelMes = viewModelTransaccion.getTransaccionesDesdeHasta(fechaInicio,fechaFin);
+                recopilarDatos(transaccionesDelMes);
+                if(formatFechaMes.print(localDate.toDate().getTime()).equals(primerMesConTransacciones)) {
+                    btnMesAnterior.setEnabled(false);
+                    btnMesAnterior.setVisibility(View.GONE);
+                }
                 btnMesSiguiente.setEnabled(true);
                 btnMesSiguiente.setVisibility(View.VISIBLE);
             }
@@ -171,19 +162,21 @@ public class TransaccionesFragment extends Fragment implements AdapterTransaccio
                 localDate = localDate.withDayOfMonth(1);
                 localDate = localDate.plusMonths(1);
                 setIntervaloTiempo();
-                recopilarDatos();
+                List<Transaccion> transaccionesDelMes = viewModelTransaccion.getTransaccionesDesdeHasta(fechaInicio,fechaFin);
+                recopilarDatos(transaccionesDelMes);
                 if(formatFechaMes.print(localDate.toDate().getTime()).equals(mesActual)) {
                     btnMesSiguiente.setEnabled(false);
                     btnMesSiguiente.setVisibility(View.GONE);
                 }
+                btnMesAnterior.setEnabled(true);
+                btnMesAnterior.setVisibility(View.VISIBLE);
             }
         });
         btnMesSiguiente.setEnabled(false);
         btnMesSiguiente.setVisibility(View.GONE);
     }
 
-    private void recopilarDatos(){
-        List<Transaccion> transaccionesDelMes = viewModelTransaccion.getTransaccionesDesdeHasta(fechaInicio,fechaFin);
+    private void recopilarDatos(List<Transaccion> transaccionesDelMes){
         gastoPorMes = 0;
         transaccionesPorFecha.clear();
         mapCategoriaDeTransacciones.clear();
@@ -197,12 +190,13 @@ public class TransaccionesFragment extends Fragment implements AdapterTransaccio
                 gastoPorMes += transaccion.getPrecio();
                 agregarCategoria(transaccion);
                 boolean continuar = true;
-                for(int j=i; (j<transaccionesDelMes.size()-1)&&continuar; j++){
+                for(int j=i+1; (j<transaccionesDelMes.size())&&continuar; j++){
                     Transaccion transaccionSiguiente = transaccionesDelMes.get(j);
                     Date fechaTransaccionSiguiente = transaccionSiguiente.getFecha();
                     if(fecha.compareTo(fechaTransaccionSiguiente)==0) {
                         transaccionesPorFecha.add(HeaderOrRow.createRow(transaccionSiguiente));
                         agregarCategoria(transaccionSiguiente);
+                        gastoPorMes += transaccionSiguiente.getPrecio();
                         i++;
                     }
                     else {

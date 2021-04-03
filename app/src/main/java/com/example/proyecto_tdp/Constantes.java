@@ -32,6 +32,7 @@ public class Constantes {
 
     public static final String SELECCIONAR_FRECUENCIA = "Seleccionar Frecuencia";
     public static final String FRECUENCIA_SOLO_UNA_VEZ = "Solo una vez";
+    public static final String FRECUENCIA_CADA_DIA = "Cada dia";
     public static final String FRECUENCIA_UNA_VEZ_A_LA_SEMANA = "Una vez a la semana";
     public static final String FRECUENCIA_UNA_VEZ_AL_MES = "Una vez al mes";
     public static final String FRECUENCIA_UNA_VEZ_AL_ANIO = "Una vez al anio";

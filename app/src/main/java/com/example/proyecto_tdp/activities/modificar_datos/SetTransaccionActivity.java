@@ -6,8 +6,8 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import com.example.proyecto_tdp.Constantes;
@@ -16,6 +16,7 @@ import com.example.proyecto_tdp.activities.SeleccionarCategoriaActivity;
 import com.example.proyecto_tdp.views.AvisoDialog;
 import com.example.proyecto_tdp.views.CalculatorInputDialog;
 import com.example.proyecto_tdp.views.CalendarioDialog;
+import com.google.android.material.textfield.TextInputEditText;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -27,11 +28,11 @@ import java.util.Locale;
 public class SetTransaccionActivity extends AppCompatActivity {
 
     protected TextView campoPrecio;
-    protected TextView campoCategoria;
-    protected TextView campoFecha;
-    protected EditText campoTitulo;
-    protected EditText campoEtiqueta;
-    protected EditText campoInfo;
+    protected AutoCompleteTextView campoCategoria;
+    protected AutoCompleteTextView campoFecha;
+    protected TextInputEditText campoTitulo;
+    protected TextInputEditText campoEtiqueta;
+    protected TextInputEditText campoInfo;
     protected RadioButton btnGasto;
     protected RadioButton btnIngreso;
     protected Button btnAceptar;
@@ -222,7 +223,7 @@ public class SetTransaccionActivity extends AppCompatActivity {
             avisoDialog.setMensaje("Falta dato principal: Para ingresar una nueva transaccion debe completar al menos el campo PRECIO");
             avisoDialog.show(getSupportFragmentManager(),"Aviso");
         }
-        else if(fechaDate.before(LocalDate.now().toDate())){
+        else if(fechaDate.before(LocalDate.now().toDate()) || fechaDate.compareTo(LocalDate.now().toDate())==0){
             verificado = true;
         }
         return verificado;

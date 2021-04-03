@@ -5,11 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <androidx.appcompat.widget.SwitchCompat
+    <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/switch_mode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/espacio_mediano">
-    </androidx.appcompat.widget.SwitchCompat>
+        android:layout_marginTop="@dimen/espacio_mediano"
+        android:buttonTint="@color/colorAccent">
+    </com.google.android.material.switchmaterial.SwitchMaterial>
 
 </LinearLayout>

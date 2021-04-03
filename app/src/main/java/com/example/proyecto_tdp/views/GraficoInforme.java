@@ -54,13 +54,13 @@ public class GraficoInforme extends PieChart {
         float totalGasto = 0;
         float gastoPorCategoria;
         for(Categoria c : categorias){
-            gastoPorCategoria = gastos.get(c.getNombreCategoria());
+            gastoPorCategoria = gastos.get(c.getId());
             labels.add(c.getNombreCategoria());
             colores.add(c.getColorCategoria());
             totalGasto += gastoPorCategoria;
         }
         for(Categoria c : categorias) {
-            gastoPorCategoria = gastos.get(c.getNombreCategoria());
+            gastoPorCategoria = gastos.get(c.getId());
             porcentajes.add((gastoPorCategoria*100)/totalGasto);
         }
     }

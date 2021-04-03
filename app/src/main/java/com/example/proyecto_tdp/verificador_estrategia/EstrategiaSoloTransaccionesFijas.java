@@ -96,8 +96,13 @@ public class EstrategiaSoloTransaccionesFijas extends EstrategiaGeneral{
                 if(frecuencia.equals(Constantes.FRECUENCIA_UNA_VEZ_AL_MES)){
                     insertarUnaVezAlMes();
                 }
-                else if(frecuencia.equals(Constantes.FRECUENCIA_UNA_VEZ_AL_ANIO)){
-                    insertarUnaVezAlAnio();
+                else {
+                    if(frecuencia.equals(Constantes.FRECUENCIA_UNA_VEZ_AL_ANIO)){
+                        insertarUnaVezAlAnio();
+                    }
+                    else if(frecuencia.equals(Constantes.FRECUENCIA_CADA_DIA)){
+                        insertarCadaDia();
+                    }
                 }
             }
         }
@@ -114,8 +119,6 @@ public class EstrategiaSoloTransaccionesFijas extends EstrategiaGeneral{
     private void eliminarTransaccionFija(Intent datos){
         id = datos.getStringExtra(Constantes.CAMPO_ID);
         if(id!=null) {
-            //Log.e("AQUII estoy en ETF"," aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-            //viewModelTransaccion.eliminarTransaccionesHijas(id);
             viewModelTransaccionFija.eliminarTransaccionFija(id);
         }
     }
@@ -133,6 +136,46 @@ public class EstrategiaSoloTransaccionesFijas extends EstrategiaGeneral{
             Log.e("AQUII en insertar TFUM","IDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"+nuevaTransaccionFija.getId()+"");
             nuevaTransaccion = new Transaccion(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,nuevaTransaccionFija.getId());
             viewModelTransaccion.insertarTransaccion(nuevaTransaccion);
+        }
+    }
+
+    private void insertarCadaDia(){
+        Transaccion nuevaTransaccion;
+        TransaccionFija nuevaTransaccionFija;
+        int cantidadDeEjecucionesTotales = 0;
+        int cantidadDeEjecucionesRealizadas = 0;
+        Date hoy = LocalDate.now().toDate();
+        if(fechaInicio.before(hoy)){
+            calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
+            nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,0,null);
+            viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
+            while ((fechaFinal.after(calendario.toDate())||fechaFinal.compareTo(calendario.toDate())==0) && hoy.after(calendario.toDate())){
+                cantidadDeEjecucionesTotales++;
+                cantidadDeEjecucionesRealizadas++;
+                nuevaTransaccion = new Transaccion(titulo,etiqueta,precio,categoria,tipo,calendario.toDate(),info,nuevaTransaccionFija.getId());
+                viewModelTransaccion.insertarTransaccion(nuevaTransaccion);
+                calendario = calendario.plusDays(1);
+            }
+            Date proximaEjecucion = null;
+            if(fechaFinal.after(calendario.toDate())){
+                proximaEjecucion = calendario.toDate();
+            }
+            while (fechaFinal.after(calendario.toDate()) || fechaFinal.compareTo(calendario.toDate())==0){
+                cantidadDeEjecucionesTotales++;
+                calendario = calendario.plusDays(1);
+            }
+            nuevaTransaccionFija.setCantidadEjecucionesRestantes(cantidadDeEjecucionesTotales-cantidadDeEjecucionesRealizadas);
+            nuevaTransaccionFija.setFechaProximaEjecucion(proximaEjecucion);
+            viewModelTransaccionFija.actualizarTransaccionFija(nuevaTransaccionFija);
+        }
+        else {
+            calendario = LocalDate.parse(formatoDeFecha.print(fechaInicio.getTime()));
+            while (fechaFinal.after(calendario.toDate()) || fechaFinal.compareTo(calendario.toDate())==0){
+                cantidadDeEjecucionesTotales++;
+                calendario = calendario.plusDays(1);
+            }
+            nuevaTransaccionFija = new TransaccionFija(titulo,etiqueta,precio,categoria,tipo,fechaInicio,info,frecuencia,fechaFinal,cantidadDeEjecucionesTotales,fechaInicio);
+            viewModelTransaccionFija.insertarTransaccionFija(nuevaTransaccionFija);
         }
     }
 

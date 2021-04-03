@@ -1,7 +1,6 @@
 package com.example.proyecto_tdp.fragments;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,17 +12,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import com.example.proyecto_tdp.Constantes;
 import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.activities.modificar_datos.SetTransaccionFijaActivity;
 import com.example.proyecto_tdp.adapters.AdapterTransaccionesFijas;
 import com.example.proyecto_tdp.base_de_datos.entidades.Categoria;
 import com.example.proyecto_tdp.base_de_datos.entidades.TransaccionFija;
-import com.example.proyecto_tdp.verificador_estrategia.EstrategiaDeVerificacion;
-import com.example.proyecto_tdp.verificador_estrategia.EstrategiaSoloTransaccionesFijas;
 import com.example.proyecto_tdp.view_models.ViewModelCategoria;
-import com.example.proyecto_tdp.view_models.ViewModelTransaccion;
 import com.example.proyecto_tdp.view_models.ViewModelTransaccionFija;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -43,7 +38,6 @@ public class IngresosFijosFragment extends Fragment {
     private ViewModelCategoria viewModelCategoria;
     private ViewModelTransaccionFija viewModelTransaccionFija;
     private Observer<List<TransaccionFija>> observer;
-    private EstrategiaDeVerificacion estrategiaDeVerificacion;
 
     @Nullable
     @Override
@@ -56,9 +50,16 @@ public class IngresosFijosFragment extends Fragment {
         return vista;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        inicializarViewModels();
+    }
+
     private void inicializarListView(){
         frecuencias = new ArrayList<>();
         frecuencias.add(Constantes.FRECUENCIA_SOLO_UNA_VEZ);
+        frecuencias.add(Constantes.FRECUENCIA_CADA_DIA);
         frecuencias.add(Constantes.FRECUENCIA_UNA_VEZ_A_LA_SEMANA);
         frecuencias.add(Constantes.FRECUENCIA_UNA_VEZ_AL_MES);
         frecuencias.add(Constantes.FRECUENCIA_UNA_VEZ_AL_ANIO);
@@ -95,10 +96,8 @@ public class IngresosFijosFragment extends Fragment {
     }
 
     private void inicializarViewModels(){
-        ViewModelTransaccion viewModelTransaccion = new ViewModelProvider(this).get(ViewModelTransaccion.class);
-        viewModelTransaccionFija = ViewModelProviders.of(getActivity()).get(ViewModelTransaccionFija.class);
-        viewModelCategoria = ViewModelProviders.of(getActivity()).get(ViewModelCategoria.class);
-        estrategiaDeVerificacion = new EstrategiaSoloTransaccionesFijas(viewModelTransaccion,viewModelTransaccionFija);
+        viewModelTransaccionFija = new ViewModelProvider(getActivity()).get(ViewModelTransaccionFija.class);
+        viewModelCategoria = new ViewModelProvider(getActivity()).get(ViewModelCategoria.class);
         recopilarDatos();
     }
 
@@ -139,12 +138,7 @@ public class IngresosFijosFragment extends Fragment {
             }
         };
         if (t != null) {
-            t.observe(getActivity(), observer);
+            t.observe(getViewLifecycleOwner(), observer);
         }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
     }
 }

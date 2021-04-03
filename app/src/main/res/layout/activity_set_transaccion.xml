@@ -3,235 +3,228 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.modificar_datos.SetTransaccionActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activities.modificar_datos.SetTransaccionActivity"
+    android:background="@color/color_anti_flash">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_above="@id/set_contenedor_botones"
-        android:background="@color/color_anti_flash">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/espacio_big"
-                android:layout_marginBottom="@dimen/espacio_mediano">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="$"
-                    android:textSize="39sp"
-                    android:textColor="@color/primary_text"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="@dimen/espacio_mediano"
-                    android:fontFamily="@font/poppins_semibold"/>
-
-                <TextView
-                    android:id="@+id/set_transaccion_campo_precio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="10.0"
-                    android:textSize="40sp"
-                    android:textColor="@color/primary_text"
-                    android:textAlignment="center"
-                    android:fontFamily="@font/poppins_semibold"/>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/divider"
-                android:layout_gravity="bottom"
-                android:layout_marginStart="@dimen/margen_iconos_transaccion"
-                android:layout_marginEnd="@dimen/margen_iconos_transaccion">
-            </View>
-
-        </FrameLayout>
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        android:paddingBottom="@dimen/espacio_big"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:layout_marginStart="@dimen/margen_iconos_transaccion"
-            android:layout_marginEnd="@dimen/margen_iconos_transaccion"
-            android:layout_marginTop="@dimen/margen_iconos_transaccion">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_categoria"
-                android:layout_gravity="center_vertical"/>
-
-            <TextView
-                android:id="@+id/set_transaccion_campo_categoria"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_campos_transaccion"
-                android:textColor="@color/primary_text"
-                android:textAlignment="textEnd"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/espacio_mediano"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:layout_marginStart="@dimen/margen_iconos_transaccion"
-            android:layout_marginEnd="@dimen/margen_iconos_transaccion">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_tipo_transaccion"
-                android:layout_gravity="center_vertical"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_above="@id/set_contenedor_botones"
+            android:background="@color/color_anti_flash">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/espacio_mediano">
+                android:layout_height="wrap_content">
 
-                <RadioGroup
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center_horizontal|center_vertical">
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/espacio_mediano"
+                    android:layout_marginBottom="@dimen/espacio_mediano">
 
-                    <RadioButton
-                        android:id="@+id/set_transaccion_radiobtn_gasto"
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Gasto"
-                        android:textSize="@dimen/text_campos_transaccion"
+                        android:text="$"
+                        android:textSize="39sp"
                         android:textColor="@color/primary_text"
-                        android:checked="true"
-                        android:buttonTint="@color/color_precios_negativos"
-                        android:layout_marginEnd="@dimen/espacio_big"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/espacio_mediano"
                         android:fontFamily="@font/poppins_semibold"/>
 
-                    <RadioButton
-                        android:id="@+id/set_transaccion_radiobtn_ingreso"
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/set_transaccion_campo_precio"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Ingreso"
-                        android:textSize="@dimen/text_campos_transaccion"
+                        android:text="10.0"
+                        android:textSize="40sp"
                         android:textColor="@color/primary_text"
-                        android:buttonTint="@color/color_precios_positivos"
+                        android:textAlignment="center"
                         android:fontFamily="@font/poppins_semibold"/>
 
-                </RadioGroup>
+                </LinearLayout>
 
             </FrameLayout>
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:layout_marginStart="@dimen/margen_iconos_transaccion"
+                android:layout_marginEnd="@dimen/margen_iconos_transaccion">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:layout_marginStart="@dimen/margen_iconos_transaccion"
-            android:layout_marginEnd="@dimen/margen_iconos_transaccion">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_tipo_transaccion"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/color_campo_transaccion"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_titulo"
-                android:layout_gravity="center_vertical"/>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/espacio_mediano">
 
-            <EditText
-                android:id="@+id/set_transaccion_campo_titulo"
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_horizontal|center_vertical">
+
+                        <RadioButton
+                            android:id="@+id/set_transaccion_radiobtn_gasto"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Gasto"
+                            android:textSize="@dimen/text_campos_transaccion"
+                            android:textColor="@color/primary_text"
+                            android:checked="true"
+                            android:buttonTint="@color/color_precios_negativos"
+                            android:layout_marginEnd="@dimen/espacio_big"
+                            android:fontFamily="@font/poppins_semibold"/>
+
+                        <RadioButton
+                            android:id="@+id/set_transaccion_radiobtn_ingreso"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ingreso"
+                            android:textSize="@dimen/text_campos_transaccion"
+                            android:textColor="@color/primary_text"
+                            android:buttonTint="@color/color_precios_positivos"
+                            android:fontFamily="@font/poppins_semibold"/>
+
+                    </RadioGroup>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_campos_transaccion"
-                android:textColor="@color/primary_text"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/espacio_mediano"/>
+                android:hint="Categoria"
+                android:textColorHint="@color/primary_text"
+                app:boxStrokeColor="@color/colorPrimary"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginTop="@dimen/espacio_mediano"
+                android:layout_marginBottom="@dimen/margen_iconos_transaccion"
+                android:layout_marginStart="@dimen/margen_iconos_transaccion"
+                android:layout_marginEnd="@dimen/margen_iconos_transaccion"
+                app:startIconDrawable="@drawable/icon_categoria"
+                app:startIconTint="@color/color_campo_transaccion">
 
-        </LinearLayout>
+                <AutoCompleteTextView
+                    android:id="@+id/set_transaccion_campo_categoria"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_campos_transaccion"
+                    android:textColor="@color/primary_text"
+                    android:inputType="none"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:layout_marginStart="@dimen/margen_iconos_transaccion"
-            android:layout_marginEnd="@dimen/margen_iconos_transaccion">
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_etiqueta"
-                android:layout_gravity="center_vertical"/>
-
-            <EditText
-                android:id="@+id/set_transaccion_campo_etiqueta"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_campos_transaccion"
-                android:textColor="@color/primary_text"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/espacio_mediano"/>
+                android:hint="Titulo"
+                android:textColorHint="@color/primary_text"
+                app:boxStrokeColor="@color/colorPrimary"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginStart="@dimen/margen_iconos_transaccion"
+                android:layout_marginEnd="@dimen/margen_iconos_transaccion"
+                android:layout_marginBottom="@dimen/margen_iconos_transaccion"
+                app:startIconDrawable="@drawable/icon_titulo"
+                app:startIconTint="@color/color_campo_transaccion">
 
-        </LinearLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/set_transaccion_campo_titulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_campos_transaccion"
+                    android:textColor="@color/primary_text"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:layout_marginStart="@dimen/margen_iconos_transaccion"
-            android:layout_marginEnd="@dimen/margen_iconos_transaccion">
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_fecha"
-                android:layout_gravity="center_vertical"/>
-
-            <TextView
-                android:id="@+id/set_transaccion_campo_fecha"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_campos_transaccion"
-                android:textColor="@color/primary_text"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/espacio_mediano"/>
+                android:hint="Etiqueta"
+                android:textColorHint="@color/primary_text"
+                app:boxStrokeColor="@color/colorPrimary"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginStart="@dimen/margen_iconos_transaccion"
+                android:layout_marginEnd="@dimen/margen_iconos_transaccion"
+                android:layout_marginBottom="@dimen/margen_iconos_transaccion"
+                app:startIconDrawable="@drawable/icon_etiqueta"
+                app:startIconTint="@color/color_campo_transaccion">
 
-        </LinearLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/set_transaccion_campo_etiqueta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_campos_transaccion"
+                    android:textColor="@color/primary_text"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:layout_marginStart="@dimen/margen_iconos_transaccion"
-            android:layout_marginEnd="@dimen/margen_iconos_transaccion">
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_apunte"
-                android:layout_gravity="center_vertical"/>
-
-            <EditText
-                android:id="@+id/set_transaccion_campo_info"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_campos_transaccion"
-                android:textColor="@color/primary_text"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/espacio_mediano"/>
+                android:hint="Fecha"
+                android:textColorHint="@color/primary_text"
+                app:boxStrokeColor="@color/colorPrimary"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginStart="@dimen/margen_iconos_transaccion"
+                android:layout_marginEnd="@dimen/margen_iconos_transaccion"
+                android:layout_marginBottom="@dimen/margen_iconos_transaccion"
+                app:startIconDrawable="@drawable/icon_fecha"
+                app:startIconTint="@color/color_campo_transaccion">
+
+                <AutoCompleteTextView
+                    android:id="@+id/set_transaccion_campo_fecha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_campos_transaccion"
+                    android:textColor="@color/primary_text"
+                    android:inputType="none"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Información"
+                android:textColorHint="@color/primary_text"
+                app:boxStrokeColor="@color/colorPrimary"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginStart="@dimen/margen_iconos_transaccion"
+                android:layout_marginEnd="@dimen/margen_iconos_transaccion"
+                app:startIconDrawable="@drawable/icon_apunte"
+                app:startIconTint="@color/color_campo_transaccion">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/set_transaccion_campo_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_campos_transaccion"
+                    android:textColor="@color/primary_text"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
         android:layout_width="fill_parent"

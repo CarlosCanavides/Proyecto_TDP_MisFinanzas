@@ -64,7 +64,7 @@ public class AdapterInformeMes extends RecyclerView.Adapter<AdapterInformeMes.Vi
             Categoria categoria = categorias.get(position-1);
             if (categoria != null) {
                 holder.tvNombreCategoria.setText(categoria.getNombreCategoria());
-                holder.tvGastoCategoria.setText("- $ " + String.format( "%.2f",gastoPorSubcategoria.get(categoria.getNombreCategoria())));
+                holder.tvGastoCategoria.setText("-$" + String.format( "%.2f",gastoPorSubcategoria.get(categoria.getId())));
                 holder.tvIconoCategoria.setText(categoria.getNombreCategoria().charAt(0)+"");
                 Drawable bg = holder.tvIconoCategoria.getBackground();
                 bg.setColorFilter(categoria.getColorCategoria(), PorterDuff.Mode.SRC);
@@ -77,7 +77,7 @@ public class AdapterInformeMes extends RecyclerView.Adapter<AdapterInformeMes.Vi
         return categorias.size()+1;
     }
 
-    public void refesh(){
+    public void refresh(){
         categorias.clear();
         gastoPorSubcategoria.clear();
     }
