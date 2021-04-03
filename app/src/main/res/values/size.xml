@@ -3,6 +3,7 @@
     <dimen name="espacio_small">5dp</dimen>
     <dimen name="espacio_mediano">10dp</dimen>
     <dimen name="espacio_big">20dp</dimen>
+    <dimen name="espacio_bordes_laterales">20dp</dimen>
 
     <dimen name="espacio_margen_subcategoria">25dp</dimen>
 
@@ -12,16 +13,20 @@
 
     <dimen name="text_circularviewSubcategoria">20sp</dimen>
     <dimen name="size_circularviewSubcategoria">30sp</dimen>
+    <dimen name="text_circularview_informes">20sp</dimen>
+    <dimen name="size_circularview_informes">40sp</dimen>
 
-    <dimen name="text_transacciones_mes">15sp</dimen>
+    <dimen name="text_transacciones_mes">14sp</dimen>
     <dimen name="btn_transacciones_mes_back">50sp</dimen>
     <dimen name="btn_transacciones_mes_advance">30sp</dimen>
 
     <dimen name="text_campos_transaccion">13sp</dimen>
     <dimen name="size_titulo_item_transaccion">13sp</dimen>
+    <dimen name="size_altura_componentes_de_seleccion">60dp</dimen>
 
     <dimen name="margen_iconos_transaccion">15dp</dimen>
     <dimen name="text_campos_resumen">13sp</dimen>
+    <dimen name="text_campos_resumen_secondary_text">12sp</dimen>
 
 
     <dimen name="calculator_button_padding">10dp</dimen>
@@ -37,5 +42,9 @@
     <dimen name="dimen_x_small">4dp</dimen>
     <dimen name="dimen_image_view_small">64dp</dimen>
     <dimen name="dimen_backdrop_image">280dp</dimen>
+
+    <dimen name="size_title">16sp</dimen>
+    <dimen name="size_primary_text">14sp</dimen>
+    <dimen name="size_secondary_text">13sp</dimen>
 
 </resources>

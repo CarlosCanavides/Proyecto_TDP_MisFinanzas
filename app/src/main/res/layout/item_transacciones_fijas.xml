@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/color_anti_flash">
 
     <androidx.cardview.widget.CardView
@@ -64,7 +64,7 @@
                             android:singleLine="true"
                             android:text="Sin titulo"
                             android:textColor="@color/primary_text"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/text_campos_transaccion"
                             android:fontFamily="@font/poppins_semibold"/>
 
                         <TextView
@@ -74,12 +74,12 @@
                             android:layout_marginStart="@dimen/espacio_mediano"
                             android:layout_marginTop="@dimen/espacio_small"
                             android:layout_marginEnd="@dimen/espacio_mediano"
-                            android:textStyle="italic"
-                            android:textSize="14sp"
-                            android:textColor="@color/secondary_text"
-                            android:text="31/03/2021 - 01/04/2021"
                             android:lines="1"
-                            android:singleLine="true"/>
+                            android:singleLine="true"
+                            android:text="31/03/2021 - 01/04/2021"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/text_campos_transaccion"
+                            android:textStyle="italic" />
 
                     </LinearLayout>
 
@@ -89,6 +89,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
                         android:text="$100,00"
+                        android:textSize="@dimen/text_campos_transaccion"
                         android:gravity="right"
                         android:layout_marginEnd="@dimen/espacio_mediano"
                         android:fontFamily="@font/poppins_semibold"/>
@@ -104,7 +105,8 @@
                     android:layout_marginEnd="@dimen/espacio_mediano"
                     android:textColor="@color/secondary_text"
                     android:text="Proxima Ejecucion: 01/04/2021"
-                    android:textStyle="italic|bold"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_campos_transaccion"
                     android:lines="1"
                     android:singleLine="true"/>
 

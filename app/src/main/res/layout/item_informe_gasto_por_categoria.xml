@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/color_anti_flash">
 
     <LinearLayout
@@ -15,15 +15,16 @@
 
         <TextView
             android:id="@+id/informes_icono_categroia"
-            android:layout_width="40sp"
-            android:layout_height="40sp"
+            android:layout_width="@dimen/size_circularview_informes"
+            android:layout_height="@dimen/size_circularview_informes"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/espacio_big"
             android:layout_marginEnd="@dimen/espacio_mediano"
             android:background="@drawable/textview_circular"
             android:textAlignment="center"
             android:textColor="@color/background_white"
-            android:textSize="@dimen/text_circularview"
+            android:textSize="@dimen/text_circularview_informes"
+            android:text="S"
             android:gravity="center_vertical"/>
 
         <FrameLayout
@@ -40,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|left"
                 android:layout_marginStart="@dimen/espacio_mediano"
-                android:textSize="16sp"
+                android:textSize="@dimen/size_primary_text"
                 android:textStyle="bold"
                 android:textColor="@color/primary_text"
                 android:fontFamily="@font/poppins_semibold"/>
@@ -52,18 +53,11 @@
                 android:layout_gravity="center_vertical|right"
                 android:textColor="@color/color_precios_negativos"
                 android:layout_marginEnd="@dimen/espacio_mediano"
-                android:textSize="16sp"
+                android:textSize="@dimen/size_primary_text"
                 android:fontFamily="@font/poppins_bold"/>
 
         </FrameLayout>
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/color_divider_recyclerview_informes"
-        android:layout_marginTop="2dp">
-    </View>
 
 </LinearLayout>

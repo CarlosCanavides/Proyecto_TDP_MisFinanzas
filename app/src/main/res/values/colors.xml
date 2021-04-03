@@ -81,8 +81,8 @@
     <color name="color_encabezado_fecha_transacciones_start">#D5DEEF</color>
     <color name="color_encabezado_fecha_transacciones_end">#F2F3F3</color>
     <color name="color_transacciones_programadas_no_seleccionada">#F9FAF9</color>
-    <color name="color_transacciones_programadas_seleccionada">#F2F3F3</color>
-    <color name="color_fondo_transacciones">#F9FAF9</color>
+    <color name="color_transacciones_programadas_seleccionada">#1754CD</color>
+    <color name="color_fondo_transacciones">#F2F3F3</color>
     <color name="color_resumen_transacciones">#FFFFFF</color>
 
     <color name="color_barra_de_navegacion">#FFFFFF</color>
@@ -104,4 +104,7 @@
     <color name="color_no_componente_seleccionado">#A0A6B8</color>
 
     <color name="color_botones_flotantes">#FF5722</color>
+
+    <color name="color_degrade_inicio_componentes_seleccionables">#1754CD</color>
+    <color name="color_degrade_final_componentes_seleccionables">#1754CD</color>
 </resources>

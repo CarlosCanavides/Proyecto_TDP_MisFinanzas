@@ -19,6 +19,7 @@
             android:layout_marginTop="@dimen/espacio_big"
             android:layout_marginStart="@dimen/espacio_big"
             android:layout_marginEnd="@dimen/espacio_big"
+            android:layout_marginBottom="@dimen/espacio_small"
             android:elevation="2dp">
 
             <LinearLayout
@@ -56,8 +57,8 @@
                     android:id="@+id/tv_balance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$ 6,320"
-                    android:textSize="30sp"
+                    android:text="$6,320"
+                    android:textSize="25sp"
                     android:textColor="@color/color_letras_azules"
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/poppins_semibold"/>
@@ -120,18 +121,121 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/background_white"
+        android:layout_marginTop="@dimen/espacio_mediano"
+        android:layout_marginBottom="@dimen/espacio_mediano">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0,1"
+            android:background="@color/color_anti_flash">
+
+            <TableRow>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/espacio_small"
+                    android:layout_marginBottom="@dimen/espacio_small">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_flecha_arriva"
+                        android:background="@drawable/background_ingreso_promedio"
+                        android:paddingBottom="12dp"
+                        android:paddingTop="12dp"
+                        android:paddingStart="@dimen/espacio_mediano"
+                        android:paddingEnd="@dimen/espacio_mediano"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/espacio_mediano">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ingreso Promedio"
+                            android:textSize="12sp"
+                            android:textColor="@color/secondary_text"
+                            android:layout_marginBottom="@dimen/espacio_small"/>
+
+                        <TextView
+                            android:id="@+id/tv_ingreso_promedio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$ 3,214"
+                            android:textSize="13sp"
+                            android:textColor="@color/primary_text"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/espacio_small"
+                    android:layout_marginBottom="@dimen/espacio_small">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_flecha_abajo"
+                        android:background="@drawable/background_gasto_promedio"
+                        android:paddingBottom="12dp"
+                        android:paddingTop="12dp"
+                        android:paddingStart="@dimen/espacio_mediano"
+                        android:paddingEnd="@dimen/espacio_mediano"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/espacio_mediano">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Gasto Promedio"
+                            android:textSize="12sp"
+                            android:textColor="@color/secondary_text"
+                            android:layout_marginBottom="@dimen/espacio_small"/>
+
+                        <TextView
+                            android:id="@+id/tv_gasto_promedio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$ 2,350"
+                            android:textSize="13sp"
+                            android:textColor="@color/primary_text"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/espacio_small"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginStart="13dp"
-            android:layout_marginEnd="13dp"
-            android:layout_marginBottom="@dimen/espacio_small"
-            android:layout_marginTop="@dimen/espacio_small">
+            android:layout_marginStart="@dimen/espacio_bordes_laterales"
+            android:layout_marginEnd="@dimen/espacio_bordes_laterales">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -161,132 +265,25 @@
             android:layout_height="wrap_content"
             android:progress="70"
             android:secondaryProgress="100"
-            android:layout_marginStart="13dp"
-            android:layout_marginEnd="13dp"
+            android:layout_marginStart="@dimen/espacio_bordes_laterales"
+            android:layout_marginEnd="@dimen/espacio_bordes_laterales"
             android:layout_marginBottom="@dimen/espacio_mediano"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background_white"
-            android:layout_marginTop="@dimen/espacio_small">
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:stretchColumns="0,1"
-                android:background="@color/color_anti_flash">
-
-                <TableRow>
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/espacio_small"
-                        android:layout_marginBottom="@dimen/espacio_small">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/icon_flecha_arriva"
-                            android:background="@drawable/background_ingreso_promedio"
-                            android:paddingBottom="12dp"
-                            android:paddingTop="12dp"
-                            android:paddingStart="@dimen/espacio_mediano"
-                            android:paddingEnd="@dimen/espacio_mediano"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginStart="@dimen/espacio_mediano">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Ingreso Promedio"
-                                android:textSize="12sp"
-                                android:textColor="@color/secondary_text"
-                                android:layout_marginBottom="@dimen/espacio_small"/>
-
-                            <TextView
-                                android:id="@+id/tv_ingreso_promedio"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="$ 3,214"
-                                android:textSize="13sp"
-                                android:textColor="@color/primary_text"
-                                android:textStyle="bold"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/espacio_small"
-                        android:layout_marginBottom="@dimen/espacio_small">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/icon_flecha_abajo"
-                            android:background="@drawable/background_gasto_promedio"
-                            android:paddingBottom="12dp"
-                            android:paddingTop="12dp"
-                            android:paddingStart="@dimen/espacio_mediano"
-                            android:paddingEnd="@dimen/espacio_mediano"/>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginStart="@dimen/espacio_mediano">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Gasto Promedio"
-                                android:textSize="12sp"
-                                android:textColor="@color/secondary_text"
-                                android:layout_marginBottom="@dimen/espacio_small"/>
-
-                            <TextView
-                                android:id="@+id/tv_gasto_promedio"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="$ 2,350"
-                                android:textSize="13sp"
-                                android:textColor="@color/primary_text"
-                                android:textStyle="bold"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </TableRow>
-
-            </TableLayout>
-
-        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/espacio_big"
-            android:layout_marginTop="@dimen/espacio_big"
-            android:layout_marginBottom="@dimen/espacio_big"
+            android:layout_marginStart="@dimen/espacio_bordes_laterales"
+            android:layout_marginBottom="@dimen/espacio_mediano"
             android:fontFamily="@font/poppins_semibold"
             android:text="Transacciones Programadas"
             android:textColor="@color/primary_text"
-            android:textSize="15sp"/>
+            android:textSize="14sp"/>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/espacio_big"
-            android:layout_marginEnd="@dimen/espacio_big"
-            android:layout_marginTop="@dimen/espacio_small"
+            android:layout_marginStart="@dimen/espacio_bordes_laterales"
+            android:layout_marginEnd="@dimen/espacio_bordes_laterales"
             android:layout_marginBottom="@dimen/espacio_mediano"
             app:cardCornerRadius="7dp"
             app:cardElevation="2dp">
@@ -294,7 +291,7 @@
             <LinearLayout
                 android:id="@+id/panel_ingresos_fijos"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="@dimen/size_altura_componentes_de_seleccion"
                 android:orientation="horizontal"
                 android:background="@drawable/selector_item"
                 android:clickable="true">
@@ -352,6 +349,7 @@
                             android:layout_gravity="center_vertical"
                             android:text="100"
                             android:textColor="@color/color_precios_positivos"
+                            android:textSize="@dimen/size_titulo_item_transaccion"
                             android:gravity="right"
                             android:fontFamily="@font/poppins_semibold"
                             android:layout_marginEnd="@dimen/espacio_mediano"/>
@@ -367,7 +365,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/espacio_big"
+            android:layout_marginStart="@dimen/espacio_bordes_laterales"
             android:layout_marginEnd="@dimen/espacio_big"
             android:layout_marginTop="@dimen/espacio_small"
             android:layout_marginBottom="@dimen/espacio_mediano"
@@ -377,7 +375,7 @@
             <LinearLayout
                 android:id="@+id/panel_gastos_fijos"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="@dimen/size_altura_componentes_de_seleccion"
                 android:orientation="horizontal"
                 android:background="@drawable/selector_item"
                 android:clickable="true">
@@ -436,6 +434,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:text="100"
+                            android:textSize="@dimen/size_titulo_item_transaccion"
                             android:textColor="@color/color_precios_negativos"
                             android:gravity="right"
                             android:layout_marginEnd="@dimen/espacio_mediano"
@@ -452,7 +451,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/espacio_big"
+            android:layout_marginStart="@dimen/espacio_bordes_laterales"
             android:layout_marginEnd="@dimen/espacio_big"
             android:layout_marginTop="@dimen/espacio_small"
             android:layout_marginBottom="@dimen/espacio_small"
@@ -462,7 +461,7 @@
             <LinearLayout
                 android:id="@+id/panel_plantillas"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="@dimen/size_altura_componentes_de_seleccion"
                 android:orientation="horizontal"
                 android:background="@drawable/selector_item"
                 android:clickable="true">
@@ -523,6 +522,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:text="100"
+                            android:textSize="@dimen/size_titulo_item_transaccion"
                             android:textColor="@color/color_precio_balance"
                             android:gravity="right"
                             android:layout_marginEnd="@dimen/espacio_mediano"
