@@ -103,7 +103,6 @@ public class NuevaTransaccionFijaActivity extends AppCompatActivity {
         btnIngreso.setChecked(false);
         btnCancelar.setText("Cancelar");
         ArrayList<String> opcionesFrecuencia = new ArrayList<>();
-        opcionesFrecuencia.add(Constantes.SELECCIONAR_FRECUENCIA);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_SOLO_UNA_VEZ);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_CADA_DIA);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_UNA_VEZ_A_LA_SEMANA);
@@ -252,7 +251,7 @@ public class NuevaTransaccionFijaActivity extends AppCompatActivity {
             avisoDialog.setMensaje("Falta dato principal: Para ingresar una nueva transaccion fija debe completar el campo PRECIO");
             avisoDialog.show(getSupportFragmentManager(),"Aviso");
         }
-        else if(frecuenciaSeleccionada.equals(Constantes.SELECCIONAR_FRECUENCIA)){
+        else if(frecuenciaSeleccionada.equals(Constantes.SELECCIONAR_FRECUENCIA) || frecuenciaSeleccionada.equals("")){
             avisoDialog.setMensaje("Falta dato principal: Para ingresar una nueva transaccion fija debe seleccionar una FRECUENCIA");
             avisoDialog.show(getSupportFragmentManager(),"Aviso");
         }

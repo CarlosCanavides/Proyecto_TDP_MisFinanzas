@@ -88,10 +88,7 @@ public class SetTransaccionActivity extends AppCompatActivity {
         campoEtiqueta.setText(intent.getStringExtra(Constantes.CAMPO_ETIQUETA));
         idCategoriaElegida = intent.getStringExtra(Constantes.CAMPO_ID_CATEGORIA);
         String nombreCategoriaElegida = intent.getStringExtra(Constantes.CAMPO_NOMBRE_CATEGORIA);
-        if(idCategoriaElegida==null){
-            campoCategoria.setText(Constantes.SELECCIONAR_CATEGORIA);
-        }
-        else {
+        if(idCategoriaElegida!=null){
             campoCategoria.setText(nombreCategoriaElegida);
         }
         String fecha = intent.getStringExtra(Constantes.CAMPO_FECHA);

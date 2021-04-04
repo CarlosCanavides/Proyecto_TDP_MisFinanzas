@@ -22,6 +22,8 @@ import com.example.proyecto_tdp.views.AvisoDialog;
 import com.example.proyecto_tdp.views.CalculatorInputDialog;
 import com.example.proyecto_tdp.views.CalendarioDialog;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -40,6 +42,8 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
     protected TextInputEditText campoTitulo;
     protected TextInputEditText campoEtiqueta;
     protected TextInputEditText campoInfo;
+    protected TextInputLayout panelFrecuencia;
+    protected TextInputLayout panelFechaFinal;
     protected Button btnAceptar;
     protected Button btnCancelar;
     protected RadioButton btnGasto;
@@ -76,6 +80,8 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
         btnCancelar = findViewById(R.id.btn_transaccion_cancelar);
         listaFrecuencias.setVisibility(View.GONE);
         btnGasto.setChecked(true);
+        panelFechaFinal = findViewById(R.id.panel_fecha_final);
+        panelFrecuencia = findViewById(R.id.panel_frecuencia);
         formatoFecha = DateTimeFormat.forPattern(Constantes.FORMATO_FECHA);
         formatoNumero = NumberFormat.getInstance(new Locale("es", "ES"));
         definirIngresarMonto();
@@ -146,7 +152,6 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
 
     protected void definirOpcionesAvanzadas(){
         ArrayList<CharSequence> opcionesFrecuencia = new ArrayList<>();
-        opcionesFrecuencia.add(Constantes.SELECCIONAR_FRECUENCIA);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_SOLO_UNA_VEZ);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_CADA_DIA);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_UNA_VEZ_A_LA_SEMANA);
@@ -161,6 +166,8 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
                 if(btnPlantilla.isChecked()) {
                     campoFechaFinal.setVisibility(View.GONE);
                     listaFrecuencias.setVisibility(View.GONE);
+                    panelFrecuencia.setVisibility(View.GONE);
+                    panelFechaFinal.setVisibility(View.GONE);
                     campoFecha.setText("No necesita fecha");
                     campoFecha.setClickable(false);
                     campoFechaFinal.setText(Constantes.SELECCIONAR_FECHA_FINAL);
@@ -178,6 +185,8 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
                 if(btnTransaccionFija.isChecked()){
                     campoFechaFinal.setVisibility(View.VISIBLE);
                     listaFrecuencias.setVisibility(View.VISIBLE);
+                    panelFrecuencia.setVisibility(View.VISIBLE);
+                    panelFechaFinal.setVisibility(View.VISIBLE);
                     listaFrecuencias.setSelection(0);
                     campoFecha.setText(formatoFecha.print(LocalDate.now()));
                     campoFecha.setClickable(true);
@@ -185,7 +194,8 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
                 else {
                     campoFechaFinal.setVisibility(View.GONE);
                     listaFrecuencias.setVisibility(View.GONE);
-                    campoFechaFinal.setText(Constantes.SELECCIONAR_FECHA_FINAL);
+                    panelFrecuencia.setVisibility(View.GONE);
+                    panelFechaFinal.setVisibility(View.GONE);
                 }
             }
         });
@@ -202,6 +212,10 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
                 calendarioFechaFinalDialog.show(getSupportFragmentManager(), getClass().getSimpleName());
             }
         });
+        panelFrecuencia.setVisibility(View.GONE);
+        panelFechaFinal.setVisibility(View.GONE);
+        listaFrecuencias.setVisibility(View.GONE);
+        campoFechaFinal.setVisibility(View.GONE);
     }
 
     protected void listenerBotonesPrincipales(){
@@ -234,7 +248,7 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
                     if(!fechaFinal.equals(Constantes.SELECCIONAR_FECHA_FINAL)){
                         intent.putExtra(Constantes.CAMPO_FECHA_FINAL, fechaFinal);
                     }
-                    if(frecuencia!=null && !frecuencia.equals(Constantes.SELECCIONAR_FRECUENCIA)){
+                    if(!frecuencia.equals(Constantes.SELECCIONAR_FRECUENCIA)){
                         intent.putExtra(Constantes.CAMPO_FRECUENCIA,frecuencia);
                     }
                     if(idCategoriaElegida!=null){
@@ -294,7 +308,7 @@ public class NuevaTransaccionActivity extends AppCompatActivity{
                 if(!fechaF.equals(Constantes.SELECCIONAR_FECHA_FINAL)){
                     fechaFinal = formatoFecha.parseDateTime(fechaF).toDate();
                 }
-                if(frecuenciaSeleccionada.equals(Constantes.SELECCIONAR_FRECUENCIA)){
+                if(frecuenciaSeleccionada.equals(Constantes.SELECCIONAR_FRECUENCIA) || frecuenciaSeleccionada.equals("")){
                     avisoDialog.setMensaje("Falta dato principal: Para ingresar una nueva transaccion fija debe seleccionar una FRECUENCIA");
                     avisoDialog.show(getSupportFragmentManager(),"Aviso");
                 }

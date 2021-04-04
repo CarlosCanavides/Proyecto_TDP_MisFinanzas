@@ -203,7 +203,8 @@
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_campos_transaccion"
                         android:textColor="@color/primary_text"
-                        android:inputType="none"/>
+                        android:inputType="none"
+                        android:editable="false"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -253,6 +254,7 @@
                     android:buttonTint="@color/colorPrimary"/>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/panel_frecuencia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Frecuencia"
@@ -274,6 +276,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/panel_fecha_final"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Fecha Final"

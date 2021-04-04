@@ -20,7 +20,6 @@ import com.example.proyecto_tdp.view_models.ViewModelCategoria;
 import com.example.proyecto_tdp.views.AvisoDialog;
 import com.example.proyecto_tdp.views.SeleccionCategoriaDialog;
 import com.google.android.material.textfield.TextInputEditText;
-
 import java.util.ArrayList;
 import java.util.List;
 import yuku.ambilwarna.AmbilWarnaDialog;
@@ -69,7 +68,6 @@ public class NuevaCategoriaActivity extends AppCompatActivity {
         colorActual = Constantes.COLOR_CATEGORIA_POR_DEFECTO;
         campoColor.setText(colorActual+"");
         campoNombre.setText("");
-        campoCategoriaSup.setText(Constantes.SELECCIONAR_CATEGORIA);
         btnGasto.setChecked(true);
         btnIngreso.setChecked(false);
         iconoCategoriaVP.setText("");

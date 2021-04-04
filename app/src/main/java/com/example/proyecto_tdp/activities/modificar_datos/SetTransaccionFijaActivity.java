@@ -2,9 +2,11 @@ package com.example.proyecto_tdp.activities.modificar_datos;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import com.example.proyecto_tdp.Constantes;
+import com.example.proyecto_tdp.R;
 import com.example.proyecto_tdp.activities.CategoriaActivity;
 import com.example.proyecto_tdp.activities.agregar_datos.NuevaTransaccionFijaActivity;
 import java.text.ParseException;
@@ -49,10 +51,7 @@ public class SetTransaccionFijaActivity extends NuevaTransaccionFijaActivity {
         campoFecha.setText(fechaInicioAnterior);
         campoEtiqueta.setText(etiquetaAnterior);
         campoFechaFinal.setText(fechaFinalAnterior);
-        if(idCategoriaAnterior==null){
-            campoCategoria.setText(Constantes.SELECCIONAR_CATEGORIA);
-        }
-        else {
+        if(idCategoriaAnterior!=null){
             campoCategoria.setText(nombreCategoriaAnterior);
         }
         if(tipoAnterior.equals(Constantes.GASTO)){
@@ -65,24 +64,24 @@ public class SetTransaccionFijaActivity extends NuevaTransaccionFijaActivity {
         }
         btnCancelar.setText("Eliminar");
         ArrayList<String> opcionesFrecuencia = new ArrayList<>();
-        opcionesFrecuencia.add(Constantes.SELECCIONAR_FRECUENCIA);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_SOLO_UNA_VEZ);
+        opcionesFrecuencia.add(Constantes.FRECUENCIA_CADA_DIA);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_UNA_VEZ_A_LA_SEMANA);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_UNA_VEZ_AL_MES);
         opcionesFrecuencia.add(Constantes.FRECUENCIA_UNA_VEZ_AL_ANIO);
-        ArrayAdapter<String> adapterFrecuencia = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, opcionesFrecuencia);
+        ArrayAdapter<String> adapterFrecuencia = new ArrayAdapter<String>(this,R.layout.list_item, opcionesFrecuencia);
         frecuencia.setAdapter(adapterFrecuencia);
 
         if(frecuenciaAnterior.equals(Constantes.FRECUENCIA_SOLO_UNA_VEZ)){
-            frecuencia.setSelection(1);
+            frecuencia.setListSelection(0);
+        }else if(frecuenciaAnterior.equals(Constantes.FRECUENCIA_CADA_DIA)){
+            frecuencia.setListSelection(1);
         }else if(frecuenciaAnterior.equals(Constantes.FRECUENCIA_UNA_VEZ_A_LA_SEMANA)){
-            frecuencia.setSelection(2);
+            frecuencia.setListSelection(2);
         }else if(frecuenciaAnterior.equals(Constantes.FRECUENCIA_UNA_VEZ_AL_MES)){
-            frecuencia.setSelection(3);
+            frecuencia.setListSelection(3);
         }else if(frecuenciaAnterior.equals(Constantes.FRECUENCIA_UNA_VEZ_AL_ANIO)){
-            frecuencia.setSelection(4);
-        }else {
-            frecuencia.setSelection(0);
+            frecuencia.setListSelection(4);
         }
     }
 

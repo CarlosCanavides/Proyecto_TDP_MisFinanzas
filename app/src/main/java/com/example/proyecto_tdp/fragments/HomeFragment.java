@@ -158,7 +158,6 @@ public class HomeFragment extends Fragment{
                     tvBalance.setText("$ "+String.format( "%.2f",balance));
                 }
                 actualizarBarraDeProgreso();
-                Log.e("AQUII estoy enel change",""+transaccions.size());
                 if(cantidadTransaccionesGasto>0) {
                     tvGastoPromedio.setText("$ "+String.format( "%.2f",Math.abs(gastoTotal)/cantidadTransaccionesGasto));
                 }
