@@ -1,7 +1,7 @@
 # Adroid App Project
 
-<div>
-<a href="https://postimg.cc/LgDRLCvN" target="_blank"><img style="width:200px; margin-right:1rem" src="https://i.postimg.cc/4nkdCjck/mockup-Phone-Black.png" alt="mockup-Phone-Black"/></a>
+<div align="center">
+<a href="https://postimg.cc/LgDRLCvN" target="_blank"><img style="width:200px; margin-right:4rem" src="https://i.postimg.cc/4nkdCjck/mockup-Phone-Black.png" alt="mockup-Phone-Black"/></a>
 <a href="https://postimg.cc/XXbCKrQC" target="_blank"><img style="width:200px" src="https://i.postimg.cc/QNBJ3570/mockup-Phone-Dark.png" alt="mockup-Phone-Dark"/></a><br/><br/>
 </div>
 
